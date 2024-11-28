@@ -1,7 +1,16 @@
 <template>
-
+  <div class="dark min-h-screen bg-gray-900 text-white">
+    <NavigationComp />
+    <router-view />
+  </div>
 </template>
 
-<style>
+<script>
+import NavigationComp from './components/NavigationComp.vue';
 
-</style>
+export default {
+  components: {
+    NavigationComp,
+  },
+};
+</script>
