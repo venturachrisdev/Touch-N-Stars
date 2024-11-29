@@ -25,16 +25,38 @@
       {{ loading ? "Aufnahme läuft..." : "Foto aufnehmen" }}
     </button>
 
-    <!-- Anzeige des Bildes -->
+    <!-- Anzeige des Bildes mit Zoom-Steuerung -->
     <div v-if="imageData" class="mt-4">
       <h6 class="text-white font-bold mb-2">Aufgenommenes Bild</h6>
-      <img
-        :src="imageData"
-        alt="Aufgenommenes Bild"
-        class="img-thumbnail mx-auto"
-      />
-    </div>
 
+      <!-- Zoom-Tasten -->
+      <div class="flex justify-center space-x-4 mb-2">
+        <button
+          @click="zoomIn"
+          class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded"
+        >
+          +
+        </button>
+        <button
+          @click="zoomOut"
+          class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded"
+        >
+          -
+        </button>
+      </div>
+
+      <!-- Zoombares Bild mit Scrollbalken -->
+      <div
+        class="overflow-auto border border-gray-400 rounded-md bg-black mx-auto"
+      >
+        <img
+          :src="imageData"
+          alt="Aufgenommenes Bild"
+          class="block"
+          :style="{ transform: `scale(${scale})`, transformOrigin: 'top left' }"
+        />
+      </div>
+    </div>
     <!-- Statusanzeige -->
     <div v-if="statusMessage" class="text-white mt-4">
       {{ statusMessage }}
@@ -48,10 +70,13 @@ import apiService from "@/services/apiService";
 export default {
   data() {
     return {
-      exposureTime: 10, // Standard-Belichtungszeit
+      exposureTime: 1, // Standard-Belichtungszeit
       imageData: null, // Base64-Daten des Bildes
       loading: false, // Ladezustand
       statusMessage: null, // Statusnachrichten
+      scale: 1, // Zoomstufe des Bildes
+      maxScale: 3, // Maximale Zoomstufe
+      minScale: 1, // Minimale Zoomstufe
     };
   },
   methods: {
@@ -107,6 +132,16 @@ export default {
     },
     wait(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
+    },
+    zoomIn() {
+      if (this.scale < this.maxScale) {
+        this.scale += 0.1;
+      }
+    },
+    zoomOut() {
+      if (this.scale > this.minScale) {
+        this.scale -= 0.1;
+      }
     },
   },
 };
