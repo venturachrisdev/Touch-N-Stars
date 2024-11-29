@@ -1,27 +1,53 @@
 <template>
   <div
-    :class="{
-      'fixed top-0 left-0 w-full h-16 flex justify-around': isPortrait, /* Horizontale Navigation */
-      'fixed top-0 right-0 w-16 h-full flex flex-col items-center': !isPortrait /* Vertikale Navigation */
-    }"
-    class="bg-gray-800 shadow-md"
+    class="fixed top-0 left-0 w-full h-16 flex justify-around bg-gray-800 shadow-md"
   >
-    <router-link to="/equipment" class="nav-button" title="Ausrüstung">
+    <router-link
+      to="/equipment"
+      class="nav-button"
+      active-class="active-nav-button"
+      title="Ausrüstung"
+    >
       <HomeIcon class="icon" />
     </router-link>
-    <router-link to="/camera" class="nav-button" title="Kamera">
+    <router-link
+      to="/camera"
+      class="nav-button"
+      active-class="active-nav-button"
+      title="Kamera"
+    >
       <CameraIcon class="icon" />
     </router-link>
-    <router-link to="/tppa" class="nav-button" title="TPPA">
+    <router-link
+      to="/tppa"
+      class="nav-button"
+      active-class="active-nav-button"
+      title="TPPA"
+    >
       <MapIcon class="icon" />
     </router-link>
-    <router-link to="/autofocus" class="nav-button" title="Autofokus">
+    <router-link
+      to="/autofocus"
+      class="nav-button"
+      active-class="active-nav-button"
+      title="Autofokus"
+    >
       <AdjustmentsHorizontalIcon class="icon" />
     </router-link>
-    <router-link to="/sequencer" class="nav-button" title="Sequenzer">
+    <router-link
+      to="/sequencer"
+      class="nav-button"
+      active-class="active-nav-button"
+      title="Sequenzer"
+    >
       <Squares2X2Icon class="icon" />
     </router-link>
-    <router-link to="/misc" class="nav-button" title="Sonstiges">
+    <router-link
+      to="/misc"
+      class="nav-button"
+      active-class="active-nav-button"
+      title="Sonstiges"
+    >
       <Cog6ToothIcon class="icon" />
     </router-link>
   </div>
@@ -48,19 +74,17 @@ export default {
   },
   data() {
     return {
-      isPortrait: window.matchMedia('(orientation: portrait)').matches,
+ 
     };
   },
   mounted() {
-    window.addEventListener('resize', this.handleResize);
+
   },
   beforeUnmount() {
-    window.removeEventListener('resize', this.handleResize);
+  
   },
   methods: {
-    handleResize() {
-      this.isPortrait = window.matchMedia('(orientation: portrait)').matches;
-    },
+
   },
 };
 </script>
@@ -72,8 +96,16 @@ export default {
   align-items: center;
   justify-content: center;
   margin: 4px;
+  transition: border-radius 0.2s ease, background-color 0.2s ease;
+}
+.nav-button:active {
+  @apply rounded-lg bg-gray-500;
+}
+.active-nav-button {
+  @apply bg-gray-500 rounded-lg;
 }
 .icon {
   @apply w-6 h-6;
 }
+
 </style>
