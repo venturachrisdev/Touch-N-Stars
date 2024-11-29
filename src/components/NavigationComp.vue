@@ -1,8 +1,8 @@
 <template>
   <div
-    class="fixed top-0 left-0 w-full h-16 flex bg-gray-800 shadow-md"
+    class="top-0 h-16 bg-gray-800 shadow-md"
   >
-  <div class="fixed top-1 inset-x-0 mx-auto max-w-sm h-16 flex justify-around">
+  <div class="inset-x-0 mx-auto max-w-sm h-16 flex items-center justify-around">
     <router-link
       to="/equipment"
       class="nav-button"
@@ -104,7 +104,7 @@ export default {
   @apply rounded-lg bg-gray-500;
 }
 .active-nav-button {
-  @apply bg-gray-500 rounded-lg;
+  @apply bg-cyan-700 rounded-lg;
 }
 .icon {
   @apply w-6 h-6;

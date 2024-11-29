@@ -4,7 +4,7 @@
       <button
         @click="toggleConnection"
         class="min-w-64 min-h-10 rounded-md text-white font-medium transition-colors"
-        :class="isConnected ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'"
+        :class="isConnected ? 'bg-red-900' : 'bg-cyan-700'"
       >
         {{ isConnected ? disconnectText : connectText }}
       </button>
