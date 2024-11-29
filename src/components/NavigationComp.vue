@@ -1,7 +1,8 @@
 <template>
   <div
-    class="fixed top-0 left-0 w-full h-16 flex justify-around bg-gray-800 shadow-md"
+    class="fixed top-0 left-0 w-full h-16 flex bg-gray-800 shadow-md"
   >
+  <div class="fixed top-1 inset-x-0 mx-auto max-w-sm h-16 flex justify-around">
     <router-link
       to="/equipment"
       class="nav-button"
@@ -50,6 +51,7 @@
     >
       <Cog6ToothIcon class="icon" />
     </router-link>
+  </div>
   </div>
 </template>
 

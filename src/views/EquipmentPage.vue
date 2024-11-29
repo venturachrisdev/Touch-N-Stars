@@ -1,36 +1,33 @@
 <template>
-  <div class="container ">
-    <h5 class="text-xl font-bold text-white mb-4">Ausrüstungs-Steuerung</h5>
+  <div class="container text-center">
+    <h5 class="text-xl  font-bold text-white mb-4">Ausrüstungs-Steuerung</h5>
+
     <!-- Kamera-Steuerung -->
-    <div class="">
-      <p class="text-white">Kamera-Status: {{ cameraStatus }}</p>
-      <button
-        @click="toggleCameraConnection"
-        class=" py-2 px-4 rounded-md text-white font-medium transition-colors"
-        :class="cameraConnected ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'"
-      >
-        {{ cameraConnected ? "Kamera trennen" : "Kamera verbinden" }}
-      </button>
-    </div>
+    <ConnectionButton
+      :isConnected="cameraConnected"
+      connectText="Kamera verbinden"
+      disconnectText="Kamera trennen"
+      :onToggle="toggleCameraConnection"
+    />
 
     <!-- Montierungs-Steuerung -->
-    <div>
-      <p class="text-white mb-2">Montierungs-Status: {{ mountStatus }}</p>
-      <button
-        @click="toggleMountConnection"
-        class=" py-2 px-4 rounded-md text-white font-medium transition-colors"
-        :class="mountConnected ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'"
-      >
-        {{ mountConnected ? "Montierung trennen" : "Montierung verbinden" }}
-      </button>
-    </div>
+    <ConnectionButton
+      :isConnected="mountConnected"
+      connectText="Montierung verbinden"
+      disconnectText="Montierung trennen"
+      :onToggle="toggleMountConnection"
+    />
   </div>
 </template>
 
 <script>
+import ConnectionButton from "@/components/ConnectionButton.vue";
 import apiService from "@/services/apiService";
 
 export default {
+  components: {
+    ConnectionButton,
+  },
   data() {
     return {
       cameraConnected: false,

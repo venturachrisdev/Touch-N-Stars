@@ -8,7 +8,7 @@
   </nav>
     <!-- Hauptinhalt -->
     <div class="container mx-auto mt-12 p-4">
-    <div class="flex-grow flex  justify-center w-full h-full p-6 transition-all">
+    <div class="flex-grow flex justify-center w-full h-full p-6 transition-all">
       <router-view />
     </div>
   </div>
