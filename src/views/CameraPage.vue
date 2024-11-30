@@ -1,22 +1,24 @@
 <template>
   <div class="container text-center">
-    <h5 class="text-xl font-bold text-white mb-4">Fotoaufnahme</h5>
+    <h5 class="text-xl font-bold text-white mb-7 ">Fotoaufnahme</h5>
 
     <!-- Eingabe für die Belichtungszeit -->
-    <div class="flex flex-col md:flex-row   gap-4">
-      <div class="flex flex-row md:flex-col md:space-y-4 space-y-0 gap-4 md:gap-0 md:w-1/5">
-        
+    <div class="flex flex-col md:flex-row gap-4">
+      <div class="flex flex-row md:flex-col md:space-y-4 space-y-0 gap-4 md:gap-0 md:w-2/6">
+        <div class="grid grid-cols-2 items-center justify-between gap-2">        
+          <label for="exposure" class="text-right text-sm" >Belichtungszeit:</label>
         <input
           id="exposure"
           v-model.number="exposureTime"
           type="number"
-          class=" text-black px-4 min-h-10 min-w-32 max-w-44 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2  focus:border-cyan-700"
-          placeholder="Belichtungszeit"
+          class=" text-black px-4 min-h-10 max-w-15 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2  focus:border-cyan-700"
+          placeholder="1"
         />
-        
+      </div>
+
         <!-- Foto aufnehmen -->
       <button
-        class=" min-h-10 min-w-32 max-w-44 rounded-md text-white font-medium transition-colors bg-cyan-700"
+        class=" min-h-10 w-full min-w-14 rounded-md text-white font-medium transition-colors bg-cyan-700"
         @click="capturePhoto"
         :disabled="loading"
       >
@@ -24,23 +26,24 @@
       </button>
     </div>
 
+
     <!-- Anzeige des Bildes mit Zoom-Steuerung -->
-    <div v-if="imageData" class="mt-4">
+    <div v-if="imageData" class="">
 
 
       <!-- Zoombares Bild mit Scrollbalken -->
       <div
-        class="overflow-auto grid place-items-center touch-pinch-zoom "
+        class="w-full h-auto overflow-auto touch-auto shadow-lg  shadow-cyan-700/40 rounded-xl border border-cyan-700"
       >
         <img
           :src="imageData"
           alt="Aufgenommenes Bild"
-          class="max-h-screen"
+          class="max-h-screen "
           :style="{ transform: `scale(${scale})`  }"
         />
       </div>
             <!-- Zoom-Tasten -->
-            <div class="flex justify-center space-x-4 mb-2">
+            <div class="flex justify-center space-x-4 mb-2 mt-2">
         <button
           @click="zoomIn"
           class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded"
