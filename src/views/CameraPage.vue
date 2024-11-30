@@ -30,7 +30,7 @@
 
       <!-- Zoombares Bild mit Scrollbalken -->
       <div
-        class="overflow-auto grid place-items-center  "
+        class="overflow-auto grid place-items-center touch-pinch-zoom "
       >
         <img
           :src="imageData"
@@ -97,7 +97,7 @@ export default {
 
         // Schritt 2: Wiederholt prüfen, ob das Bild verfügbar ist
         let attempts = 0;
-        const maxAttempts = this.exposureTime + 3; // Maximal warten: Belichtungszeit + 5 Sekunden
+        const maxAttempts = this.exposureTime + 10; // Maximal warten: Belichtungszeit + 5 Sekunden
         let image = null;
 
         while (!image && attempts < maxAttempts) {
