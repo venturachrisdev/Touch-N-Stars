@@ -15,45 +15,67 @@
             id="exposure"
             v-model.number="exposureTime"
             type="number"
-            class="text-black px-4 min-h-10 max-w-15 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:border-cyan-700"
+            class="text-black px-4 h-10 max-w-15 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-700"
             placeholder="1"
           />
         </div>
 
         <!-- Foto aufnehmen -->
         <button
-          class="min-h-10 w-full min-w-14 rounded-md text-white font-medium transition-colors bg-cyan-700 flex items-center justify-center"
+          class="h-10 w-full min-w-14 rounded-md text-white font-medium transition-colors bg-cyan-700 flex items-center justify-center disabled:opacity-50"
           @click="capturePhoto"
           :disabled="loading"
         >
           <template v-if="loading">
             <div v-if="isExposure" class="flex items-center">
               <!-- Fortschrittskreis für Belichtungszeit -->
-              <svg class="spinner-button" viewBox="0 0 36 36">
+              <svg class="w-6 h-6" viewBox="0 0 36 36">
                 <path
-                  class="circle-bg"
+                  class="text-white text-opacity-30 fill-none stroke-current [stroke-width:2.8]"
                   d="M18 2.0845
                      a 15.9155 15.9155 0 0 1 0 31.831
                      a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
                 <path
-                  class="circle"
-                  :stroke-dasharray="progress + ', 100'"
+                  class="fill-none stroke-current [stroke-width:2.8]"
+                  :style="{
+                    'stroke-dasharray': progress + ', 100',
+                    'transform': 'rotate(-90deg)',
+                    'transform-origin': 'center',
+                  }"
                   d="M18 2.0845
                      a 15.9155 15.9155 0 0 1 0 31.831
                      a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
               </svg>
               <span class="ml-2 text-white text-sm font-medium">
-               Aufnahme läuft: {{ remainingExposureTime }}s
+                {{ remainingExposureTime }}s
               </span>
             </div>
             <div v-else-if="isLoadingImage" class="flex items-center">
               <!-- Drehender Spinner für Bild lädt -->
-              <svg class="loading-spinner-button" viewBox="0 0 50 50">
-                <circle class="loading-circle" cx="25" cy="25" r="20" />
+              <svg
+                class="w-6 h-6 animate-spin text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
               </svg>
-              <span class="ml-2 text-white text-sm font-medium">Bild lädt...</span>
+              <span class="ml-2 text-white text-sm font-medium">
+                Bild lädt...
+              </span>
             </div>
           </template>
           <template v-else>
@@ -71,7 +93,7 @@
           <img
             :src="imageData"
             alt="Aufgenommenes Bild"
-            class="max-h-screen"
+            class="max-h-screen transform"
             :style="{ transform: `scale(${scale / 100})` }"
           />
         </div>
@@ -199,151 +221,41 @@ export default {
 </script>
 
 <style scoped>
-/* Styling für den Slider */
+/* Minimales eigenes CSS für spezielle Anpassungen */
+
+/* Hintergrund des Sliders transparent setzen */
 input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  background: transparent;
+  background-color: transparent;
 }
 
-input[type="range"]:focus {
-  outline: none;
-}
-
-/* Webkit */
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 5px;
-  background: #00bcd4;
-  border-radius: 3px;
-}
-
+/* Pseudo-Elemente können nicht mit Tailwind direkt gestylt werden */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 15px;
-  width: 15px;
-  background: #fff;
-  border: 2px solid #00bcd4;
-  cursor: pointer;
-  border-radius: 50%;
-  margin-top: -5px;
+  @apply h-4 w-4 bg-cyan-700 border border-cyan-700 rounded-full cursor-pointer;
+  margin-top: -6px;
 }
 
-/* Mozilla */
-input[type="range"]::-moz-range-track {
-  height: 5px;
-  background: #00bcd4;
-  border-radius: 3px;
+input[type="range"]::-webkit-slider-runnable-track {
+  @apply h-1 bg-cyan-700 rounded;
 }
 
+/* Für Firefox */
 input[type="range"]::-moz-range-thumb {
-  height: 15px;
-  width: 15px;
-  background: #fff;
-  border: 2px solid #00bcd4;
-  cursor: pointer;
-  border-radius: 50%;
+  @apply h-4 w-4 bg-cyan-700 border border-cyan-700 rounded-full cursor-pointer;
 }
 
-/* IE */
-input[type="range"]::-ms-track {
-  height: 5px;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
+input[type="range"]::-moz-range-track {
+  @apply h-1 bg-cyan-700 rounded;
 }
 
-input[type="range"]::-ms-fill-lower {
-  background: #00bcd4;
+/* Entfernt den Standardhintergrund in Firefox */
+input[type="range"] {
+  -moz-appearance: none; /* Wichtig für Firefox */
+  background-color: transparent;
 }
 
-input[type="range"]::-ms-fill-upper {
-  background: #00bcd4;
-}
-
-input[type="range"]::-ms-thumb {
-  height: 15px;
-  width: 15px;
-  background: #fff;
-  border: 2px solid #00bcd4;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-input[type="range"]:focus::-ms-fill-lower {
-  background: #00bcd4;
-}
-
-input[type="range"]:focus::-ms-fill-upper {
-  background: #00bcd4;
-}
-
-/* Styling für den Fortschrittskreis innerhalb des Buttons */
-.spinner-button {
-  width: 24px;
-  height: 24px;
-}
-
-.circle-bg {
-  fill: none;
-  stroke: #fff;
-  stroke-opacity: 0.3;
-  stroke-width: 2.8;
-}
-
-.circle {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 2.8;
-  stroke-linecap: round;
-  transition: stroke-dasharray 0.3s ease;
-  transform: rotate(-90deg);
-  transform-origin: center;
-}
-
-/* Styling für den drehenden Spinner innerhalb des Buttons */
-.loading-spinner-button {
-  animation: rotate 2s linear infinite;
-  width: 24px;
-  height: 24px;
-}
-
-.loading-circle {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 2.8;
-  stroke-linecap: round;
-  stroke-dasharray: 90,150;
-  stroke-dashoffset: 0;
-  transform-origin: center;
-  animation: dash 1.5s ease-in-out infinite;
-}
-
-@keyframes rotate {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes dash {
-  0% {
-    stroke-dasharray: 1,150;
-    stroke-dashoffset: 0;
-  }
-  50% {
-    stroke-dasharray: 90,150;
-    stroke-dashoffset: -35;
-  }
-  100% {
-    stroke-dasharray: 90,150;
-    stroke-dashoffset: -124;
-  }
-}
-
-/* Anpassung des Textes innerhalb des Buttons */
-button .percentage {
-  fill: #fff;
-  font-size: 0.75em;
-  text-anchor: middle;
-  dominant-baseline: central;
+/* Fokus-Stil entfernen */
+input[type="range"]:focus {
+  outline: none;
 }
 </style>
