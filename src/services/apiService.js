@@ -50,7 +50,10 @@ const apiService = {
     async getCaptureResult() {
       return axios
         .get(`${BASE_URL}/equipment/camera/capture`, {
-          params: { getResult: true },
+          params: { 
+            getResult: true,
+            quality: 10,
+           },
         })
         .then((response) => response.data)
         .catch((error) => {
