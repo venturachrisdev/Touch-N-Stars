@@ -52,7 +52,7 @@ const apiService = {
         .get(`${BASE_URL}/equipment/camera/capture`, {
           params: { 
             getResult: true,
-            quality: 10,
+            quality: 80,
            },
         })
         .then((response) => response.data)
