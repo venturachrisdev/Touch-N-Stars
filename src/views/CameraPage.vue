@@ -4,13 +4,9 @@
 
     <!-- Eingabe für die Belichtungszeit -->
     <div class="flex flex-col md:flex-row gap-4">
-      <div
-        class="flex flex-row md:flex-col md:space-y-4 space-y-0 gap-4 md:gap-0 md:w-2/6"
-      >
+      <div class="flex flex-row md:flex-col md:space-y-4 space-y-0 gap-4 md:gap-0 md:w-2/6">
         <div class="grid grid-cols-2 items-center justify-between gap-2">
-          <label for="exposure" class="text-right text-sm"
-            >Belichtungszeit:</label
-          >
+          <label for="exposure" class="text-right text-sm">Belichtungszeit:</label>
           <input
             id="exposure"
             v-model.number="exposureTime"
@@ -31,13 +27,13 @@
               <!-- Fortschrittskreis für Belichtungszeit -->
               <svg class="w-6 h-6" viewBox="0 0 36 36">
                 <path
-                  class="text-white text-opacity-30 fill-none stroke-current [stroke-width:2.8]"
+                  class="text-white text-opacity-30 fill-none stroke-current stroke-[2.8]"
                   d="M18 2.0845
                      a 15.9155 15.9155 0 0 1 0 31.831
                      a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
                 <path
-                  class="fill-none stroke-current [stroke-width:2.8]"
+                  class="fill-none stroke-current stroke-[2.8]"
                   :style="{
                     'stroke-dasharray': progress + ', 100',
                     'transform': 'rotate(-90deg)',
@@ -231,21 +227,37 @@ input[type="range"] {
 /* Pseudo-Elemente können nicht mit Tailwind direkt gestylt werden */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  @apply h-4 w-4 bg-cyan-700 border border-cyan-700 rounded-full cursor-pointer;
   margin-top: -6px;
+
+  /* Direkte CSS-Eigenschaften anstelle von @apply */
+  width: 1rem; /* entspricht h-4 */
+  height: 1rem; /* entspricht w-4 */
+  background-color: #0e7490; /* entspricht bg-cyan-700 */
+  border: 1px solid #0e7490; /* entspricht border-cyan-700 */
+  border-radius: 9999px; /* entspricht rounded-full */
+  cursor: pointer;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
-  @apply h-1 bg-cyan-700 rounded;
+  height: 0.25rem; /* entspricht h-1 */
+  background-color: #0e7490; /* entspricht bg-cyan-700 */
+  border-radius: 0.25rem; /* entspricht rounded */
 }
 
 /* Für Firefox */
 input[type="range"]::-moz-range-thumb {
-  @apply h-4 w-4 bg-cyan-700 border border-cyan-700 rounded-full cursor-pointer;
+  width: 1rem;
+  height: 1rem;
+  background-color: #0e7490;
+  border: 1px solid #0e7490;
+  border-radius: 9999px;
+  cursor: pointer;
 }
 
 input[type="range"]::-moz-range-track {
-  @apply h-1 bg-cyan-700 rounded;
+  height: 0.25rem;
+  background-color: #0e7490;
+  border-radius: 0.25rem;
 }
 
 /* Entfernt den Standardhintergrund in Firefox */
