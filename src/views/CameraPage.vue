@@ -28,6 +28,11 @@
         >
           {{ loading ? "Aufnahme läuft..." : "Foto aufnehmen" }}
         </button>
+
+        <!-- Statusanzeige unter dem Button -->
+        <div v-if="statusMessage" class="text-white mt-2">
+          {{ statusMessage }}
+        </div>
       </div>
 
       <!-- Anzeige des Bildes mit Zoom-Steuerung -->
@@ -58,11 +63,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Statusanzeige -->
-    <div v-if="statusMessage" class="text-white mt-4">
-      {{ statusMessage }}
-    </div>
   </div>
 </template>
 
@@ -73,12 +73,13 @@ export default {
   data() {
     return {
       exposureTime: 1, // Standard-Belichtungszeit
+      remainingExposureTime: 0, // Für den Countdown der Belichtungszeit
       imageData: null, // Base64-Daten des Bildes
       loading: false, // Ladezustand
       statusMessage: null, // Statusnachrichten
       scale: 100, // Startet bei 100%
-      maxScale: 2200, // Maximale Zoomstufe (300%)
-      minScale: 50, // Minimale Zoomstufe (50%)
+      maxScale: 2200, // Maximale Zoomstufe
+      minScale: 50, // Minimale Zoomstufe
     };
   },
   methods: {
@@ -89,23 +90,30 @@ export default {
       }
 
       this.loading = true;
-      this.statusMessage = `Starte Aufnahme mit ${this.exposureTime} Sekunden Belichtungszeit...`;
-      this.imageData = null;
       this.scale = 100; // Zoomlevel auf Standard setzen
+      this.remainingExposureTime = this.exposureTime;
 
       try {
-        // Schritt 1: Aufnahme starten
-        await apiService.startCapture(this.exposureTime);
-        this.statusMessage =
-          "Belichtung abgeschlossen. Warte auf Bildübertragung...";
+        // Starten der Aufnahme (ohne darauf zu warten)
+        const capturePromise = apiService.startCapture(this.exposureTime);
+
+        // Countdown der Belichtungszeit starten
+        this.statusMessage = `Belichtungszeit: ${this.remainingExposureTime} Sekunden`;
+        await this.startExposureCountdown();
+
+        // Warten, bis die Aufnahme abgeschlossen ist
+        await capturePromise;
+
+        // Nach der Belichtung anzeigen, dass das Bild geladen wird
+        this.statusMessage = "Bild lädt...";
 
         // Schritt 2: Wiederholt prüfen, ob das Bild verfügbar ist
         let attempts = 0;
-        const maxAttempts = this.exposureTime + 10; // Maximal warten: Belichtungszeit + 10 Sekunden
+        const maxAttempts = 10; // Maximal 10 Sekunden warten
         let image = null;
 
         while (!image && attempts < maxAttempts) {
-          this.statusMessage = `Prüfe Bildverfügbarkeit... Versuch ${
+          this.statusMessage = `Bild wird geladen... Versuch ${
             attempts + 1
           }/${maxAttempts}`;
           try {
@@ -135,6 +143,19 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    startExposureCountdown() {
+      return new Promise((resolve) => {
+        const interval = setInterval(() => {
+          this.remainingExposureTime--;
+          if (this.remainingExposureTime > 0) {
+            this.statusMessage = `Belichtungszeit: ${this.remainingExposureTime} Sekunden`;
+          } else {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 1000);
+      });
     },
     wait(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
