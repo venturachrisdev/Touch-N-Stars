@@ -17,6 +17,14 @@
       disconnectText="Montierung trennen"
       :onToggle="toggleMountConnection"
     />
+
+        <!-- Focuser-Steuerung -->
+    <ConnectionButton
+      :isConnected="focusConnected"
+      connectText="Fokusierer verbinden"
+      disconnectText="Fokusierer trennen"
+      :onToggle="toggleFocuserConnection"
+    />
   </div>
 </template>
 
@@ -34,6 +42,8 @@ export default {
       cameraStatus: "Nicht verbunden",
       mountConnected: false,
       mountStatus: "Nicht verbunden",
+      focusConnected: false,
+      focusStatus: "Nicht verbunden",
     };
   },
   async mounted() {
@@ -70,6 +80,21 @@ export default {
         this.mountStatus = "Fehler bei der Verbindung";
       }
     },
+    async toggleFocuserConnection() {
+      try {
+        if (this.focusConnected) {
+          await apiService.focusAction("disconnect");
+        } else {
+          await apiService.focusAction("connect");
+        }
+        const focusInfo = await apiService.focusAction("info");
+        this.focusConnected = focusInfo?.Response?.Connected || false;
+        this.focusStatus = this.focusConnected ? "Verbunden" : "Nicht verbunden";
+      } catch (error) {
+        console.error("Fehler bei der Focuser-Steuerung:", error.response?.data || error);
+        this.focusStatus = "Fehler bei der Verbindung";
+      }
+    },
     async fetchInitialStatus() {
       try {
         const cameraInfo = await apiService.cameraAction("info");
@@ -79,6 +104,10 @@ export default {
         const mountInfo = await apiService.mountAction("info");
         this.mountConnected = mountInfo?.Response?.Connected || false;
         this.mountStatus = this.mountConnected ? "Verbunden" : "Nicht verbunden";
+
+        const focusInfo = await apiService.focusAction("info");
+        this.focusConnected = focusInfo?.Response?.Connected || false;
+        this.focusStatus = this.focusConnected ? "Verbunden" : "Nicht verbunden";
       } catch (error) {
         console.error("Fehler beim Abrufen des Status:", error.response?.data || error);
       }

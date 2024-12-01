@@ -4,7 +4,7 @@
 
     <!-- Eingabe für die Belichtungszeit -->
     <div class="flex flex-col md:flex-row gap-4">
-      <div class="flex flex-row md:flex-col md:space-y-4 space-y-0 gap-4 md:gap-0 md:w-2/6">
+      <div class="flex flex-row md:flex-col md:space-y-4 space-y-0 gap-4 md:gap-0 md:w-3/7">
         <div class="grid grid-cols-2 items-center justify-between gap-2">
           <label for="exposure" class="text-right text-sm">Belichtungszeit:</label>
           <input
@@ -45,7 +45,7 @@
                 />
               </svg>
               <span class="ml-2 text-white text-sm font-medium">
-                {{ remainingExposureTime }}s
+                Aufnahme läuft {{ remainingExposureTime }}s
               </span>
             </div>
             <div v-else-if="isLoadingImage" class="flex items-center">
@@ -84,12 +84,14 @@
       <div v-if="imageData" class="w-full">
         <!-- Zoombares Bild mit Scrollbalken -->
         <div
+          ref="imageContainer"
           class="w-full h-auto overflow-auto touch-auto shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700"
         >
           <img
+            ref="image"
             :src="imageData"
             alt="Aufgenommenes Bild"
-            class="max-h-screen transform"
+            class="max-h-[65vh] h-full transform"
             :style="{ transform: `scale(${scale / 100})` }"
           />
         </div>
@@ -125,9 +127,16 @@ export default {
       isExposure: false, // Gibt an, ob die Belichtungszeit läuft
       isLoadingImage: false, // Gibt an, ob das Bild geladen wird
       scale: 100, // Startet bei 100%
+      previousScale: 100, // Zum Verfolgen des vorherigen Zoom-Faktors
       maxScale: 2200, // Maximale Zoomstufe
       minScale: 50, // Minimale Zoomstufe
     };
+  },
+  watch: {
+    scale(newScale, oldScale) {
+      this.adjustScrollPosition(newScale, oldScale);
+      this.previousScale = newScale;
+    },
   },
   methods: {
     async capturePhoto() {
@@ -138,6 +147,7 @@ export default {
 
       this.loading = true;
       this.scale = 100; // Zoomlevel auf Standard setzen
+      this.previousScale = 100; // Vorheriger Zoomlevel zurücksetzen
       this.remainingExposureTime = this.exposureTime;
       this.progress = 0; // Fortschritt zurücksetzen
       this.isExposure = true; // Die Belichtung startet
@@ -211,6 +221,35 @@ export default {
     },
     wait(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
+    },
+    adjustScrollPosition(newScale, oldScale) {
+      const container = this.$refs.imageContainer;
+      const image = this.$refs.image;
+
+      if (container && image) {
+        // Berechnung des Skalierungsfaktors
+        const scaleFactor = newScale / oldScale;
+
+        // Aktuelle Scroll-Positionen
+        const scrollLeft = container.scrollLeft;
+        const scrollTop = container.scrollTop;
+
+        // Größen von Container und Bild
+        const containerWidth = container.clientWidth;
+        const containerHeight = container.clientHeight;
+
+        // Mittelpunkt der aktuellen Ansicht berechnen
+        const centerX = scrollLeft + containerWidth / 2;
+        const centerY = scrollTop + containerHeight / 2;
+
+        // Neue Scroll-Positionen berechnen
+        const newCenterX = centerX * scaleFactor;
+        const newCenterY = centerY * scaleFactor;
+
+        // Neue Scroll-Positionen setzen, um die Mitte zu erhalten
+        container.scrollLeft = newCenterX - containerWidth / 2;
+        container.scrollTop = newCenterY - containerHeight / 2;
+      }
     },
   },
 };

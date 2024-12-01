@@ -13,6 +13,12 @@ const apiService = {
     return axios.get(`${BASE_URL}/equipment/mount/${action}`).then((response) => response.data);
   },
 
+  // Fokusierer
+  focusAction(action) {
+    return axios.get(`${BASE_URL}/equipment/focuser/${action}`).then((response) => response.data);
+  },
+
+
   //Foto aufnehmen ------------------------------------
   async startCapture(duration) {
       return axios
