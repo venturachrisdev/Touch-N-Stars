@@ -1,6 +1,6 @@
 <template>
   <div class="container text-center">
-    <h5 class="text-xl  font-bold text-white mb-4">Vorlage</h5>
+    <h5 class="text-xl  font-bold text-white mb-4">Fokusierer</h5>
 
     
     
@@ -9,11 +9,11 @@
 
 <script>
 
-//import apiService from "@/services/apiService";
+
 
 export default {
   components: {
-
+  
   },
   data() {
     return {
