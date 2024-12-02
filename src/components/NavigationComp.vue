@@ -33,7 +33,7 @@
       active-class="active-nav-button"
       title="TPPA"
     >
-      <AdjustmentsHorizontalIcon class="icon" />
+      <SparklesIcon class="icon" />
     </router-link>
     <router-link
       to="/sequencer"
@@ -60,7 +60,7 @@ import {
   LinkIcon,
   CameraIcon,
   EyeIcon,
-  AdjustmentsHorizontalIcon,
+  SparklesIcon,
   Squares2X2Icon,
   Cog6ToothIcon,
 } from '@heroicons/vue/24/outline';
@@ -70,7 +70,7 @@ export default {
     LinkIcon,
     CameraIcon,
     EyeIcon,
-    AdjustmentsHorizontalIcon,
+    SparklesIcon,
     Squares2X2Icon,
     Cog6ToothIcon,
   },

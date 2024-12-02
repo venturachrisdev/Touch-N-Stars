@@ -6,10 +6,10 @@ class WebSocketService {
   
     // WebSocket-Verbindung herstellen
     connect() {
-      this.socket = new WebSocket("ws://localhost:1888/v2/socket");
+      this.socket = new WebSocket("ws://localhost:1888/v2/tppa");
   
       this.socket.onopen = () => {
-        console.log("WebSocket verbunden.");
+        console.log("WebSocket TPPA verbunden.");
       };
   
       this.socket.onmessage = (event) => {
