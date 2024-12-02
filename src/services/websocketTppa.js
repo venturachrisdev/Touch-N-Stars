@@ -1,46 +1,74 @@
+// services/websocketTppa.js
+
 class WebSocketService {
-    constructor() {
-      this.socket = null;
-      this.listeners = new Map(); // Listener für Events
-    }
-  
-    // WebSocket-Verbindung herstellen
-    connect() {
-      this.socket = new WebSocket("ws://localhost:1888/v2/tppa");
-  
-      this.socket.onopen = () => {
-        console.log("WebSocket TPPA verbunden.");
-      };
-  
-      this.socket.onmessage = (event) => {
+  constructor() {
+    this.socket = null;
+    this.statusCallback = null;
+    this.messageCallback = null;
+  }
+
+  setStatusCallback(callback) {
+    this.statusCallback = callback;
+  }
+
+  setMessageCallback(callback) {
+    this.messageCallback = callback;
+  }
+
+  connect() {
+    this.socket = new WebSocket("ws://localhost:1888/v2/tppa");
+
+    this.socket.onopen = () => {
+      console.log("WebSocket verbunden.");
+      if (this.statusCallback) {
+        this.statusCallback("Verbunden");
+      }
+    };
+
+    this.socket.onmessage = (event) => {
+      console.log("Nachricht empfangen:", event.data);
+      try {
         const message = JSON.parse(event.data);
-        const eventName = message.Response?.Event;
-  
-        if (this.listeners.has(eventName)) {
-          this.listeners.get(eventName)(message);
+        console.log("Geparste Nachricht:", message);
+        if (this.messageCallback) {
+          this.messageCallback(message);
         }
-      };
-  
-      this.socket.onerror = (error) => {
-        console.error("WebSocket-Fehler:", error);
-      };
-  
-      this.socket.onclose = () => {
-        console.log("WebSocket geschlossen.");
-      };
-    }
-  
-    // Listener hinzufügen
-    addListener(event, callback) {
-      this.listeners.set(event, callback);
-    }
-  
-    // Listener entfernen
-    removeListener(event) {
-      this.listeners.delete(event);
+      } catch (error) {
+        console.error("Fehler beim Parsen der Nachricht:", error);
+        if (this.statusCallback) {
+          this.statusCallback("Fehler beim Empfangen einer Nachricht");
+        }
+      }
+    };
+
+    this.socket.onerror = (error) => {
+      console.error("WebSocket-Fehler:", error);
+      if (this.statusCallback) {
+        this.statusCallback("Fehler: " + error.message);
+      }
+    };
+
+    this.socket.onclose = () => {
+      console.log("WebSocket geschlossen.");
+      if (this.statusCallback) {
+        this.statusCallback("Geschlossen");
+      }
+    };
+  }
+
+  // Aktualisierte Methode zum Senden von Nachrichten als einfache Strings
+  sendMessage(message) {
+    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      // Nachricht direkt als String senden
+      this.socket.send(message);
+    } else {
+      console.error("WebSocket ist nicht verbunden. Nachricht konnte nicht gesendet werden.");
+      if (this.statusCallback) {
+        this.statusCallback("Fehler: WebSocket nicht verbunden");
+      }
     }
   }
-  
-  const websocketService = new WebSocketService();
-  export default websocketService;
-  
+}
+
+const websocketService = new WebSocketService();
+export default websocketService;
