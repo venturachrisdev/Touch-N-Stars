@@ -3,10 +3,10 @@
     <h5 class="text-xl font-bold text-white mb-7">Fotoaufnahme</h5>
 
     <!-- Eingabe für die Belichtungszeit -->
-    <div class="flex flex-col md:flex-row gap-4">
-      <div class="flex flex-row md:flex-col md:space-y-4 space-y-0 gap-4 md:gap-0 md:w-3/7">
-        <div class="grid grid-cols-2 items-center justify-between gap-2">
-          <label for="exposure" class="text-right text-sm">Belichtungszeit:</label>
+    <div class="flex flex-col md:flex-row gap-2 ">
+      <div class="flex flex-row md:flex-col md:space-y-2 space-y-0 gap-2 md:gap-0 md:w-3/7">
+        <div class="flex flex-col gap-2 text-left max-w-36">
+          <label for="exposure" class="text-sm">Belichtungszeit:</label>
           <input
             id="exposure"
             v-model.number="exposureTime"
@@ -15,10 +15,16 @@
             placeholder="1"
           />
         </div>
-
+        
+        <div class="flex flex-col min-w-36">
+        <!-- Dauerschleife -->
+        <div class="flex items-center mb-2">
+          <input id="checkDauerschleife" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-cyan-500 dark:focus:ring-cyan-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+          <label for="checkDauerschleife" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dauerschleife</label>
+        </div>
         <!-- Foto aufnehmen -->
         <button
-          class="h-10 w-full min-w-14 rounded-md text-white font-medium transition-colors bg-cyan-700 flex items-center justify-center disabled:opacity-50"
+          class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
           @click="capturePhoto"
           :disabled="loading"
         >
@@ -79,6 +85,7 @@
           </template>
         </button>
       </div>
+      </div>
 
       <!-- Anzeige des Bildes mit Zoom-Steuerung -->
       <div v-if="imageData" class="md:w-4/7">
@@ -119,7 +126,7 @@ import apiService from "@/services/apiService";
 export default {
   data() {
     return {
-      exposureTime: 1, // Standard-Belichtungszeit
+      exposureTime: 2, // Standard-Belichtungszeit
       remainingExposureTime: 0, // Für den Countdown der Belichtungszeit
       progress: 0, // Fortschritt für den Spinner
       imageData: null, // Base64-Daten des Bildes
@@ -169,7 +176,7 @@ export default {
 
         // Schritt 2: Wiederholt prüfen, ob das Bild verfügbar ist
         let attempts = 0;
-        const maxAttempts = 10; // Maximal 10 Sekunden warten
+        const maxAttempts = 15; // Maximal 15 Sekunden warten
         let image = null;
 
         while (!image && attempts < maxAttempts) {
@@ -268,7 +275,6 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   margin-top: -6px;
 
-  /* Direkte CSS-Eigenschaften anstelle von @apply */
   width: 1rem; /* entspricht h-4 */
   height: 1rem; /* entspricht w-4 */
   background-color: #0e7490; /* entspricht bg-cyan-700 */
