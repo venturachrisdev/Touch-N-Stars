@@ -81,7 +81,7 @@
       </div>
 
       <!-- Anzeige des Bildes mit Zoom-Steuerung -->
-      <div v-if="imageData" class="w-full">
+      <div v-if="imageData" class="md:w-4/7">
         <!-- Zoombares Bild mit Scrollbalken -->
         <div
           ref="imageContainer"
@@ -91,7 +91,7 @@
             ref="image"
             :src="imageData"
             alt="Aufgenommenes Bild"
-            class="max-h-[65vh] h-full transform"
+            class="max-h-[65vh]"
             :style="{ transform: `scale(${scale / 100})` }"
           />
         </div>
