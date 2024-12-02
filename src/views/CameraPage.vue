@@ -19,7 +19,7 @@
         <div class="flex flex-col min-w-36">
         <!-- Dauerschleife -->
         <div class="flex items-center mb-2">
-          <input id="checkDauerschleife" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-cyan-500 dark:focus:ring-cyan-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+          <input v-model="isLooping" id="checkDauerschleife" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-cyan-500 dark:focus:ring-cyan-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
           <label for="checkDauerschleife" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dauerschleife</label>
         </div>
         <!-- Foto aufnehmen -->
@@ -137,6 +137,7 @@ export default {
       previousScale: 100, // Zum Verfolgen des vorherigen Zoom-Faktors
       maxScale: 2200, // Maximale Zoomstufe
       minScale: 50, // Minimale Zoomstufe
+      isLooping: false
     };
   },
   watch: {
@@ -206,6 +207,11 @@ export default {
       } finally {
         this.loading = false;
         this.isLoadingImage = false; // Das Bild ist geladen oder der Vorgang ist beendet
+
+        if (this.isLooping) {
+        // Startet die Aufnahme erneut, wenn Dauerschleife aktiv ist
+        this.capturePhoto();
+      }
       }
     },
     startExposureCountdown() {
