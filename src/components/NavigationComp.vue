@@ -101,7 +101,7 @@ export default {
   transition: border-radius 0.2s ease, background-color 0.2s ease;
 }
 .nav-button:active {
-  @apply rounded-lg bg-gray-500;
+  @apply rounded-lg bg-cyan-500;
 }
 .active-nav-button {
   @apply bg-cyan-700 rounded-lg;
