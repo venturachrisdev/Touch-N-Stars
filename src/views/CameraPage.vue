@@ -4,7 +4,7 @@
 
     <!-- Eingabe für die Belichtungszeit -->
     <div class="flex flex-col md:flex-row gap-2 ">
-      <div class="flex flex-row md:flex-col md:space-y-2 space-y-0 gap-2 md:gap-0 md:w-3/7">
+      <div class="flex flex-row justify-center md:justify-normal md:flex-col md:space-y-2 space-y-0 gap-2 md:gap-0 md:w-3/7">
         <div class="flex flex-col gap-2 text-left max-w-40">
           <label for="exposure" class="text-sm">Belichtungszeit:</label>
           <input
@@ -137,7 +137,7 @@ export default {
       previousScale: 100, // Zum Verfolgen des vorherigen Zoom-Faktors
       maxScale: 2200, // Maximale Zoomstufe
       minScale: 50, // Minimale Zoomstufe
-      isLooping: false
+      isLooping: false,
     };
   },
   watch: {

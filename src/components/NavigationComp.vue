@@ -9,7 +9,7 @@
       active-class="active-nav-button"
       title="Ausrüstung"
     >
-      <HomeIcon class="icon" />
+      <LinkIcon class="icon" />
     </router-link>
     <router-link
       to="/camera"
@@ -20,18 +20,18 @@
       <CameraIcon class="icon" />
     </router-link>
     <router-link
-      to="/tppa"
-      class="nav-button"
-      active-class="active-nav-button"
-      title="TPPA"
-    >
-      <MapIcon class="icon" />
-    </router-link>
-    <router-link
       to="/autofocus"
       class="nav-button"
       active-class="active-nav-button"
       title="Autofokus"
+    >
+      <EyeIcon class="icon" />
+    </router-link>
+    <router-link
+      to="/tppa"
+      class="nav-button"
+      active-class="active-nav-button"
+      title="TPPA"
     >
       <AdjustmentsHorizontalIcon class="icon" />
     </router-link>
@@ -57,9 +57,9 @@
 
 <script>
 import {
-  HomeIcon,
+  LinkIcon,
   CameraIcon,
-  MapIcon,
+  EyeIcon,
   AdjustmentsHorizontalIcon,
   Squares2X2Icon,
   Cog6ToothIcon,
@@ -67,9 +67,9 @@ import {
 
 export default {
   components: {
-    HomeIcon,
+    LinkIcon,
     CameraIcon,
-    MapIcon,
+    EyeIcon,
     AdjustmentsHorizontalIcon,
     Squares2X2Icon,
     Cog6ToothIcon,
