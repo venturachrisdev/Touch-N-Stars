@@ -155,7 +155,7 @@ export default {
 
       this.loading = true;
       //this.scale = 100; // Zoomlevel auf Standard setzen
-      this.previousScale = 100; // Vorheriger Zoomlevel zurücksetzen
+      //this.previousScale = 100; // Vorheriger Zoomlevel zurücksetzen
       this.remainingExposureTime = this.exposureTime;
       this.progress = 0; // Fortschritt zurücksetzen
       this.isExposure = true; // Die Belichtung startet
