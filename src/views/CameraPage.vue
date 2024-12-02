@@ -5,7 +5,7 @@
     <!-- Eingabe für die Belichtungszeit -->
     <div class="flex flex-col md:flex-row gap-2 ">
       <div class="flex flex-row md:flex-col md:space-y-2 space-y-0 gap-2 md:gap-0 md:w-3/7">
-        <div class="flex flex-col gap-2 text-left max-w-36">
+        <div class="flex flex-col gap-2 text-left max-w-40">
           <label for="exposure" class="text-sm">Belichtungszeit:</label>
           <input
             id="exposure"
@@ -16,7 +16,7 @@
           />
         </div>
         
-        <div class="flex flex-col min-w-36">
+        <div class="flex flex-col min-w-40">
         <!-- Dauerschleife -->
         <div class="flex items-center mb-2">
           <input v-model="isLooping" id="checkDauerschleife" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-cyan-500 dark:focus:ring-cyan-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -154,7 +154,7 @@ export default {
       }
 
       this.loading = true;
-      this.scale = 100; // Zoomlevel auf Standard setzen
+      //this.scale = 100; // Zoomlevel auf Standard setzen
       this.previousScale = 100; // Vorheriger Zoomlevel zurücksetzen
       this.remainingExposureTime = this.exposureTime;
       this.progress = 0; // Fortschritt zurücksetzen
