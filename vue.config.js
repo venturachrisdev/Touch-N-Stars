@@ -10,14 +10,14 @@ module.exports = defineConfig({
         changeOrigin: true, // Erzwingt Cross-Origin-Header-Anpassungen
         pathRewrite: { "^/v2/api": "/v2/api" }, // (Optional) Umschreiben des Pfads
         logLevel: "debug", 
-      },/*
+      },
       "/v2/tppa": {
         target: "ws://localhost:1888", // URL des API-Servers
         secure: false, // SSL-Zertifikate ignorieren (optional)
         changeOrigin: true, // Erzwingt Cross-Origin-Header-Anpassungen
         pathRewrite: { "^/v2/tppa": "/v2/tppa" }, // (Optional) Umschreiben des Pfads
         logLevel: "debug", 
-      },*/
+      },
     },
   },
 });
