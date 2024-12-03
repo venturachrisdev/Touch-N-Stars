@@ -108,19 +108,39 @@ export default {
   },
   methods: {
     // Hilfsfunktion zum Umwandeln eines Dezimalgrads in DMS
-    decimalToDMS(value) {
-      const degrees = Math.floor(value);
-      const minutesDecimal = (value - degrees) * 60;
-      const minutes = Math.floor(minutesDecimal);
-      const seconds = ((minutesDecimal - minutes) * 60).toFixed(0);
+    decimalToDMS(value){
+    // Vorzeichen prüfen
+    const isNegative = value < 0;
+    const absValue = Math.abs(value);
 
-      // Formatierung mit führenden Nullen
-      const degreesStr = degrees.toString().padStart(2, "0");
-      const minutesStr = minutes.toString().padStart(2, "0");
-      const secondsStr = seconds.toString().padStart(2, "0");
+    // Berechnung der Grad, Minuten und Sekunden
+    
+    let degrees = Math.floor(absValue);
+    let minutesDecimal = (absValue - degrees) * 60;
+    let minutes = Math.floor(minutesDecimal);
+    let seconds = Math.round((minutesDecimal - minutes) * 60);
 
-      return `${degreesStr}° ${minutesStr}' ${secondsStr}''`;
-    },
+    // Rundungsproblematik: 60 Sekunden in die nächste Minute umwandeln
+    if (seconds === 60) {
+        seconds = 0;
+        minutes++;
+    }
+    // Rundungsproblematik: 60 Minuten in den nächsten Grad umwandeln
+    if (minutes === 60) {
+        minutes = 0;
+        degrees++;
+    }
+
+    // Formatierung mit führenden Nullen
+    const degreesStr = degrees.toString().padStart(2, "0");
+    const minutesStr = minutes.toString().padStart(2, "0");
+    const secondsStr = seconds.toString().padStart(2, "0");
+
+    // Negative Werte korrekt darstellen
+    const sign = isNegative ? "-" : "";
+    return `${sign}${degreesStr}° ${minutesStr}' ${secondsStr}''`;
+},
+
 
     // Hilfsfunktion zum Abrufen der aktuellen Uhrzeit
     getCurrentTime() {
