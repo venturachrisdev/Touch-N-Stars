@@ -102,15 +102,14 @@
             style="touch-action: none; user-select: none;"
           />
         </div>
-      </div>
-    </div>
+      </div>   </div>
   </div>
 </template>
 
 
 <script>
 import apiService from "@/services/apiService";
-import Panzoom from 'panzoom'
+import Panzoom from 'panzoom';
 
 export default {
   data() {

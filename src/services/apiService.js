@@ -46,6 +46,28 @@ const apiService = {
           throw error;
         });
     },
+    // Focuser --------------------------------------------------------
+    async moveFocuser(position) {
+      return axios
+        .get(`${BASE_URL}/equipment/focuser/move`, {
+          params: { position },
+        })
+        .then((response) => response.data)
+        .catch((error) => {
+          console.error("Fehler beim Steuern des OAZ:", error);
+          throw error;
+        });
+    },
+    async getFocuserInfo(){
+      return axios
+      .get(`${BASE_URL}/equipment/focuser/info`, {
+      })
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error("Fehler beim abrufen des OAZ:", error);
+        throw error;
+      });
+    },
   };
 
 export default apiService;

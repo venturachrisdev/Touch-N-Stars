@@ -11,8 +11,6 @@ module.exports = defineConfig({
         pathRewrite: { "^/v2/api": "/v2/api" }, // (Optional) Umschreiben des Pfads
         logLevel: "debug", 
       },
-    },
-    proxy: {
       "/v2/tppa": {
         target: "ws://localhost:1888", // URL des API-Servers
         secure: false, // SSL-Zertifikate ignorieren (optional)
