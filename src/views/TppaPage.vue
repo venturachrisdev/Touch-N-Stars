@@ -20,26 +20,68 @@
         Stop Alignment
       </button>
     </div>
-
-    <div v-if="currentMessage" class="mt-4">
-      <p style="white-space: pre-wrap;">
-       
-        {{ formatMessage(currentMessage.message) }} <br>
-        <strong>Letzte Aktualisierung:</strong> {{ currentMessage.time }}<br>
-      </p>
+    <div v-if="currentMessage" class="mt-10">
+      <div v-if="startStop">
+      <p>{{  formatMessage(currentMessage.message)  }}</p>
+      </div>
+      <div v-else class=" space-y-4">
+          <div class="flex space-x-4 justify-center">
+            <p><strong>Altitude Fehler:</strong></p> <p> {{   showAltitudeError }}</p>
+            <ArrowUpIcon v-if="altitudeCorDirectionTop" class="size-6 text-blue-500" />
+            <ArrowDownIcon v-else class="size-6 text-blue-500" />
+          </div>
+          <div class="flex space-x-4 justify-center">
+            <p><strong>Azimuth Fehler:</strong> </p><p> {{ showAzimuthError }}</p>
+            <div v-if="azimuthCorDirectionLeft"> 
+              <ArrowLeftIcon  class="size-6 text-blue-500 " />
+            </div>
+            <div v-else class="flex space-x-4 justify-center"> 
+              <ArrowRightIcon class="size-6 text-blue-500" />
+            </div>
+          </div>
+          <div class="flex space-x-4 justify-center">
+            <p><strong>Gesamtfehler: </strong> </p><p> {{ showTotalError }}</p>
+          </div>
+          <div v-if="currentMessage" class="mt-4">
+            <p style="white-space: pre-wrap;">
+            
+              {{ formatMessage(currentMessage.message) }} <br>
+              <strong>Letzte Aktualisierung:</strong> {{ currentMessage.time }}<br>
+            </p>
+          </div>
+        </div>
     </div>
   </div>
 </template>
 
 <script>
 import websocketService from "@/services/websocketTppa";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+    } from '@heroicons/vue/24/outline';
 
 export default {
+  components: {
+    ArrowDownIcon,
+    ArrowUpIcon,
+    ArrowLeftIcon,
+    ArrowRightIcon,
+  },
   data() {
     return {
       Nachricht: "",
       currentMessage: null,
+      startStop:false,
       isConnected: false,
+      showAzimuthError:"",
+      showAltitudeError:"",
+      showTotalError:"",
+      azimuthCorDirectionLeft:false,
+      altitudeCorDirectionTop:false,
+
     };
   },
   mounted() {
@@ -90,8 +132,10 @@ export default {
       if (message.Response) {
         if (typeof message.Response === "string") {
           // Wenn Response ein String ist (z.B. "started procedure")
+          this.startStop = true;
           return message.Response;
         } else if (typeof message.Response === "object") {
+          this.startStop = false;
           const { AzimuthError, AltitudeError, TotalError } = message.Response;
           if (
             AzimuthError !== undefined &&
@@ -103,13 +147,18 @@ export default {
             const altitudeErrorDMS = this.decimalToDMS(AltitudeError);
             const totalErrorDMS = this.decimalToDMS(TotalError);
 
+            this.showAzimuthError = azimuthErrorDMS;
+            this.showAltitudeError = altitudeErrorDMS;
+            this.showTotalError = totalErrorDMS;
+
+
             // Bestimmen, ob der AltitudeError negativ ist
-            const azimuthArrow = AzimuthError > 0 ? "nach links stellen ←" : "nach rechts stellen →";
-            const altitudeArrow = AltitudeError < 0 ? "nach oben stellen ↑" : "nach unten stellen ↓";
+            this.azimuthCorDirectionLeft = AzimuthError > 0 ? true : false;
+            this.altitudeCorDirectionTop = AltitudeError < 0 ? true : false;
            
 
             // Verwendung von \n für Zeilenumbrüche
-            return `AzimuthError: ${azimuthErrorDMS} ${azimuthArrow}\nAltitudeError:  ${altitudeErrorDMS} ${altitudeArrow} \nTotalError: ${totalErrorDMS}`;
+            
           } else {
             return "Fehlerwerte nicht vorhanden.";
           }
