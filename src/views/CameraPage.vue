@@ -88,17 +88,17 @@
       </div>
 
       <!-- Anzeige des Bildes mit Panzoom -->
-      <div v-if="imageData" class="md:w-4/7">
+      <div v-if="imageData" class="md:w-4/7 mx-auto">
         <!-- Bildcontainer -->
         <div
           ref="imageContainer"
-          class="image-container w-full h-auto touch-auto shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700"
-        >
+          class="image-container overflow-hidden w-full h-auto touch-auto shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700"
+  >
           <img
             ref="image"
             :src="imageData"
             alt="Aufgenommenes Bild"
-            class="max-h-[65vh] w-full"
+            class=" block max-h-[65vh] "
             style="touch-action: none; user-select: none;"
           />
         </div>
@@ -225,7 +225,7 @@ export default {
           }
           // Panzoom auf dem Bild initialisieren
           this.panzoomInstance = Panzoom(this.$refs.image, {
-            maxZoom: 10,
+            maxZoom: 30,
             minZoom: 0.9,
             bounds: true, // Aktiviert die Begrenzung
             boundsPadding: 0.1, // Optionaler Puffer
@@ -241,16 +241,5 @@ export default {
 
 
 <style scoped>
-
-.image-container {
-  overflow: hidden; /* Verhindert das Überlaufen des Inhalts */
-  position: relative; /* Für korrekte Positionierung */
-}
-
-img {
-  touch-action: none;
-  user-select: none;
-  display: block; /* Entfernt Lücken unter dem Bild */
-}
 
 </style>
