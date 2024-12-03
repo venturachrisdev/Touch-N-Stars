@@ -58,6 +58,17 @@ const apiService = {
           throw error;
         });
     },
+    async startAutofocus() {
+      return axios
+        .get(`${BASE_URL}/equipment/focuser/auto-focus`, {
+
+        })
+        .then((response) => response.data)
+        .catch((error) => {
+          console.error("Fehler beim Steuern des OAZ:", error);
+          throw error;
+        });
+    },
     async getFocuserInfo(){
       return axios
       .get(`${BASE_URL}/equipment/focuser/info`, {

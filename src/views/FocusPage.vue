@@ -1,30 +1,48 @@
 <template>
-  <div class="container text-center">
-    <h5 class="text-xl font-bold text-white mb-4">Fokusierer</h5>
-    <div>
-      <label for="position" class="text-sm">Position:</label>
-      <input
-        id="position"
-        v-model.number="position"
-        type="number"
-        class="text-black px-4 h-10 max-w-15 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-700"
-        placeholder="1"
-      />
-      <button
-        class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
-        @click="moveFocuser"
-        :disabled="loading"
-      >
-        Bewegen
-      </button>
+  <div class="container flex tems-center justify-center">
+    <div class="container max-w-md ">
+    <h5 class="text-xl font-bold text-center text-white mb-4">Fokusierer</h5>
+    <div v-if="!isConnected" class="text-red-500">
+      <p>Bitte Focuser verbinden</p>
     </div>
-    <div class="mt-4">
-      <p class="text-white">Aktuelle Position: {{ currentPosition }}</p>
-      <p class="text-white">Temperatur: {{ temperature }}°C</p>
-      <p class="text-white">Bewegt sich: {{ isMoving ? 'Ja' : 'Nein' }}</p>
-      <p class="text-white">Wird eingestellt: {{ isSettling ? 'Ja' : 'Nein' }}</p>
+    <div v-else class="text-left">
+      <div class="flex space-x-3 items-center">
+        <label for="position" class=" w-52">Neue Position:</label>
+        <input
+          id="position"
+          v-model.number="position"
+          type="number"
+          class="text-black px-4 h-10 w-40 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-700"
+          placeholder="1"
+          step="50"
+        />
+        <button
+          class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+          @click="moveFocuser"
+          :disabled="loading"
+        >
+          Bewegen
+        </button>
+      </div>
+      <div class="mt-4">
+        <button
+          class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+          @click="startAutofocus"
+          :disabled="loading"
+        >
+          Starte Autofokus
+        </button>
+      </div>
+      <div class="mt-4">
+        <p class="text-white">Aktuelle Position: {{ currentPosition }}</p>
+        <!-- Temperatur anzeigen, nur wenn gültig -->
+        <p class="text-white" v-if="!isNaN(temperature)">Temperatur: {{ (temperature) }}°C</p>
+        <p class="text-white">Bewegt sich: {{ isMoving ? 'Ja' : 'Nein' }}</p>
+        <p class="text-white">Einpendeln: {{ isSettling ? 'Ja' : 'Nein' }}</p>
+      </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -33,16 +51,19 @@ import apiService from "@/services/apiService";
 export default {
   data() {
     return {
-      position: 2000, // Position für Eingabe
+      position: null, // Eingabeposition
       currentPosition: null, // Aktuelle Position vom Server
       temperature: null, // Aktuelle Temperatur
       isMoving: false, // Status: Bewegt sich
       isSettling: false, // Status: Wird eingestellt
+      isConnected: false, // Verbindungsstatus
       loading: false, // Status des Buttons
       intervalId: null, // ID für setInterval
     };
   },
-  mounted() {
+  async mounted() {
+    // Hole die aktuelle Position beim Laden der Komponente
+    await this.fetchFocuserInfo(true);
     // Starte das regelmäßige Abrufen der Informationen
     this.startFetchingInfo();
   },
@@ -61,15 +82,28 @@ export default {
         this.loading = false;
       }
     },
-    async fetchFocuserInfo() {
+    async startAutofocus() {
+      try {
+        await apiService.startAutofocus(); // Fokussierer bewegen
+      } catch (error) {
+        console.error("Fehler beim Autofokus", error);
+      }
+    },
+    async fetchFocuserInfo(initialFetch = false) {
       try {
         const response = await apiService.getFocuserInfo(); // API-Aufruf
         if (response.Success) {
           const data = response.Response;
+          this.isConnected = data.Connected; // Verbindungsstatus setzen
           this.currentPosition = data.Position; // Setze aktuelle Position
-          this.temperature = data.Temperature; // Setze Temperatur
+          this.temperature = data.Temperature.toFixed(2); // Setze Temperatur
           this.isMoving = data.IsMoving; // Setze Bewegung-Status
           this.isSettling = data.IsSettling; // Setze Einstellungs-Status
+
+          // Setze die Eingabeposition nur beim ersten Aufruf
+          if (initialFetch && this.isConnected) {
+            this.position = data.Position;
+          }
         } else {
           console.error("Fehler in der API-Antwort:", response.Error);
         }
