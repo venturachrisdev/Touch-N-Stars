@@ -1,6 +1,7 @@
 <template>
-  <div class="container text-center">
-    <h5 class="text-xl font-bold text-white mb-4">TPPA</h5>
+  <div class="container flex tems-center justify-center">
+    <div class="container max-w-md ">
+    <h5 class="text-xl text-center font-bold text-white mb-4">TPPA</h5>
     <p class="mb-4">TPPA Modul {{ Nachricht }}</p>
 
     <!-- Neue Buttons -->
@@ -25,33 +26,35 @@
       <p>{{  formatMessage(currentMessage.message)  }}</p>
       </div>
       <div v-else class=" space-y-4">
-          <div class="flex space-x-4 justify-center">
-            <p><strong>Altitude Fehler:</strong></p> <p> {{   showAltitudeError }}</p>
+          <div class="flex space-x-4 ">
+            <p class=" w-52"><strong>Altitude Fehler:</strong></p> <p> {{   showAltitudeError }}</p>
             <ArrowUpIcon v-if="altitudeCorDirectionTop" class="size-6 text-blue-500" />
             <ArrowDownIcon v-else class="size-6 text-blue-500" />
           </div>
-          <div class="flex space-x-4 justify-center">
-            <p><strong>Azimuth Fehler:</strong> </p><p> {{ showAzimuthError }}</p>
+          <div class="flex space-x-4 ">
+            <p class=" w-52"><strong>Azimuth Fehler:</strong> </p><p> {{ showAzimuthError }}</p>
             <div v-if="azimuthCorDirectionLeft"> 
               <ArrowLeftIcon  class="size-6 text-blue-500 " />
             </div>
-            <div v-else class="flex space-x-4 justify-center"> 
+            <div v-else class="flex space-x-4 j"> 
               <ArrowRightIcon class="size-6 text-blue-500" />
             </div>
           </div>
-          <div class="flex space-x-4 justify-center">
-            <p><strong>Gesamtfehler: </strong> </p><p> {{ showTotalError }}</p>
+          <div class="flex space-x-4 ">
+            <p class=" w-52"><strong>Gesamtfehler: </strong> </p><p> {{ showTotalError }}</p>
           </div>
-          <div v-if="currentMessage" class="mt-4">
+          <div v-if="currentMessage" class=" mt-20">
             <p style="white-space: pre-wrap;">
             
-              {{ formatMessage(currentMessage.message) }} <br>
-              <strong>Letzte Aktualisierung:</strong> {{ currentMessage.time }}<br>
-            </p>
+              {{ formatMessage(currentMessage.message) }}         </p>
+              <p class=" text-xs"><strong>Letzte Aktualisierung:</strong> {{ currentMessage.time }}</p>
+   
           </div>
         </div>
     </div>
   </div>
+</div>
+
 </template>
 
 <script>
