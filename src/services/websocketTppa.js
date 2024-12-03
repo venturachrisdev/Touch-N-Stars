@@ -16,7 +16,7 @@ class WebSocketService {
   }
 
   connect() {
-    this.socket = new WebSocket("/v2/tppa");
+    this.socket = new WebSocket("ws://192.168.2.128:1888/v2/tppa");
 
     this.socket.onopen = () => {
       console.log("WebSocket verbunden.");
