@@ -103,8 +103,13 @@ export default {
             const altitudeErrorDMS = this.decimalToDMS(AltitudeError);
             const totalErrorDMS = this.decimalToDMS(TotalError);
 
+            // Bestimmen, ob der AltitudeError negativ ist
+            const azimuthArrow = AzimuthError > 0 ? "nach links stellen ←" : "nach rechts stellen →";
+            const altitudeArrow = AltitudeError < 0 ? "nach oben stellen ↑" : "nach unten stellen ↓";
+           
+
             // Verwendung von \n für Zeilenumbrüche
-            return `AzimuthError: ${azimuthErrorDMS}\nAltitudeError: ${altitudeErrorDMS}\nTotalError: ${totalErrorDMS}`;
+            return `AzimuthError: ${azimuthErrorDMS} ${azimuthArrow}\nAltitudeError:  ${altitudeErrorDMS} ${altitudeArrow} \nTotalError: ${totalErrorDMS}`;
           } else {
             return "Fehlerwerte nicht vorhanden.";
           }
@@ -115,6 +120,7 @@ export default {
         return JSON.stringify(message, null, 2);
       }
     },
+
 
     // Senden von "start-alignment"
     startAlignment() {
