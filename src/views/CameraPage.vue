@@ -87,41 +87,30 @@
       </div>
       </div>
 
-      <!-- Anzeige des Bildes mit Zoom-Steuerung -->
+      <!-- Anzeige des Bildes mit Panzoom -->
       <div v-if="imageData" class="md:w-4/7">
-        <!-- Zoombares Bild mit Scrollbalken -->
+        <!-- Bildcontainer -->
         <div
           ref="imageContainer"
-          class="w-full h-auto overflow-auto touch-auto shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700"
+          class="w-full h-auto touch-auto shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700"
         >
           <img
             ref="image"
             :src="imageData"
             alt="Aufgenommenes Bild"
-            class="max-h-[65vh]"
-            :style="{ transform: `scale(${scale / 100})` }"
+            class="max-h-[65vh] w-full"
+            style="touch-action: none; user-select: none;"
           />
-        </div>
-        <!-- Zoom-Slider mit Labels -->
-        <div class="flex items-center space-x-2 mb-2 mt-2">
-          <span class="text-white">Min</span>
-          <input
-            type="range"
-            :min="minScale"
-            :max="maxScale"
-            :step="1"
-            v-model.number="scale"
-            class="flex-grow"
-          />
-          <span class="text-white">Max</span>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+
 <script>
 import apiService from "@/services/apiService";
+import panzoom from '@panzoom/panzoom'
 
 export default {
   data() {
@@ -133,18 +122,9 @@ export default {
       loading: false, // Ladezustand
       isExposure: false, // Gibt an, ob die Belichtungszeit läuft
       isLoadingImage: false, // Gibt an, ob das Bild geladen wird
-      scale: 100, // Startet bei 100%
-      previousScale: 100, // Zum Verfolgen des vorherigen Zoom-Faktors
-      maxScale: 2200, // Maximale Zoomstufe
-      minScale: 50, // Minimale Zoomstufe
       isLooping: false,
+      panzoomInstance: null, // Panzoom-Instanz
     };
-  },
-  watch: {
-    scale(newScale, oldScale) {
-      this.adjustScrollPosition(newScale, oldScale);
-      this.previousScale = newScale;
-    },
   },
   methods: {
     async capturePhoto() {
@@ -154,8 +134,6 @@ export default {
       }
 
       this.loading = true;
-      //this.scale = 100; // Zoomlevel auf Standard setzen
-      //this.previousScale = 100; // Vorheriger Zoomlevel zurücksetzen
       this.remainingExposureTime = this.exposureTime;
       this.progress = 0; // Fortschritt zurücksetzen
       this.isExposure = true; // Die Belichtung startet
@@ -209,9 +187,9 @@ export default {
         this.isLoadingImage = false; // Das Bild ist geladen oder der Vorgang ist beendet
 
         if (this.isLooping) {
-        // Startet die Aufnahme erneut, wenn Dauerschleife aktiv ist
-        this.capturePhoto();
-      }
+          // Startet die Aufnahme erneut, wenn Dauerschleife aktiv ist
+          this.capturePhoto();
+        }
       }
     },
     startExposureCountdown() {
@@ -235,90 +213,43 @@ export default {
     wait(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
-    adjustScrollPosition(newScale, oldScale) {
-      const container = this.$refs.imageContainer;
-      const image = this.$refs.image;
-
-      if (container && image) {
-        // Berechnung des Skalierungsfaktors
-        const scaleFactor = newScale / oldScale;
-
-        // Aktuelle Scroll-Positionen
-        const scrollLeft = container.scrollLeft;
-        const scrollTop = container.scrollTop;
-
-        // Größen von Container und Bild
-        const containerWidth = container.clientWidth;
-        const containerHeight = container.clientHeight;
-
-        // Mittelpunkt der aktuellen Ansicht berechnen
-        const centerX = scrollLeft + containerWidth / 2;
-        const centerY = scrollTop + containerHeight / 2;
-
-        // Neue Scroll-Positionen berechnen
-        const newCenterX = centerX * scaleFactor;
-        const newCenterY = centerY * scaleFactor;
-
-        // Neue Scroll-Positionen setzen, um die Mitte zu erhalten
-        container.scrollLeft = newCenterX - containerWidth / 2;
-        container.scrollTop = newCenterY - containerHeight / 2;
-      }
-    },
+  },
+  watch: {
+  imageData(newValue) {
+    if (newValue) {
+      this.$nextTick(() => {
+        if (this.$refs.image) {
+          // Vorherige Panzoom-Instanz entsorgen, falls vorhanden
+          if (this.panzoomInstance) {
+            this.panzoomInstance.dispose();
+          }
+          // Panzoom auf dem Bild initialisieren
+          this.panzoomInstance = panzoom(this.$refs.image, {
+            maxZoom: 10,
+            minZoom: 0.9,
+            bounds: true,
+            boundsPadding: 0.1,
+            zoomDoubleClickSpeed: 5, // Deaktiviert Doppelklick zum Zoomen
+          });
+        }
+      });
+    }
+  },
+},
+  beforeUnmount() {
+    if (this.panzoomInstance) {
+      this.panzoomInstance.dispose();
+    }
   },
 };
 </script>
 
+
 <style scoped>
-/* Minimales eigenes CSS für spezielle Anpassungen */
 
-/* Hintergrund des Sliders transparent setzen */
-input[type="range"] {
-  background-color: transparent;
+img {
+  touch-action: none;
+  user-select: none;
 }
 
-/* Pseudo-Elemente können nicht mit Tailwind direkt gestylt werden */
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  margin-top: -6px;
-
-  width: 1rem; /* entspricht h-4 */
-  height: 1rem; /* entspricht w-4 */
-  background-color: #0e7490; /* entspricht bg-cyan-700 */
-  border: 1px solid #0e7490; /* entspricht border-cyan-700 */
-  border-radius: 9999px; /* entspricht rounded-full */
-  cursor: pointer;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 0.25rem; /* entspricht h-1 */
-  background-color: #0e7490; /* entspricht bg-cyan-700 */
-  border-radius: 0.25rem; /* entspricht rounded */
-}
-
-/* Für Firefox */
-input[type="range"]::-moz-range-thumb {
-  width: 1rem;
-  height: 1rem;
-  background-color: #0e7490;
-  border: 1px solid #0e7490;
-  border-radius: 9999px;
-  cursor: pointer;
-}
-
-input[type="range"]::-moz-range-track {
-  height: 0.25rem;
-  background-color: #0e7490;
-  border-radius: 0.25rem;
-}
-
-/* Entfernt den Standardhintergrund in Firefox */
-input[type="range"] {
-  -moz-appearance: none; /* Wichtig für Firefox */
-  background-color: transparent;
-}
-
-/* Fokus-Stil entfernen */
-input[type="range"]:focus {
-  outline: none;
-}
 </style>
