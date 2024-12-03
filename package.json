@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
-    "@panzoom/panzoom": "^4.5.1",
     "@vueuse/head": "^2.0.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.8",
     "core-js": "^3.8.3",
+    "panzoom": "^9.4.3",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
     "vue": "^3.2.13",

@@ -92,7 +92,7 @@
         <!-- Bildcontainer -->
         <div
           ref="imageContainer"
-          class="w-full h-auto touch-auto shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700"
+          class="image-container w-full h-auto touch-auto shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700"
         >
           <img
             ref="image"
@@ -110,7 +110,7 @@
 
 <script>
 import apiService from "@/services/apiService";
-import panzoom from '@panzoom/panzoom'
+import Panzoom from 'panzoom'
 
 export default {
   data() {
@@ -224,32 +224,33 @@ export default {
             this.panzoomInstance.dispose();
           }
           // Panzoom auf dem Bild initialisieren
-          this.panzoomInstance = panzoom(this.$refs.image, {
+          this.panzoomInstance = Panzoom(this.$refs.image, {
             maxZoom: 10,
             minZoom: 0.9,
-            bounds: true,
-            boundsPadding: 0.1,
-            zoomDoubleClickSpeed: 5, // Deaktiviert Doppelklick zum Zoomen
+            bounds: true, // Aktiviert die Begrenzung
+            boundsPadding: 0.1, // Optionaler Puffer
           });
         }
       });
     }
   },
 },
-  beforeUnmount() {
-    if (this.panzoomInstance) {
-      this.panzoomInstance.dispose();
-    }
-  },
+
 };
 </script>
 
 
 <style scoped>
 
+.image-container {
+  overflow: hidden; /* Verhindert das Überlaufen des Inhalts */
+  position: relative; /* Für korrekte Positionierung */
+}
+
 img {
   touch-action: none;
   user-select: none;
+  display: block; /* Entfernt Lücken unter dem Bild */
 }
 
 </style>
