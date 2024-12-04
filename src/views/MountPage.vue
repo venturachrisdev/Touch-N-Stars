@@ -1,8 +1,11 @@
 <template>
   <div class="container text-center">
     <h5 class="text-xl  font-bold text-white mb-4">Montierung</h5>
-
-    <div >
+    <div v-if="!isConnected" class="text-red-500">
+      <p>Bitte Montierung verbinden</p>
+    </div>
+    <div v-else>
+      <div>
       <p class="text-white mb-2 "></p>
       <button
         @click="toggleParkUnpark"
@@ -15,7 +18,7 @@
 
      <!-- Integration von TppaPage -->
      <TppaPage />
-    
+    </div>
   </div>
 </template>
 
@@ -31,7 +34,6 @@ export default {
     return {
       parkPosition: null, // Eingabeposition
       currentPosition: null, // Aktuelle Position vom Server
-      temperature: null, // Aktuelle Temperatur
       isMoving: false, // Status: Bewegt sich
       isConnected: false, // Verbindungsstatus
       loading: false, // Status des Buttons
