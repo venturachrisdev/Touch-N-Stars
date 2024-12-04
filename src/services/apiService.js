@@ -3,6 +3,7 @@ import axios from "axios";
 const BASE_URL = "/v2/api";
 
 const apiService = {
+  // Verbindungen ------------------------------
   // Kameraaktionen
   cameraAction(action) {
     return axios.get(`${BASE_URL}/equipment/camera/${action}`).then((response) => response.data);
@@ -10,6 +11,7 @@ const apiService = {
 
   // Montierungsaktionen
   mountAction(action) {
+    //console.log(action);
     return axios.get(`${BASE_URL}/equipment/mount/${action}`).then((response) => response.data);
   },
 
