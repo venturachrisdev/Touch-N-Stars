@@ -20,6 +20,11 @@ const apiService = {
     return axios.get(`${BASE_URL}/equipment/focuser/${action}`).then((response) => response.data);
   },
 
+  // Guider
+  guiderAction(action) {
+    return axios.get(`${BASE_URL}/equipment/guider/${action}`).then((response) => response.data);
+  },
+
 
   //Foto aufnehmen ------------------------------------
   async startCapture(duration) {

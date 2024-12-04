@@ -25,6 +25,13 @@
       disconnectText="Fokusierer trennen"
       :onToggle="toggleFocuserConnection"
     />
+    <!-- Guider-Steuerung -->
+    <ConnectionButton
+      :isConnected="guiderConnected"
+      connectText="Guider verbinden"
+      disconnectText="Guider trennen"
+      :onToggle="toggleGuiderConnection"
+    />
   </div>
 </template>
 
@@ -44,6 +51,8 @@ export default {
       mountStatus: "Nicht verbunden",
       focusConnected: false,
       focusStatus: "Nicht verbunden",
+      guiderConnected: false,
+      guiderStatus: "Nicht verbunden",
     };
   },
   async mounted() {
@@ -95,6 +104,21 @@ export default {
         this.focusStatus = "Fehler bei der Verbindung";
       }
     },
+    async toggleGuiderConnection() {
+      try {
+        if (this.guiderConnected) {
+          await apiService.guiderAction("disconnect");
+        } else {
+          await apiService.guiderAction("connect");
+        }
+        const guiderInfo = await apiService.guiderAction("info");
+        this.guiderConnected = guiderInfo?.Response?.Connected || false;
+        this.guiderStatus = this.guiderConnected ? "Verbunden" : "Nicht verbunden";
+      } catch (error) {
+        console.error("Fehler bei der Guder-Steuerung:", error.response?.data || error);
+        this.guiderStatus = "Fehler bei der Verbindung";
+      }
+    },
     async fetchInitialStatus() {
       try {
         const cameraInfo = await apiService.cameraAction("info");
@@ -108,6 +132,10 @@ export default {
         const focusInfo = await apiService.focusAction("info");
         this.focusConnected = focusInfo?.Response?.Connected || false;
         this.focusStatus = this.focusConnected ? "Verbunden" : "Nicht verbunden";
+
+        const guiderInfo = await apiService.guiderAction("info");
+        this.guiderConnected = guiderInfo?.Response?.Connected || false;
+        this.guiderStatus = this.guiderConnected ? "Verbunden" : "Nicht verbunden";
       } catch (error) {
         console.error("Fehler beim Abrufen des Status:", error.response?.data || error);
       }
