@@ -18,8 +18,8 @@
     </div>
     <div class="text-left">
 
-        <p class="text-white">Tracking läuft: {{ TrackingEnabled ? 'Ja' : 'Nein' }}</p>
-        <p class="text-white">Montierung Schwenkt: {{ Slewing ? 'Ja' : 'Nein' }}</p>
+        <p class="text-white" :class="TrackingEnabled ? 'text-green-500' : 'text-gray-600/50'"> {{ TrackingEnabled ? 'Tracking läuft' : 'Tracking aus' }}</p>
+        <p class="text-white" :class="Slewing ? 'text-green-500' : 'text-gray-600/50'"> {{ Slewing ? 'Montierung Schwenkt' : 'Schwenken aus' }}</p>
       </div>
 
      <!-- Integration von TppaPage -->
