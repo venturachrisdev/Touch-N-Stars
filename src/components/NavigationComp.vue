@@ -28,7 +28,7 @@
       <EyeIcon class="icon" />
     </router-link>
     <router-link
-      to="/tppa"
+      to="/mount"
       class="nav-button"
       active-class="active-nav-button"
       title="TPPA"

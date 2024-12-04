@@ -67,6 +67,7 @@ import {
     } from '@heroicons/vue/24/outline';
 
 export default {
+  name: "TppaPage",
   components: {
     ArrowDownIcon,
     ArrowUpIcon,
