@@ -36,7 +36,7 @@
       <SparklesIcon class="icon" />
     </router-link>
     <router-link
-      to="/sequencer"
+      to="/guider"
       class="nav-button"
       active-class="active-nav-button"
       title="Sequenzer"
