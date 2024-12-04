@@ -1,20 +1,13 @@
 <template>
-    /*
-    Beispiel zum einfügen
-    <StatusBool
-      :isEnabled="TrackingEnabled"
-      enabledText="Tracking ist aktiv"
-      disabledText="Tracking wurde deaktiviert"
-      enabledClass="text-blue-500"
-      disabledClass="text-red-500"
-    />
-    */
+
     <p class="text-white" :class="isEnabled ? enabledClass : disabledClass">
       {{ isEnabled ? enabledText : disabledText }}
     </p>
   </template>
   
   <script>
+
+  
   export default {
     props: {
       isEnabled: {

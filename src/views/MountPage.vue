@@ -16,7 +16,7 @@
         </div>
         <div class="text-left">
           <StatusBool :isEnabled="TrackingEnabled" enabledText="Tracking ist aktiv" disabledText="Tracking deaktiviert"/>
-          <StatusBool :isEnabled="Slewing" enabledText="Montierung Schwenkt" disabledText="Schwenken nicht"/>
+          <StatusBool :isEnabled="Slewing" enabledText="Montierung Schwenkt" disabledText="Schwenkt nicht"/>
         </div>
 
         <!-- Integration von TppaPage -->

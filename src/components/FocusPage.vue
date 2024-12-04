@@ -37,8 +37,8 @@
         <p class="text-white">Aktuelle Position: {{ currentPosition }}</p>
         <!-- Temperatur anzeigen, nur wenn gültig -->
         <p class="text-white" v-if="!isNaN(temperature)">Temperatur: {{ (temperature) }}°C</p>
-        <p class="text-white">Bewegt sich: {{ isMoving ? 'Ja' : 'Nein' }}</p>
-        <p class="text-white">Einpendeln: {{ isSettling ? 'Ja' : 'Nein' }}</p>
+        <StatusBool :isEnabled="isMoving" enabledText="OAZ bewegt sich" disabledText="OAZ steht"/>
+        <StatusBool :isEnabled="isSettling" enabledText="Backlash bereinigen" disabledText=""/>
       </div>
     </div>
   </div>
@@ -47,8 +47,12 @@
 
 <script>
 import apiService from "@/services/apiService";
+import StatusBool from '../components/StatusBool.vue';
 
 export default {
+  components: {
+    StatusBool,
+  },
   data() {
     return {
       position: null, // Eingabeposition
