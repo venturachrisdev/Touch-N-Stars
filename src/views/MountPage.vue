@@ -15,10 +15,8 @@
           </button>
         </div>
         <div class="text-left">
-
-          <p class="text-white" :class="TrackingEnabled ? 'text-green-500' : 'text-gray-600/50'"> {{ TrackingEnabled ?
-            'Tracking läuft' : 'Tracking aus' }}</p>
-          <p class="text-white" :class="Slewing ? 'text-green-500' : 'text-gray-600/50'"> {{ Slewing ? 'MontierungSchwenkt' : 'Schwenken aus' }}</p>
+          <StatusBool :isEnabled="TrackingEnabled" enabledText="Tracking ist aktiv" disabledText="Tracking deaktiviert"/>
+          <StatusBool :isEnabled="Slewing" enabledText="Montierung Schwenkt" disabledText="Schwenken nicht"/>
         </div>
 
         <!-- Integration von TppaPage -->
@@ -37,9 +35,12 @@
 
 import apiService from "@/services/apiService";
 import TppaPage from '../components/TppaPage.vue';
+import StatusBool from '../components/StatusBool.vue';
+
 export default {
   components: {
     TppaPage,
+    StatusBool,
   },
   data() {
     return {
