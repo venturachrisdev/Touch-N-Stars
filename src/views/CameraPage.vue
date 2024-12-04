@@ -6,6 +6,7 @@
     <div class="flex flex-col md:flex-row gap-2 ">
       <div class="flex flex-row justify-center md:justify-normal md:flex-col md:space-y-2 space-y-0 gap-2 md:gap-0 md:w-3/7">
         <div class="flex flex-col gap-2 text-left max-w-40">
+
           <label for="exposure" class="text-sm">Belichtungszeit:</label>
           <input
             id="exposure"
@@ -111,7 +112,14 @@
 import apiService from "@/services/apiService";
 import Panzoom from 'panzoom';
 
+// eslint-disable-next-line
+import FocusPage from '../components/FocusPage.vue';
+
 export default {
+  components: {
+    // eslint-disable-next-line
+    FocusPage,
+  },
   data() {
     return {
       exposureTime: 2, // Standard-Belichtungszeit
