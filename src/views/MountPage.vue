@@ -1,25 +1,37 @@
 <template>
-  <div class="container text-center">
-    <h5 class="text-xl  font-bold text-white mb-4">Montierung</h5>
-    <div v-if="!isConnected" class="text-red-500">
+   <div class="container flex tems-center justify-center">
+    <div class="container max-w-md ">
+    <h5 class="text-xl text-center font-bold text-white mb-4">Montierung</h5>
+    <div v-if="!isConnected" class="text-red-500 ">
       <p>Bitte Montierung verbinden</p>
     </div>
     <div v-else>
-      <div>
+      <div class="mb-5 ">
       <p class="text-white mb-2 "></p>
       <button
         @click="toggleParkUnpark"
-        class="min-w-64 min-h-10 rounded-md text-white font-medium transition-colors"
+        class="min-w-64 min-h-10 rounded-md text-white font-medium transition-colors w-full"
         :class="parkPosition ? 'bg-cyan-900' : 'bg-red-700'"
       >
         {{ parkPosition ? "Ausparken" : "Parken" }}
       </button>
     </div>
+    <div class="text-left">
+
+        <p class="text-white">Tracking läuft: {{ TrackingEnabled ? 'Ja' : 'Nein' }}</p>
+        <p class="text-white">Montierung Schwenkt: {{ Slewing ? 'Ja' : 'Nein' }}</p>
+      </div>
 
      <!-- Integration von TppaPage -->
-     <TppaPage />
+      <div class="mt-10">
+        <hr class="border-t border-gray-300">
+      </div>
+      <div class="mt-5">
+        <TppaPage />
+      </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -32,11 +44,10 @@ export default {
   },
   data() {
     return {
-      parkPosition: null, // Eingabeposition
-      currentPosition: null, // Aktuelle Position vom Server
-      isMoving: false, // Status: Bewegt sich
+      parkPosition: true, // Eingabeposition
+      TrackingEnabled: false,
+      Slewing: false,
       isConnected: false, // Verbindungsstatus
-      loading: false, // Status des Buttons
     };
   },
   async mounted() {
@@ -71,8 +82,9 @@ export default {
           const data = response.Response;
           this.isConnected = data.Connected; // Verbindungsstatus setzen
           this.parkPosition = data.AtPark; // Setze aktuelle Position
-          
-          this.isMoving = data.IsMoving; // Setze Bewegung-Status
+          this.TrackingEnabled = data.TrackingEnabled;
+          this.Slewing = data.Slewing;
+
          
 
           // Setze die Eingabeposition nur beim ersten Aufruf
