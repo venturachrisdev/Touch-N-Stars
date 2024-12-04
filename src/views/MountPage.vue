@@ -1,37 +1,36 @@
 <template>
-   <div class="container flex tems-center justify-center">
+  <div class="container flex tems-center justify-center">
     <div class="container max-w-md ">
-    <h5 class="text-xl text-center font-bold text-white mb-4">Montierung</h5>
-    <div v-if="!isConnected" class="text-red-500 ">
-      <p>Bitte Montierung verbinden</p>
-    </div>
-    <div v-else>
-      <div class="mb-5 ">
-      <p class="text-white mb-2 "></p>
-      <button
-        @click="toggleParkUnpark"
-        class="min-w-64 min-h-10 rounded-md text-white font-medium transition-colors w-full"
-        :class="parkPosition ? 'bg-cyan-900' : 'bg-red-700'"
-      >
-        {{ parkPosition ? "Ausparken" : "Parken" }}
-      </button>
-    </div>
-    <div class="text-left">
-
-        <p class="text-white" :class="TrackingEnabled ? 'text-green-500' : 'text-gray-600/50'"> {{ TrackingEnabled ? 'Tracking läuft' : 'Tracking aus' }}</p>
-        <p class="text-white" :class="Slewing ? 'text-green-500' : 'text-gray-600/50'"> {{ Slewing ? 'Montierung Schwenkt' : 'Schwenken aus' }}</p>
+      <h5 class="text-xl text-center font-bold text-white mb-4">Montierung</h5>
+      <div v-if="!isConnected" class="text-red-500 ">
+        <p>Bitte Montierung verbinden</p>
       </div>
+      <div v-else>
+        <div class="mb-5 ">
+          <p class="text-white mb-2 "></p>
+          <button @click="toggleParkUnpark"
+            class="min-w-64 min-h-10 rounded-md text-white font-medium transition-colors w-full"
+            :class="parkPosition ? 'bg-cyan-900' : 'bg-red-700'">
+            {{ parkPosition ? "Ausparken" : "Parken" }}
+          </button>
+        </div>
+        <div class="text-left">
 
-     <!-- Integration von TppaPage -->
-      <div class="mt-10">
-        <hr class="border-t border-gray-300">
-      </div>
-      <div class="mt-5">
-        <TppaPage />
+          <p class="text-white" :class="TrackingEnabled ? 'text-green-500' : 'text-gray-600/50'"> {{ TrackingEnabled ?
+            'Tracking läuft' : 'Tracking aus' }}</p>
+          <p class="text-white" :class="Slewing ? 'text-green-500' : 'text-gray-600/50'"> {{ Slewing ? 'MontierungSchwenkt' : 'Schwenken aus' }}</p>
+        </div>
+
+        <!-- Integration von TppaPage -->
+        <div class="mt-10">
+          <hr class="border-t border-gray-300">
+        </div>
+        <div class="mt-5">
+          <TppaPage />
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -84,8 +83,6 @@ export default {
           this.parkPosition = data.AtPark; // Setze aktuelle Position
           this.TrackingEnabled = data.TrackingEnabled;
           this.Slewing = data.Slewing;
-
-         
 
           // Setze die Eingabeposition nur beim ersten Aufruf
           if (initialFetch && this.isConnected) {
