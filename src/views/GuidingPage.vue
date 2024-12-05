@@ -26,6 +26,9 @@
             <p> Total: {{ RmsErrorTotalArcseconds }} </p>
      
           </div>
+          <div>
+            <rmsGraph />
+          </div>
 
         </div>
       </div>
@@ -34,10 +37,11 @@
 
 <script>
 import apiService from "@/services/apiService";
+import rmsGraph from '../components/rmsGraph.vue';
 
 export default {
   components: {
-
+    rmsGraph,
   },
   data() {
     return {
