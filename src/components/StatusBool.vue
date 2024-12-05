@@ -1,6 +1,6 @@
 <template>
 
-    <p class="text-white" :class="isEnabled ? enabledClass : disabledClass">
+    <p :class="isEnabled ? enabledClass : disabledClass">
       {{ isEnabled ? enabledText : disabledText }}
     </p>
   </template>

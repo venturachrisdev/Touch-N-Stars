@@ -88,14 +88,14 @@ export default {
     },
     async startAutofocus() {
       try {
-        await apiService.startAutofocus(); // Fokussierer bewegen
+        await apiService.focusAction("auto-focus"); // Fokussierer bewegen
       } catch (error) {
         console.error("Fehler beim Autofokus", error);
       }
     },
     async fetchFocuserInfo(initialFetch = false) {
       try {
-        const response = await apiService.getFocuserInfo(); // API-Aufruf
+        const response = await apiService.focusAction("info"); // API-Aufruf
         if (response.Success) {
           const data = response.Response;
           this.isConnected = data.Connected; // Verbindungsstatus setzen
