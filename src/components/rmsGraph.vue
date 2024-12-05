@@ -37,7 +37,7 @@
         this.chart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: Array(100).fill(''), // Placeholder-Labels
+            labels: Array(50).fill(''), // Placeholder-Labels
             datasets: [
               {
                 label: 'RMS RA',
@@ -62,7 +62,15 @@
           options: {
             responsive: true,
             maintainAspectRatio: false,
+            animation: false,
+            datasets: {
+            line: {
+                pointRadius: 0 // disable for all `'line'` datasets
+            }
+        }
           },
+
+          
         });
       },
       updateGraph(newRA, newDec, newTotal) {

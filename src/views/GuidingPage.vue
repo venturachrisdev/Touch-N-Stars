@@ -2,9 +2,10 @@
   <div class="container flex tems-center justify-center">
     <div class="container max-w-md ">
       <h5 class="text-xl text-center font-bold text-white mb-4">Guiding</h5>
-        <div> <!-- für die Abfrage ob Verbunden-->
-        </div>
-        <div><!-- Wenn verbunden dann hier der Inhalt-->
+      <div v-if="!isConnected" class="text-red-500 ">
+        <p>Bitte Guider verbinden</p>
+      </div>
+        <div v-else><!-- Wenn verbunden dann hier der Inhalt-->
           <div class="flex space-x-4">
             <button
               class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
@@ -19,14 +20,14 @@
               Stop 
             </button>
           </div>
-          <div>
-            <p>RMS Fehler in Arcseconds</p>
+          <div class="mt-5">
+            <p class="">RMS Fehler in Arcseconds</p>
             <p> RA:{{ RmsErrorRaArcseconds }} </p>
             <p> DEC:  {{ RmsErrorDecArcseconds }} </p>
             <p> Total: {{ RmsErrorTotalArcseconds }} </p>
      
           </div>
-          <div>
+          <div class="mt-5">
             <rmsGraph />
           </div>
 
@@ -74,15 +75,16 @@ export default {
         if (response.Success) {
           const data = response.Response;
           this.isConnected = data.Connected; // Verbindungsstatus setzen
+          if (this.isConnected){
           this.RmsErrorRaArcseconds = parseFloat(data.RMSError.RA.Arcseconds.toFixed(2));
           this.RmsErrorDecArcseconds = parseFloat(data.RMSError.Dec.Arcseconds.toFixed(2));
           this.RmsErrorTotalArcseconds = parseFloat(data.RMSError.Total.Arcseconds.toFixed(2));
-
+        }
           //console.log(data.RMSError.Dec.Arcseconds);
 
           // Setze die Eingabeposition nur beim ersten Aufruf
           if (initialFetch && this.isConnected) {
-            this.parkPosition = data.AtPark;
+            console.log("init");
           }
         } else {
           console.error("Fehler in der API-Antwort:", response.Error);

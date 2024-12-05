@@ -9,9 +9,9 @@ const store = createStore({
   },
   mutations: {
     ADD_RMS_VALUES(state, { raValue, decValue, totalValue }) {
-      if (state.rmsValuesRA.length >= 100) state.rmsValuesRA.shift();
-      if (state.rmsValuesDec.length >= 100) state.rmsValuesDec.shift();
-      if (state.rmsValuesTotal.length >= 100) state.rmsValuesTotal.shift();
+      if (state.rmsValuesRA.length >= 50) state.rmsValuesRA.shift();
+      if (state.rmsValuesDec.length >= 50) state.rmsValuesDec.shift();
+      if (state.rmsValuesTotal.length >= 50) state.rmsValuesTotal.shift();
 
       state.rmsValuesRA.push(raValue);
       state.rmsValuesDec.push(decValue);
