@@ -56,6 +56,10 @@ export default {
     // Starte das regelmäßige Abrufen der Informationen
     this.startFetchingInfo();
   },
+  beforeUnmount() {
+    // Stoppe den Intervall, wenn die Komponente zerstört wird
+    this.stopFetchingInfo();
+  },
   methods: {
     async toggleParkUnpark() {
       try {
