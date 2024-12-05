@@ -3,8 +3,8 @@
     <h5 class="text-xl font-bold text-white mb-7">Fotoaufnahme</h5>
 
     <!-- Eingabe für die Belichtungszeit -->
-    <div class="flex flex-col md:flex-row gap-2 ">
-      <div class="flex flex-row justify-center md:justify-normal md:flex-col md:space-y-2 space-y-0 gap-2 md:gap-0 md:w-3/7">
+    <div class="flex flex-col landscape:flex-row gap-2 ">
+      <div class="flex flex-row justify-center landscape:justify-normal landscape:flex-col landscape:space-y-2 space-y-0 gap-2 landscape:gap-0 landscape:w-3/7">
         <div class="flex flex-col gap-2 text-left max-w-40">
 
           <label for="exposure" class="text-sm">Belichtungszeit:</label>

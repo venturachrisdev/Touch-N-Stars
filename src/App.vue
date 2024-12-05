@@ -9,7 +9,7 @@
       </nav>
 
       <!-- Hauptinhalt -->
-    <div class="container mx-auto mt-4 p-4  transition-all">
+    <div class="container mx-auto  p-4  transition-all">
       <router-view />
     </div>
 </div>

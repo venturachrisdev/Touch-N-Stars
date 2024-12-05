@@ -4,7 +4,7 @@ import CameraPage from '../views/CameraPage.vue';
 import FocusPage from '../views/FocusPage.vue';
 import MountPage from '../views/MountPage.vue';
 import GuidingPage from '../views/GuidingPage.vue';
-import rmsGraph from '../components/rmsGraph.vue';
+import rmsGraph from '/';
 
 
 const routes = [
