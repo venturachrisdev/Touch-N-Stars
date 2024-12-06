@@ -67,11 +67,11 @@
       
 
       <!-- Anzeige des Bildes mit Panzoom -->
-      <div v-if="imageData" class="flex  w-full landscape:w-4/7">
+      <div  class="flex  w-full landscape:w-4/7">
         <!-- Bildcontainer -->
         <div ref="imageContainer"
           class="image-container overflow-hidden min-h-[65vh] min-w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
-          <img ref="image" :src="imageData" alt="Aufgenommenes Bild" class=" block  "
+          <img v-if="imageData" ref="image" :src="imageData" alt="Aufgenommenes Bild" class=" block  "
             style="touch-action: none; user-select: none;" />
         </div>
       </div>
@@ -248,6 +248,27 @@ export default {
   },
 };
 </script>
+<style scoped>
+.image-container {
+  display: flex; /* Aktiviert Flexbox */
+  align-items: center; /* Vertikale Zentrierung */
+  justify-content: center; /* Horizontale Zentrierung */
+  overflow: hidden; /* Verhindert Überlauf */
+  min-height: 65vh; /* Beibehaltung der Mindesthöhe */
+  min-width: 100%; /* Beibehaltung der Mindestbreite */
+  background-color: #1f2937; /* Dunkles Grau als Hintergrundfarbe */
+  box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.4);
+  border-radius: 1rem; /* Abrundung der Ecken */
+  border: 1px solid #06b6d4; /* Cyanfarbige Umrandung */
+}
 
+.image-container img {
+  max-width: 100%; /* Bildbreite begrenzen */
+  max-height: 100%; /* Bildhöhe begrenzen */
+  object-fit: contain; /* Bildverhältnis beibehalten */
+  user-select: none; /* Verhindert Auswahl des Bildes */
+  touch-action: none; /* Verhindert unerwünschte Touch-Aktionen */
+}
+</style>
 
 <style scoped></style>
