@@ -1,5 +1,5 @@
 <template>
-  <div class="container text-center">
+  <div class=" text-center">
     <h5 class="text-xl font-bold text-white mb-7">Fotoaufnahme</h5>
     <div v-if="!isConnected" class="text-red-500 ">
       <p>Bitte Kamera verbinden</p>
@@ -64,13 +64,14 @@
           </button>
         </div>
       </div>
+      
 
       <!-- Anzeige des Bildes mit Panzoom -->
-      <div v-if="imageData" class="md:w-4/7 mx-auto">
+      <div v-if="imageData" class="flex  w-full landscape:w-4/7">
         <!-- Bildcontainer -->
         <div ref="imageContainer"
-          class="image-container overflow-hidden w-full h-auto touch-auto shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
-          <img ref="image" :src="imageData" alt="Aufgenommenes Bild" class=" block max-h-[65vh] "
+          class="image-container overflow-hidden min-h-[75vh] min-w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
+          <img ref="image" :src="imageData" alt="Aufgenommenes Bild" class=" block  "
             style="touch-action: none; user-select: none;" />
         </div>
       </div>
@@ -84,7 +85,7 @@ import apiService from "@/services/apiService";
 import Panzoom from 'panzoom';
 
 // eslint-disable-next-line
-import FocusPage from './FocusPage.vue';
+import FocusPage from '../components/FocusPage.vue';
 
 export default {
   components: {

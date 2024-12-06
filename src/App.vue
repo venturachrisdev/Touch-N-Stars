@@ -1,5 +1,5 @@
 <template>
-  <div class=" dark min-h-screen bg-gray-900 text-white ">
+  <div class=" dark h-dvh bg-gray-900 text-white ">
     <div v-if="!isBackendReachable">
       <div class="flex w-full min-h-screen items-center justify-center text-2xl text-red-700">
         <p>NINA ist nicht erreichbar!</p>

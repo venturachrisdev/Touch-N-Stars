@@ -3,7 +3,7 @@
   <div
     class="top-0 h-16 bg-gray-800 shadow-md"
   >
-  <div class="inset-x-0 mx-auto max-w-sm h-16 flex items-center justify-around">
+  <div class="flex inset-x-0 mx-auto max-w-sm h-16  items-center justify-around">
     <router-link
       to="/equipment"
       class="nav-button"
