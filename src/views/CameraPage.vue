@@ -2,112 +2,79 @@
   <div class="container text-center">
     <h5 class="text-xl font-bold text-white mb-7">Fotoaufnahme</h5>
     <div v-if="!isConnected" class="text-red-500 ">
-        <p>Bitte Kamera verbinden</p>
-      </div>
+      <p>Bitte Kamera verbinden</p>
+    </div>
 
-    <!-- Eingabe für die Belichtungszeit -->
+    <!-- Eingabefelder -->
     <div v-else class="flex flex-col landscape:flex-row gap-2 ">
-      <div class="flex flex-row justify-center landscape:justify-normal landscape:flex-col landscape:space-y-2 space-y-0 gap-2 landscape:gap-0 landscape:w-3/7">
+      <div
+        class="flex flex-row justify-center landscape:justify-normal landscape:flex-col landscape:space-y-2 space-y-0 gap-2 landscape:gap-0 landscape:w-3/7">
         <div class="flex flex-col gap-2 text-left max-w-40">
-
           <label for="exposure" class="text-sm">Belichtungszeit:</label>
-          <input
-            id="exposure"
-            v-model.number="exposureTime"
-            type="number"
+          <input id="exposure" v-model.number="exposureTime" type="number"
             class="text-black px-4 h-10 max-w-15 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-700"
-            placeholder="1"
-          />
+            placeholder="1" />
         </div>
-        
+
         <div class="flex flex-col min-w-40">
-        <!-- Dauerschleife -->
-        <div class="flex items-center mb-2">
-          <input v-model="isLooping" id="checkDauerschleife" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-cyan-500 dark:focus:ring-cyan-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-          <label for="checkDauerschleife" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dauerschleife</label>
-        </div>
-        <!-- Foto aufnehmen -->
-        <button
-          class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
-          @click="capturePhoto"
-          :disabled="loading"
-        >
-          <template v-if="loading">
-            <div v-if="isExposure" class="flex items-center">
-              <!-- Fortschrittskreis für Belichtungszeit -->
-              <svg class="w-6 h-6" viewBox="0 0 36 36">
-                <path
-                  class="text-white text-opacity-30 fill-none stroke-current stroke-[2.8]"
-                  d="M18 2.0845
+          <!-- Dauerschleife -->
+          <div class="flex items-center mb-2">
+            <input v-model="isLooping" id="checkDauerschleife" type="checkbox" value=""
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-cyan-500 dark:focus:ring-cyan-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <label for="checkDauerschleife"
+              class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dauerschleife</label>
+          </div>
+          <!-- Foto aufnehmen -->
+          <button
+            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+            @click="capturePhoto" :disabled="loading">
+            <template v-if="loading">
+              <div v-if="isExposure" class="flex items-center">
+                <!-- Fortschrittskreis für Belichtungszeit -->
+                <svg class="w-6 h-6" viewBox="0 0 36 36">
+                  <path class="text-white text-opacity-30 fill-none stroke-current stroke-[2.8]" d="M18 2.0845
                      a 15.9155 15.9155 0 0 1 0 31.831
-                     a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-                <path
-                  class="fill-none stroke-current stroke-[2.8]"
-                  :style="{
+                     a 15.9155 15.9155 0 0 1 0 -31.831" />
+                  <path class="fill-none stroke-current stroke-[2.8]" :style="{
                     strokeDasharray: progress + ', 100',
                     transform: 'rotate(-90deg)',
                     transformOrigin: 'center',
-                  }"
-
-                  d="M18 2.0845
+                  }" d="M18 2.0845
                      a 15.9155 15.9155 0 0 1 0 31.831
-                     a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-              </svg>
-              <span class="ml-2 text-white text-sm font-medium">
-                Aufnahme läuft {{ remainingExposureTime }}s
-              </span>
-            </div>
-            <div v-else-if="isLoadingImage" class="flex items-center">
-              <!-- Drehender Spinner für Bild lädt -->
-              <svg
-                class="w-6 h-6 animate-spin text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v8H4z"
-                ></path>
-              </svg>
-              <span class="ml-2 text-white text-sm font-medium">
-                Bild lädt...
-              </span>
-            </div>
-          </template>
-          <template v-else>
-            Foto aufnehmen
-          </template>
-        </button>
-      </div>
+                     a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+                <span class="ml-2 text-white text-sm font-medium">
+                  Aufnahme läuft {{ remainingExposureTime }}s
+                </span>
+              </div>
+              <div v-else-if="isLoadingImage" class="flex items-center">
+                <!-- Drehender Spinner für Bild lädt -->
+                <svg class="w-6 h-6 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+                <span class="ml-2 text-white text-sm font-medium">
+                  Bild lädt...
+                </span>
+              </div>
+            </template>
+            <template v-else>
+              Foto aufnehmen
+            </template>
+          </button>
+        </div>
       </div>
 
       <!-- Anzeige des Bildes mit Panzoom -->
-      <div v-if="imageData" class="md:w-4/7 mx-auto" >
+      <div v-if="imageData" class="md:w-4/7 mx-auto">
         <!-- Bildcontainer -->
-        <div
-          ref="imageContainer"
-          class="image-container overflow-hidden w-full h-auto touch-auto shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700"
-  >
-          <img
-            ref="image"
-            :src="imageData"
-            alt="Aufgenommenes Bild"
-            class=" block max-h-[65vh] "
-            style="touch-action: none; user-select: none;"
-          />
+        <div ref="imageContainer"
+          class="image-container overflow-hidden w-full h-auto touch-auto shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
+          <img ref="image" :src="imageData" alt="Aufgenommenes Bild" class=" block max-h-[65vh] "
+            style="touch-action: none; user-select: none;" />
         </div>
-      </div>   </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -139,29 +106,30 @@ export default {
     };
   },
   async mounted() {
+    await this.cameraInfo();
     this.startIntCameraInfo();
   },
   methods: {
-    async cameraInfo(){
-      try{
-         const response= await apiService.cameraAction("info");
-         if (response.Success){
+    async cameraInfo() {
+      try {
+        const response = await apiService.cameraAction("info");
+        if (response.Success) {
           this.isConnected = response.Response.Connected;
-         // console.log(response.Response.Connected);
+          // console.log(response.Response.Connected);
 
-         } else {
+        } else {
           console.log("Fehler beim abrufen der Kameradaten");
-         }
-      }        
-      catch(error){
-          console.log("Kamera API nicht erricht", error);
-         }
+        }
+      }
+      catch (error) {
+        console.log("Kamera API nicht erricht", error);
+      }
     },
-    startIntCameraInfo(){
+    startIntCameraInfo() {
       this.intervalId = setInterval(this.cameraInfo, 1000)
     },
-    stopIntCamerInfo(){
-      if(this.intervalId){
+    stopIntCamerInfo() {
+      if (this.intervalId) {
         clearInterval(this.intervalId);
         this.intervalId = null;
       }
@@ -254,31 +222,31 @@ export default {
     },
   },
   watch: {
-  imageData(newValue) {
-    if (newValue) {
-      this.$nextTick(() => {
-        if (this.$refs.image) {
-          // Vorherige Panzoom-Instanz entsorgen, falls vorhanden
-          if (this.panzoomInstance) {
-            this.panzoomInstance.dispose();
+    imageData(newValue) {
+      if (newValue) {
+        this.$nextTick(() => {
+          if (this.$refs.image) {
+            // Vorherige Panzoom-Instanz entsorgen, falls vorhanden
+            if (this.panzoomInstance) {
+              this.panzoomInstance.dispose();
+            }
+            // Panzoom auf dem Bild initialisieren
+            this.panzoomInstance = Panzoom(this.$refs.image, {
+              maxZoom: 30,
+              minZoom: 0.9,
+              bounds: true, // Aktiviert die Begrenzung
+              boundsPadding: 0.1, // Optionaler Puffer
+            });
           }
-          // Panzoom auf dem Bild initialisieren
-          this.panzoomInstance = Panzoom(this.$refs.image, {
-            maxZoom: 30,
-            minZoom: 0.9,
-            bounds: true, // Aktiviert die Begrenzung
-            boundsPadding: 0.1, // Optionaler Puffer
-          });
-        }
-      });
-    }
+        });
+      }
+    },
   },
-},
-
+  beforeUnmount(){
+    this.stopIntCamerInfo();
+  },
 };
 </script>
 
 
-<style scoped>
-
-</style>
+<style scoped></style>
