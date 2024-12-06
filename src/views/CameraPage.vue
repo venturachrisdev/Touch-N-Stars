@@ -237,6 +237,8 @@ export default {
               minZoom: 0.9,
               bounds: true, // Aktiviert die Begrenzung
               boundsPadding: 0.1, // Optionaler Puffer
+              contain: 'inside', // Passt das Bild an den Container an
+              origin: 'center', // Setzt den Zoomursprung in die Mitte
             });
           }
         });
@@ -250,25 +252,22 @@ export default {
 </script>
 <style scoped>
 .image-container {
-  display: flex; /* Aktiviert Flexbox */
-  align-items: center; /* Vertikale Zentrierung */
-  justify-content: center; /* Horizontale Zentrierung */
-  overflow: hidden; /* Verhindert Überlauf */
-  min-height: 65vh; /* Beibehaltung der Mindesthöhe */
-  min-width: 100%; /* Beibehaltung der Mindestbreite */
-  background-color: #1f2937; /* Dunkles Grau als Hintergrundfarbe */
-  box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.4);
-  border-radius: 1rem; /* Abrundung der Ecken */
-  border: 1px solid #06b6d4; /* Cyanfarbige Umrandung */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative; /* Wichtig für zentrierten Inhalt */
 }
 
 .image-container img {
-  max-width: 100%; /* Bildbreite begrenzen */
-  max-height: 100%; /* Bildhöhe begrenzen */
-  object-fit: contain; /* Bildverhältnis beibehalten */
-  user-select: none; /* Verhindert Auswahl des Bildes */
-  touch-action: none; /* Verhindert unerwünschte Touch-Aktionen */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  user-select: none;
+  touch-action: none;
+  transform-origin: center center; /* Zentriert die Transformation */
 }
+
 </style>
 
 <style scoped></style>

@@ -31,37 +31,44 @@ export default {
   data(){
     return {
       isBackendReachable: false,
+      checkInterval: null, // Speichert die ID des Intervalls
     };
   },
   setup() {
-    useHead ({
+    useHead({
       title: "NINA WebApp",
-    /*''  meta: [
-        {
-          name: "viewport",
-          content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
-        },
-     ],*/
-    })
+    });
   },
-  async mounted(){
-    this.isBackendReachable = await apiService.isBackendReachable();
-    if (this.isBackendReachable){
-      console.log("ist da");
-    } else  {
-      console.log("nicht da");
+  async mounted() {
+    // Initiale Prüfung
+    await this.checkBackendStatus();
+
+    // Setze ein Intervall zur regelmäßigen Prüfung
+    this.checkInterval = setInterval(this.checkBackendStatus, 5000); // Alle 10 Sekunden
+  },
+  beforeUnmount() {
+    // Räumt das Intervall auf, wenn die Komponente zerstört wird
+    if (this.checkInterval) {
+      clearInterval(this.checkInterval);
     }
   },
   components: {
     NavigationComp,
   },
-  
   methods: {
-    handleResize() {
+    async checkBackendStatus() {
+      try {
+        this.isBackendReachable = await apiService.isBackendReachable();
+        console.log(this.isBackendReachable ? "Backend ist erreichbar" : "Backend ist nicht erreichbar");
+      } catch (error) {
+        console.error("Fehler beim Prüfen der Backend-Erreichbarkeit", error);
+        this.isBackendReachable = false;
+      }
     },
-  }
+  },
 };
 </script>
+
 
 <style scoped>
 
