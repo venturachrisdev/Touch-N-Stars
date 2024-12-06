@@ -2,7 +2,21 @@ import axios from "axios";
 
 const BASE_URL = "/v2/api";
 
+
+
+
 const apiService = {
+    // Backend-Erreichbarkeitsprüfung
+    async isBackendReachable() {
+      try {
+        const response = await axios.get(`${BASE_URL}/version`);
+        return response.status === 200;
+      } catch (error) {
+        console.error("Fehler beim Erreichen des Backends:", error.message);
+        return false;
+      }
+    },
+  
   // Verbindungen ------------------------------
   // Kameraaktionen
   cameraAction(action) {

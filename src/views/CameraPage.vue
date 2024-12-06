@@ -1,9 +1,12 @@
 <template>
   <div class="container text-center">
     <h5 class="text-xl font-bold text-white mb-7">Fotoaufnahme</h5>
+    <div v-if="!isConnected" class="text-red-500 ">
+        <p>Bitte Kamera verbinden</p>
+      </div>
 
     <!-- Eingabe für die Belichtungszeit -->
-    <div class="flex flex-col landscape:flex-row gap-2 ">
+    <div v-else class="flex flex-col landscape:flex-row gap-2 ">
       <div class="flex flex-row justify-center landscape:justify-normal landscape:flex-col landscape:space-y-2 space-y-0 gap-2 landscape:gap-0 landscape:w-3/7">
         <div class="flex flex-col gap-2 text-left max-w-40">
 
@@ -42,10 +45,11 @@
                 <path
                   class="fill-none stroke-current stroke-[2.8]"
                   :style="{
-                    'stroke-dasharray': progress + ', 100',
-                    'transform': 'rotate(-90deg)',
-                    'transform-origin': 'center',
+                    strokeDasharray: progress + ', 100',
+                    transform: 'rotate(-90deg)',
+                    transformOrigin: 'center',
                   }"
+
                   d="M18 2.0845
                      a 15.9155 15.9155 0 0 1 0 31.831
                      a 15.9155 15.9155 0 0 1 0 -31.831"
@@ -89,7 +93,7 @@
       </div>
 
       <!-- Anzeige des Bildes mit Panzoom -->
-      <div v-if="imageData" class="md:w-4/7 mx-auto">
+      <div v-if="imageData" class="md:w-4/7 mx-auto" >
         <!-- Bildcontainer -->
         <div
           ref="imageContainer"
@@ -122,6 +126,7 @@ export default {
   },
   data() {
     return {
+      isConnected: false,
       exposureTime: 2, // Standard-Belichtungszeit
       remainingExposureTime: 0, // Für den Countdown der Belichtungszeit
       progress: 0, // Fortschritt für den Spinner
@@ -133,7 +138,34 @@ export default {
       panzoomInstance: null, // Panzoom-Instanz
     };
   },
+  async mounted() {
+    this.startIntCameraInfo();
+  },
   methods: {
+    async cameraInfo(){
+      try{
+         const response= await apiService.cameraAction("info");
+         if (response.Success){
+          this.isConnected = response.Response.Connected;
+         // console.log(response.Response.Connected);
+
+         } else {
+          console.log("Fehler beim abrufen der Kameradaten");
+         }
+      }        
+      catch(error){
+          console.log("Kamera API nicht erricht", error);
+         }
+    },
+    startIntCameraInfo(){
+      this.intervalId = setInterval(this.cameraInfo, 1000)
+    },
+    stopIntCamerInfo(){
+      if(this.intervalId){
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      }
+    },
     async capturePhoto() {
       if (this.exposureTime <= 0) {
         alert("Bitte geben Sie eine gültige Belichtungszeit ein.");

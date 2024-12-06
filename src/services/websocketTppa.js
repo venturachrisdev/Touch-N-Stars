@@ -1,5 +1,14 @@
 // services/websocketTppa.js
 
+//IP von NINA ermitteln
+const backendProtokol = "ws";
+const backendPort = 1888;
+const backendPfad ="/v2/tppa";
+const backendUrl = `${backendProtokol}://${window.location.hostname}:${backendPort}${backendPfad}`;
+
+console.log(backendUrl);
+
+
 class WebSocketService {
   constructor() {
     this.socket = null;
@@ -16,7 +25,8 @@ class WebSocketService {
   }
 
   connect() {
-    this.socket = new WebSocket("ws://192.168.2.128:1888/v2/tppa");
+    this.socket = new WebSocket(backendUrl);
+    //this.socket = new WebSocket("ws://192.168.2.128:1888/v2/tppa");
     //this.socket = new WebSocket("/v2/tppa");
 
     this.socket.onopen = () => {
