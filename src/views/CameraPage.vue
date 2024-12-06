@@ -70,7 +70,7 @@
       <div v-if="imageData" class="flex  w-full landscape:w-4/7">
         <!-- Bildcontainer -->
         <div ref="imageContainer"
-          class="image-container overflow-hidden min-h-[75vh] min-w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
+          class="image-container overflow-hidden min-h-[65vh] min-w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
           <img ref="image" :src="imageData" alt="Aufgenommenes Bild" class=" block  "
             style="touch-action: none; user-select: none;" />
         </div>
