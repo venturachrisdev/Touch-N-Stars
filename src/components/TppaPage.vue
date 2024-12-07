@@ -1,9 +1,14 @@
 <template>
   <div class="container flex tems-center justify-center">
     <div class="container max-w-md ">
-    <h5 class="text-xl text-center font-bold text-white mb-4">TPPA</h5>
-    <p class="mb-4">TPPA Modul {{ Nachricht }}</p>
-
+      <div v-if="!isConnected" class="text-gray-600 ">
+        TPPA nicht verfügbar
+      </div>
+      <div v-else>
+    <h5 class="text-xl text-center font-bold text-white mb-4">
+      Three Point Polar Alignment
+    </h5>
+  
     <!-- Neue Buttons -->
     <div class="flex space-x-4">
       <button
@@ -53,6 +58,7 @@
         </div>
     </div>
   </div>
+</div>
 </div>
 
 </template>
@@ -118,7 +124,6 @@ export default {
     const absValue = Math.abs(value);
 
     // Berechnung der Grad, Minuten und Sekunden
-    
     let degrees = Math.floor(absValue);
     let minutesDecimal = (absValue - degrees) * 60;
     let minutes = Math.floor(minutesDecimal);
@@ -156,6 +161,10 @@ export default {
       if (message.Response) {
         if (typeof message.Response === "string") {
           // Wenn Response ein String ist (z.B. "started procedure")
+          if(message.Response === "started procedure"){
+            console.log("Start TPPA");
+            return message.Response;
+          }
           this.startStop = true;
           return message.Response;
         } else if (typeof message.Response === "object") {
@@ -175,13 +184,9 @@ export default {
             this.showAltitudeError = altitudeErrorDMS;
             this.showTotalError = totalErrorDMS;
 
-
             // Bestimmen, ob der AltitudeError negativ ist
             this.azimuthCorDirectionLeft = AzimuthError > 0 ? true : false;
             this.altitudeCorDirectionTop = AltitudeError < 0 ? true : false;
-           
-
-            // Verwendung von \n für Zeilenumbrüche
             
           } else {
             return "Fehlerwerte nicht vorhanden.";
