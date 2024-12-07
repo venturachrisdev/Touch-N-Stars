@@ -62,6 +62,14 @@
               Foto aufnehmen
             </template>
           </button>
+          <div class=" pt-2">
+          <button 
+           class="flex h-10 w-full rounded-md text-white font-medium bg-red-800 items-center justify-center "
+          v-if="isExposure" 
+          @click="abortExposure">
+            Abbrechen
+          </button>
+        </div>
         </div>
       </div>
       
@@ -198,6 +206,23 @@ export default {
           // Startet die Aufnahme erneut, wenn Dauerschleife aktiv ist
           this.capturePhoto();
         }
+      }
+    },
+    async abortExposure(){
+      try{
+        await apiService.cameraAction("abort-exposure");
+        console.log("Aufnahme abgebrochen");
+
+        this.isExposure = false;
+        this.remainingExposureTime = false;
+        this.progress = 0;
+
+        clearInterval(this.startExposureCountdown);
+        this.isLooping = false;
+      } catch (error) {
+        console.log("Abbrechen fehlgeschlagen:", error);
+      } finally {
+        this.loading = false;
       }
     },
     startExposureCountdown() {
