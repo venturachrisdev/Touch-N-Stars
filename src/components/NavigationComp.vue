@@ -118,7 +118,7 @@ export default {
 }
 
 .active-nav-button {
-  @apply border border-gray-500 bg-cyan-700 rounded-lg;
+  @apply border border-cyan-300/30 bg-cyan-700 rounded-lg;
 }
 .icon {
   @apply w-6 h-6;
