@@ -6,7 +6,7 @@
   <div class="flex inset-x-0 mx-auto max-w-sm h-16  items-center justify-around">
     <router-link
       to="/equipment"
-      class="nav-button"
+      class="nav-button  "
       active-class="active-nav-button"
       title="Ausrüstung"
     >
@@ -109,18 +109,16 @@ export default {
 
 <style scoped>
 .nav-button {
-  @apply w-12 h-12 bg-gray-700 text-white rounded-full hover:bg-gray-600;
+  @apply w-12 h-12 border border-cyan-500/20 bg-gray-700 text-white rounded-full hover:bg-gray-600;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 4px;
   transition: border-radius 0.2s ease, background-color 0.2s ease;
 }
-.nav-button:active {
-  @apply rounded-lg bg-cyan-500;
-}
+
 .active-nav-button {
-  @apply bg-cyan-700 rounded-lg;
+  @apply border border-gray-500 bg-cyan-700 rounded-lg;
 }
 .icon {
   @apply w-6 h-6;

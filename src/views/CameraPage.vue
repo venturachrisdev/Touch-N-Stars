@@ -26,7 +26,7 @@
           </div>
           <!-- Foto aufnehmen -->
           <button
-            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+            class="flex h-10 min-w-48 rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
             @click="capturePhoto" :disabled="loading">
             <template v-if="loading">
               <div v-if="isExposure" class="flex items-center">
@@ -63,19 +63,17 @@
             </template>
           </button>
           <div class=" pt-2">
-          <button 
-           class="flex h-10 w-full rounded-md text-white font-medium bg-red-800 items-center justify-center "
-          v-if="isExposure" 
-          @click="abortExposure">
-            Abbrechen
-          </button>
-        </div>
+            <button class="flex h-10 w-full rounded-md text-white font-medium bg-red-800 items-center justify-center "
+              v-if="isExposure" @click="abortExposure">
+              Abbrechen
+            </button>
+          </div>
         </div>
       </div>
-      
+
 
       <!-- Anzeige des Bildes mit Panzoom -->
-      <div  class="flex  w-full landscape:w-4/7">
+      <div class="flex  w-full landscape:w-4/7">
         <!-- Bildcontainer -->
         <div ref="imageContainer"
           class="image-container overflow-hidden min-h-[65vh] min-w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
@@ -111,6 +109,7 @@ export default {
       isExposure: false, // Gibt an, ob die Belichtungszeit läuft
       isLoadingImage: false, // Gibt an, ob das Bild geladen wird
       isLooping: false,
+      isAbort:false,
       panzoomInstance: null, // Panzoom-Instanz
     };
   },
@@ -154,6 +153,7 @@ export default {
       this.progress = 0; // Fortschritt zurücksetzen
       this.isExposure = true; // Die Belichtung startet
       this.isLoadingImage = false;
+      this.isAbort = false;
 
       try {
         // Starten der Aufnahme (ohne darauf zu warten)
@@ -174,7 +174,7 @@ export default {
         const maxAttempts = 15; // Maximal 15 Sekunden warten
         let image = null;
 
-        while (!image && attempts < maxAttempts) {
+        while (!image && attempts < maxAttempts && !this.isAbort) {
           try {
             const result = await apiService.getCaptureResult();
             image = result?.Response?.Image;
@@ -189,6 +189,16 @@ export default {
 
           attempts++;
           await this.wait(1000); // 1 Sekunde warten
+        }
+
+        if (this.isAbort) {
+          console.log("Bildabruf wurde abgebrochen.");
+          return;
+        }
+
+        if (!image) {
+          console.error("Kein Bild verfügbar nach mehreren Versuchen.");
+          alert("Bild wurde nicht rechtzeitig bereitgestellt.");
         }
 
         if (!image) {
@@ -208,41 +218,63 @@ export default {
         }
       }
     },
-    async abortExposure(){
-      try{
-        await apiService.cameraAction("abort-exposure");
-        console.log("Aufnahme abgebrochen");
+    async abortExposure() {
+      try {
+        console.log("Abbruch der Belichtung gestartet...");
+        await apiService.cameraAction("abort-exposure"); // API-Aufruf zum Abbrechen
 
+        // Läuft keine Belichtung mehr
+        this.isAbort = true,
         this.isExposure = false;
-        this.remainingExposureTime = false;
+        this.isLoadingImage = false;
+        this.isLooping = false;
+
+        // Fortschritt zurücksetzen
+        this.remainingExposureTime = 0;
         this.progress = 0;
 
-        clearInterval(this.startExposureCountdown);
-        this.isLooping = false;
+        // Countdown-Timer stoppen
+        clearTimeout(this.exposureCountdownTimer);
+
+        console.log("Belichtung erfolgreich abgebrochen.");
       } catch (error) {
-        console.log("Abbrechen fehlgeschlagen:", error);
+        console.error("Fehler beim Abbrechen der Belichtung:", error);
+        alert("Abbrechen fehlgeschlagen: " + (error.message || "Unbekannter Fehler"));
       } finally {
+        // Ladezustand zurücksetzen
         this.loading = false;
       }
     },
+
     startExposureCountdown() {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         const totalTime = this.exposureTime;
+
         const interval = setInterval(() => {
+          // Abbruchbedingung prüfen
+          if (!this.isExposure) {
+            clearInterval(interval);
+            reject(new Error("Belichtung wurde abgebrochen."));
+            return;
+          }
+
           this.remainingExposureTime--;
           this.progress =
             ((totalTime - this.remainingExposureTime) / totalTime) * 100;
 
-          if (this.remainingExposureTime > 0) {
-            // Fortschritt aktualisieren
-          } else {
+          if (this.remainingExposureTime <= 0) {
             clearInterval(interval);
             this.progress = 100;
             resolve();
           }
         }, 1000);
+
+        // Timer speichern, um später abbrechen zu können
+        this.exposureCountdownTimer = interval;
       });
     },
+
+
     wait(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
@@ -270,7 +302,7 @@ export default {
       }
     },
   },
-  beforeUnmount(){
+  beforeUnmount() {
     this.stopIntCamerInfo();
   },
 };
@@ -281,7 +313,8 @@ export default {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  position: relative; /* Wichtig für zentrierten Inhalt */
+  position: relative;
+  /* Wichtig für zentrierten Inhalt */
 }
 
 .image-container img {
@@ -290,9 +323,9 @@ export default {
   object-fit: contain;
   user-select: none;
   touch-action: none;
-  transform-origin: center center; /* Zentriert die Transformation */
+  transform-origin: center center;
+  /* Zentriert die Transformation */
 }
-
 </style>
 
 <style scoped></style>
