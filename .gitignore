@@ -1,6 +1,9 @@
 c.DS_Store
 node_modules
 /dist
+/server/dist
+/server/build
+/server/static
 
 
 # local env files
@@ -21,4 +24,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.spec
 node_modules
