@@ -1,47 +1,40 @@
-from flask import Flask, request, Response, send_from_directory
-from flask_cors import CORS
+from flask import Flask, request, Response
 import requests
-import os
 
 app = Flask(__name__)
-CORS(app)  # Aktiviert CORS für alle Routen
 
-# Pfad zu den Vue-Statikdateien (nach dem Build-Prozess)
-STATIC_FOLDER = os.path.join(os.getcwd(), 'static')  # Ordner für deine Vue-Statikdateien
+# Basis-URL der Ziel-API
+BASE_API_URL = "http://localhost:1888/v2/api"
 
-@app.route('/api/<path:endpoint>', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/v2/api/<path:endpoint>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def proxy(endpoint):
-    """Proxy-Server für die API-Anfragen."""
-    api_url = f"http://localhost:8080/{endpoint}"  # Ziel-API (ersetze mit der URL deiner Software-API)
+    # Ziel-URL zusammensetzen
+    target_url = f"{BASE_API_URL}/{endpoint}"
 
-    # Weiterleitung der Anfrage
-    if request.method == 'GET':
-        response = requests.get(api_url, params=request.args)
-    elif request.method == 'POST':
-        response = requests.post(api_url, json=request.json)
-    elif request.method == 'PUT':
-        response = requests.put(api_url, json=request.json)
-    elif request.method == 'DELETE':
-        response = requests.delete(api_url)
-    else:
-        return {"error": "Unsupported method"}, 405
+    # Logge die weitergeleitete Anfrage
+    print(f"Forwarding request to: {target_url}")
 
-    # Antwort zurückgeben mit angepassten CORS-Headern
-    proxy_response = Response(response.content, status=response.status_code)
-    proxy_response.headers['Access-Control-Allow-Origin'] = '*'
-    proxy_response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
-    proxy_response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-    return proxy_response
+    try:
+        # Anfrage basierend auf der HTTP-Methode weiterleiten
+        if request.method == 'GET':
+            resp = requests.get(target_url, params=request.args)
+        elif request.method == 'POST':
+            resp = requests.post(target_url, json=request.json)
+        elif request.method == 'PUT':
+            resp = requests.put(target_url, json=request.json)
+        elif request.method == 'DELETE':
+            resp = requests.delete(target_url)
+        else:
+            return {"error": "Unsupported HTTP method"}, 405
 
-# Route für die Vue-App
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve_vue(path):
-    """Vue-App statisch ausliefern."""
-    if path != "" and os.path.exists(os.path.join(STATIC_FOLDER, path)):
-        return send_from_directory(STATIC_FOLDER, path)
-    else:
-        return send_from_directory(STATIC_FOLDER, 'index.html')
+        # Antwort der Ziel-API weitergeben
+        response = Response(resp.content, status=resp.status_code)
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return response
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return {"error": "Failed to connect to target API"}, 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

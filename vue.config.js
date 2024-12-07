@@ -3,7 +3,7 @@ const { defineConfig } = require('@vue/cli-service');
 module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
-    proxy: {
+    proxy: {/*
       "/v2/api": {
         target: "http://localhost:1888", // URL des API-Servers
         secure: false, // SSL-Zertifikate ignorieren (optional)
@@ -18,6 +18,6 @@ module.exports = defineConfig({
         pathRewrite: { "^/v2/tppa": "/v2/tppa" }, // (Optional) Umschreiben des Pfads
         logLevel: "debug", 
       },
-    },
+    */},
   },
 });
