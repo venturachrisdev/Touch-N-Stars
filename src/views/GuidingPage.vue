@@ -38,7 +38,7 @@
 
 <script>
 import apiService from "@/services/apiService";
-import rmsGraph from '../components/rmsGraph.vue';
+import rmsGraph from '../components/GuiderGraph.vue';
 
 export default {
   components: {
