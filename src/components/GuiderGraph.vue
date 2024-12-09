@@ -40,46 +40,54 @@ export default {
   },
   methods: {
     initGraph() {
-      const ctx = document.getElementById('rmsGraph').getContext('2d');
-      this.chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: Array(100).fill(''), // Placeholder-Labels
-          datasets: [
-            {
-              label: 'RA',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              data: [], // Start ohne Daten
-            },
-            {
-              label: 'Dec',
-              borderColor: 'rgba(153, 102, 255, 1)',
-              backgroundColor: 'rgba(153, 102, 255, 0.2)',
-              data: [], // Start ohne Daten
-            },
-          ],
+  const ctx = document.getElementById('rmsGraph').getContext('2d');
+  this.chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Array(50).fill(''), // Placeholder-Labels
+      datasets: [
+        {
+          label: 'RA "',
+          borderColor: 'rgba(70, 130, 180, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          tension: 0.5,
+          pointRadius: 0, // Punktgröße hier einstellen
+          data: [], // Start ohne Daten
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          animation: false,
-  
-        scales: {
-            y: {
-                suggestedMin: -2,
-                suggestedMax: 2
-            }
+        {
+          label: 'Dec "',
+          borderColor: 'rgba(220, 20, 60, 1)',
+          backgroundColor: 'rgba(153, 102, 255, 0.2)',
+          tension: 0.5,
+          pointRadius: 0, // Punktgröße hier einstellen
+          data: [], // Start ohne Daten
         },
-    
-          datasets: {
-            line: {
-              pointRadius: 0 // disable for all `'line'` datasets
-            }
-          }
-        },
-      });
+      ],
     },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: {
+        duration: 0, // Animation deaktivieren
+      },
+      scales: {
+        x: {
+          grid: {
+            color: 'rgba(248, 248, 255, 0.1)', // Gitterfarbe auf Weiß setzen
+          },
+        },
+        y: {
+          suggestedMin: -3,
+          suggestedMax: 3,
+          grid: {
+            color: 'rgba(248, 248, 255, 0.1)', // Gitterfarbe auf Weiß setzen
+          },
+        },
+      },
+    },
+  });
+},
+
     updateGraph(newRawRA, newRawDec) {
       if (this.chart) {
         // Update Graph-Daten ohne direkte Bindung an Vuex

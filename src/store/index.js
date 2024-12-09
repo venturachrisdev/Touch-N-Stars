@@ -19,9 +19,9 @@ const store = createStore({
   mutations: {
     ADD_RMS_VALUES(state, { raRmsValue, decRmsValue, totalRmsValue }) {
       //RMS Werte
-      if (state.rmsValuesRA.length >= 100) state.rmsValuesRA.shift();
-      if (state.rmsValuesDec.length >= 100) state.rmsValuesDec.shift();
-      if (state.rmsValuesTotal.length >= 100) state.rmsValuesTotal.shift();
+      if (state.rmsValuesRA.length >= 50) state.rmsValuesRA.shift();
+      if (state.rmsValuesDec.length >= 50) state.rmsValuesDec.shift();
+      if (state.rmsValuesTotal.length >= 50) state.rmsValuesTotal.shift();
 
       state.rmsValuesRA.push(raRmsValue);
       state.rmsValuesDec.push(decRmsValue);
@@ -30,17 +30,20 @@ const store = createStore({
 
     },
     ADD_RAW_VALUES(state, { RADistanceRaw, DECDistanceRaw, RADuration, DECDuration }) {
-      //Akutelle Abweichungen
-      if (state.RADistanceRaw.length >= 100) state.RADistanceRaw.shift();
-      if (state.DECDistanceRaw.length >= 100) state.DECDistanceRaw.shift();
-      if (state.RADuration.length >= 100) state.RADuration.shift();
-      if (state.DECDuration.length >= 100) state.DECDuration.shift();
-
-      state.RADistanceRaw.push(RADistanceRaw);
-      state.DECDistanceRaw.push(DECDistanceRaw);
-      state.RADuration.push(RADuration);
-      state.DECDuration.push(DECDuration);
-    },
+      // Funktion zum Hinzufügen nur, wenn sich der Wert geändert hat
+      const addIfChanged = (array, value) => {
+          if (array.length >= 50) array.shift(); // Entferne älteste Werte bei Bedarf
+          if (array.length === 0 || array[array.length - 1] !== value) {
+              array.push(value); // Füge nur hinzu, wenn Wert anders ist
+          }
+      };
+  
+      // Überprüfe und füge Werte hinzu
+      addIfChanged(state.RADistanceRaw, RADistanceRaw);
+      addIfChanged(state.DECDistanceRaw, DECDistanceRaw);
+      addIfChanged(state.RADuration, RADuration);
+      addIfChanged(state.DECDuration, DECDuration);
+  },
   },
   actions: {
     async fetchGuiderData({ commit }) {
@@ -69,7 +72,7 @@ const store = createStore({
       if (!this.intervalId) {
         this.intervalId = setInterval(() => {
           dispatch('fetchGuiderData');
-        }, 1000);
+        }, 500);
       }
     },
     stopFetching() {
