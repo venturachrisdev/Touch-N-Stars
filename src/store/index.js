@@ -53,8 +53,8 @@ const store = createStore({
           const decRmsValue = parseFloat(data.RMSError.Dec.Arcseconds.toFixed(2));
           const totalRmsValue = parseFloat(data.RMSError.Total.Arcseconds.toFixed(2));
 
-          const RADistanceRaw = parseFloat(data.LastGuideStep.RADistanceRaw.toFixed(2));
-          const DECDistanceRaw = parseFloat(data.LastGuideStep.DECDistanceRaw.toFixed(2));
+          const RADistanceRaw = parseFloat(data.LastGuideStep.RADistanceRaw.toFixed(2))*parseFloat(data.PixelScale);
+          const DECDistanceRaw = parseFloat(data.LastGuideStep.DECDistanceRaw.toFixed(2))*parseFloat(data.PixelScale);
           const RADuration = parseFloat(data.LastGuideStep.RADuration.toFixed(0));
           const DECDuration = parseFloat(data.LastGuideStep.DECDuration.toFixed(0));
 
