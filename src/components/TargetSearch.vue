@@ -10,21 +10,23 @@
         placeholder="Geben Sie einen Suchbegriff ein..."
       />
       <ul v-if="suggestions.length > 0" class="absolute left-0 right-0 bg-white border border-gray-300 rounded mt-1 z-10">
-        <li 
-          v-for="(item, index) in suggestions" 
-          :key="index"
-          class="p-2 hover:bg-gray-200 cursor-pointer"
-          @click="selectSuggestion(item)"
-        >
-          {{ item.Name }} ({{ item.Type }})
-        </li>
-      </ul>
+  <li 
+    v-for="(item, index) in suggestions" 
+    :key="index"
+    class="p-2 hover:bg-gray-200 cursor-pointer"
+    @click="selectSuggestion(item)"
+  >
+    {{ item.Name }}
+    <span v-if="item['Common names']"> ({{ item['Common names'] }})</span>
+    <span v-if="item['M']">  (M {{ item['M'] }})</span>
+  </li>
+</ul>
     </div>
 
     <!-- Ausgewählter Eintrag -->
     <div v-if="selectedItem" class="mt-4 bg-white text-black p-4 rounded shadow">
       <h6 class="text-lg font-bold">Ausgewählter Eintrag:</h6>
-      <p><strong>NGC:</strong> {{ selectedItem['Common names'] }}</p>
+      <p><strong>Name:</strong> {{ selectedItem['Common names'] }}</p>
       <p><strong>NGC:</strong> {{ selectedItem.Name }}</p>
       <p><strong>Typ:</strong> {{ selectedItem.Type }}</p>
       <p><strong>RA:</strong> {{ selectedItem.RA }}</p>
