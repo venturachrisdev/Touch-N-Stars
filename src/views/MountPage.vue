@@ -19,12 +19,17 @@
           <StatusBool :isEnabled="Slewing" enabledText="Montierung Schwenkt" disabledText="Schwenkt nicht"/>
         </div>
 
+     
         <!-- Integration von TppaPage -->
         <div class="mt-10">
           <hr class="border-t border-gray-300">
         </div>
         <div class="mt-5">
           <TppaPage />
+        </div>
+        <div>
+          <TargetSearch />
+          
         </div>
       </div>
     </div>
@@ -36,11 +41,13 @@
 import apiService from "@/services/apiService";
 import TppaPage from '../components/TppaPage.vue';
 import StatusBool from '../components/StatusBool.vue';
+import TargetSearch from '../components/TargetSearch.vue';
 
 export default {
   components: {
     TppaPage,
     StatusBool,
+    TargetSearch,
   },
   data() {
     return {

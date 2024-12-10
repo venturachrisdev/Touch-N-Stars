@@ -57,6 +57,7 @@ export default {
       this.searchQuery = item.Name || '';
       this.suggestions = [];
       this.selectedItem = item; // Ausgewählten Eintrag speichern
+      this.$emit('itemSelected', item);
       // console.log(item);
     }
   }
