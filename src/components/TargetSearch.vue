@@ -2,25 +2,17 @@
   <div class="container text-center">
     <h5 class="text-xl font-bold mb-4">Suche</h5>
     <div class="relative text-black mx-auto max-w-md">
-      <input 
-        type="text" 
-        v-model="searchQuery" 
-        @input="fetchSuggestions"
-        class="w-full p-2 border border-gray-300 rounded"
-        placeholder="Geben Sie einen Suchbegriff ein..."
-      />
-      <ul v-if="suggestions.length > 0" class="absolute left-0 right-0 bg-white border border-gray-300 rounded mt-1 z-10">
-  <li 
-    v-for="(item, index) in suggestions" 
-    :key="index"
-    class="p-2 hover:bg-gray-200 cursor-pointer"
-    @click="selectSuggestion(item)"
-  >
-    {{ item.Name }}
-    <span v-if="item['Common names']"> ({{ item['Common names'] }})</span>
-    <span v-if="item['M']">  (M {{ item['M'] }})</span>
-  </li>
-</ul>
+      <input type="text" v-model="searchQuery" @input="fetchSuggestions"
+        class="w-full p-2 border border-gray-300 rounded" placeholder="Geben Sie einen Suchbegriff ein..." />
+      <ul v-if="suggestions.length > 0"
+        class="absolute left-0 right-0 bg-white border border-gray-300 rounded mt-1 z-10">
+        <li v-for="(item, index) in suggestions" :key="index" class="p-2 hover:bg-gray-200 cursor-pointer"
+          @click="selectSuggestion(item)">
+          {{ item.Name }}
+          <span v-if="item['Common names']"> ({{ item['Common names'] }})</span>
+          <span v-if="item['M']"> (M {{ item['M'] }})</span>
+        </li>
+      </ul>
     </div>
 
     <!-- Ausgewählter Eintrag -->
@@ -54,8 +46,8 @@ export default {
       }
       try {
         const data = await apiService.searchNGC(this.searchQuery, 10);
-        this.suggestions = data; 
-        console.log(data);
+        this.suggestions = data;
+        // console.log(data);
       } catch (error) {
         console.error('Fehler beim Laden der Vorschläge:', error);
         this.suggestions = [];
@@ -65,7 +57,7 @@ export default {
       this.searchQuery = item.Name || '';
       this.suggestions = [];
       this.selectedItem = item; // Ausgewählten Eintrag speichern
-      console.log(item);
+      // console.log(item);
     }
   }
 };
