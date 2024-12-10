@@ -24,13 +24,20 @@
       <p><strong>RA:</strong> {{ selectedItem.RA }}</p>
       <p><strong>Dec:</strong> {{ selectedItem.Dec }}</p>
     </div>
+    <div>
+      <slewAndCenter />
+    </div>
   </div>
 </template>
 
 <script>
 import apiService from "@/services/apiService";
+import slewAndCenter from '../components/slewAndCenter.vue';
 
 export default {
+  components: {
+    slewAndCenter,
+  },
   data() {
     return {
       searchQuery: '',
