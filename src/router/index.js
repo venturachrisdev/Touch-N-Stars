@@ -4,7 +4,7 @@ import CameraPage from '../views/CameraPage.vue';
 import FocusPage from '../components/FocusPage.vue';
 import MountPage from '../views/MountPage.vue';
 import GuidingPage from '../views/GuidingPage.vue';
-import rmsGraph from '/';
+import TargetSearch from '../components/TargetSearch.vue';
 
 
 const routes = [
@@ -14,7 +14,7 @@ const routes = [
   { path: '/autofocus', component: FocusPage },
   { path: '/mount', component: MountPage },
   { path: '/guider', component: GuidingPage },
-  { path: '/misc', component: rmsGraph },
+  { path: '/misc', component: TargetSearch },
 
 ];
 

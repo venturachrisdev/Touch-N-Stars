@@ -59,6 +59,13 @@ def search_ngc():
     # Rückgabe als gültiges JSON
     return jsonify(results_cleaned.to_dict(orient='records'))
 
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,OPTIONS'
+    return response
+
 # ------------------ Proxy-Route zur NINA API ----------------------
 @app.route('/v2/api/<path:endpoint>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def proxy(endpoint):

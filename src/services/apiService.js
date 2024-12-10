@@ -3,7 +3,7 @@ import axios from "axios";
 //const BASE_URL = "/v2/api";
 const BASE_URL = "http://192.168.2.128:5000/v2/api";
 
-
+const NGCS_URL = "http://192.168.2.128:5000/api/ngc/search";
 
 
 const apiService = {
@@ -81,6 +81,23 @@ const apiService = {
         });
     },
 
-  };
+  // NGC-Suche:
+  async searchNGC(query, limit = 10) {
+    // Ruft die NGC-Suche auf, die im Flask-Server unter /api/ngc/search läuft
+    return axios
+      .get(NGCS_URL, {
+        params: {
+          query,
+          limit,
+        },
+      })
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error("Fehler bei der NGC-Suche:", error);
+        throw error;
+      });
+  },
+};
+
 
 export default apiService;
