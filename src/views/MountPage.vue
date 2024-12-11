@@ -28,7 +28,7 @@
           <TppaPage />
         </div>
         <div>
-          <TargetSearch />
+        <!--  <TargetSearch /> -->
           
         </div>
       </div>
@@ -41,12 +41,14 @@
 import apiService from "@/services/apiService";
 import TppaPage from '../components/TppaPage.vue';
 import StatusBool from '../components/StatusBool.vue';
+// eslint-disable-next-line
 import TargetSearch from '../components/TargetSearch.vue';
 
 export default {
   components: {
     TppaPage,
     StatusBool,
+    // eslint-disable-next-line
     TargetSearch,
   },
   data() {

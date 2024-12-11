@@ -40,6 +40,11 @@ const apiService = {
     return axios.get(`${BASE_URL}/equipment/guider/${action}`).then((response) => response.data);
   },
 
+  // framing
+  framingAction(action) {
+    return axios.get(`${BASE_URL}/framing/${action}`).then((response) => response.data);
+  },
+
 
   //Foto aufnehmen ------------------------------------
   async startCapture(duration) {
@@ -80,6 +85,22 @@ const apiService = {
           throw error;
         });
     },
+
+        // Slew and Center --------------------------------------------------------
+        async slewAndCenter(RAangle,DECangle) {
+          return axios
+            .get(`${BASE_URL}/framing/set-coordinates`, {
+              params: { 
+                RAangle,
+                DECangle,
+               },
+            })
+            .then((response) => response.data)
+            .catch((error) => {
+              console.error("Fehler beim Steuern der Montierung:", error);
+              throw error;
+            });
+        },
 
   // NGC-Suche:
   async searchNGC(query, limit = 10) {

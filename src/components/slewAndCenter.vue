@@ -17,7 +17,7 @@
   
   <script>
   
-  //import apiService from "@/services/apiService";
+  import apiService from "@/services/apiService";
   
   export default {
     components: {
@@ -35,12 +35,16 @@
       
     },
     methods: {
-        slewAndCenter(){
-            this.RAangle= this.hmsToDegrees(this.RAangleString);
-            this.DECangle= this.dmsToDegrees(this.DECangleString);
-            console.log(this.RAangle);
-            console.log(this.DECangle);
-        },
+        async slewAndCenter() {
+           
+            this.RAangle = this.hmsToDegrees(this.RAangleString);
+            this.DECangle = this.dmsToDegrees(this.DECangleString);
+            try {
+                await apiService.slewAndCenter(this.RAangle, this.DECangle);
+            } catch (error) {
+                console.log("Framing API nicht erreicht", error);
+            }
+            },
         hmsToDegrees(hmsString) {
             const parts = hmsString.split(':');
             const hours = parseInt(parts[0], 10);
