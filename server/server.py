@@ -101,9 +101,7 @@ def search_ngc():
     elif query.startswith('ic'):
         search_column = 'Name'
         search_value = query[2:]  # Remove only the first 'ic'
-    else: 
-        search_column = 'Name'
-        search_value = query[2:]  # Remove only the first 'ic'
+   
         
 
     results = data[data[search_column].astype(str).str.lower().str.contains(search_value, na=False)].head(limit)

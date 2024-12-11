@@ -30,7 +30,10 @@
       <img :src="imageUrl"  />
     </div>
     <div>
-      <slewAndCenter />
+      <slewAndCenter 
+        v-model:RAangleString="RAangleString"
+        v-model:DECangleString="DECangleString"
+      />
     </div>
   </div>
 </div>
@@ -50,6 +53,8 @@ export default {
       suggestions: [],
       selectedItem: null, 
       imageUrl: null,
+      RAangleString: "",
+      DECangleString: "",
     };
   },
   methods: {
@@ -71,6 +76,8 @@ export default {
       this.searchQuery = item.Name || '';
       this.suggestions = [];
       this.selectedItem = item; // Ausgewählten Eintrag speichern
+      this.RAangleString = item.RA;
+      this.DECangleString = item.Dec;
       if (item.Image){
         const modifiedFileName = item.Image.FileName.replace('.jpg', '_500px.jpg'); // Fügt "_150px" vor ".jpg" hinzu
         this.imageUrl = `http://192.168.2.128:5000/cache/${modifiedFileName}`;
