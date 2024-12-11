@@ -87,7 +87,7 @@ const apiService = {
   },
 
   // Slew and Center --------------------------------------------------------
-  async slewAndCenter(RAangle, DECangle) {
+  async slewAndCenter(RAangle, DECangle, Center) {
     try {
       // Koordinaten setzen
       await axios.get(`${BASE_URL}/framing/set-coordinates`, {
@@ -96,14 +96,24 @@ const apiService = {
           DECangle,
         },
       });
-  
+     
       // Slew-Befehl senden
+      if (Center === false){
       const response = await axios.get(`${BASE_URL}/framing/slew`);
       return response.data;
+      } else {
+        const response = await axios.get(`${BASE_URL}/framing/slew`, {
+          params: {
+            slewoption: "Center",
+          },
+        })
+        return response.data;
+      }
     } catch (error) {
       console.error("Fehler beim Steuern der Montierung:", error);
       throw error;
     }
+  
   },
 
   // NGC-Suche:

@@ -19,11 +19,9 @@
     <!-- Ausgewählter Eintrag -->
     <div v-if="selectedItem" class="mt-4 p-4 border border-gray-700 rounded shadow">
       <h6 class="text-lg font-bold">Ausgewählter Eintrag:</h6>
-      <p><strong>Name:</strong> {{ selectedItem['Common names'] }}</p>
+      <p v-if="selectedItem['Common names']"><strong>Name:</strong> {{ selectedItem['Common names'] }}</p>
       <p><strong>NGC:</strong> {{ selectedItem.Name }}</p>
-      <p><strong>Typ:</strong> {{ selectedItem.Type }}</p>
-      <p><strong>RA:</strong> {{ selectedItem.RA }}</p>
-      <p><strong>Dec:</strong> {{ selectedItem.Dec }}</p>
+      <p v-if="selectedItem.M"><strong>M:</strong> M{{ selectedItem.M }}</p>
     </div>
   
     <div>
