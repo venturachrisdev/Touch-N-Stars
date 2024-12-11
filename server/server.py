@@ -7,21 +7,29 @@ import xmltodict
 
 app = Flask(__name__, static_folder='static')
 
+# Constants
 BASE_API_URL = "http://localhost:1888/v2/api"
+CACHE_PATH = os.path.join(os.getenv('LOCALAPPDATA', ''), 'NINA', 'FramingAssistantCache')
+XML_FILE_PATH = os.path.join(CACHE_PATH, 'CacheInfo.xml')
 
-data = pd.read_csv('./katalog/NGC.csv', sep=';')
-data2 = pd.read_csv('./katalog/addendum.csv', sep=';')  
-data = pd.concat([data, data2], ignore_index=True)
+# Load data
+data = pd.concat([
+    pd.read_csv('./katalog/NGC.csv', sep=';'),
+    pd.read_csv('./katalog/addendum.csv', sep=';')
+], ignore_index=True)
 
+# Utility functions
 def great_circle_distance(ra1, dec1, ra2, dec2):
+    """Calculate the great circle distance between two points in radians."""
     ra1, dec1, ra2, dec2 = map(math.radians, [ra1, dec1, ra2, dec2])
     delta_ra = ra2 - ra1
     delta_dec = dec2 - dec1
-    a = math.sin(delta_dec / 2)**2 + math.cos(dec1)*math.cos(dec2)*math.sin(delta_ra / 2)**2
-    c = 2*math.asin(math.sqrt(a))
-    return c
+    a = (math.sin(delta_dec / 2)**2 +
+         math.cos(dec1) * math.cos(dec2) * math.sin(delta_ra / 2)**2)
+    return 2 * math.asin(math.sqrt(a))
 
 def find_closest_image(ra_target, dec_target, xml_file_path):
+    """Find the closest image to the given RA and Dec in the XML file."""
     try:
         with open(xml_file_path, 'r', encoding='utf-8') as xml_file:
             data_dict = xmltodict.parse(xml_file.read())
@@ -41,41 +49,33 @@ def find_closest_image(ra_target, dec_target, xml_file_path):
     min_distance = float('inf')
     for image in images:
         try:
-            # RA und Dec direkt auslesen (hier wird angenommen, dass @RA und @Dec in Grad sind)
             ra = float(image['@RA'])
             dec = float(image['@Dec'])
-            
             distance = great_circle_distance(ra_target, dec_target, ra, dec)
             if distance < min_distance:
                 min_distance = distance
                 closest_image = image
         except Exception as e:
             print(f"Error processing image: {e}")
-    print(closest_image)
+
     return closest_image, None
 
 def hms_to_decimal(ra_hms, dec_hms, ra_in_hours=False):
-
+    """Convert RA and Dec from HMS/DMS to decimal degrees."""
     def dms_to_degrees(dms):
-        parts = dms.split(":")
-        degrees = float(parts[0]) + float(parts[1])/60.0 + float(parts[2])/3600.0
-        return degrees
+        parts = list(map(float, dms.split(":")))
+        return parts[0] + parts[1] / 60.0 + parts[2] / 3600.0
 
-    # RA in Grad berechnen
     ra_decimal = dms_to_degrees(ra_hms)
     if ra_in_hours:
-        # Wenn RA in Stunden wäre, dann ra_decimal * 15.0
-        # Aber hier RA in D:M:S => also keine Multiplikation
-        ra_decimal = ra_decimal * 15.0
+        ra_decimal *= 15.0
 
-    # DEC in Grad berechnen
     dec_sign = -1 if dec_hms.startswith("-") else 1
-    dec_hms = dec_hms.lstrip("-")
-    dec_decimal = dec_sign * dms_to_degrees(dec_hms)
+    dec_decimal = dec_sign * dms_to_degrees(dec_hms.lstrip("-"))
 
     return ra_decimal, dec_decimal
 
-
+# Routes
 @app.route('/api/ngc/search', methods=['GET'])
 def search_ngc():
     query = request.args.get('query', '').strip().lower()
@@ -83,6 +83,7 @@ def search_ngc():
 
     if not query:
         return {"error": "Query parameter is required"}, 400
+
     try:
         limit = int(limit)
         if limit <= 0:
@@ -90,94 +91,60 @@ def search_ngc():
     except ValueError:
         return {"error": "Invalid limit parameter"}, 400
 
+    search_column, search_value = ('Common names', query)
     if query.startswith('m'):
         search_column = 'M'
-        search_value = query[1:]
+        search_value = query[1:]  # Remove only the first 'm'
     elif query.startswith('ngc'):
         search_column = 'Name'
-        search_value = query[3:]
+        search_value = query[3:]  # Remove only the first 'ngc'
     elif query.startswith('ic'):
         search_column = 'Name'
-        search_value = query[2:]
-    else:
-        search_column = 'Common names'
-        search_value = query[0:]
+        search_value = query[2:]  # Remove only the first 'ic'
 
-    results = data[
-        data[search_column].astype(str).str.lower().str.contains(search_value, na=False)
-    ].head(limit)
-
+    results = data[data[search_column].astype(str).str.lower().str.contains(search_value, na=False)].head(limit)
     selected_columns = ['Name', 'Type', 'RA', 'Dec', 'M', 'Common names']
-    results_filtered = results[selected_columns].fillna("")
-    results_cleaned = results_filtered.replace("", None)
+    results_cleaned = results[selected_columns].fillna("")
 
-    local_appdata_path = os.getenv('LOCALAPPDATA')
-    if not local_appdata_path:
-        return jsonify({"error": "LOCALAPPDATA environment variable not found"}), 500
-
-    xml_file_path = os.path.join(local_appdata_path, 'NINA', 'FramingAssistantCache', 'CacheInfo.xml')
-    if not os.path.exists(xml_file_path):
-        return jsonify({"error": f"Cache file not found at {xml_file_path}"}), 404
+    if not os.path.exists(XML_FILE_PATH):
+        return jsonify({"error": f"Cache file not found at {XML_FILE_PATH}"}), 404
 
     enriched_results = []
     for _, row in results_cleaned.iterrows():
         try:
-            # RA und Dec in Dezimalgrade umrechnen, RA in D:M:S => ra_in_hours=False
             ra_decimal, dec_decimal = hms_to_decimal(row['RA'], row['Dec'], ra_in_hours=False)
-            closest_image, error = find_closest_image(ra_decimal, dec_decimal, xml_file_path)
-            
-            if error:
-                image_info = {"error": error}
-            else:
-                image_info = {
-                    "FileName": closest_image.get('@FileName'),
-                    "RA": closest_image.get('@RA'),
-                    "Dec": closest_image.get('@Dec'),
-                    "Source": closest_image.get('@Source'),
-                    "Name": closest_image.get('@Name'),
-                }
+            closest_image, error = find_closest_image(ra_decimal, dec_decimal, XML_FILE_PATH)
+            image_info = {"error": error} if error else {
+                "FileName": closest_image.get('@FileName'),
+                "RA": closest_image.get('@RA'),
+                "Dec": closest_image.get('@Dec'),
+                "Source": closest_image.get('@Source'),
+                "Name": closest_image.get('@Name'),
+            }
         except Exception as e:
             image_info = {"error": f"Error during image lookup: {e}"}
 
-        enriched_results.append({
-            "Name": row['Name'],
-            "Type": row['Type'],
-            "RA": row['RA'],
-            "Dec": row['Dec'],
-            "M": row['M'],
-            "Common names": row['Common names'],
-            "Image": image_info
-        })
+        enriched_results.append({**row.to_dict(), "Image": image_info})
 
     return jsonify(enriched_results)
 
 @app.route('/cache/<path:filename>')
 def serve_image_from_cache(filename):
-    cache_path = "C:\\Users\\Astro\\AppData\\Local\\NINA\\FramingAssistantCache"
-    return send_from_directory(cache_path, filename)
-
+    return send_from_directory(CACHE_PATH, filename)
 
 @app.route('/v2/api/<path:endpoint>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def proxy(endpoint):
     target_url = f"{BASE_API_URL}/{endpoint}"
-    print(f"Forwarding request to: {target_url}")
-
     try:
-        if request.method == 'GET':
-            resp = requests.get(target_url, params=request.args)
-        elif request.method == 'POST':
-            resp = requests.post(target_url, json=request.json)
-        elif request.method == 'PUT':
-            resp = requests.put(target_url, json=request.json)
-        elif request.method == 'DELETE':
-            resp = requests.delete(target_url)
-        else:
-            return {"error": "Unsupported HTTP method"}, 405
-
+        resp = requests.request(
+            method=request.method,
+            url=target_url,
+            params=request.args if request.method == 'GET' else None,
+            json=request.json if request.method in ['POST', 'PUT'] else None
+        )
         response = Response(resp.content, status=resp.status_code)
         response.headers['Access-Control-Allow-Origin'] = '*'
         return response
-
     except Exception as e:
         print(f"Error: {e}")
         return {"error": "Failed to connect to target API"}, 500
@@ -185,11 +152,9 @@ def proxy(endpoint):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_vue(path):
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+    if path and os.path.exists(os.path.join(app.static_folder, path)):
         return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
-
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.after_request
 def add_cors_headers(response):
