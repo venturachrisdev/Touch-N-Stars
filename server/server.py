@@ -106,8 +106,13 @@ def search_ngc():
     selected_columns = ['Name', 'Type', 'RA', 'Dec', 'M', 'Common names']
     results_cleaned = results[selected_columns].fillna("")
 
+    if not os.path.exists(CACHE_PATH):
+        enriched_results = [row.to_dict() for _, row in results_cleaned.iterrows()]
+        return jsonify(enriched_results)
+
     if not os.path.exists(XML_FILE_PATH):
-        return jsonify({"error": f"Cache file not found at {XML_FILE_PATH}"}), 404
+        enriched_results = [row.to_dict() for _, row in results_cleaned.iterrows()]
+        return jsonify(enriched_results)
 
     enriched_results = []
     for _, row in results_cleaned.iterrows():

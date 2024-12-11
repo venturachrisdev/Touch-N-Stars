@@ -68,11 +68,13 @@ export default {
       this.searchQuery = item.Name || '';
       this.suggestions = [];
       this.selectedItem = item; // Ausgewählten Eintrag speichern
+      if (item.Image){
+        const modifiedFileName = item.Image.FileName.replace('.jpg', '_500px.jpg'); // Fügt "_150px" vor ".jpg" hinzu
+        this.imageUrl = `http://192.168.2.128:5000/cache/${modifiedFileName}`;
+      // this.imageUrl = `/cache/${modifiedFileName}`;
+        this.$emit('itemSelected', item);
+      }
 
-      const modifiedFileName = item.Image.FileName.replace('.jpg', '_500px.jpg'); // Fügt "_150px" vor ".jpg" hinzu
-      this.imageUrl = `http://192.168.2.128:5000/cache/${modifiedFileName}`;
-     // this.imageUrl = `/cache/${modifiedFileName}`;
-      this.$emit('itemSelected', item);
       console.log(this.imageUrl);
     }
   }
