@@ -101,11 +101,19 @@ def search_ngc():
     elif query.startswith('ic'):
         search_column = 'Name'
         search_value = query[2:]  # Remove only the first 'ic'
+    else: 
+        search_column = 'Name'
+        search_value = query[2:]  # Remove only the first 'ic'
+        
 
     results = data[data[search_column].astype(str).str.lower().str.contains(search_value, na=False)].head(limit)
     selected_columns = ['Name', 'Type', 'RA', 'Dec', 'M', 'Common names']
     results_cleaned = results[selected_columns].fillna("")
-
+    
+    enriched_results = [row.to_dict() for _, row in results_cleaned.iterrows()]
+    return jsonify(enriched_results)
+    
+    '''
     if not os.path.exists(CACHE_PATH):
         enriched_results = [row.to_dict() for _, row in results_cleaned.iterrows()]
         return jsonify(enriched_results)
@@ -130,8 +138,9 @@ def search_ngc():
             image_info = {"error": f"Error during image lookup: {e}"}
 
         enriched_results.append({**row.to_dict(), "Image": image_info})
-
-    return jsonify(enriched_results)
+        return jsonify(enriched_results)
+    '''
+    
 
 @app.route('/cache/<path:filename>')
 def serve_image_from_cache(filename):

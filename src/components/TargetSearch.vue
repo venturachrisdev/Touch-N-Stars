@@ -1,11 +1,12 @@
 <template>
-  <div class="container text-center">
+   <div class="container flex tems-center justify-center">
+    <div class="container max-w-md ">
     <h5 class="text-xl font-bold mb-4">Suche</h5>
-    <div class="relative text-black mx-auto max-w-md">
+    <div class=" text-black mx-auto max-w-md">
       <input type="text" v-model="searchQuery" @input="fetchSuggestions"
         class="w-full p-2 border border-gray-300 rounded" placeholder="Geben Sie einen Suchbegriff ein..." />
       <ul v-if="suggestions.length > 0"
-        class="absolute left-0 right-0 bg-white border border-gray-300 rounded mt-1 z-10">
+        class=" bg-white border border-gray-300 rounded mt-1 z-10">
         <li v-for="(item, index) in suggestions" :key="index" class="p-2 hover:bg-gray-200 cursor-pointer"
           @click="selectSuggestion(item)">
           {{ item.Name }}
@@ -16,7 +17,7 @@
     </div>
 
     <!-- Ausgewählter Eintrag -->
-    <div v-if="selectedItem" class="mt-4 bg-white text-black p-4 rounded shadow">
+    <div v-if="selectedItem" class="mt-4 p-4 border border-gray-700 rounded shadow">
       <h6 class="text-lg font-bold">Ausgewählter Eintrag:</h6>
       <p><strong>Name:</strong> {{ selectedItem['Common names'] }}</p>
       <p><strong>NGC:</strong> {{ selectedItem.Name }}</p>
@@ -24,13 +25,15 @@
       <p><strong>RA:</strong> {{ selectedItem.RA }}</p>
       <p><strong>Dec:</strong> {{ selectedItem.Dec }}</p>
     </div>
+  
     <div>
-      <img :src="imageUrl" alt="Himmelsbild" />
+      <img :src="imageUrl"  />
     </div>
     <div>
       <slewAndCenter />
     </div>
   </div>
+</div>
 </template>
 
 <script>

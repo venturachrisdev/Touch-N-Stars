@@ -1,17 +1,20 @@
 <template>
-    <div class="container text-center">
+       <div class="container flex tems-center justify-center">
+        <div class="container max-w-md ">
       <h5 class="text-xl  font-bold text-white mb-4">Schwenken und Zentrieren</h5>
-        <div>
-            <input type="text" v-model="RAangleString" class="text-black">
-            <input type="text" v-model="DECangleString" class="text-black">
+        <div class="flex flex-row space-x-4">
+            <input type="text" v-model="RAangleString" class="text-black w-full p-2 border border-gray-300 rounded">
+            <input type="text" v-model="DECangleString" class="text-black w-full p-2 border border-gray-300 rounded">
         </div>
-        <div>
-            <button @click="slewAndCenter">
+        <div class="mt-4">
+            <button @click="slewAndCenter"
+                    class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+            >
                 Schwenken
             </button>
         </div>
       
-      
+    </div>
     </div>
   </template>
   
