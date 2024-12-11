@@ -51,14 +51,10 @@ def find_closest_image(ra_target, dec_target, xml_file_path):
                 closest_image = image
         except Exception as e:
             print(f"Error processing image: {e}")
-
+    print(closest_image)
     return closest_image, None
 
 def hms_to_decimal(ra_hms, dec_hms, ra_in_hours=False):
-    """
-    Wenn RA in Grad:Min:Sek (D:M:S) angegeben ist, setze ra_in_hours=False.
-    Dann wird RA einfach wie ein Winkel in Grad behandelt.
-    """
 
     def dms_to_degrees(dms):
         parts = dms.split(":")
@@ -154,6 +150,11 @@ def search_ngc():
         })
 
     return jsonify(enriched_results)
+
+@app.route('/cache/<path:filename>')
+def serve_image_from_cache(filename):
+    cache_path = "C:\\Users\\Astro\\AppData\\Local\\NINA\\FramingAssistantCache"
+    return send_from_directory(cache_path, filename)
 
 
 @app.route('/v2/api/<path:endpoint>', methods=['GET', 'POST', 'PUT', 'DELETE'])

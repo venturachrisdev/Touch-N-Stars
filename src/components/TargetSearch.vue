@@ -25,6 +25,9 @@
       <p><strong>Dec:</strong> {{ selectedItem.Dec }}</p>
     </div>
     <div>
+      <img :src="imageUrl" alt="Himmelsbild" />
+    </div>
+    <div>
       <slewAndCenter />
     </div>
   </div>
@@ -42,7 +45,8 @@ export default {
     return {
       searchQuery: '',
       suggestions: [],
-      selectedItem: null // Hier speichern wir den ausgewählten Vorschlag
+      selectedItem: null, 
+      imageUrl: null,
     };
   },
   methods: {
@@ -64,8 +68,12 @@ export default {
       this.searchQuery = item.Name || '';
       this.suggestions = [];
       this.selectedItem = item; // Ausgewählten Eintrag speichern
+
+      const modifiedFileName = item.Image.FileName.replace('.jpg', '_500px.jpg'); // Fügt "_150px" vor ".jpg" hinzu
+      this.imageUrl = `http://192.168.2.128:5000/cache/${modifiedFileName}`;
+     // this.imageUrl = `/cache/${modifiedFileName}`;
       this.$emit('itemSelected', item);
-      // console.log(item);
+      console.log(this.imageUrl);
     }
   }
 };
