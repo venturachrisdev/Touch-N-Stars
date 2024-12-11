@@ -21,16 +21,35 @@
 
      
         <!-- Integration von TppaPage -->
-        <div class="mt-10">
-          <hr class="border-t border-gray-300">
+
+       
+        <div class="mt-10 border border-gray-600 rounded-b-lg bg-gray-800/10">
+          
+          
+        <div class="text-sm">
+          <button 
+          class="border-2 border-gray-500 rounded-b-md w-24 h-10"
+          :class="{'bg-gray-600': showSlew, 
+                    'bg-gray-800': !showSlew,
+          }"
+          @click="toggleShowSlew">Schwenken</button>
+          <button 
+          class="border-2 border-gray-500 rounded-b-md  w-24 h-10"
+          :class="{'bg-gray-600': showTppa, 
+                    'bg-gray-800': !showTppa, 
+                }"
+          @click="toggleShowTppa">TPPA</button>
         </div>
-        <div class="mt-5">
+        <div class="container pl-5 pb-5 pr-5">
+        <div v-if="showTppa" class="mt-5">
           <TppaPage />
         </div>
-        <div>
-        <!--  <TargetSearch /> -->
+        <div v-if="showSlew" class="mt-5">
+        <TargetSearch />
           
         </div>
+      </div>
+    </div>
       </div>
     </div>
   </div>
@@ -57,6 +76,9 @@ export default {
       TrackingEnabled: false,
       Slewing: false,
       isConnected: false, // Verbindungsstatus
+      showTppa:false,
+      showSlew:true,
+
     };
   },
   async mounted() {
@@ -70,6 +92,18 @@ export default {
     this.stopFetchingInfo();
   },
   methods: {
+    toggleShowSlew(){
+      this.showSlew = !this.showSlew;
+      if (this.showSlew) {
+        this.showTppa = false; // Setzt showSlew auf false, wenn showTppa aktiviert wird
+      }
+    },
+    toggleShowTppa(){
+      this.showTppa = !this.showTppa;
+      if (this.showTppa) {
+        this.showSlew = false; // Setzt showSlew auf false, wenn showTppa aktiviert wird
+      }
+    },
     async toggleParkUnpark() {
       try {
         //console.log(this.parkPosition);
