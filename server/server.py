@@ -2,8 +2,8 @@ from flask import Flask, send_from_directory, request, Response, jsonify, send_f
 import requests
 import pandas as pd
 import os
-import math
-import xmltodict
+import threading
+import time
 
 app = Flask(__name__, static_folder='static')
 #-----------------------------------------------------
@@ -16,7 +16,15 @@ TARGETPIC_CACHE_DIR = os.path.join(CACHE_PATH, 'TargetPicsCache')
 os.makedirs(TARGETPIC_CACHE_DIR, exist_ok=True)  # Sicherstellen, dass der Cache-Ordner existiert
 TARGETPIC_URL = "https://alaskybis.u-strasbg.fr/hips-image-services/hips2fits"  
 
+#-----------------------------------------------------
+# Globale Daten 
+#-----------------------------------------------------
 search_results_cache = None
+guider_data = {
+    "RADistanceRaw": [],
+    "DECDistanceRaw": [],
+}
+lock = threading.Lock()
 #-----------------------------------------------------
 # Load data
 #-----------------------------------------------------
@@ -28,6 +36,45 @@ data = pd.concat([
 #-----------------------------------------------------
 # Utility functions
 #-----------------------------------------------------
+def fetch_and_store_data():
+    """Periodisch Guider-Daten abrufen und speichern."""
+    while True:
+        try:
+            response = requests.get(f"{BASE_API_URL}/equipment/guider/info")
+            if response.status_code == 200:
+                data = response.json()
+
+                # Prüfen, ob die Verbindung aktiv ist
+                if data.get("Success") and data["Response"].get("Connected"):
+                    response_data = data.get("Response", {})
+
+                    # Prüfen, ob LastGuideStep existiert
+                    if "LastGuideStep" in response_data:
+                        last_guide_step = response_data["LastGuideStep"]
+
+                        ra_distance = round(float(last_guide_step.get("RADistanceRaw", 0)) * float(response_data.get("PixelScale", 1)), 2)
+                        dec_distance = round(float(last_guide_step.get("DECDistanceRaw", 0)) * float(response_data.get("PixelScale", 1)), 2)
+
+                        with lock:
+                            def add_value_if_changed(array, value, limit=50):
+                                if len(array) == 0 or array[-1] != value:  # Speichern nur bei Änderung
+                                    if len(array) >= limit:
+                                        array.pop(0)  # Entferne den ältesten Wert
+                                    array.append(value)
+
+                            add_value_if_changed(guider_data["RADistanceRaw"], ra_distance)
+                            add_value_if_changed(guider_data["DECDistanceRaw"], dec_distance)
+                    else:
+                        print("Schlüssel 'LastGuideStep' fehlt in der API-Antwort.")
+                else:
+                    print("Guider nicht verbunden oder kein Erfolg ")
+            else:
+                print(f"Fehlerhafte API-Antwort: {response.status_code}")
+        except Exception as e:
+            print(f"Fehler beim Abrufen der Guider-Daten: {e}")
+        
+        time.sleep(1)  # Abruf alle 1 s
+
 def hms_to_degrees(hms_string):
     """
     Konvertiert eine Zeitangabe im Format HH:MM:SS in Grad.
@@ -65,6 +112,12 @@ def dms_to_degrees(dms_string):
 #-----------------------------------------------------
 # Routes
 #-----------------------------------------------------
+@app.route('/api/guider-data', methods=['GET'])
+def get_guider_data():
+    """API-Endpunkt, um die letzten Guider-Werte bereitzustellen."""
+    with lock:
+        return jsonify(guider_data)
+    
 @app.route('/api/ngc/search', methods=['GET'])
 def search_ngc():
     global search_results_cache
@@ -218,6 +271,10 @@ def add_cors_headers(response):
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
     response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,OPTIONS'
     return response
+#-----------------------------------------------------
+# Hintergrund-Thread 
+#-----------------------------------------------------
+threading.Thread(target=fetch_and_store_data, daemon=True).start()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
