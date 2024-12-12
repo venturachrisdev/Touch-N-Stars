@@ -136,7 +136,6 @@ const apiService = {
 
 // Zielbild laden
   async searchTargetPic(width,height,fov,ra,dec) {
-  // /hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
     return axios
       .get(TARGETPIC_URL, {
         params: {
@@ -145,11 +144,16 @@ const apiService = {
           fov: fov,
           ra: ra,
           dec: dec,
-          projection:"STG&hips=CDS%2FP%2FDSS2%2Fcolor",
+          hips: "CDS/P/DSS2/color",
+          projection:"STG",
           format: "jpg",
         },
+        responseType: "blob", 
       })
-      .then((response) => response.data)
+      .then((response) => {
+        // Erzeugt eine Blob-URL aus den binären Daten
+        return URL.createObjectURL(response.data);
+      })
       .catch((error) => {
         console.error("Fehler beim abrufen des Zielbildes", error);
         throw error;
