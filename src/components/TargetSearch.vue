@@ -27,7 +27,7 @@
           <TargetPic v-model:RAangleString="RAangleString" v-model:DECangleString="DECangleString" />
         </div>
       </div>
-      <div>
+      <div class="mt-4">
         <slewAndCenter v-model:RAangleString="RAangleString" v-model:DECangleString="DECangleString" />
       </div>
     </div>

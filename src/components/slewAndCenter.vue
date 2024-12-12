@@ -2,11 +2,13 @@
     <div class="container flex tems-center justify-center">
         <div class="container max-w-md">
             <h5 class="text-xl font-bold text-white mb-4">Schwenken und Zentrieren</h5>
-            <div class="flex flex-row space-x-4">
+            <div class="flex flex-row justify-center items-center space-x-4">
                 <!-- Verwende v-model für die Bidirektionale Datenbindung -->
-                <input type="text" v-model="localRAangleString"
+                 <p>RA:</p>
+                <input type="text" v-model="localRAangleString" disabled
                     class="text-black w-full p-2 border border-gray-300 rounded" placeholder="RA 03:47:28.2" />
-                <input type="text" v-model="localDECangleString"
+                <p>Dec:</p>
+                <input type="text" v-model="localDECangleString" disabled
                     class="text-black w-full p-2 border border-gray-300 rounded" placeholder="Dec +24:06:19" />
             </div>
             <div class="mt-4 flex flex-col space-y-2">
