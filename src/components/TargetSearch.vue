@@ -1,56 +1,57 @@
 <template>
-   <div class="container flex tems-center justify-center">
+  <div class="container flex tems-center justify-center">
     <div class="container max-w-md ">
-    <h5 class="text-xl font-bold mb-4">Suche</h5>
-    <div class=" text-black mx-auto max-w-md">
-      <input type="text" v-model="searchQuery" @input="fetchSuggestions"
-        class="w-full p-2 border border-gray-300 rounded" placeholder="Geben Sie einen Suchbegriff ein..." />
-      <ul v-if="suggestions.length > 0"
-        class=" bg-white border border-gray-300 rounded mt-1 z-10">
-        <li v-for="(item, index) in suggestions" :key="index" class="p-2 hover:bg-gray-200 cursor-pointer"
-          @click="selectSuggestion(item)">
-          {{ item.Name }}
-          <span v-if="item['Common names']"> ({{ item['Common names'] }})</span>
-          <span v-if="item['M']"> (M {{ item['M'] }})</span>
-        </li>
-      </ul>
-    </div>
+      <h5 class="text-xl font-bold mb-4">Suche</h5>
+      <div class=" text-black mx-auto max-w-md">
+        <input type="text" v-model="searchQuery" @input="fetchSuggestions"
+          class="w-full p-2 border border-gray-300 rounded" placeholder="Geben Sie einen Suchbegriff ein..." />
+        <ul v-if="suggestions.length > 0" class=" bg-white border border-gray-300 rounded mt-1 z-10">
+          <li v-for="(item, index) in suggestions" :key="index" class="p-2 hover:bg-gray-200 cursor-pointer"
+            @click="selectSuggestion(item)">
+            {{ item.Name }}
+            <span v-if="item['Common names']"> ({{ item['Common names'] }})</span>
+            <span v-if="item['M']"> (M {{ item['M'] }})</span>
+          </li>
+        </ul>
+      </div>
+      <!-- Ausgewählter Eintrag -->
+      <div v-if="selectedItem" class="flex mt-4 p-4 border border-gray-700 rounded shadow">
+        <div>
+         
+          <div class="text-xs ">
+            <p v-if="selectedItem['Common names']"><strong>Name:</strong> {{ selectedItem['Common names'] }}</p>
+            <p> <strong>NGC:</strong> {{ selectedItem.Name }}</p>
+            <p v-if="selectedItem.M"> <strong>M:</strong> M{{ selectedItem.M }}</p>
+          </div>
+        </div>
+        <div class="border border-gray-700 rounded-md">
+          <TargetPic v-model:RAangleString="RAangleString" v-model:DECangleString="DECangleString" />
+        </div>
+      </div>
 
-    <!-- Ausgewählter Eintrag -->
-    <div v-if="selectedItem" class="mt-4 p-4 border border-gray-700 rounded shadow">
-      <h6 class="text-lg font-bold">Ausgewählter Eintrag:</h6>
-      <p v-if="selectedItem['Common names']"><strong>Name:</strong> {{ selectedItem['Common names'] }}</p>
-      <p><strong>NGC:</strong> {{ selectedItem.Name }}</p>
-      <p v-if="selectedItem.M"><strong>M:</strong> M{{ selectedItem.M }}</p>
-    </div>
-  
-    <div>
-      <img :src="imageUrl"  />
-    </div>
-    <div>
-      <slewAndCenter 
-        v-model:RAangleString="RAangleString"
-        v-model:DECangleString="DECangleString"
-      />
+      <div>
+        <slewAndCenter v-model:RAangleString="RAangleString" v-model:DECangleString="DECangleString" />
+      </div>
+
     </div>
   </div>
-</div>
 </template>
 
 <script>
 import apiService from "@/services/apiService";
 import slewAndCenter from '../components/slewAndCenter.vue';
+import TargetPic from '../components/TargetPic.vue';
 
 export default {
   components: {
     slewAndCenter,
+    TargetPic,
   },
   data() {
     return {
       searchQuery: '',
       suggestions: [],
-      selectedItem: null, 
-      imageUrl: null,
+      selectedItem: null,
       RAangleString: "",
       DECangleString: "",
     };
@@ -73,17 +74,9 @@ export default {
     selectSuggestion(item) {
       this.searchQuery = item.Name || '';
       this.suggestions = [];
-      this.selectedItem = item; // Ausgewählten Eintrag speichern
+      this.selectedItem = item; 
       this.RAangleString = item.RA;
       this.DECangleString = item.Dec;
-      if (item.Image){
-        const modifiedFileName = item.Image.FileName.replace('.jpg', '_500px.jpg'); // Fügt "_150px" vor ".jpg" hinzu
-        this.imageUrl = `http://192.168.2.128:5000/cache/${modifiedFileName}`;
-      // this.imageUrl = `/cache/${modifiedFileName}`;
-        this.$emit('itemSelected', item);
-      }
-
-      console.log(this.imageUrl);
     }
   }
 };

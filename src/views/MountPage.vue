@@ -21,10 +21,7 @@
 
      
         <!-- Integration von TppaPage -->
-
-       
         <div class="mt-10 border border-gray-600 rounded-b-lg bg-gray-800/10">
-          
           
         <div class="text-sm">
           <button 
@@ -60,14 +57,12 @@
 import apiService from "@/services/apiService";
 import TppaPage from '../components/TppaPage.vue';
 import StatusBool from '../components/StatusBool.vue';
-// eslint-disable-next-line
 import TargetSearch from '../components/TargetSearch.vue';
 
 export default {
   components: {
     TppaPage,
     StatusBool,
-    // eslint-disable-next-line
     TargetSearch,
   },
   data() {

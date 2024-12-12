@@ -1,27 +1,30 @@
 <template>
-    <div class="container text-center">
-        <h5 class="text-xl  font-bold text-white mb-4">Bild</h5>
+    <div class="container flex tems-center justify-center">
+        <div class="container max-w-md ">
 
-        <button @click="getTargetPic">laden</button>
-        <img v-if="targetPic" :src="targetPic" alt="Bild konnte nicht geladen werden">
+                <img v-if="targetPic" :src="targetPic" alt="Bild konnte nicht geladen werden">
+            
+        </div>
     </div>
 </template>
 
 <script>
-
 import apiService from "@/services/apiService";
 
 export default {
-    components: {
-
+    props: {
+        RAangleString: String,
+        DECangleString: String,
     },
     data() {
         return {
             targetPic: null,
         };
     },
-    async mounted() {
-
+    watch: {
+        // Beobachten Sie Änderungen an RAangleString und DECangleString
+        RAangleString: "loadImage",
+        DECangleString: "loadImage",
     },
     methods: {
         hmsToDegrees(hmsString) {
@@ -48,9 +51,10 @@ export default {
         },
         async getTargetPic() {
             try {
-                const ra = this.hmsToDegrees("00:42:44.35");
-                const dec = this.dmsToDegrees("+41:16:08.6");
+                const ra = this.hmsToDegrees(this.RAangleString);
+                const dec = this.dmsToDegrees(this.DECangleString);
 
+                console.log("Bild wird abgerufen")
                 if (this.targetPic) {
                     URL.revokeObjectURL(this.targetPic);
                 }
@@ -60,6 +64,14 @@ export default {
                 console.error("Fehler beim Abrufen des Bildes:", error);
             }
         },
+        loadImage() {
+            // Löst das Neuladen des Bildes aus, wenn sich RAangleString oder DECangleString ändert
+            this.getTargetPic();
+        },
+    },
+    mounted() {
+        // Lädt das Bild beim Initialisieren der Komponente
+        this.loadImage();
     },
 };
 </script>

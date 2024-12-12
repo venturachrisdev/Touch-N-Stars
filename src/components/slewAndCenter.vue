@@ -105,7 +105,7 @@ export default {
                 const response = await apiService.framingAction("info"); // API-Aufruf
                 if (response.Success) {
                     this.Info = response.Response;
-                    console.log(this.Info);
+                    //console.log(this.Info);
                     //const data = response.Response;
                    
                       //  this.mountCoordinatesRaStr = data.Rectangle.OriginalCoordinates.RAString;
