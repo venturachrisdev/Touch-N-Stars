@@ -13,6 +13,7 @@ BASE_API_URL = "http://localhost:1888/v2/api"
 CACHE_PATH = os.path.join(os.getenv('LOCALAPPDATA', ''), 'NINA', 'FramingAssistantCache')
 XML_FILE_PATH = os.path.join(CACHE_PATH, 'CacheInfo.xml')
 
+search_results_cache = None
 #-----------------------------------------------------
 # Load data
 #-----------------------------------------------------
@@ -36,7 +37,7 @@ def hms_to_degrees(hms_string):
 
     hours = int(parts[0])
     minutes = int(parts[1])
-    seconds = int(parts[2])
+    seconds = float(parts[2])
 
     return hours * 15 + minutes * (15 / 60) + seconds * (15 / 3600)
 
@@ -53,8 +54,8 @@ def dms_to_degrees(dms_string):
     if len(parts) != 3:
         raise ValueError("Ungültiges Format. Erwartet: ±DD:MM:SS.s")
 
-    degrees = float(parts[0])
-    minutes = float(parts[1])
+    degrees = int(parts[0])
+    minutes = int(parts[1])
     seconds = float(parts[2])
 
     return sign * (degrees + minutes / 60 + seconds / 3600)
@@ -63,41 +64,65 @@ def dms_to_degrees(dms_string):
 #-----------------------------------------------------
 @app.route('/api/ngc/search', methods=['GET'])
 def search_ngc():
+    global search_results_cache
     query = request.args.get('query', '').strip().lower()
     limit = request.args.get('limit', 100)
 
     if not query:
-        return {"error": "Query parameter is required"}, 400
+        return jsonify({"error": "Query parameter is required"}), 400
 
     try:
         limit = int(limit)
         if limit <= 0:
-            return {"error": "Limit must be a positive integer"}, 400
+            return jsonify({"error": "Limit must be a positive integer"}), 400
     except ValueError:
-        return {"error": "Invalid limit parameter"}, 400
+        return jsonify({"error": "Invalid limit parameter"}), 400
 
-    search_column, search_value = ('Common names', query)
-    if query.startswith('m'):
-        search_column = 'M'
-        search_value = query[1:]  # Remove only the first 'm'
-    elif query.startswith('ngc'):
-        search_column = 'Name'
-        search_value = query[3:]  # Remove only the first 'ngc'
-    elif query.startswith('ic'):
-        search_column = 'Name'
-        search_value = query[2:]  # Remove only the first 'ic'
-   
-    results = data[data[search_column].astype(str).str.lower().str.contains(search_value, na=False)].head(limit)
-    selected_columns = ['Name', 'Type', 'RA', 'Dec', 'M', 'Common names']
-    results_cleaned = results[selected_columns].fillna("")
-    
-    final_results = [row.to_dict() for _, row in results_cleaned.iterrows()]
-    return jsonify(final_results)
+    try:
+        search_column, search_value = ('Common names', query)
+        if query.startswith('m'):
+            search_column = 'M'
+            search_value = query[1:]  # Remove only the first 'm'
+        elif query.startswith('ngc'):
+            search_column = 'Name'
+            search_value = query[3:]  # Remove only the first 'ngc'
+        elif query.startswith('ic'):
+            search_column = 'Name'
+            search_value = query[2:]  # Remove only the first 'ic'
+
+        results = data[data[search_column].astype(str).str.lower().str.contains(search_value, na=False)].head(limit)
+        selected_columns = ['Name', 'Type', 'RA', 'Dec', 'M', 'Common names']
+        results_cleaned = results[selected_columns].fillna("")
+
+        final_results = []
+        for _, row in results_cleaned.iterrows():
+            try:
+                ra_decimal = hms_to_degrees(row['RA']) if row['RA'] else None
+                dec_decimal = dms_to_degrees(row['Dec']) if row['Dec'] else None
+            except Exception as e:
+                print(f"Error converting RA/Dec for row: {row.to_dict()}, Error: {e}")
+                ra_decimal = None
+                dec_decimal = None
+
+            result = row.to_dict()
+            result['RA_decimal'] = ra_decimal
+            result['Dec_decimal'] = dec_decimal
+            final_results.append(result)
+        
+        search_results_cache = final_results
+        return jsonify(final_results)
+
+    except Exception as e:
+        print(f"Error in /api/ngc/search: {e}")
+        return jsonify({"error": "An internal error occurred"}), 500
     
 
-@app.route('/cache/<path:filename>')
-def serve_image_from_cache(filename):
-    return send_from_directory(CACHE_PATH, filename)
+@app.route('/api/ngc/cache', methods=['GET'])
+def get_cached_results():
+    global search_results_cache
+    if not search_results_cache:
+        return jsonify({"error": "Kein Cache verfügbar"}), 404
+    return jsonify(search_results_cache)
 
 @app.route('/v2/api/<path:endpoint>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def proxy(endpoint):
