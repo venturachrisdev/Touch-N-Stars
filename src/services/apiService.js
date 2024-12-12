@@ -3,9 +3,8 @@ import axios from "axios";
 //const BASE_URL = "/v2/api";
 const BASE_URL = "http://192.168.2.128:5000/v2/api";
 const NGCS_URL = "http://192.168.2.128:5000/api/ngc/";
-const TARGETPIC_URL = "https://alaskybis.u-strasbg.fr/hips-image-services/hips2fits";
-//https://alaskybis.u-strasbg.fr/hips-image-services/hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
-
+//const TARGETPIC_URL = "https://alaskybis.u-strasbg.fr/hips-image-services/hips2fits";
+const TARGETPIC_URL = "http://192.168.2.128:5000/api/targetpic";
 
 const apiService = {
   // Backend-Erreichbarkeitsprüfung

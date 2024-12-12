@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, request, Response, jsonify
+from flask import Flask, send_from_directory, request, Response, jsonify, send_file
 import requests
 import pandas as pd
 import os
@@ -12,6 +12,9 @@ app = Flask(__name__, static_folder='static')
 BASE_API_URL = "http://localhost:1888/v2/api"
 CACHE_PATH = os.path.join(os.getenv('LOCALAPPDATA', ''), 'NINA', 'FramingAssistantCache')
 XML_FILE_PATH = os.path.join(CACHE_PATH, 'CacheInfo.xml')
+TARGETPIC_CACHE_DIR = os.path.join(CACHE_PATH, 'TargetPicsCache')
+os.makedirs(TARGETPIC_CACHE_DIR, exist_ok=True)  # Sicherstellen, dass der Cache-Ordner existiert
+TARGETPIC_URL = "https://alaskybis.u-strasbg.fr/hips-image-services/hips2fits"  
 
 search_results_cache = None
 #-----------------------------------------------------
@@ -134,7 +137,56 @@ def update_cached_results():
     except Exception as e:
         print(f"Fehler beim Aktualisieren des Caches: {e}")
         return jsonify({"error": "Fehler beim Aktualisieren des Caches"}), 500
+    
+@app.route('/api/targetpic', methods=['GET'])
+def fetch_target_pic():
+    width = request.args.get('width')
+    height = request.args.get('height')
+    fov = request.args.get('fov')
+    ra = request.args.get('ra')
+    dec = request.args.get('dec')
 
+    if not all([width, height, fov, ra, dec]):
+        return jsonify({"error": "Alle Parameter (width, height, fov, ra, dec) sind erforderlich"}), 400
+
+    # Erstelle einen eindeutigen Cache-Schlüssel
+    cache_key = f"{width}_{height}_{fov}_{ra}_{dec}.jpg"
+    cache_path = os.path.join(TARGETPIC_CACHE_DIR, cache_key)
+
+    # Prüfen, ob das Bild bereits zwischengespeichert ist
+    if os.path.exists(cache_path):
+        return send_file(cache_path, mimetype='image/jpeg')
+
+    # Falls nicht im Cache, lade das Bild
+    try:
+        response = requests.get(
+            TARGETPIC_URL,
+            params={
+                "width": width,
+                "height": height,
+                "fov": fov,
+                "ra": ra,
+                "dec": dec,
+                "hips": "CDS/P/DSS2/color",
+                "projection": "STG",
+                "format": "jpg",
+            },
+            stream=True
+        )
+
+        if response.status_code == 200:
+            # Speichere das Bild im Cache
+            with open(cache_path, 'wb') as cache_file:
+                for chunk in response.iter_content(1024):
+                    cache_file.write(chunk)
+
+            return send_file(cache_path, mimetype='image/jpeg')
+        else:
+            return jsonify({"error": "Fehler beim Abrufen des Zielbildes"}), response.status_code
+
+    except Exception as e:
+        print(f"Fehler beim Abrufen des Zielbildes: {e}")
+        return jsonify({"error": "Interner Fehler beim Abrufen des Zielbildes"}), 500
 
 @app.route('/v2/api/<path:endpoint>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def proxy(endpoint):
