@@ -2,8 +2,9 @@ import axios from "axios";
 
 //const BASE_URL = "/v2/api";
 const BASE_URL = "http://192.168.2.128:5000/v2/api";
-
 const NGCS_URL = "http://192.168.2.128:5000/api/ngc/search";
+const TARGETPIC_URL = "https://alaskybis.u-strasbg.fr/hips-image-services/hips2fits";
+//https://alaskybis.u-strasbg.fr/hips-image-services/hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
 
 
 const apiService = {
@@ -96,11 +97,11 @@ const apiService = {
           DECangle,
         },
       });
-     
+
       // Slew-Befehl senden
-      if (Center === false){
-      const response = await axios.get(`${BASE_URL}/framing/slew`);
-      return response.data;
+      if (Center === false) {
+        const response = await axios.get(`${BASE_URL}/framing/slew`);
+        return response.data;
       } else {
         const response = await axios.get(`${BASE_URL}/framing/slew`, {
           params: {
@@ -113,7 +114,7 @@ const apiService = {
       console.error("Fehler beim Steuern der Montierung:", error);
       throw error;
     }
-  
+
   },
 
   // NGC-Suche:
@@ -132,7 +133,32 @@ const apiService = {
         throw error;
       });
   },
+
+// Zielbild laden
+  async searchTargetPic(width,height,fov,ra,dec) {
+  // /hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
+    return axios
+      .get(TARGETPIC_URL, {
+        params: {
+          width: width,
+          height: height,
+          fov: fov,
+          ra: ra,
+          dec: dec,
+          projection:"STG&hips=CDS%2FP%2FDSS2%2Fcolor",
+          format: "jpg",
+        },
+      })
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error("Fehler beim abrufen des Zielbildes", error);
+        throw error;
+      });
+    }
 };
+
+
+
 
 
 export default apiService;
