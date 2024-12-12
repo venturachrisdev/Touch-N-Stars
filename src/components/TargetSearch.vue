@@ -24,7 +24,7 @@
             <p v-if="selectedItem.M"> <strong>M:</strong> M{{ selectedItem.M }}</p>
           </div>
         </div>
-        <div class="border border-gray-700 rounded-md">
+        <div class="border border-gray-700 rounded-md ml-3">
           <TargetPic v-model:RAangleString="RAangleString" v-model:DECangleString="DECangleString" />
         </div>
       </div>
