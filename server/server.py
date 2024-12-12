@@ -6,76 +6,61 @@ import math
 import xmltodict
 
 app = Flask(__name__, static_folder='static')
-
-# Constants
+#-----------------------------------------------------
+# Constants 
+#-----------------------------------------------------
 BASE_API_URL = "http://localhost:1888/v2/api"
 CACHE_PATH = os.path.join(os.getenv('LOCALAPPDATA', ''), 'NINA', 'FramingAssistantCache')
 XML_FILE_PATH = os.path.join(CACHE_PATH, 'CacheInfo.xml')
 
+#-----------------------------------------------------
 # Load data
+#-----------------------------------------------------
 data = pd.concat([
     pd.read_csv('./katalog/NGC.csv', sep=';'),
     pd.read_csv('./katalog/addendum.csv', sep=';')
 ], ignore_index=True)
 
+#-----------------------------------------------------
 # Utility functions
-def great_circle_distance(ra1, dec1, ra2, dec2):
-    """Calculate the great circle distance between two points in radians."""
-    ra1, dec1, ra2, dec2 = map(math.radians, [ra1, dec1, ra2, dec2])
-    delta_ra = ra2 - ra1
-    delta_dec = dec2 - dec1
-    a = (math.sin(delta_dec / 2)**2 +
-         math.cos(dec1) * math.cos(dec2) * math.sin(delta_ra / 2)**2)
-    return 2 * math.asin(math.sqrt(a))
+#-----------------------------------------------------
+def hms_to_degrees(hms_string):
+    """
+    Konvertiert eine Zeitangabe im Format HH:MM:SS in Grad.
+    :param hms_string: Zeitangabe im Format HH:MM:SS
+    :return: Entsprechende Gradzahl
+    """
+    parts = hms_string.split(":")
+    if len(parts) != 3:
+        raise ValueError("Ungültiges Format. Erwartet: HH:MM:SS")
 
-def find_closest_image(ra_target, dec_target, xml_file_path):
-    """Find the closest image to the given RA and Dec in the XML file."""
-    try:
-        with open(xml_file_path, 'r', encoding='utf-8') as xml_file:
-            data_dict = xmltodict.parse(xml_file.read())
-    except FileNotFoundError:
-        return None, "XML file not found"
-    except Exception as e:
-        return None, f"Error reading XML: {e}"
+    hours = int(parts[0])
+    minutes = int(parts[1])
+    seconds = int(parts[2])
 
-    images = data_dict.get("ImageCacheInfo", {}).get("Image", [])
-    if isinstance(images, dict):
-        images = [images]
+    return hours * 15 + minutes * (15 / 60) + seconds * (15 / 3600)
 
-    if not images:
-        return None, "No images found in XML"
+def dms_to_degrees(dms_string):
+    """
+    Konvertiert eine Winkelangabe im Format ±DD:MM:SS.s in Grad.
+    :param dms_string: Winkelangabe im Format ±DD:MM:SS.s
+    :return: Entsprechende Gradzahl
+    """
+    sign = -1 if dms_string.startswith("-") else 1
+    stripped = dms_string.lstrip("-")
 
-    closest_image = None
-    min_distance = float('inf')
-    for image in images:
-        try:
-            ra = float(image['@RA'])
-            dec = float(image['@Dec'])
-            distance = great_circle_distance(ra_target, dec_target, ra, dec)
-            if distance < min_distance:
-                min_distance = distance
-                closest_image = image
-        except Exception as e:
-            print(f"Error processing image: {e}")
+    parts = stripped.split(":")
+    if len(parts) != 3:
+        raise ValueError("Ungültiges Format. Erwartet: ±DD:MM:SS.s")
 
-    return closest_image, None
+    degrees = float(parts[0])
+    minutes = float(parts[1])
+    seconds = float(parts[2])
 
-def hms_to_decimal(ra_hms, dec_hms, ra_in_hours=False):
-    """Convert RA and Dec from HMS/DMS to decimal degrees."""
-    def dms_to_degrees(dms):
-        parts = list(map(float, dms.split(":")))
-        return parts[0] + parts[1] / 60.0 + parts[2] / 3600.0
-
-    ra_decimal = dms_to_degrees(ra_hms)
-    if ra_in_hours:
-        ra_decimal *= 15.0
-
-    dec_sign = -1 if dec_hms.startswith("-") else 1
-    dec_decimal = dec_sign * dms_to_degrees(dec_hms.lstrip("-"))
-
-    return ra_decimal, dec_decimal
-
+    return sign * (degrees + minutes / 60 + seconds / 3600)
+#-----------------------------------------------------
 # Routes
+#-----------------------------------------------------
 @app.route('/api/ngc/search', methods=['GET'])
 def search_ngc():
     query = request.args.get('query', '').strip().lower()
@@ -102,42 +87,12 @@ def search_ngc():
         search_column = 'Name'
         search_value = query[2:]  # Remove only the first 'ic'
    
-        
-
     results = data[data[search_column].astype(str).str.lower().str.contains(search_value, na=False)].head(limit)
     selected_columns = ['Name', 'Type', 'RA', 'Dec', 'M', 'Common names']
     results_cleaned = results[selected_columns].fillna("")
     
-    enriched_results = [row.to_dict() for _, row in results_cleaned.iterrows()]
-    return jsonify(enriched_results)
-    
-    '''
-    if not os.path.exists(CACHE_PATH):
-        enriched_results = [row.to_dict() for _, row in results_cleaned.iterrows()]
-        return jsonify(enriched_results)
-
-    if not os.path.exists(XML_FILE_PATH):
-        enriched_results = [row.to_dict() for _, row in results_cleaned.iterrows()]
-        return jsonify(enriched_results)
-
-    enriched_results = []
-    for _, row in results_cleaned.iterrows():
-        try:
-            ra_decimal, dec_decimal = hms_to_decimal(row['RA'], row['Dec'], ra_in_hours=False)
-            closest_image, error = find_closest_image(ra_decimal, dec_decimal, XML_FILE_PATH)
-            image_info = {"error": error} if error else {
-                "FileName": closest_image.get('@FileName'),
-                "RA": closest_image.get('@RA'),
-                "Dec": closest_image.get('@Dec'),
-                "Source": closest_image.get('@Source'),
-                "Name": closest_image.get('@Name'),
-            }
-        except Exception as e:
-            image_info = {"error": f"Error during image lookup: {e}"}
-
-        enriched_results.append({**row.to_dict(), "Image": image_info})
-        return jsonify(enriched_results)
-    '''
+    final_results = [row.to_dict() for _, row in results_cleaned.iterrows()]
+    return jsonify(final_results)
     
 
 @app.route('/cache/<path:filename>')
