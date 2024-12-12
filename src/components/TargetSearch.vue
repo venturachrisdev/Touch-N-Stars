@@ -17,7 +17,6 @@
       <!-- Ausgewählter Eintrag -->
       <div v-if="selectedItem" class="flex mt-4 p-4 border border-gray-700 rounded shadow">
         <div>
-         
           <div class="text-xs ">
             <p v-if="selectedItem['Common names']"><strong>Name:</strong> {{ selectedItem['Common names'] }}</p>
             <p> <strong>NGC:</strong> {{ selectedItem.Name }}</p>
@@ -28,11 +27,9 @@
           <TargetPic v-model:RAangleString="RAangleString" v-model:DECangleString="DECangleString" />
         </div>
       </div>
-
       <div>
         <slewAndCenter v-model:RAangleString="RAangleString" v-model:DECangleString="DECangleString" />
       </div>
-
     </div>
   </div>
 </template>
@@ -74,7 +71,7 @@ export default {
     selectSuggestion(item) {
       this.searchQuery = item.Name || '';
       this.suggestions = [];
-      this.selectedItem = item; 
+      this.selectedItem = item;
       this.RAangleString = item.RA;
       this.DECangleString = item.Dec;
     }
