@@ -2,7 +2,7 @@ import axios from "axios";
 
 //const BASE_URL = "/v2/api";
 const BASE_URL = "http://192.168.2.128:5000/v2/api";
-const NGCS_URL = "http://192.168.2.128:5000/api/ngc/search";
+const NGCS_URL = "http://192.168.2.128:5000/api/ngc/";
 const TARGETPIC_URL = "https://alaskybis.u-strasbg.fr/hips-image-services/hips2fits";
 //https://alaskybis.u-strasbg.fr/hips-image-services/hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
 
@@ -121,7 +121,7 @@ const apiService = {
   async searchNGC(query, limit = 10) {
     // Ruft die NGC-Suche auf, die im Flask-Server unter /api/ngc/search läuft
     return axios
-      .get(NGCS_URL, {
+      .get(NGCS_URL+"search", {
         params: {
           query,
           limit,
@@ -130,6 +130,29 @@ const apiService = {
       .then((response) => response.data)
       .catch((error) => {
         console.error("Fehler bei der NGC-Suche:", error);
+        throw error;
+      });
+  },
+  async getNgcCache() {
+    return axios
+      .get(NGCS_URL+"cache", {
+        params: {},
+      })
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error("Fehler bei der NGC-Suche:", error);
+        throw error;
+      });
+  },
+
+  async updateNgcCache(data) {
+    return axios
+      .post(NGCS_URL+"cache", {
+        data,
+      })
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error("Fehler beim der NGC-Update:", error);
         throw error;
       });
   },

@@ -15,7 +15,7 @@
         </ul>
       </div>
       <!-- Ausgewählter Eintrag -->
-      <div v-if="selectedItem" class="flex mt-4 p-4 border border-gray-700 rounded shadow">
+      <div v-if="selectedItem" class="flex mt-4 p-4 border  border-gray-700 rounded shadow">
         <div>
           <div class="text-xs ">
             <p v-if="selectedItem['Common names']"><strong>Name:</strong> {{ selectedItem['Common names'] }}</p>
@@ -53,7 +53,25 @@ export default {
       DECangleString: "",
     };
   },
+  async mounted() {
+    await this.loadNgcCache(); // Lade Cache beim Laden der Seite
+  },
   methods: {
+    async loadNgcCache() {
+      try {
+        const data = await apiService.getNgcCache();
+        if (data ) {
+          this.selectedItem = data.data.item
+          this.RAangleString = data.data.item.RA;
+          this.DECangleString = data.data.item.Dec;
+          console.log("Cache erfolgreich geladen:", data.data.item);
+        } else {
+          console.warn("Kein Cache verfügbar.");
+        }
+      } catch (error) {
+        console.error("Fehler beim Laden des Caches:", error);
+      }
+    },
     async fetchSuggestions() {
       if (this.searchQuery.trim() === '') {
         this.suggestions = [];
@@ -74,6 +92,16 @@ export default {
       this.selectedItem = item;
       this.RAangleString = item.RA;
       this.DECangleString = item.Dec;
+      try {
+         apiService.updateNgcCache({
+          item,
+    
+        });
+        console.log("Cache erfolgreich aktualisiert:", item);
+      } catch (error) {
+        console.error("Fehler beim Aktualisieren des Caches:", error);
+      }
+  
     }
   }
 };

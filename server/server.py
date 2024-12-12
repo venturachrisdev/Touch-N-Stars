@@ -65,6 +65,7 @@ def dms_to_degrees(dms_string):
 @app.route('/api/ngc/search', methods=['GET'])
 def search_ngc():
     global search_results_cache
+    search_results_cache = None
     query = request.args.get('query', '').strip().lower()
     limit = request.args.get('limit', 100)
 
@@ -109,7 +110,6 @@ def search_ngc():
             result['Dec_decimal'] = dec_decimal
             final_results.append(result)
         
-        search_results_cache = final_results
         return jsonify(final_results)
 
     except Exception as e:
@@ -123,6 +123,18 @@ def get_cached_results():
     if not search_results_cache:
         return jsonify({"error": "Kein Cache verfügbar"}), 404
     return jsonify(search_results_cache)
+
+@app.route('/api/ngc/cache', methods=['POST'])
+def update_cached_results():
+    global search_results_cache
+    try:
+        # Neuen Cache-Wert aus der Anfrage übernehmen
+        search_results_cache = request.json
+        return jsonify({"message": "Cache erfolgreich aktualisiert"}), 200
+    except Exception as e:
+        print(f"Fehler beim Aktualisieren des Caches: {e}")
+        return jsonify({"error": "Fehler beim Aktualisieren des Caches"}), 500
+
 
 @app.route('/v2/api/<path:endpoint>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def proxy(endpoint):

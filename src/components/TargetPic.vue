@@ -2,7 +2,7 @@
     <div class="container flex tems-center justify-center">
         <div class="container max-w-md ">
 
-                <img v-if="targetPic" :src="targetPic" alt="Bild konnte nicht geladen werden">
+                <img class="rounded-md" v-if="targetPic" :src="targetPic" alt="Bild konnte nicht geladen werden">
             
         </div>
     </div>
@@ -38,7 +38,7 @@ export default {
             const sign = dmsString.startsWith("-") ? -1 : 1;
             const stripped = dmsString.replace("-", "");
             const parts = stripped.split(":");
-
+            //console.log(dmsString)
             if (parts.length !== 3) {
                 throw new Error("Ungültiges Format. Erwartet: ±DD:MM:SS.s");
             }
