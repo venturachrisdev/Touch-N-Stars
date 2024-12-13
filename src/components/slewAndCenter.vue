@@ -74,8 +74,6 @@ export default {
             }
             this.updateRA();
             this.updateDec();
-           // this.$emit("update:RAangleString", this.localRAangleString);
-           // this.$emit("update:DECangleString", this.localDECangleString);
         },
         updateRA() {
             this.$emit("update:RAangleString", this.localRAangleString);
