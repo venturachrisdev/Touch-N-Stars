@@ -5,61 +5,64 @@
         TPPA nicht verfügbar
       </div>
       <div v-else>
-    <h5 class="text-xl text-center font-bold text-white mb-4">
-      Three Point Polar Alignment
-    </h5>
-  
-    <!-- Neue Buttons -->
-    <div class="flex space-x-4">
-      <button
-        class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
-        @click="startAlignment"
-        :disabled="!isConnected"
-      >
-        Start Alignment
-      </button>
-      <button
-        class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
-        @click="stopAlignment"
-        :disabled="!isConnected"
-      >
-        Stop Alignment
-      </button>
-    </div>
-    <div v-if="currentMessage" class="mt-10">
-      <div v-if="startStop">
-      <p>{{  formatMessage(currentMessage.message)  }}</p>
-      </div>
-      <div v-else class=" space-y-4">
-          <div class="flex space-x-4 ">
-            <p class=" w-52"><strong>Altitude Fehler:</strong></p> <p> {{   showAltitudeError }}</p>
-            <ArrowUpIcon v-if="altitudeCorDirectionTop" class="size-6 text-blue-500" />
-            <ArrowDownIcon v-else class="size-6 text-blue-500" />
+        <h5 class="text-xl text-center font-bold text-white mb-4">
+          Three Point Polar Alignment
+        </h5>
+
+        <!-- Neue Buttons -->
+        <div class="flex space-x-4">
+          <button
+            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+            @click="startAlignment">
+            Start Alignment
+          </button>
+          <button
+            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+            @click="stopAlignment">
+            Stop Alignment
+          </button>
+        </div>
+        <div v-if="currentMessage" class="mt-10">
+          <div v-if="startStop">
+            <p>{{ formatMessage(currentMessage.message) }}</p>
           </div>
-          <div class="flex space-x-4 ">
-            <p class=" w-52"><strong>Azimuth Fehler:</strong> </p><p> {{ showAzimuthError }}</p>
-            <div v-if="azimuthCorDirectionLeft"> 
-              <ArrowLeftIcon  class="size-6 text-blue-500 " />
+          <div v-else class=" space-y-4">
+            <div class="flex space-x-4 ">
+              <p class=" w-52"><strong>Altitude Fehler:</strong></p>
+              <p> {{ showAltitudeError }}</p>
+              <div v-if="showAltitudeError">
+                <ArrowUpIcon v-if="altitudeCorDirectionTop" class="size-6 text-blue-500" />
+                <ArrowDownIcon v-else class="size-6 text-blue-500" />
+              </div>
             </div>
-            <div v-else class="flex space-x-4 j"> 
-              <ArrowRightIcon class="size-6 text-blue-500" />
+            <div class="flex space-x-4 ">
+              <p class=" w-52"><strong>Azimuth Fehler:</strong> </p>
+              <p> {{ showAzimuthError }}</p>
+              <div v-if="showAzimuthError">
+                <div v-if="azimuthCorDirectionLeft">
+                  <ArrowLeftIcon class="size-6 text-blue-500 " />
+                </div>
+                <div v-else class="flex space-x-4 j">
+                  <ArrowRightIcon class="size-6 text-blue-500" />
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="flex space-x-4 ">
-            <p class=" w-52"><strong>Gesamtfehler: </strong> </p><p> {{ showTotalError }}</p>
-          </div>
-          <div v-if="currentMessage" class=" mt-20">
-            <p style="white-space: pre-wrap;">
-            
-              {{ formatMessage(currentMessage.message) }}         </p>
+            <div class="flex space-x-4 ">
+              <p class=" w-52"><strong>Gesamtfehler: </strong> </p>
+              <p> {{ showTotalError }}</p>
+            </div>
+            <div v-if="currentMessage" class=" mt-20">
+              <p style="white-space: pre-wrap;">
+
+                {{ formatMessage(currentMessage.message) }} </p>
               <p class=" text-xs"><strong>Letzte Aktualisierung:</strong> {{ currentMessage.time }}</p>
-   
+
+            </div>
           </div>
         </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
 
 </template>
 
@@ -70,7 +73,7 @@ import {
   ArrowUpIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
-    } from '@heroicons/vue/24/outline';
+} from '@heroicons/vue/24/outline';
 
 export default {
   name: "TppaPage",
@@ -84,13 +87,13 @@ export default {
     return {
       Nachricht: "",
       currentMessage: null,
-      startStop:false,
+      startStop: false,
       isConnected: false,
-      showAzimuthError:"",
-      showAltitudeError:"",
-      showTotalError:"",
-      azimuthCorDirectionLeft:false,
-      altitudeCorDirectionTop:false,
+      showAzimuthError: "",
+      showAltitudeError: "",
+      showTotalError: "",
+      azimuthCorDirectionLeft: false,
+      altitudeCorDirectionTop: false,
 
     };
   },
@@ -118,37 +121,37 @@ export default {
   },
   methods: {
     // Hilfsfunktion zum Umwandeln eines Dezimalgrads in DMS
-    decimalToDMS(value){
-    // Vorzeichen prüfen
-    const isNegative = value < 0;
-    const absValue = Math.abs(value);
+    decimalToDMS(value) {
+      // Vorzeichen prüfen
+      const isNegative = value < 0;
+      const absValue = Math.abs(value);
 
-    // Berechnung der Grad, Minuten und Sekunden
-    let degrees = Math.floor(absValue);
-    let minutesDecimal = (absValue - degrees) * 60;
-    let minutes = Math.floor(minutesDecimal);
-    let seconds = Math.round((minutesDecimal - minutes) * 60);
+      // Berechnung der Grad, Minuten und Sekunden
+      let degrees = Math.floor(absValue);
+      let minutesDecimal = (absValue - degrees) * 60;
+      let minutes = Math.floor(minutesDecimal);
+      let seconds = Math.round((minutesDecimal - minutes) * 60);
 
-    // Rundungsproblematik: 60 Sekunden in die nächste Minute umwandeln
-    if (seconds === 60) {
+      // Rundungsproblematik: 60 Sekunden in die nächste Minute umwandeln
+      if (seconds === 60) {
         seconds = 0;
         minutes++;
-    }
-    // Rundungsproblematik: 60 Minuten in den nächsten Grad umwandeln
-    if (minutes === 60) {
+      }
+      // Rundungsproblematik: 60 Minuten in den nächsten Grad umwandeln
+      if (minutes === 60) {
         minutes = 0;
         degrees++;
-    }
+      }
 
-    // Formatierung mit führenden Nullen
-    const degreesStr = degrees.toString().padStart(2, "0");
-    const minutesStr = minutes.toString().padStart(2, "0");
-    const secondsStr = seconds.toString().padStart(2, "0");
+      // Formatierung mit führenden Nullen
+      const degreesStr = degrees.toString().padStart(2, "0");
+      const minutesStr = minutes.toString().padStart(2, "0");
+      const secondsStr = seconds.toString().padStart(2, "0");
 
-    // Negative Werte korrekt darstellen
-    const sign = isNegative ? "-" : "";
-    return `${sign}${degreesStr}° ${minutesStr}' ${secondsStr}''`;
-},
+      // Negative Werte korrekt darstellen
+      const sign = isNegative ? "-" : "";
+      return `${sign}${degreesStr}° ${minutesStr}' ${secondsStr}''`;
+    },
 
 
     // Hilfsfunktion zum Abrufen der aktuellen Uhrzeit
@@ -161,7 +164,7 @@ export default {
       if (message.Response) {
         if (typeof message.Response === "string") {
           // Wenn Response ein String ist (z.B. "started procedure")
-          if(message.Response === "started procedure"){
+          if (message.Response === "started procedure") {
             console.log("Start TPPA");
             return message.Response;
           }
@@ -187,7 +190,7 @@ export default {
             // Bestimmen, ob der AltitudeError negativ ist
             this.azimuthCorDirectionLeft = AzimuthError > 0 ? true : false;
             this.altitudeCorDirectionTop = AltitudeError < 0 ? true : false;
-            
+
           } else {
             return "Fehlerwerte nicht vorhanden.";
           }
@@ -217,6 +220,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
