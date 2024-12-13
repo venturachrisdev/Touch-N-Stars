@@ -6,47 +6,36 @@
         <p>Bitte Montierung verbinden</p>
       </div>
       <div v-else>
+        <infoMount v-model="isConnected" />
         <div class="mb-5 ">
           <p class="text-white mb-2 "></p>
-          <button @click="toggleParkUnpark"
-            class="min-w-64 min-h-10 rounded-md text-white font-medium transition-colors w-full"
-            :class="parkPosition ? 'bg-cyan-900' : 'bg-red-700'">
-            {{ parkPosition ? "Ausparken" : "Parken" }}
-          </button>
-        </div>
-        <div class="text-left">
-          <StatusBool :isEnabled="TrackingEnabled" enabledText="Tracking ist aktiv" disabledText="Tracking deaktiviert"/>
-          <StatusBool :isEnabled="Slewing" enabledText="Montierung Schwenkt" disabledText="Schwenkt nicht"/>
-        </div>
 
-     
+        </div>
+        <controlMount />
+
         <!-- Integration von TppaPage -->
         <div class="mt-10 border border-gray-600 rounded-b-lg bg-gray-800/10">
-          
-        <div class="text-sm">
-          <button 
-          class="border-2 border-gray-500 rounded-b-md w-24 h-10"
-          :class="{'bg-gray-600': showSlew, 
-                    'bg-gray-800': !showSlew,
-          }"
-          @click="toggleShowSlew">Schwenken</button>
-          <button 
-          class="border-2 border-gray-500 rounded-b-md  w-24 h-10"
-          :class="{'bg-gray-600': showTppa, 
-                    'bg-gray-800': !showTppa, 
-                }"
-          @click="toggleShowTppa">TPPA</button>
+
+          <div class="text-sm">
+            <button class="border-2 border-gray-500 rounded-b-md w-24 h-10" :class="{
+              'bg-gray-600': showSlew,
+              'bg-gray-800': !showSlew,
+            }" @click="toggleShowSlew">Schwenken</button>
+            <button class="border-2 border-gray-500 rounded-b-md  w-24 h-10" :class="{
+              'bg-gray-600': showTppa,
+              'bg-gray-800': !showTppa,
+            }" @click="toggleShowTppa">TPPA</button>
+          </div>
+          <div class="container pl-5 pb-5 pr-5">
+            <div v-if="showTppa" class="mt-5">
+              <TppaPage />
+            </div>
+            <div v-if="showSlew" class="mt-5">
+              <TargetSearch />
+
+            </div>
+          </div>
         </div>
-        <div class="container pl-5 pb-5 pr-5">
-        <div v-if="showTppa" class="mt-5">
-          <TppaPage />
-        </div>
-        <div v-if="showSlew" class="mt-5">
-        <TargetSearch />
-          
-        </div>
-      </div>
-    </div>
       </div>
     </div>
   </div>
@@ -56,14 +45,17 @@
 
 import apiService from "@/services/apiService";
 import TppaPage from '../components/TppaPage.vue';
-import StatusBool from '../components/StatusBool.vue';
+
 import TargetSearch from '../components/TargetSearch.vue';
+import infoMount from '../components/infoMount.vue';
+import controlMount from '../components/controlMount.vue';
 
 export default {
   components: {
     TppaPage,
-    StatusBool,
     TargetSearch,
+    infoMount,
+    controlMount,
   },
   data() {
     return {
@@ -71,8 +63,8 @@ export default {
       TrackingEnabled: false,
       Slewing: false,
       isConnected: false, // Verbindungsstatus
-      showTppa:false,
-      showSlew:true,
+      showTppa: false,
+      showSlew: true,
 
     };
   },
@@ -87,13 +79,13 @@ export default {
     this.stopFetchingInfo();
   },
   methods: {
-    toggleShowSlew(){
+    toggleShowSlew() {
       this.showSlew = !this.showSlew;
       if (this.showSlew) {
         this.showTppa = false; // Setzt showSlew auf false, wenn showTppa aktiviert wird
       }
     },
-    toggleShowTppa(){
+    toggleShowTppa() {
       this.showTppa = !this.showTppa;
       if (this.showTppa) {
         this.showSlew = false; // Setzt showSlew auf false, wenn showTppa aktiviert wird
