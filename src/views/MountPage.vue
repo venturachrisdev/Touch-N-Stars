@@ -2,17 +2,10 @@
   <div class="container flex tems-center justify-center">
     <div class="container max-w-md ">
       <h5 class="text-xl text-center font-bold text-white mb-4">Montierung</h5>
-      <div v-if="!isConnected" class="text-red-500 ">
-        <p>Bitte Montierung verbinden</p>
-      </div>
-      <div v-else>
-        <infoMount v-model="isConnected" />
-        <div class="mb-5 ">
-          <p class="text-white mb-2 "></p>
+      <infoMount v-model="isConnected" />
 
-        </div>
-       
-
+      <div v-if="isConnected">
+        
         <!-- Integration von TppaPage -->
         <div class="mt-10 border border-gray-600 rounded-b-lg bg-gray-800/10">
 
@@ -49,7 +42,7 @@
 
 <script>
 
-import apiService from "@/services/apiService";
+//import apiService from "@/services/apiService";
 import TppaPage from '../components/TppaPage.vue';
 
 import TargetSearch from '../components/TargetSearch.vue';
@@ -76,10 +69,6 @@ export default {
     };
   },
   async mounted() {
-    // Hole die aktuelle Position beim Laden der Komponente
-    await this.fetchMountInfo();
-    // Starte das regelmäßige Abrufen der Informationen
-    this.startFetchingInfo();
   },
   beforeUnmount() {
     // Stoppe den Intervall, wenn die Komponente zerstört wird
@@ -107,30 +96,9 @@ export default {
         this.showMount = false;
       }
     },
-    async fetchMountInfo() {
-      try {
-        const response = await apiService.mountAction("info"); // API-Aufruf
-        if (response.Success) {
-          const data = response.Response;
-          this.isConnected = data.Connected; // Verbindungsstatus setzen
-        } else {
-          console.error("Fehler in der API-Antwort:", response.Error);
-        }
-      } catch (error) {
-        console.error("Fehler beim Abrufen der Mount-Informationen:", error);
-      }
-    },
-    startFetchingInfo() {
-      // Starte das Intervall für regelmäßige Abrufe
-      this.intervalId = setInterval(this.fetchMountInfo, 5000);
-    },
-    stopFetchingInfo() {
-      // Stoppe das Intervall
-      if (this.intervalId) {
-        clearInterval(this.intervalId);
-        this.intervalId = null;
-      }
-    },
+
+
+
   },
 };
 </script>
