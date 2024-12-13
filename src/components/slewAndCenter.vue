@@ -5,18 +5,10 @@
             <div class="flex flex-row justify-center items-center space-x-4">
                 <!-- Verwende v-model für die Bidirektionale Datenbindung -->
                 <p>RA:</p>
-                <input 
-                    type="text" 
-                    v-model="localRAangleString"
-                    @blur="updateRA"
-                    @keyup.enter="updateRA"
+                <input type="text" v-model="localRAangleString" @blur="handleBlurRA" @keyup.enter="handleBlurRA"
                     class="text-black w-full p-2 border border-gray-300 rounded" placeholder="RA 03:47:28.2" />
                 <p>Dec:</p>
-                <input 
-                    type="text" 
-                    v-model="localDECangleString"
-                    @blur="updateDec"
-                    @keyup.enter="updateDec"
+                <input type="text" v-model="localDECangleString" @blur="handleBlurDEC" @keyup.enter="handleBlurDEC"
                     class="text-black w-full p-2 border border-gray-300 rounded" placeholder="Dec +24:06:19" />
             </div>
             <div class="mt-4 flex flex-col space-y-2">
@@ -64,6 +56,47 @@ export default {
         },
     },
     methods: {
+        validateRA(raString) {
+            const raPattern = /^([01]?[0-9]|2[0-3]):([0-5]?[0-9]):([0-5]?[0-9](\.\d+)?)$/;
+            return raPattern.test(raString);
+        },
+        validateDEC(decString) {
+            const decPattern = /^(\+|-)?(90|[0-8]?[0-9]):([0-5]?[0-9]):([0-5]?[0-9](\.\d+)?)$/;
+            return decPattern.test(decString);
+        },
+        checkValidity() {
+            const isRAValid = this.validateRA(this.localRAangleString);
+            const isDECValid = this.validateDEC(this.localDECangleString);
+
+            if (!isRAValid) {
+                alert("Ungültiges RA-Format. Bitte verwenden Sie HH:MM:SS.");
+            }
+            if (!isDECValid) {
+                alert("Ungültiges DEC-Format. Bitte verwenden Sie ±DD:MM:SS.");
+            }
+
+            return isRAValid && isDECValid;
+        },
+        handleBlurRA() {
+            if (this.validateRA(this.localRAangleString)) {
+                this.updateRA();
+            } else {
+                alert("Ungültige RA-Eingabe.");
+            }
+        },
+        handleBlurDEC() {
+            if (this.validateDEC(this.localDECangleString)) {
+                this.updateDec();
+            } else {
+                alert("Ungültige DEC-Eingabe.");
+            }
+        },
+        updateRA() {
+            this.$emit("update:RAangleString", this.localRAangleString);
+        },
+        updateDec() {
+            this.$emit("update:DECangleString", this.localDECangleString);
+        },
         async slew() {
             this.RAangle = this.hmsToDegrees(this.localRAangleString);
             this.DECangle = this.dmsToDegrees(this.localDECangleString);
@@ -72,14 +105,7 @@ export default {
             } catch (error) {
                 console.error("Framing API nicht erreicht", error);
             }
-            this.updateRA();
-            this.updateDec();
-        },
-        updateRA() {
-            this.$emit("update:RAangleString", this.localRAangleString);
-        },
-        updateDec() {
-            this.$emit("update:DECangleString", this.localDECangleString);
+
         },
         async slewAndCenter() {
             this.RAangle = this.hmsToDegrees(this.localRAangleString);
