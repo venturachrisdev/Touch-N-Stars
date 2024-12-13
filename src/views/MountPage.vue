@@ -7,7 +7,7 @@
       <div v-if="isConnected">
         
         <!-- Integration von TppaPage -->
-        <div class="mt-10 border border-gray-600 rounded-b-lg bg-gray-800/10">
+        <div class="mt-5 border border-gray-600 rounded-b-lg bg-gray-800/10">
 
           <div class="text-sm">
             <button class="border-2 border-gray-500 rounded-b-md  w-24 h-10" :class="{
@@ -71,8 +71,6 @@ export default {
   async mounted() {
   },
   beforeUnmount() {
-    // Stoppe den Intervall, wenn die Komponente zerstört wird
-    this.stopFetchingInfo();
   },
   methods: {
     toggleShowMount() {

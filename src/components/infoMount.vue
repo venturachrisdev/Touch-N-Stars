@@ -3,7 +3,7 @@
         <p>Bitte Montierung verbinden</p>
     </div>
     <div v-else class="text-left">
-        <StatusBool :isEnabled="parkPosition" enabledText="Geparkt" disabledText="Ausgeparkt" />
+        <StatusBool :isEnabled="!parkPosition" enabledText="Ausgeparkt" disabledText="Geparkt" disabledClass="text-red-600" />
         <StatusBool :isEnabled="TrackingEnabled" enabledText="Tracking ist aktiv" disabledText="Tracking deaktiviert" />
         <StatusBool :isEnabled="Slewing" enabledText="Montierung Schwenkt" disabledText="Schwenkt nicht" />
     </div>
