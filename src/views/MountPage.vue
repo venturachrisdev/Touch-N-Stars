@@ -11,12 +11,16 @@
           <p class="text-white mb-2 "></p>
 
         </div>
-        <controlMount />
+       
 
         <!-- Integration von TppaPage -->
         <div class="mt-10 border border-gray-600 rounded-b-lg bg-gray-800/10">
 
           <div class="text-sm">
+            <button class="border-2 border-gray-500 rounded-b-md  w-24 h-10" :class="{
+              'bg-gray-600': showMount,
+              'bg-gray-800': !showMount,
+            }" @click="toggleShowMount">Montierung</button>
             <button class="border-2 border-gray-500 rounded-b-md w-24 h-10" :class="{
               'bg-gray-600': showSlew,
               'bg-gray-800': !showSlew,
@@ -27,12 +31,14 @@
             }" @click="toggleShowTppa">TPPA</button>
           </div>
           <div class="container pl-5 pb-5 pr-5">
+            <div v-if="showMount" class="mt-5">
+              <controlMount />
+            </div>
             <div v-if="showTppa" class="mt-5">
               <TppaPage />
             </div>
             <div v-if="showSlew" class="mt-5">
               <TargetSearch />
-
             </div>
           </div>
         </div>
@@ -64,13 +70,14 @@ export default {
       Slewing: false,
       isConnected: false, // Verbindungsstatus
       showTppa: false,
-      showSlew: true,
+      showSlew: false,
+      showMount: true,
 
     };
   },
   async mounted() {
     // Hole die aktuelle Position beim Laden der Komponente
-    await this.fetchMountInfo(true);
+    await this.fetchMountInfo();
     // Starte das regelmäßige Abrufen der Informationen
     this.startFetchingInfo();
   },
@@ -79,50 +86,33 @@ export default {
     this.stopFetchingInfo();
   },
   methods: {
+    toggleShowMount() {
+      this.showMount = !this.showMount;
+      if (this.showMount) {
+        this.showSlew = false; 
+        this.showTppa = false; 
+      }
+    },
     toggleShowSlew() {
       this.showSlew = !this.showSlew;
       if (this.showSlew) {
-        this.showTppa = false; // Setzt showSlew auf false, wenn showTppa aktiviert wird
+        this.showTppa = false; 
+        this.showMount = false;
       }
     },
     toggleShowTppa() {
       this.showTppa = !this.showTppa;
       if (this.showTppa) {
-        this.showSlew = false; // Setzt showSlew auf false, wenn showTppa aktiviert wird
+        this.showSlew = false; 
+        this.showMount = false;
       }
     },
-    async toggleParkUnpark() {
-      try {
-        //console.log(this.parkPosition);
-        if (this.parkPosition) {
-          await apiService.mountAction("unpark");
-          console.log("Montierung ausparken");
-        } else {
-          await apiService.mountAction("park");
-          console.log("Montierung parken");
-        }
-        const mountInfo = await apiService.mountAction("info");
-        this.parkPosition = mountInfo?.Response?.AtPark || false;
-        //console.log(mountInfo);
-      } catch (error) {
-        console.error("Fehler :", error.response?.data || error);
-        this.mountStatus = "Fehler ";
-      }
-    },
-    async fetchMountInfo(initialFetch = false) {
+    async fetchMountInfo() {
       try {
         const response = await apiService.mountAction("info"); // API-Aufruf
         if (response.Success) {
           const data = response.Response;
           this.isConnected = data.Connected; // Verbindungsstatus setzen
-          this.parkPosition = data.AtPark; // Setze aktuelle Position
-          this.TrackingEnabled = data.TrackingEnabled;
-          this.Slewing = data.Slewing;
-
-          // Setze die Eingabeposition nur beim ersten Aufruf
-          if (initialFetch && this.isConnected) {
-            this.parkPosition = data.AtPark;
-          }
         } else {
           console.error("Fehler in der API-Antwort:", response.Error);
         }
@@ -132,7 +122,7 @@ export default {
     },
     startFetchingInfo() {
       // Starte das Intervall für regelmäßige Abrufe
-      this.intervalId = setInterval(this.fetchMountInfo, 1000);
+      this.intervalId = setInterval(this.fetchMountInfo, 5000);
     },
     stopFetchingInfo() {
       // Stoppe das Intervall
