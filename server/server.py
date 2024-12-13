@@ -66,8 +66,8 @@ def fetch_and_store_data():
                             add_value_if_changed(guider_data["DECDistanceRaw"], dec_distance)
                     else:
                         print("Schlüssel 'LastGuideStep' fehlt in der API-Antwort.")
-                else:
-                    print("Guider nicht verbunden oder kein Erfolg ")
+                #else:
+                    #print("Guider nicht verbunden")
             else:
                 print(f"Fehlerhafte API-Antwort: {response.status_code}")
         except Exception as e:
