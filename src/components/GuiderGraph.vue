@@ -33,7 +33,7 @@ export default {
               backgroundColor: "rgba(75, 192, 192, 0.2)",
               tension: 0.5,
               pointRadius: 0,
-              data: [0, 10, 20, 30],
+              data: [0],
             },
             {
               label: 'Dec "',
@@ -41,7 +41,7 @@ export default {
               backgroundColor: "rgba(153, 102, 255, 0.2)",
               tension: 0.5,
               pointRadius: 0,
-              data: [0, 10, 15, 20],
+              data: [0],
             },
           ],
         },
