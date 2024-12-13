@@ -28,7 +28,6 @@ const apiService = {
 
   // Focuser actions
   focusAction(action) {
-    console.log(action);
     return this._simpleGetRequest(`${BASE_URL}/equipment/focuser/${action}`);
   },
 
