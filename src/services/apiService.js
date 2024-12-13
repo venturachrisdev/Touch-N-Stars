@@ -1,206 +1,166 @@
 import axios from "axios";
 
-//const BASE_URL = "/v2/api";
 const BASE_URL = "http://192.168.2.128:5000/v2/api";
 const API_URL = "http://192.168.2.128:5000/api/";
-
-//const TARGETPIC_URL = "https://alaskybis.u-strasbg.fr/hips-image-services/hips2fits";
 const TARGETPIC_URL = "http://192.168.2.128:5000/api/targetpic";
 
 const apiService = {
-  // Backend-Erreichbarkeitsprüfung
+  // Backend reachability check
   async isBackendReachable() {
     try {
       const response = await axios.get(`${BASE_URL}/version`);
       return response.status === 200;
     } catch (error) {
-      console.error("Fehler beim Erreichen des Backends:", error.message);
+      console.error("Error reaching backend:", error.message);
       return false;
     }
   },
 
-  // Verbindungen ------------------------------
-  // Kameraaktionen
+  // Camera actions
   cameraAction(action) {
-    return axios.get(`${BASE_URL}/equipment/camera/${action}`).then((response) => response.data);
+    return this._simpleGetRequest(`${BASE_URL}/equipment/camera/${action}`);
   },
 
-  // Montierungsaktionen
+  // Mount actions
   mountAction(action) {
-    //console.log(action);
-    return axios.get(`${BASE_URL}/equipment/mount/${action}`).then((response) => response.data);
+    return this._simpleGetRequest(`${BASE_URL}/equipment/mount/${action}`);
   },
 
-  // Fokusierer
+  // Focuser actions
   focusAction(action) {
-    return axios.get(`${BASE_URL}/equipment/focuser/${action}`).then((response) => response.data);
+    console.log(action);
+    return this._simpleGetRequest(`${BASE_URL}/equipment/focuser/${action}`);
   },
 
-  // Guider
+  // Guider actions
   guiderAction(action) {
-    return axios.get(`${BASE_URL}/equipment/guider/${action}`).then((response) => response.data);
+    return this._simpleGetRequest(`${BASE_URL}/equipment/guider/${action}`);
   },
 
-  // framing
+  // Framing actions
   framingAction(action) {
-    return axios.get(`${BASE_URL}/framing/${action}`).then((response) => response.data);
+    return this._simpleGetRequest(`${BASE_URL}/framing/${action}`);
   },
 
-
-  //Foto aufnehmen ------------------------------------
+  // Start capture
   async startCapture(duration) {
-    return axios
-      .get(`${BASE_URL}/equipment/camera/capture`, {
-        params: { duration, getResult: false },
-      })
-      .then((response) => response.data)
-      .catch((error) => {
-        console.error("Fehler beim Starten der Aufnahme:", error);
-        throw error;
-      });
-  },
-
-  async getCaptureResult() {
-    return axios
-      .get(`${BASE_URL}/equipment/camera/capture`, {
-        params: {
-          getResult: true,
-          quality: 80,
-        },
-      })
-      .then((response) => response.data)
-      .catch((error) => {
-        console.error("Fehler beim Abrufen des Bildes:", error);
-        throw error;
-      });
-  },
-  // Focuser --------------------------------------------------------
-  async moveFocuser(position) {
-    return axios
-      .get(`${BASE_URL}/equipment/focuser/move`, {
-        params: { position },
-      })
-      .then((response) => response.data)
-      .catch((error) => {
-        console.error("Fehler beim Steuern des OAZ:", error);
-        throw error;
-      });
-  },
-
-  // Slew and Center --------------------------------------------------------
-  async slewAndCenter(RAangle, DECangle, Center) {
     try {
-      // Koordinaten setzen
-      await axios.get(`${BASE_URL}/framing/set-coordinates`, {
-        params: {
-          RAangle,
-          DECangle,
-        },
+      const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
+        params: { duration, getResult: false },
       });
-
-      // Slew-Befehl senden
-      if (Center === false) {
-        const response = await axios.get(`${BASE_URL}/framing/slew`);
-        return response.data;
-      } else {
-        const response = await axios.get(`${BASE_URL}/framing/slew`, {
-          params: {
-            slewoption: "Center",
-          },
-        })
-        return response.data;
-      }
+      return response.data;
     } catch (error) {
-      console.error("Fehler beim Steuern der Montierung:", error);
+      console.error("Error starting capture:", error);
       throw error;
     }
-
   },
 
-  // NGC-Suche:
+  // Get capture result
+  async getCaptureResult() {
+    try {
+      const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
+        params: { getResult: true, quality: 80 },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error retrieving capture result:", error);
+      throw error;
+    }
+  },
+
+  // Move focuser
+  async moveFocuser(position) {
+    try {
+      const response = await axios.get(`${BASE_URL}/equipment/focuser/move`, {
+        params: { position },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error moving focuser:", error);
+      throw error;
+    }
+  },
+
+  // Slew and center
+  async slewAndCenter(RAangle, DECangle, Center) {
+    try {
+      await axios.get(`${BASE_URL}/framing/set-coordinates`, {
+        params: { RAangle, DECangle },
+      });
+
+      const params = Center ? { slewoption: "Center" } : {};
+      const response = await axios.get(`${BASE_URL}/framing/slew`, { params });
+      return response.data;
+    } catch (error) {
+      console.error("Error controlling mount:", error);
+      throw error;
+    }
+  },
+
+  // NGC search
   async searchNGC(query, limit = 10) {
-    // Ruft die NGC-Suche auf, die im Flask-Server unter /api/ngc/search läuft
-    return axios
-      .get(API_URL+"ngc/search", {
-        params: {
-          query,
-          limit,
-        },
-      })
-      .then((response) => response.data)
-      .catch((error) => {
-        console.error("Fehler bei der NGC-Suche:", error);
-        throw error;
-      });
+    return this._getWithParams(`${API_URL}ngc/search`, { query, limit });
   },
+
   async getNgcCache() {
-    return axios
-      .get(API_URL+"ngc/cache", {
-        params: {},
-      })
-      .then((response) => response.data)
-      .catch((error) => {
-        console.error("Fehler bei der NGC-Suche:", error);
-        throw error;
-      });
+    return this._simpleGetRequest(`${API_URL}ngc/cache`);
   },
 
   async updateNgcCache(data) {
+    try {
+      const response = await axios.post(`${API_URL}ngc/cache`, { data });
+      return response.data;
+    } catch (error) {
+      console.error("Error updating NGC cache:", error);
+      throw error;
+    }
+  },
+
+  // Load target picture
+  async searchTargetPic(width, height, fov, ra, dec) {
+    try {
+      const response = await axios.get(TARGETPIC_URL, {
+        params: { width, height, fov, ra, dec, hips: "CDS/P/DSS2/color", projection: "STG", format: "jpg" },
+        responseType: "blob",
+      });
+      return URL.createObjectURL(response.data);
+    } catch (error) {
+      console.error("Error retrieving target picture:", error);
+      throw error;
+    }
+  },
+
+  // Fetch guider chart data
+  async fetchGuiderChartData() {
+    try {
+      const response = await axios.get(`${API_URL}guider-data`);
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error("Error fetching guider data:", error);
+      return { success: false, message: "Error fetching guider data" };
+    }
+  },
+
+  // Helper methods
+  _simpleGetRequest(url) {
     return axios
-      .post(API_URL+"ngc/cache", {
-        data,
-      })
+      .get(url)
       .then((response) => response.data)
       .catch((error) => {
-        console.error("Fehler beim der NGC-Update:", error);
+        console.error(`Error in GET request to ${url}:`, error);
         throw error;
       });
   },
 
-// Zielbild laden
-  async searchTargetPic(width,height,fov,ra,dec) {
+  _getWithParams(url, params) {
     return axios
-      .get(TARGETPIC_URL, {
-        params: {
-          width: width,
-          height: height,
-          fov: fov,
-          ra: ra,
-          dec: dec,
-          hips: "CDS/P/DSS2/color",
-          projection:"STG",
-          format: "jpg",
-        },
-        responseType: "blob", 
-      })
-      .then((response) => {
-        // Erzeugt eine Blob-URL aus den binären Daten
-        return URL.createObjectURL(response.data);
-      })
+      .get(url, { params })
+      .then((response) => response.data)
       .catch((error) => {
-        console.error("Fehler beim abrufen des Zielbildes", error);
+        console.error(`Error in GET request to ${url} with params:`, error);
         throw error;
       });
-    },
-    async fetchGuiderChartData() {
-      try {
-        const response = await axios.get(`${API_URL}guider-data`);
-        return {
-          success: true,
-          data: response.data,
-        };
-      } catch (error) {
-        console.error("Fehler beim Abrufen der Guider-Daten:", error);
-        return {
-          success: false,
-          message: "Fehler beim Abrufen der Guider-Daten",
-        };
-      }
-    },
+  },
 };
-
-
-
-
 
 export default apiService;
