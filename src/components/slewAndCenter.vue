@@ -4,11 +4,19 @@
             <h5 class="text-xl font-bold text-white mb-4">Schwenken und Zentrieren</h5>
             <div class="flex flex-row justify-center items-center space-x-4">
                 <!-- Verwende v-model für die Bidirektionale Datenbindung -->
-                 <p>RA:</p>
-                <input type="text" v-model="localRAangleString" disabled
+                <p>RA:</p>
+                <input 
+                    type="text" 
+                    v-model="localRAangleString"
+                    @blur="updateRA"
+                    @keyup.enter="updateRA"
                     class="text-black w-full p-2 border border-gray-300 rounded" placeholder="RA 03:47:28.2" />
                 <p>Dec:</p>
-                <input type="text" v-model="localDECangleString" disabled
+                <input 
+                    type="text" 
+                    v-model="localDECangleString"
+                    @blur="updateDec"
+                    @keyup.enter="updateDec"
                     class="text-black w-full p-2 border border-gray-300 rounded" placeholder="Dec +24:06:19" />
             </div>
             <div class="mt-4 flex flex-col space-y-2">
@@ -22,7 +30,7 @@
                 </button>
             </div>
         </div>
-        
+
     </div>
 </template>
 
@@ -44,8 +52,8 @@ export default {
         };
     },
     async mounted() {
-    this.startFetchingInfo();
-  },
+        this.startFetchingInfo();
+    },
     watch: {
         // Wenn Props sich ändern, aktualisiere die lokalen Kopien
         RAangleString(newValue) {
@@ -64,8 +72,15 @@ export default {
             } catch (error) {
                 console.error("Framing API nicht erreicht", error);
             }
-
+            this.updateRA();
+            this.updateDec();
+           // this.$emit("update:RAangleString", this.localRAangleString);
+           // this.$emit("update:DECangleString", this.localDECangleString);
+        },
+        updateRA() {
             this.$emit("update:RAangleString", this.localRAangleString);
+        },
+        updateDec() {
             this.$emit("update:DECangleString", this.localDECangleString);
         },
         async slewAndCenter() {
@@ -107,11 +122,6 @@ export default {
                 const response = await apiService.framingAction("info"); // API-Aufruf
                 if (response.Success) {
                     this.Info = response.Response;
-                    //console.log(this.Info);
-                    //const data = response.Response;
-                   
-                      //  this.mountCoordinatesRaStr = data.Rectangle.OriginalCoordinates.RAString;
-                      //  this.mountCoordinatesDecStr = data.Rectangle.OriginalCoordinates.DecString
 
                 } else {
                     console.error("Fehler in der API-Antwort:", response.Error);

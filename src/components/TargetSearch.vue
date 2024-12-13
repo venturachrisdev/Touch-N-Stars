@@ -24,7 +24,8 @@
           </div>
         </div>
         <div class="border border-gray-700 rounded-md ml-3">
-          <TargetPic v-model:RAangleString="RAangleString" v-model:DECangleString="DECangleString" />
+          <TargetPic v-model:RAangleString="RAangleString"
+            v-model:DECangleString="DECangleString" />
         </div>
       </div>
       <div class="mt-4">
@@ -57,10 +58,15 @@ export default {
     await this.loadNgcCache(); // Lade Cache beim Laden der Seite
   },
   methods: {
+    handleReloadImage({ RA, Dec }) {
+      console.log(`Empfange Bildaktualisierung für RA: ${RA}, Dec: ${Dec}`);
+      // Rufen Sie hier die API auf oder aktualisieren Sie die Daten, um das Bild neu zu laden
+      //this.loadNewImage(RA, Dec);
+    },
     async loadNgcCache() {
       try {
         const data = await apiService.getNgcCache();
-        if (data ) {
+        if (data) {
           this.selectedItem = data.data.item
           this.RAangleString = data.data.item.RA;
           this.DECangleString = data.data.item.Dec;
@@ -93,15 +99,15 @@ export default {
       this.RAangleString = item.RA;
       this.DECangleString = item.Dec;
       try {
-         apiService.updateNgcCache({
+        apiService.updateNgcCache({
           item,
-    
+
         });
-        console.log("Cache erfolgreich aktualisiert:", item);
+        //console.log("Cache erfolgreich aktualisiert:", item);
       } catch (error) {
         console.error("Fehler beim Aktualisieren des Caches:", error);
       }
-  
+
     }
   }
 };
