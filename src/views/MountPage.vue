@@ -1,13 +1,13 @@
 <template>
   <div class="container flex tems-center justify-center">
-    <div class="container max-w-md ">
+    <div class="container max-w-md landscape:max-w-xl">
       <h5 class="text-xl text-center font-bold text-white mb-4">Montierung</h5>
-      <infoMount v-model="isConnected" />
+      <infoMount v-model="isConnected" class="grid grid-cols-2 landscape:grid-cols-3"/>
 
       <div v-if="isConnected">
         
         <!-- Integration von TppaPage -->
-        <div class="mt-5 border border-gray-600 rounded-b-lg bg-gray-800/10">
+        <div class="mt-4 border border-gray-600 rounded-b-lg bg-gray-800/10">
 
           <div class="text-sm">
             <button class="border-2 border-gray-500 rounded-b-md  w-24 h-10" :class="{

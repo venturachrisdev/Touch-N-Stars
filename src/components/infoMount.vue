@@ -4,19 +4,10 @@
     </div>
 
 
-    <div v-else class="grid grid-cols-2 gap-2 ">
-
-        <div>
-            <StatusBool :isEnabled="!parkPosition" enabledText="Ausgeparkt" disabledText="Geparkt"
-               />
-        </div>
-        <div>
-            <StatusBool :isEnabled="TrackingEnabled" enabledText="Tracking ist aktiv"
-                disabledText="Tracking deaktiviert" />
-        </div>
-        <div>
-            <StatusBool :isEnabled="Slewing" enabledText="Montierung Schwenkt" disabledText="Schwenkt nicht" />
-        </div>
+    <div v-else class=" gap-2 ">
+        <StatusBool :isEnabled="!parkPosition" enabledText="Ausgeparkt" disabledText="Geparkt" />
+        <StatusBool :isEnabled="TrackingEnabled" enabledText="Tracking ist aktiv" disabledText="Tracking deaktiviert" />
+        <StatusBool :isEnabled="Slewing" enabledText="Montierung Schwenkt" disabledText="Schwenkt nicht" />
     </div>
 </template>
 
