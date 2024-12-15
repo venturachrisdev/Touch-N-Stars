@@ -13,11 +13,11 @@
             </div>
             <div class="mt-4 grid sm:grid-cols-2 space-y-2  sm:space-x-2 sm:space-y-0 ">
                 <button @click="slew"
-                    class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50">
+                    class="default-button-cyan">
                     Schwenken
                 </button>
                 <button @click="slewAndCenter"
-                    class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50">
+                    class="default-button-cyan">
                     Schwenken und Zentrieren
                 </button>
             </div>

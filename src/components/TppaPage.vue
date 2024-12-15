@@ -12,12 +12,12 @@
         <!-- Neue Buttons -->
         <div class="flex space-x-4">
           <button
-            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+            class="default-button-cyan"
             @click="startAlignment">
             Start Alignment
           </button>
           <button
-            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+            class="default-button-cyan"
             @click="stopAlignment">
             Stop Alignment
           </button>
