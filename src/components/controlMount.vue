@@ -1,11 +1,11 @@
 <template>
     <div class="flex gap-x-2">
         <button @click="parkMount"
-            class=" min-w-32 min-h-10 bg-cyan-900 rounded-md text-white font-medium transition-colors w-full">
+            class="default-button-cyan ">
             Parken
         </button>
         <button @click="unparkMount"
-            class="min-w-32 min-h-10 bg-red-800 rounded-md text-white font-medium transition-colors w-full">
+            class="default-button-red">
             Ausparken
         </button>
     </div>
