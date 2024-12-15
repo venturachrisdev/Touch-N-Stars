@@ -11,7 +11,7 @@
                 <input type="text" v-model="localDECangleString" @blur="handleBlurDEC" @keyup.enter="handleBlurDEC"
                     class="text-black w-full p-2 border border-gray-300 rounded" placeholder="Dec +24:06:19" />
             </div>
-            <div class="mt-4 flex flex-col space-y-2">
+            <div class="mt-4 grid sm:grid-cols-2 space-y-2  sm:space-x-2 sm:space-y-0 ">
                 <button @click="slew"
                     class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50">
                     Schwenken

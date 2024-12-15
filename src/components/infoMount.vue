@@ -7,7 +7,7 @@
     <div v-else class=" gap-2 ">
         <StatusBool :isEnabled="!parkPosition" enabledText="Ausgeparkt" disabledText="Geparkt" />
         <StatusBool :isEnabled="TrackingEnabled" enabledText="Tracking ist aktiv" disabledText="Tracking deaktiviert" />
-        <StatusBool :isEnabled="Slewing" enabledText="Montierung Schwenkt" disabledText="Schwenkt nicht" />
+        <StatusBool :isEnabled="Slewing" enabledText="Montierung schwenkt" disabledText="Schwenkt nicht" />
     </div>
 </template>
 

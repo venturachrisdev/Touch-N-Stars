@@ -1,8 +1,8 @@
 <template>
   <div class="container flex tems-center justify-center">
-    <div class="container max-w-md ">
+    <div class="container max-w-md">
       <h5 class="text-xl font-bold mb-4">Suche</h5>
-      <div class=" text-black mx-auto max-w-md">
+      <div class=" text-black mx-auto">
         <input type="text" v-model="searchQuery" @input="fetchSuggestions"
           class="w-full p-2 border border-gray-300 rounded" placeholder="Geben Sie einen Suchbegriff ein..." />
         <ul v-if="suggestions.length > 0" class=" bg-white border border-gray-300 rounded mt-1 z-10">
@@ -15,7 +15,7 @@
         </ul>
       </div>
       <!-- Ausgewählter Eintrag -->
-      <div v-if="selectedItem" class="flex mt-4 p-4 border  border-gray-700 rounded shadow">
+      <div v-if="selectedItem" class="grid grid-cols-2 mt-4 p-4 border  border-gray-700 rounded shadow">
         <div>
           <div class="text-xs ">
             <p v-if="selectedItem['Common names']"><strong>Name:</strong> {{ selectedItem['Common names'] }}</p>
@@ -23,8 +23,8 @@
             <p v-if="selectedItem.M"> <strong>M:</strong> M{{ selectedItem.M }}</p>
           </div>
         </div>
-        <div class="border border-gray-700 rounded-md ml-3">
-          <TargetPic v-model:RAangleString="RAangleString"
+        <div class="">
+          <TargetPic class="border border-gray-500 rounded-md" v-model:RAangleString="RAangleString"
             v-model:DECangleString="DECangleString" />
         </div>
       </div>
