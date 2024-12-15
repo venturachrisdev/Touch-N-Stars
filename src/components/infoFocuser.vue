@@ -1,11 +1,13 @@
 <template>
     <div v-if="!isConnected" class="text-red-500 ">
-        <p>Bitte Montierung verbinden</p>
+        <p>Bitte Fokusierer verbinden</p>
     </div>
     <div v-else class=" gap-2 ">
-        <StatusBool :isEnabled="!parkPosition" enabledText="Ausgeparkt" disabledText="Geparkt" />
-        <StatusBool :isEnabled="TrackingEnabled" enabledText="Tracking ist aktiv" disabledText="Tracking deaktiviert" />
-        <StatusBool :isEnabled="Slewing" enabledText="Montierung schwenkt" disabledText="Schwenkt nicht" />
+        <StatusString :isEnabled="currentPosition" Name="Aktuelle Poistion:" :Value=currentPosition />
+        <StatusString :isEnabled="temperature" Name="Temperatur:" :Value=temperature />
+        <StatusBool class="col-start-1" :isEnabled="!isMoving" enabledText="Beweg sich" disabledText="Steht" />
+        <StatusBool :isEnabled="isSettling" enabledText="Backlash Korrektur" disabledText="Backlash Korrektur" />
+
     </div>
 </template>
 
@@ -13,17 +15,20 @@
 
 import apiService from "@/services/apiService";
 import StatusBool from '../components/StatusBool.vue';
+import StatusString from '../components/StatusString.vue';
 
 export default {
     components: {
         StatusBool,
+        StatusString,
     },
     data() {
         return {
-            parkPosition: true,
-            TrackingEnabled: false,
-            Slewing: false,
-            isConnected: false,
+            currentPosition: null, // Aktuelle Position vom Server
+            temperature: null, // Aktuelle Temperatur
+            isMoving: false, // Status: Bewegt sich
+            isSettling: false, // Status: Wird eingestellt
+            isConnected: false, // Verbindungsstatus
         };
     },
     props: {
@@ -45,20 +50,17 @@ export default {
         this.stopFetchingInfo();
     },
     methods: {
-        async fetchInfo(initialFetch = false) {
+        async fetchInfo() {
             try {
-                const response = await apiService.mountAction("info"); // API-Aufruf
+                const response = await apiService.focusAction("info"); // API-Aufruf
                 if (response.Success) {
                     const data = response.Response;
                     this.isConnected = data.Connected; // Verbindungsstatus setzen
-                    this.parkPosition = data.AtPark; // Setze aktuelle Position
-                    this.TrackingEnabled = data.TrackingEnabled;
-                    this.Slewing = data.Slewing;
+                    this.currentPosition = data.Position; // Setze aktuelle Position
+                    this.temperature = data.Temperature.toFixed(2); // Setze Temperatur
+                    this.isMoving = data.IsMoving; // Setze Bewegung-Status
+                    this.isSettling = data.IsSettling; // Setze Einstellungs-Status
 
-                    // Setze die Eingabeposition nur beim ersten Aufruf
-                    if (initialFetch && this.isConnected) {
-                        this.parkPosition = data.AtPark;
-                    }
                 } else {
                     console.error("Fehler in der API-Antwort:", response.Error);
                 }

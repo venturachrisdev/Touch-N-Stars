@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import EquipmentPage from '../views/EquipmentPage.vue';
 import CameraPage from '../views/CameraPage.vue';
-import FocusPage from '../components/FocusPage.vue';
+import FocusPage from '../views/FocusPage.vue';
 import MountPage from '../views/MountPage.vue';
 import GuidingPage from '../views/GuidingPage.vue';
 import TargetPic from '../components/TargetPic.vue';

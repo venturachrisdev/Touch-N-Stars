@@ -91,7 +91,7 @@ import apiService from "@/services/apiService";
 import Panzoom from 'panzoom';
 
 // eslint-disable-next-line
-import FocusPage from '../components/FocusPage.vue';
+import FocusPage from './FocusPage.vue';
 
 export default {
   components: {

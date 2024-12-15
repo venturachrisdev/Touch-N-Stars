@@ -1,6 +1,6 @@
 <template>
 
-        <div class="flex items-center space-x-4 border border-gray-500 rounded-xl p-1"> 
+        <div class="flex items-center space-x-4 border border-gray-500 rounded-xl p-1 min-h-7"> 
             <div class="flex items-center space-x-3 ">
                 <div :class="isEnabled ? enabledClass : disabledClass"></div>
                 <span class=" text-xs text-gray-400">{{ isEnabled ? enabledText : disabledText }}</span>
