@@ -1,9 +1,15 @@
 <template>
   <div class=" text-center">
-    <h5 class="text-xl font-bold text-white mb-7">Fotoaufnahme</h5>
-    <div v-if="!isConnected" class="text-red-500 ">
-      <p>Bitte Kamera verbinden</p>
+    
+     <div class="text-left mb-5 grid grid-cols-3">
+      <Button @click="showInfo = !showInfo" class="w-10 h-10 bg-gray-700 active:bg-cyan-700 rounded-xl border border-cyan-500/20">
+        <p class=" font-bold">i</p>
+      </Button>
+      <h1 class="text-xl text-center text font-bold">Fotoaufnahme</h1>
     </div>
+
+    <infoCamera v-model="isConnected" :show-info="showInfo" class="grid grid-cols-2 landscape:grid-cols-3 mb-4" />
+    <div v-if="!isConnected" class="text-red-500 "></div>
 
     <!-- Eingabefelder -->
     <div v-else class="flex flex-col landscape:flex-row gap-2 ">
@@ -89,14 +95,11 @@
 <script>
 import apiService from "@/services/apiService";
 import Panzoom from 'panzoom';
-
-// eslint-disable-next-line
-import FocusPage from './FocusPage.vue';
+import infoCamera from '../components/infoCamera.vue';
 
 export default {
   components: {
-    // eslint-disable-next-line
-    FocusPage,
+    infoCamera,
   },
   data() {
     return {
@@ -109,39 +112,14 @@ export default {
       isExposure: false, // Gibt an, ob die Belichtungszeit läuft
       isLoadingImage: false, // Gibt an, ob das Bild geladen wird
       isLooping: false,
-      isAbort:false,
+      isAbort: false,
       panzoomInstance: null, // Panzoom-Instanz
+      showInfo:false,
     };
   },
   async mounted() {
-    await this.cameraInfo();
-    this.startIntCameraInfo();
   },
   methods: {
-    async cameraInfo() {
-      try {
-        const response = await apiService.cameraAction("info");
-        if (response.Success) {
-          this.isConnected = response.Response.Connected;
-          // console.log(response.Response.Connected);
-
-        } else {
-          console.log("Fehler beim abrufen der Kameradaten");
-        }
-      }
-      catch (error) {
-        console.log("Kamera API nicht erricht", error);
-      }
-    },
-    startIntCameraInfo() {
-      this.intervalId = setInterval(this.cameraInfo, 1000)
-    },
-    stopIntCamerInfo() {
-      if (this.intervalId) {
-        clearInterval(this.intervalId);
-        this.intervalId = null;
-      }
-    },
     async capturePhoto() {
       if (this.exposureTime <= 0) {
         alert("Bitte geben Sie eine gültige Belichtungszeit ein.");
@@ -225,7 +203,7 @@ export default {
 
         // Läuft keine Belichtung mehr
         this.isAbort = true,
-        this.isExposure = false;
+          this.isExposure = false;
         this.isLoadingImage = false;
         this.isLooping = false;
 
@@ -273,8 +251,6 @@ export default {
         this.exposureCountdownTimer = interval;
       });
     },
-
-
     wait(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
@@ -303,7 +279,6 @@ export default {
     },
   },
   beforeUnmount() {
-    this.stopIntCamerInfo();
   },
 };
 </script>
