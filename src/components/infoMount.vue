@@ -1,8 +1,8 @@
 <template>
-    <div v-show="!isConnected" class="text-red-500 ">
+    <div v-if="!isConnected" class="text-red-500 ">
         <p>Bitte Montierung verbinden</p>
     </div>
-    <div v-show="isConnected" class=" gap-2 ">
+    <div v-else class=" gap-2 ">
         <StatusBool :isEnabled="!parkPosition" enabledText="Ausgeparkt" disabledText="Geparkt" />
         <StatusBool :isEnabled="TrackingEnabled" enabledText="Tracking ist aktiv" disabledText="Tracking deaktiviert" />
         <StatusBool :isEnabled="Slewing" enabledText="Montierung schwenkt" disabledText="Schwenkt nicht" />
@@ -36,7 +36,8 @@ export default {
     },
     async mounted() {
         // Hole die aktuelle Position beim Laden der Komponente
-        await this.fetchInfo(true);
+        this.isConnected = true;
+        await this.fetchInfo();
         // Starte das regelmäßige Abrufen der Informationen
         this.startFetchingInfo();
     },
@@ -60,9 +61,11 @@ export default {
                         this.parkPosition = data.AtPark;
                     }
                 } else {
+                    this.isConnected = false;
                     console.error("Fehler in der API-Antwort:", response.Error);
                 }
             } catch (error) {
+                this.isConnected = false;
                 console.error("Fehler beim Abrufen der Mount-Informationen:", error);
             }
         },
