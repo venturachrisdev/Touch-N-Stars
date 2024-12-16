@@ -1,8 +1,8 @@
 <template>
-    <div v-if="!isConnected" class="text-red-500 ">
+    <div v-show="!isConnected" class="text-red-500 ">
         <p>Bitte Montierung verbinden</p>
     </div>
-    <div v-else class=" gap-2 ">
+    <div v-show="isConnected" class=" gap-2 ">
         <StatusBool :isEnabled="!parkPosition" enabledText="Ausgeparkt" disabledText="Geparkt" />
         <StatusBool :isEnabled="TrackingEnabled" enabledText="Tracking ist aktiv" disabledText="Tracking deaktiviert" />
         <StatusBool :isEnabled="Slewing" enabledText="Montierung schwenkt" disabledText="Schwenkt nicht" />

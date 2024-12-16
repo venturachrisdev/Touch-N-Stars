@@ -1,102 +1,103 @@
 <template>
   <div class=" text-center">
 
-    <div v-if="isConnected" class="text-left mb-2  ">
+    <div v-show="isConnected" class="text-left mb-2  ">
       <h1 class="text-xl text-center text font-bold">Fotoaufnahme</h1>
-
     </div>
 
-      <infoCamera v-model="isConnected" :show-info="showInfo" class="grid grid-cols-2 landscape:grid-cols-3 mb-4" />
-    
-    <div class="flex items-center space-x-3 mb-4">
-      <!-- Kurzer Strich -->
-      <div class="w-3 h-[1px] bg-gray-700"></div>
-      <button @click="showInfo = !showInfo"
-        class="w-7 h-7 bg-gray-700 active:bg-cyan-700 hover:bg-cyan-600 rounded-md border border-cyan-500/20 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white transition-transform duration-300"
-          :class="{ 'rotate-180': showInfo }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <!-- Langer Strich -->
-      <div class="flex-grow h-[1px] bg-gray-700"></div>
-    </div>
-    <div v-if="!isConnected"></div>
+    <infoCamera v-model="isConnected" :show-info="showInfo" class="grid grid-cols-2 landscape:grid-cols-3 mb-4" />
 
-    <!-- Eingabefelder -->
-    <div v-else class="flex flex-col landscape:flex-row gap-2 ">
-      <div
-        class="flex flex-row justify-center landscape:justify-normal landscape:flex-col landscape:space-y-2 space-y-0 gap-2 landscape:gap-0 landscape:w-3/7">
-        <div class="flex flex-col gap-2 text-left max-w-40">
-          <label for="exposure" class="text-sm">Belichtungszeit:</label>
-          <input id="exposure" v-model.number="exposureTime" type="number"
-            class="text-black px-4 h-10 max-w-15 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-700"
-            placeholder="1" />
-        </div>
-
-        <div class="flex flex-col min-w-40">
-          <!-- Dauerschleife -->
-          <div class="flex items-center mb-2">
-            <input v-model="isLooping" id="checkDauerschleife" type="checkbox" value=""
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-cyan-500 dark:focus:ring-cyan-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-            <label for="checkDauerschleife"
-              class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dauerschleife</label>
-          </div>
-          <!-- Foto aufnehmen -->
-          <button
-            class="flex h-10 min-w-48 rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
-            @click="capturePhoto" :disabled="loading">
-            <template v-if="loading">
-              <div v-if="isExposure" class="flex items-center">
-                <!-- Fortschrittskreis für Belichtungszeit -->
-                <svg class="w-6 h-6" viewBox="0 0 36 36">
-                  <path class="text-white text-opacity-30 fill-none stroke-current stroke-[2.8]" d="M18 2.0845
-                     a 15.9155 15.9155 0 0 1 0 31.831
-                     a 15.9155 15.9155 0 0 1 0 -31.831" />
-                  <path class="fill-none stroke-current stroke-[2.8]" :style="{
-                    strokeDasharray: progress + ', 100',
-                    transform: 'rotate(-90deg)',
-                    transformOrigin: 'center',
-                  }" d="M18 2.0845
-                     a 15.9155 15.9155 0 0 1 0 31.831
-                     a 15.9155 15.9155 0 0 1 0 -31.831" />
-                </svg>
-                <span class="ml-2 text-white text-sm font-medium">
-                  Aufnahme läuft {{ remainingExposureTime }}s
-                </span>
-              </div>
-              <div v-else-if="isLoadingImage" class="flex items-center">
-                <!-- Drehender Spinner für Bild lädt -->
-                <svg class="w-6 h-6 animate-spin text-white" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                </svg>
-                <span class="ml-2 text-white text-sm font-medium">
-                  Bild lädt...
-                </span>
-              </div>
-            </template>
-            <template v-else>
-              Aufnahme starten
-            </template>
-          </button>
-          <div class=" pt-2">
-            <button class="flex h-10 w-full rounded-md text-white font-medium bg-red-800 items-center justify-center "
-              v-if="isExposure" @click="abortExposure">
-              Abbrechen
-            </button>
-          </div>
-        </div>
+    <div v-show="isConnected">
+      <div class="flex items-center space-x-3 mb-4">
+        <!-- Kurzer Strich -->
+        <div class="w-3 h-[1px] bg-gray-700"></div>
+        <button @click="showInfo = !showInfo"
+          class="w-7 h-7 bg-gray-700 active:bg-cyan-700 hover:bg-cyan-600 rounded-md border border-cyan-500/20 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white transition-transform duration-300"
+            :class="{ 'rotate-180': showInfo }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <!-- Langer Strich -->
+        <div class="flex-grow h-[1px] bg-gray-700"></div>
       </div>
 
 
-      <!-- Anzeige des Bildes mit Panzoom -->
-      <div class="flex  w-full landscape:w-4/7">
-        <!-- Bildcontainer -->
-        <div ref="imageContainer"
-          class="image-container overflow-hidden min-h-[65vh] min-w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
-          <img v-if="imageData" ref="image" :src="imageData" alt="Aufgenommenes Bild" class=" block  "
-            style="touch-action: none; user-select: none;" />
+      <!-- Eingabefelder -->
+      <div class="flex flex-col landscape:flex-row gap-2 ">
+        <div
+          class="flex flex-row justify-center landscape:justify-normal landscape:flex-col landscape:space-y-2 space-y-0 gap-2 landscape:gap-0 landscape:w-3/7">
+          <div class="flex flex-col gap-2 text-left max-w-40">
+            <label for="exposure" class="text-sm">Belichtungszeit:</label>
+            <input id="exposure" v-model.number="exposureTime" type="number"
+              class="text-black px-4 h-10 max-w-15 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-700"
+              placeholder="1" />
+          </div>
+
+          <div class="flex flex-col min-w-40">
+            <!-- Dauerschleife -->
+            <div class="flex items-center mb-2">
+              <input v-model="isLooping" id="checkDauerschleife" type="checkbox" value=""
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-cyan-500 dark:focus:ring-cyan-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+              <label for="checkDauerschleife"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dauerschleife</label>
+            </div>
+            <!-- Foto aufnehmen -->
+            <button
+              class="flex h-10 min-w-48 rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+              @click="capturePhoto" :disabled="loading">
+              <template v-if="loading">
+                <div v-if="isExposure" class="flex items-center">
+                  <!-- Fortschrittskreis für Belichtungszeit -->
+                  <svg class="w-6 h-6" viewBox="0 0 36 36">
+                    <path class="text-white text-opacity-30 fill-none stroke-current stroke-[2.8]" d="M18 2.0845
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="fill-none stroke-current stroke-[2.8]" :style="{
+                      strokeDasharray: progress + ', 100',
+                      transform: 'rotate(-90deg)',
+                      transformOrigin: 'center',
+                    }" d="M18 2.0845
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831" />
+                  </svg>
+                  <span class="ml-2 text-white text-sm font-medium">
+                    Aufnahme läuft {{ remainingExposureTime }}s
+                  </span>
+                </div>
+                <div v-else-if="isLoadingImage" class="flex items-center">
+                  <!-- Drehender Spinner für Bild lädt -->
+                  <svg class="w-6 h-6 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                  </svg>
+                  <span class="ml-2 text-white text-sm font-medium">
+                    Bild lädt...
+                  </span>
+                </div>
+              </template>
+              <template v-else>
+                Aufnahme starten
+              </template>
+            </button>
+            <div class=" pt-2">
+              <button class="flex h-10 w-full rounded-md text-white font-medium bg-red-800 items-center justify-center "
+                v-if="isExposure" @click="abortExposure">
+                Abbrechen
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Anzeige des Bildes mit Panzoom -->
+        <div class="flex  w-full landscape:w-4/7">
+          <!-- Bildcontainer -->
+          <div ref="imageContainer"
+            class="image-container overflow-hidden min-h-[65vh] min-w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
+            <img v-if="imageData" ref="image" :src="imageData" alt="Aufgenommenes Bild" class=" block  "
+              style="touch-action: none; user-select: none;" />
+          </div>
         </div>
       </div>
     </div>
@@ -313,8 +314,6 @@ export default {
   transform-origin: center center;
   /* Zentriert die Transformation */
 }
-
-
 </style>
 
 <style scoped></style>
