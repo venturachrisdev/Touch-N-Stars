@@ -41,12 +41,30 @@ const apiService = {
     return this._simpleGetRequest(`${BASE_URL}/framing/${action}`);
   },
 
+  // profile actions
+  profileAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/profile/${action}`);
+  },
+
+  // application actions
+  async profileSwitch(profileid) {
+    try {
+      const response = await axios.get(`${BASE_URL}/profile/switch`, {
+        params: { profileid: profileid, },
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error switch profil:", error);
+      throw error;
+    }
+  },
+
   // application actions
   async applicatioTabSwitch(tab) {
     try {
-      console.log("applicatioTabSwitch");
       const response = await axios.get(`${BASE_URL}/application/switch-tab`, {
-        params: {tab: tab,  },
+        params: { tab: tab, },
       });
       console.log(response.data);
       return response.data;

@@ -1,47 +1,36 @@
 <template>
   <div class="container text-center">
     <h5 class="text-xl  font-bold text-white mb-4">Ausrüstungs-Steuerung</h5>
-
+    <div class="flex flex-col items-center justify-center">
+      <profilSelect class="mb-4" v-show="!cameraConnected & !mountConnected & !focusConnected"/>
+  
     <!-- Kamera-Steuerung -->
-    <ConnectionButton
-      :isConnected="cameraConnected"
-      connectText="Kamera verbinden"
-      disconnectText="Kamera trennen"
-      :onToggle="toggleCameraConnection"
-    />
+    <ConnectionButton :isConnected="cameraConnected" connectText="Kamera verbinden" disconnectText="Kamera trennen"
+      :onToggle="toggleCameraConnection" />
 
     <!-- Montierungs-Steuerung -->
-    <ConnectionButton
-      :isConnected="mountConnected"
-      connectText="Montierung verbinden"
-      disconnectText="Montierung trennen"
-      :onToggle="toggleMountConnection"
-    />
+    <ConnectionButton :isConnected="mountConnected" connectText="Montierung verbinden"
+      disconnectText="Montierung trennen" :onToggle="toggleMountConnection" />
 
-        <!-- Focuser-Steuerung -->
-    <ConnectionButton
-      :isConnected="focusConnected"
-      connectText="Fokusierer verbinden"
-      disconnectText="Fokusierer trennen"
-      :onToggle="toggleFocuserConnection"
-    />
+    <!-- Focuser-Steuerung -->
+    <ConnectionButton :isConnected="focusConnected" connectText="Fokusierer verbinden"
+      disconnectText="Fokusierer trennen" :onToggle="toggleFocuserConnection" />
     <!-- Guider-Steuerung -->
-    <ConnectionButton
-      :isConnected="guiderConnected"
-      connectText="Guider verbinden"
-      disconnectText="Guider trennen"
-      :onToggle="toggleGuiderConnection"
-    />
+    <ConnectionButton :isConnected="guiderConnected" connectText="Guider verbinden" disconnectText="Guider trennen"
+      :onToggle="toggleGuiderConnection" />
   </div>
+</div>
 </template>
 
 <script>
 import ConnectionButton from "@/components/ConnectionButton.vue";
 import apiService from "@/services/apiService";
+import profilSelect from "@/components/profilSelect.vue";
 
 export default {
   components: {
     ConnectionButton,
+    profilSelect,
   },
   data() {
     return {
