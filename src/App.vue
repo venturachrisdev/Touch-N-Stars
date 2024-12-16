@@ -4,10 +4,10 @@
       <div class="flex w-full min-h-screen items-center justify-center text-2xl text-red-700">
         <p>NINA ist nicht erreichbar!</p>
       </div>
-      
+
     </div>
     <div v-else>
-    <!-- Navigation -->
+      <!-- Navigation -->
       <nav>
         <div>
           <NavigationComp />
@@ -15,20 +15,20 @@
       </nav>
 
       <!-- Hauptinhalt -->
-    <div class="container mx-auto  p-4  transition-all">
-      <router-view />
+      <div class="container mx-auto  p-4  transition-all">
+        <router-view />
+      </div>
     </div>
-</div>
-</div>
+  </div>
 </template>
 
 <script>
 import { useHead } from '@vueuse/head';
 import NavigationComp from './components/NavigationComp.vue';
-import apiService from "@/services/apiService"; 
+import apiService from "@/services/apiService";
 
 export default {
-  data(){
+  data() {
     return {
       isBackendReachable: false,
       checkInterval: null, // Speichert die ID des Intervalls
@@ -36,7 +36,7 @@ export default {
   },
   setup() {
     useHead({
-      title: "NINA WebApp",
+      title: "N.I.N.A.Mobile",
     });
   },
   async mounted() {
@@ -70,6 +70,4 @@ export default {
 </script>
 
 
-<style scoped>
-
-</style>
+<style scoped></style>

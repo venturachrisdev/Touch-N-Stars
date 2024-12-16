@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import StartPage from '../views/StartPage.vue';
 import EquipmentPage from '../views/EquipmentPage.vue';
 import CameraPage from '../views/CameraPage.vue';
 import FocusPage from '../views/FocusPage.vue';
@@ -8,7 +9,7 @@ import TargetPic from '../components/TargetPic.vue';
 
 
 const routes = [
- 
+  { path: '/', component: StartPage },
   { path: '/equipment', component: EquipmentPage },
   { path: '/camera', component: CameraPage },
   { path: '/autofocus', component: FocusPage },
