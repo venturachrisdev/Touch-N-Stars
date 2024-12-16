@@ -35,10 +35,8 @@ export default {
         },
     },
     async mounted() {
-        // Hole die aktuelle Position beim Laden der Komponente
         this.isConnected = true;
         await this.fetchInfo();
-        // Starte das regelmäßige Abrufen der Informationen
         this.startFetchingInfo();
     },
     beforeUnmount() {
@@ -46,20 +44,16 @@ export default {
         this.stopFetchingInfo();
     },
     methods: {
-        async fetchInfo(initialFetch = false) {
+        async fetchInfo() {
             try {
-                const response = await apiService.mountAction("info"); // API-Aufruf
+                const response = await apiService.mountAction("info"); 
                 if (response.Success) {
                     const data = response.Response;
-                    this.isConnected = data.Connected; // Verbindungsstatus setzen
-                    this.parkPosition = data.AtPark; // Setze aktuelle Position
+                    this.isConnected = data.Connected;
+                    this.parkPosition = data.AtPark; 
                     this.TrackingEnabled = data.TrackingEnabled;
                     this.Slewing = data.Slewing;
 
-                    // Setze die Eingabeposition nur beim ersten Aufruf
-                    if (initialFetch && this.isConnected) {
-                        this.parkPosition = data.AtPark;
-                    }
                 } else {
                     this.isConnected = false;
                     console.error("Fehler in der API-Antwort:", response.Error);

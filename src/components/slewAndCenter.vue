@@ -45,6 +45,8 @@ export default {
     },
     async mounted() {
         this.startFetchingInfo();
+        //Da es zu Probleme kommt wenn der Framing assistant noch nie aufgerufen wurde diesen zurerst öffnen
+        await  apiService.applicatioTabSwitch("framing");
     },
     watch: {
         // Wenn Props sich ändern, aktualisiere die lokalen Kopien

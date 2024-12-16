@@ -41,6 +41,21 @@ const apiService = {
     return this._simpleGetRequest(`${BASE_URL}/framing/${action}`);
   },
 
+  // application actions
+  async applicatioTabSwitch(tab) {
+    try {
+      console.log("applicatioTabSwitch");
+      const response = await axios.get(`${BASE_URL}/application/switch-tab`, {
+        params: {tab: tab,  },
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error open application:", error);
+      throw error;
+    }
+  },
+
   // Start capture
   async startCapture(duration) {
     try {
