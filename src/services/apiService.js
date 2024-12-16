@@ -46,13 +46,13 @@ const apiService = {
     return this._simpleGetRequest(`${BASE_URL}/profile/${action}`);
   },
 
-  // application actions
+  // Profil Switch
   async profileSwitch(profileid) {
     try {
       const response = await axios.get(`${BASE_URL}/profile/switch`, {
         params: { profileid: profileid, },
       });
-      console.log(response.data);
+      //console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error switch profil:", error);
@@ -66,7 +66,7 @@ const apiService = {
       const response = await axios.get(`${BASE_URL}/application/switch-tab`, {
         params: { tab: tab, },
       });
-      console.log(response.data);
+      //console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error open application:", error);

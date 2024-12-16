@@ -1,7 +1,12 @@
 <template>
     <div class="w-64 flex items-center ">
         <label class="mr-2" for="profileDropdown">Profil: </label>
-        <select id="profileDropdown" class="default-inputfield" @change="updateProfile">
+        <select
+            id="profileDropdown"
+            class="default-inputfield"
+            v-model="selectedProfileId"
+            @change="updateProfile"
+        >
             <option v-for="profile in profiles" :key="profile.Id" :value="profile.Id">
                 {{ profile.Name }}
             </option>
@@ -41,6 +46,7 @@ export default {
         // Aktualisiere das ausgewählte Profil
         async updateProfile() {
             try {
+                //console.log(this.selectedProfileId);
                 const response = await apiService.profileSwitch(this.selectedProfileId);
                 if (response && response.Success) {
                     console.log('Profil erfolgreich aktualisiert');
