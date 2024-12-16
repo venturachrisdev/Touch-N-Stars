@@ -8,12 +8,12 @@
 
       <infoCamera v-model="isConnected" :show-info="showInfo" class="grid grid-cols-2 landscape:grid-cols-3 mb-4" />
     
-    <div class="flex items-center space-x-4 mb-4">
+    <div class="flex items-center space-x-3 mb-4">
       <!-- Kurzer Strich -->
-      <div class="w-5 h-[1px] bg-gray-700"></div>
+      <div class="w-3 h-[1px] bg-gray-700"></div>
       <button @click="showInfo = !showInfo"
-        class="w-6 h-6 bg-gray-700 active:bg-cyan-700 hover:bg-cyan-600 rounded-md border border-cyan-500/20 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white transition-transform duration-300"
+        class="w-7 h-7 bg-gray-700 active:bg-cyan-700 hover:bg-cyan-600 rounded-md border border-cyan-500/20 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white transition-transform duration-300"
           :class="{ 'rotate-180': showInfo }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
