@@ -1,16 +1,12 @@
 <template>
-    
-            <div class="w-64 flex items-center ">
-                <label class="mr-2" for="profileDropdown">Profil: </label>
-                <select id="profileDropdown" class="default-inputfield" @change="updateProfile">
-                    <option v-for="profile in profiles" :key="profile.Id" :value="profile.Id">
-                        {{ profile.Name }}
-                    </option>
-                </select>
-            </div>
-
-  
- 
+    <div class="w-64 flex items-center ">
+        <label class="mr-2" for="profileDropdown">Profil: </label>
+        <select id="profileDropdown" class="default-inputfield" @change="updateProfile">
+            <option v-for="profile in profiles" :key="profile.Id" :value="profile.Id">
+                {{ profile.Name }}
+            </option>
+        </select>
+    </div>
 </template>
 
 
@@ -64,6 +60,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
