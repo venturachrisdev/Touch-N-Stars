@@ -3,11 +3,10 @@
         <p>Bitte Fokusierer verbinden</p>
     </div>
     <div v-else class=" gap-2 ">
-        <StatusString :isEnabled="currentPosition" Name="Aktuelle Poistion:" :Value=currentPosition />
-        <StatusString :isEnabled="temperature" Name="Temperatur:" :Value=temperature />
+        <StatusString :isEnabled="currentPosition" Name="Aktuelle Position:" :Value="currentPosition" />
+        <StatusString :isEnabled="temperature" Name="Temperatur:" :Value="temperature" />
         <StatusBool class="col-start-1" :isEnabled="!isMoving" enabledText="Beweg sich" disabledText="Steht" />
         <StatusBool :isEnabled="isSettling" enabledText="Backlash Korrektur" disabledText="Backlash Korrektur" />
-
     </div>
 </template>
 
@@ -60,7 +59,8 @@ export default {
                     this.temperature = data.Temperature.toFixed(2); // Setze Temperatur
                     this.isMoving = data.IsMoving; // Setze Bewegung-Status
                     this.isSettling = data.IsSettling; // Setze Einstellungs-Status
-
+                    console.log(data);
+                    this.$emit("update:modelValue", this.isConnected);
                 } else {
                     console.error("Fehler in der API-Antwort:", response.Error);
                 }

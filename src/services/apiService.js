@@ -16,31 +16,29 @@ const apiService = {
     }
   },
 
-  // Camera actions
-  cameraAction(action) {
-    return this._simpleGetRequest(`${BASE_URL}/equipment/camera/${action}`);
-  },
-
+  //-------------------------------------  Mount ---------------------------------------
   // Mount actions
   mountAction(action) {
     return this._simpleGetRequest(`${BASE_URL}/equipment/mount/${action}`);
   },
 
-  // Focuser actions
-  focusAction(action) {
-    return this._simpleGetRequest(`${BASE_URL}/equipment/focuser/${action}`);
+  // Mount Tracking Mode
+  //0=Siderial, 1=Lunar, 2=Solar, 3=King, 4=Stopped)
+  //http://192.168.2.128:1888/v2/api/equipment/mount/tracking?mode=0
+  async setTrackingMode(TrackingMode) {
+    try {
+      const response = await axios.get(`${BASE_URL}/equipment/mount/tracking`, {
+        params: { mode: TrackingMode, },
+      });
+      //console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error switch profil:", error);
+      throw error;
+    }
   },
 
-  // Guider actions
-  guiderAction(action) {
-    return this._simpleGetRequest(`${BASE_URL}/equipment/guider/${action}`);
-  },
-
-  // Framing actions
-  framingAction(action) {
-    return this._simpleGetRequest(`${BASE_URL}/framing/${action}`);
-  },
-
+  //-------------------------------------  profile ---------------------------------------
   // profile actions
   profileAction(action) {
     return this._simpleGetRequest(`${BASE_URL}/profile/${action}`);
@@ -60,6 +58,7 @@ const apiService = {
     }
   },
 
+  //-------------------------------------  application ---------------------------------------
   // application actions
   async applicatioTabSwitch(tab) {
     try {
@@ -72,6 +71,12 @@ const apiService = {
       console.error("Error open application:", error);
       throw error;
     }
+  },
+
+  //-------------------------------------  Camera ---------------------------------------
+  // Camera actions
+  cameraAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/camera/${action}`);
   },
 
   // Start capture
@@ -100,6 +105,12 @@ const apiService = {
     }
   },
 
+  //-------------------------------------  focuser ---------------------------------------
+  // Focuser actions
+  focusAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/focuser/${action}`);
+  },
+
   // Move focuser
   async moveFocuser(position) {
     try {
@@ -113,6 +124,11 @@ const apiService = {
     }
   },
 
+  //-------------------------------------  Framing ---------------------------------------
+  // Framing actions
+  framingAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/framing/${action}`);
+  },
   // Slew and center
   async slewAndCenter(RAangle, DECangle, Center) {
     try {
@@ -162,6 +178,11 @@ const apiService = {
     }
   },
 
+  //-------------------------------------  guider ---------------------------------------
+  // Guider actions
+  guiderAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/guider/${action}`);
+  },
   // Fetch guider chart data
   async fetchGuiderChartData() {
     try {
@@ -173,6 +194,7 @@ const apiService = {
     }
   },
 
+  //-------------------------------------  Helper ---------------------------------------
   // Helper methods
   _simpleGetRequest(url) {
     return axios

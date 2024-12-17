@@ -2,9 +2,8 @@
   <div class="container flex tems-center justify-center">
     <div class="container max-w-md landscape:max-w-xl">
       <infoFocuser v-model="isConnected" class="grid grid-cols-2 landscape:grid-cols-3" />
-      <div v-if="!isConnected" >
-      </div>
-      <div v-else class="flex flex-col text-left mt-4">
+
+      <div v-if="isConnected" class="flex flex-col text-left mt-4">
         <div class="flex space-x-3 items-center">
           <label for="position" class=" w-auto">Neue Position:</label>
           <input id="position" v-model.number="position" type="number"
@@ -12,14 +11,14 @@
             placeholder="1" step="50" />
           <button
             class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
-            @click="moveFocuser" :disabled="loading">
+            @click="moveFocuser" >
             Bewegen
           </button>
         </div>
         <div class="mt-4">
           <button
             class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
-            @click="startAutofocus" :disabled="loading">
+            @click="startAutofocus">
             Starte Autofokus
           </button>
         </div>
@@ -43,6 +42,7 @@ export default {
       position: null, // Eingabeposition
       loading: false, // Status des Buttons
       intervalId: null, // ID für setInterval
+      isConnected: false,
     };
   },
   async mounted() {
