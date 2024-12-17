@@ -4,7 +4,7 @@
 
 @layer components {
   .default-button-cyan {
-    @apply min-w-32 min-h-10 bg-cyan-900 rounded-md text-white font-medium transition-colors w-full;
+    @apply min-w-24 min-h-10 bg-cyan-900 rounded-md text-white font-medium transition-colors w-full;
   }
 
   .default-button-cyan:active {
@@ -12,7 +12,7 @@
   }
 
   .default-button-red {
-    @apply min-w-32 min-h-10 bg-red-800 rounded-md text-white font-medium transition-colors w-full;
+    @apply min-w-24 min-h-10 bg-red-800 rounded-md text-white font-medium transition-colors w-full;
   }
 
   .default-button-red:active {
