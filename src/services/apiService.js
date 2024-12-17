@@ -120,7 +120,7 @@ const apiService = {
         params: { RAangle, DECangle },
       });
 
-      const params = Center ? { slewoption: "Center" } : {};
+      const params = Center ? { slew_option: "Center" } : {};
       const response = await axios.get(`${BASE_URL}/framing/slew`, { params });
       return response.data;
     } catch (error) {
