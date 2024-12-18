@@ -1,24 +1,18 @@
 <template>
-  <div class="container flex tems-center justify-center">
-    <div class="container max-w-md ">
-      <div v-if="!isConnected" class="text-gray-600 ">
+  <div class="container flex items-center justify-center">
+    <div class="container max-w-md">
+      <div v-if="!isConnected" class="text-gray-600">
         TPPA nicht verfügbar
       </div>
       <div v-else>
         <h5 class="text-xl text-center font-bold text-white mb-4">
           Three Point Polar Alignment
         </h5>
-
-        <!-- Neue Buttons -->
         <div class="flex space-x-4">
-          <button
-            class="default-button-cyan"
-            @click="startAlignment">
+          <button class="default-button-cyan" @click="startAlignment">
             Start Alignment
           </button>
-          <button
-            class="default-button-cyan"
-            @click="stopAlignment">
+          <button class="default-button-cyan" @click="stopAlignment">
             Stop Alignment
           </button>
         </div>
@@ -26,47 +20,48 @@
           <div v-if="startStop">
             <p>{{ formatMessage(currentMessage.message) }}</p>
           </div>
-          <div v-else class=" space-y-4">
-            <div class="flex space-x-4 ">
-              <p class=" w-52"><strong>Altitude Fehler:</strong></p>
-              <p> {{ showAltitudeError }}</p>
+          <div v-else class="space-y-4">
+            <div class="flex space-x-4">
+              <p class="w-52"><strong>Altitude Fehler:</strong></p>
+              <p>{{ showAltitudeError }}</p>
               <div v-if="showAltitudeError">
                 <ArrowUpIcon v-if="altitudeCorDirectionTop" class="size-6 text-blue-500" />
                 <ArrowDownIcon v-else class="size-6 text-blue-500" />
               </div>
             </div>
-            <div class="flex space-x-4 ">
-              <p class=" w-52"><strong>Azimuth Fehler:</strong> </p>
-              <p> {{ showAzimuthError }}</p>
+            <div class="flex space-x-4">
+              <p class="w-52"><strong>Azimuth Fehler:</strong> </p>
+              <p>{{ showAzimuthError }}</p>
               <div v-if="showAzimuthError">
                 <div v-if="azimuthCorDirectionLeft">
                   <ArrowLeftIcon class="size-6 text-blue-500 " />
                 </div>
-                <div v-else class="flex space-x-4 j">
+                <div v-else class="flex space-x-4">
                   <ArrowRightIcon class="size-6 text-blue-500" />
                 </div>
               </div>
             </div>
-            <div class="flex space-x-4 ">
-              <p class=" w-52"><strong>Gesamtfehler: </strong> </p>
-              <p> {{ showTotalError }}</p>
+            <div class="flex space-x-4">
+              <p class="w-52"><strong>Gesamtfehler: </strong></p>
+              <p>{{ showTotalError }}</p>
             </div>
-            <div v-if="currentMessage" class=" mt-20">
+            <div v-if="currentMessage" class="mt-20">
               <p style="white-space: pre-wrap;">
-
-                {{ formatMessage(currentMessage.message) }} </p>
-              <p class=" text-xs"><strong>Letzte Aktualisierung:</strong> {{ currentMessage.time }}</p>
-
+                {{ formatMessage(currentMessage.message) }}
+              </p>
+              <p class="text-xs">
+                <strong>Letzte Aktualisierung:</strong> {{ currentMessage.time }}
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import websocketService from "@/services/websocketTppa";
 import {
   ArrowDownIcon,
@@ -75,149 +70,118 @@ import {
   ArrowRightIcon,
 } from '@heroicons/vue/24/outline';
 
-export default {
-  name: "TppaPage",
-  components: {
-    ArrowDownIcon,
-    ArrowUpIcon,
-    ArrowLeftIcon,
-    ArrowRightIcon,
-  },
-  data() {
-    return {
-      Nachricht: "",
-      currentMessage: null,
-      startStop: false,
-      isConnected: false,
-      showAzimuthError: "",
-      showAltitudeError: "",
-      showTotalError: "",
-      azimuthCorDirectionLeft: false,
-      altitudeCorDirectionTop: false,
+const Nachricht = ref("");
+const currentMessage = ref(null);
+const startStop = ref(false);
+const isConnected = ref(false);
+const showAzimuthError = ref("");
+const showAltitudeError = ref("");
+const showTotalError = ref("");
+const azimuthCorDirectionLeft = ref(false);
+const altitudeCorDirectionTop = ref(false);
 
-    };
-  },
-  mounted() {
-    websocketService.setStatusCallback((status) => {
-      console.log("Status aktualisiert:", status);
-      this.Nachricht = status;
-      this.isConnected = status === "Verbunden";
-    });
+function decimalToDMS(value) {
+  const isNegative = value < 0;
+  const absValue = Math.abs(value);
 
-    websocketService.setMessageCallback((message) => {
-      console.log("Neue Nachricht erhalten:", message);
-      // Speichere die Nachricht zusammen mit der Empfangszeit
-      this.currentMessage = {
-        message: message,
-        time: this.getCurrentTime(),
-      };
-    });
+  let degrees = Math.floor(absValue);
+  let minutesDecimal = (absValue - degrees) * 60;
+  let minutes = Math.floor(minutesDecimal);
+  let seconds = Math.round((minutesDecimal - minutes) * 60);
 
-    websocketService.connect();
-  },
-  beforeUnmount() {
-    websocketService.setStatusCallback(null);
-    websocketService.setMessageCallback(null);
-  },
-  methods: {
-    // Hilfsfunktion zum Umwandeln eines Dezimalgrads in DMS
-    decimalToDMS(value) {
-      // Vorzeichen prüfen
-      const isNegative = value < 0;
-      const absValue = Math.abs(value);
+  if (seconds === 60) {
+    seconds = 0;
+    minutes++;
+  }
 
-      // Berechnung der Grad, Minuten und Sekunden
-      let degrees = Math.floor(absValue);
-      let minutesDecimal = (absValue - degrees) * 60;
-      let minutes = Math.floor(minutesDecimal);
-      let seconds = Math.round((minutesDecimal - minutes) * 60);
+  if (minutes === 60) {
+    minutes = 0;
+    degrees++;
+  }
 
-      // Rundungsproblematik: 60 Sekunden in die nächste Minute umwandeln
-      if (seconds === 60) {
-        seconds = 0;
-        minutes++;
+  const degreesStr = degrees.toString().padStart(2, "0");
+  const minutesStr = minutes.toString().padStart(2, "0");
+  const secondsStr = seconds.toString().padStart(2, "0");
+
+  const sign = isNegative ? "-" : "";
+  return `${sign}${degreesStr}° ${minutesStr}' ${secondsStr}''`;
+}
+
+function getCurrentTime() {
+  const now = new Date();
+  return now.toLocaleTimeString();
+}
+
+function formatMessage(message) {
+  if (message.Response) {
+    if (typeof message.Response === "string") {
+      if (message.Response === "started procedure") {
+        console.log("Start TPPA");
+        return message.Response;
       }
-      // Rundungsproblematik: 60 Minuten in den nächsten Grad umwandeln
-      if (minutes === 60) {
-        minutes = 0;
-        degrees++;
-      }
+      startStop.value = true;
+      return message.Response;
+    } else if (typeof message.Response === "object") {
+      startStop.value = false;
+      const { AzimuthError, AltitudeError, TotalError } = message.Response;
+      if (
+        AzimuthError !== undefined &&
+        AltitudeError !== undefined &&
+        TotalError !== undefined
+      ) {
+        const azimuthErrorDMS = decimalToDMS(AzimuthError);
+        const altitudeErrorDMS = decimalToDMS(AltitudeError);
+        const totalErrorDMS = decimalToDMS(TotalError);
 
-      // Formatierung mit führenden Nullen
-      const degreesStr = degrees.toString().padStart(2, "0");
-      const minutesStr = minutes.toString().padStart(2, "0");
-      const secondsStr = seconds.toString().padStart(2, "0");
+        showAzimuthError.value = azimuthErrorDMS;
+        showAltitudeError.value = altitudeErrorDMS;
+        showTotalError.value = totalErrorDMS;
 
-      // Negative Werte korrekt darstellen
-      const sign = isNegative ? "-" : "";
-      return `${sign}${degreesStr}° ${minutesStr}' ${secondsStr}''`;
-    },
-
-
-    // Hilfsfunktion zum Abrufen der aktuellen Uhrzeit
-    getCurrentTime() {
-      const now = new Date();
-      return now.toLocaleTimeString(); // Format: HH:MM:SS
-    },
-
-    formatMessage(message) {
-      if (message.Response) {
-        if (typeof message.Response === "string") {
-          // Wenn Response ein String ist (z.B. "started procedure")
-          if (message.Response === "started procedure") {
-            console.log("Start TPPA");
-            return message.Response;
-          }
-          this.startStop = true;
-          return message.Response;
-        } else if (typeof message.Response === "object") {
-          this.startStop = false;
-          const { AzimuthError, AltitudeError, TotalError } = message.Response;
-          if (
-            AzimuthError !== undefined &&
-            AltitudeError !== undefined &&
-            TotalError !== undefined
-          ) {
-            // Konvertieren der Werte in DMS-Format
-            const azimuthErrorDMS = this.decimalToDMS(AzimuthError);
-            const altitudeErrorDMS = this.decimalToDMS(AltitudeError);
-            const totalErrorDMS = this.decimalToDMS(TotalError);
-
-            this.showAzimuthError = azimuthErrorDMS;
-            this.showAltitudeError = altitudeErrorDMS;
-            this.showTotalError = totalErrorDMS;
-
-            // Bestimmen, ob der AltitudeError negativ ist
-            this.azimuthCorDirectionLeft = AzimuthError > 0 ? true : false;
-            this.altitudeCorDirectionTop = AltitudeError < 0 ? true : false;
-
-          } else {
-            return "Fehlerwerte nicht vorhanden.";
-          }
-        } else {
-          return "Unbekanntes Response-Format.";
-        }
+        azimuthCorDirectionLeft.value = AzimuthError > 0 ? true : false;
+        altitudeCorDirectionTop.value = AltitudeError < 0 ? true : false;
       } else {
-        return JSON.stringify(message, null, 2);
+        return "Fehlerwerte nicht vorhanden.";
       }
-    },
+    } else {
+      return "Unbekanntes Response-Format.";
+    }
+  } else {
+    return JSON.stringify(message, null, 2);
+  }
+}
 
+function startAlignment() {
+  console.log("Sende 'start-alignment' an den Server");
+  websocketService.sendMessage("start-alignment");
+}
 
-    // Senden von "start-alignment"
-    startAlignment() {
-      console.log("Sende 'start-alignment' an den Server");
-      const message = "start-alignment";
-      websocketService.sendMessage(message);
-    },
+function stopAlignment() {
+  console.log("Sende 'stop-alignment' an den Server");
+  websocketService.sendMessage("stop-alignment");
+}
 
-    // Senden von "stop-alignment"
-    stopAlignment() {
-      console.log("Sende 'stop-alignment' an den Server");
-      const message = "stop-alignment";
-      websocketService.sendMessage(message);
-    },
-  },
-};
+onMounted(() => {
+  websocketService.setStatusCallback((status) => {
+    console.log("Status aktualisiert:", status);
+    Nachricht.value = status;
+    isConnected.value = (status === "Verbunden");
+  });
+
+  websocketService.setMessageCallback((message) => {
+    console.log("Neue Nachricht erhalten:", message);
+    currentMessage.value = {
+      message: message,
+      time: getCurrentTime(),
+    };
+  });
+
+  websocketService.connect();
+});
+
+onBeforeUnmount(() => {
+  websocketService.setStatusCallback(null);
+  websocketService.setMessageCallback(null);
+});
 </script>
 
 <style scoped></style>
