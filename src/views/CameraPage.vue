@@ -5,7 +5,7 @@
       <h1 class="text-xl text-center text font-bold">Fotoaufnahme</h1>
     </div>
 
-    <infoCamera v-model="isConnected" :show-info="showInfo" class="grid grid-cols-2 landscape:grid-cols-3 mb-4" />
+    <infoCamera v-model="isConnected" :show-all-info="showInfo" class="grid grid-cols-2 landscape:grid-cols-3 mb-4" />
 
     <div v-show="isConnected">
       <div class="flex items-center space-x-3 mb-4">

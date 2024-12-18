@@ -2,8 +2,7 @@
     <div v-if="!isConnected" class="text-red-500 ">
         <p>Bitte Kamera verbinden</p>
     </div>
-    <div v-else-if="showInfo" class=" gap-2 ">
-       
+    <div v-else-if="showAllInfo" class=" gap-2 ">
         <StatusString :isEnabled="Name" Name="Name:" :Value=Name />
         <StatusString :isEnabled="Gain" Name="Gain:" :Value=Gain />
         <StatusString :isEnabled="Offset" Name="Offset:" :Value=Offset />
@@ -14,7 +13,9 @@
         <StatusBool class="col-start-1" :isEnabled="IsExposing" enabledText="Aufnahme läuft" disabledText="Kamera standby" />
         <StatusBool v-if="CanSetTemperature" :isEnabled="CoolerOn" enabledText="Kühler aktiv" disabledText="Kühler aus" />
         <StatusBool v-if="CanSetTemperature" :isEnabled="DewHeaterOn" enabledText="Tauheizung aktiv" disabledText="Tauheizung aus" />
-       
+    </div>
+    <div v-else-if="showOnlyExposing" class=" gap-2 ">
+        <StatusBool :isEnabled="IsExposing" enabledText="Aufnahme läuft" disabledText="Kamera standby" />
     </div>
 </template>
 
@@ -49,10 +50,8 @@ export default {
     },
     props: {
         modelValue: Boolean,
-        showInfo: {
-        type: Boolean,
-        required: false,
-      },
+        showAllInfo: Boolean,
+        showOnlyExposing:  Boolean,
     },
     watch: {
         isConnected(newVal) {

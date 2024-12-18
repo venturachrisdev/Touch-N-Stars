@@ -3,7 +3,7 @@
     <div class="container max-w-md landscape:max-w-xl">
       <h5 class="text-xl text-center font-bold text-white mb-4">Montierung</h5>
       <infoMount v-model="isConnected" class="grid grid-cols-2 landscape:grid-cols-3"/>
-
+      <infoCamera :show-only-exposing="showTppa" class="grid grid-cols-2 landscape:grid-cols-3 mt-2" />
       <div v-if="isConnected">
         
         <!-- Integration von TppaPage -->
@@ -47,6 +47,7 @@ import TppaPage from '../components/TppaPage.vue';
 
 import TargetSearch from '../components/TargetSearch.vue';
 import infoMount from '../components/infoMount.vue';
+import infoCamera from '../components/infoCamera.vue';
 import controlMount from '../components/controlMount.vue';
 
 export default {
@@ -54,6 +55,7 @@ export default {
     TppaPage,
     TargetSearch,
     infoMount,
+    infoCamera,
     controlMount,
   },
   data() {
