@@ -10,20 +10,4 @@
 <script>
 
 
-export default {
-  components: {
-
-  },
-  data() {
-    return {
-
-    };
-  },
-  async mounted() {
-
-  },
-  methods: {
-
-  },
-};
 </script>

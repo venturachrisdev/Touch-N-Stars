@@ -1,27 +1,33 @@
 <template>
-  <div class="container flex tems-center justify-center">
+  <div class="container flex items-center justify-center">
     <div class="container max-w-md landscape:max-w-xl">
       <h5 class="text-xl text-center font-bold text-white mb-4">Montierung</h5>
-      <infoMount v-model="isConnected" class="grid grid-cols-2 landscape:grid-cols-3"/>
+      <infoMount v-model="isConnected" class="grid grid-cols-2 landscape:grid-cols-3" />
       <infoCamera :show-only-exposing="showTppa" class="grid grid-cols-2 landscape:grid-cols-3 mt-2" />
       <div v-if="isConnected">
-        
-        <!-- Integration von TppaPage -->
         <div class="mt-4 border border-gray-600 rounded-b-lg bg-gray-800/10">
-
           <div class="text-sm">
-            <button class="border-2 border-gray-500 rounded-b-md  w-24 h-10" :class="{
-              'bg-gray-600': showMount,
-              'bg-gray-800': !showMount,
-            }" @click="toggleShowMount">Montierung</button>
-            <button class="border-2 border-gray-500 rounded-b-md w-24 h-10" :class="{
-              'bg-gray-600': showSlew,
-              'bg-gray-800': !showSlew,
-            }" @click="toggleShowSlew">Schwenken</button>
-            <button class="border-2 border-gray-500 rounded-b-md  w-24 h-10" :class="{
-              'bg-gray-600': showTppa,
-              'bg-gray-800': !showTppa,
-            }" @click="toggleShowTppa">TPPA</button>
+            <button
+              class="border-2 border-gray-500 rounded-b-md w-24 h-10"
+              :class="{ 'bg-gray-600': showMount, 'bg-gray-800': !showMount }"
+              @click="toggleShowMount"
+            >
+              Montierung
+            </button>
+            <button
+              class="border-2 border-gray-500 rounded-b-md w-24 h-10"
+              :class="{ 'bg-gray-600': showSlew, 'bg-gray-800': !showSlew }"
+              @click="toggleShowSlew"
+            >
+              Schwenken
+            </button>
+            <button
+              class="border-2 border-gray-500 rounded-b-md w-24 h-10"
+              :class="{ 'bg-gray-600': showTppa, 'bg-gray-800': !showTppa }"
+              @click="toggleShowTppa"
+            >
+              TPPA
+            </button>
           </div>
           <div class="container pl-5 pb-5 pr-5">
             <div v-if="showMount" class="mt-5">
@@ -40,65 +46,42 @@
   </div>
 </template>
 
-<script>
-
-//import apiService from "@/services/apiService";
+<script setup>
+import { ref } from 'vue'
 import TppaPage from '../components/TppaPage.vue';
-
 import TargetSearch from '../components/TargetSearch.vue';
 import infoMount from '../components/infoMount.vue';
 import infoCamera from '../components/infoCamera.vue';
 import controlMount from '../components/controlMount.vue';
 
-export default {
-  components: {
-    TppaPage,
-    TargetSearch,
-    infoMount,
-    infoCamera,
-    controlMount,
-  },
-  data() {
-    return {
-      parkPosition: true, // Eingabeposition
-      TrackingEnabled: false,
-      Slewing: false,
-      isConnected: false, // Verbindungsstatus
-      showTppa: false,
-      showSlew: false,
-      showMount: true,
+const isConnected = ref(false);
+const showTppa = ref(false);
+const showSlew = ref(false);
+const showMount = ref(true);
 
-    };
-  },
-  async mounted() {
-  },
-  beforeUnmount() {
-  },
-  methods: {
-    toggleShowMount() {
-      this.showMount = !this.showMount;
-      if (this.showMount) {
-        this.showSlew = false; 
-        this.showTppa = false; 
-      }
-    },
-    toggleShowSlew() {
-      this.showSlew = !this.showSlew;
-      if (this.showSlew) {
-        this.showTppa = false; 
-        this.showMount = false;
-      }
-    },
-    toggleShowTppa() {
-      this.showTppa = !this.showTppa;
-      if (this.showTppa) {
-        this.showSlew = false; 
-        this.showMount = false;
-      }
-    },
+function toggleShowMount() {
+  showMount.value = !showMount.value;
+  if (showMount.value) {
+    showSlew.value = false;
+    showTppa.value = false;
+  }
+}
 
+function toggleShowSlew() {
+  showSlew.value = !showSlew.value;
+  if (showSlew.value) {
+    showTppa.value = false;
+    showMount.value = false;
+  }
+}
 
-
-  },
-};
+function toggleShowTppa() {
+  showTppa.value = !showTppa.value;
+  if (showTppa.value) {
+    showSlew.value = false;
+    showMount.value = false;
+  }
+}
 </script>
+
+<style scoped></style>
