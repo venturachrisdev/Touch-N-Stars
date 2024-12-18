@@ -161,8 +161,10 @@ import { ref, watch, nextTick } from 'vue'
 import apiService from "@/services/apiService";
 import Panzoom from 'panzoom';
 import infoCamera from '../components/infoCamera.vue';
+import { apiStore } from '@/store/store';
 
-const isConnected = ref(true);
+const store = apiStore();
+const isConnected = store.cameraInfo.Connected;
 const exposureTime = ref(2);
 const remainingExposureTime = ref(0);
 const progress = ref(0);
@@ -172,9 +174,9 @@ const isExposure = ref(false);
 const isLoadingImage = ref(false);
 const isLooping = ref(false);
 const isAbort = ref(false);
-let panzoomInstance = null;
 const showInfo = ref(false);
 
+let panzoomInstance = null;
 let exposureCountdownTimer = null;
 
 function wait(ms) {
