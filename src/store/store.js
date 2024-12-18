@@ -31,13 +31,14 @@ export const apiStore = defineStore("store", {
     },
     async fetchAllInfos() {
       try {
-        const [cameraResponse, mountResponse, focuserResponse, guiderResponse] = await Promise.all([
+        const [cameraResponse, mountResponse, focuserResponse, guiderResponse, GuiderChartResponse] = await Promise.all([
           apiService.cameraAction("info"),
           apiService.mountAction("info"),
           apiService.focusAction("info"),
-          apiService.guiderAction("info")
+          apiService.guiderAction("info"),
+          apiService.fetchGuiderChartData()
         ]);
-    
+
         // Kamera
         if (cameraResponse.Success) {
           this.cameraInfo = cameraResponse.Response;
@@ -46,7 +47,7 @@ export const apiStore = defineStore("store", {
           this.isConnected = false;
           console.error("Fehler in der Kamera-API-Antwort:", cameraResponse.Error);
         }
-    
+
         // Montierung
         if (mountResponse.Success) {
           this.mountInfo = mountResponse.Response;
@@ -55,7 +56,7 @@ export const apiStore = defineStore("store", {
           this.isConnected = false;
           console.error("Fehler in der Mount-API-Antwort:", mountResponse.Error);
         }
-    
+
         // Fokussierer
         if (focuserResponse.Success) {
           this.focuserInfo = focuserResponse.Response;
@@ -64,7 +65,7 @@ export const apiStore = defineStore("store", {
           this.isConnected = false;
           console.error("Fehler in der Focuser-API-Antwort:", focuserResponse.Error);
         }
-    
+
         // Guider
         if (guiderResponse.Success) {
           this.guiderInfo = guiderResponse.Response;
@@ -73,13 +74,45 @@ export const apiStore = defineStore("store", {
           this.isConnected = false;
           console.error("Fehler in der Guider-API-Antwort:", guiderResponse.Error);
         }
-    
+
+        if (GuiderChartResponse.success) {
+          if (GuiderChartResponse.success) {
+            const data = GuiderChartResponse.data;
+
+            if (
+              !Array.isArray(data.RADistanceRaw) ||
+              !Array.isArray(data.DECDistanceRaw)
+            ) {
+              console.error("Ungültige Datenstruktur:", data);
+              return;
+            }
+
+            if (data.RADistanceRaw.length === 0 || data.DECDistanceRaw.length === 0) {
+              console.warn("Leere Arrays empfangen:", data);
+              return;
+            }
+
+            const sanitizedRA = data.RADistanceRaw.map((value) =>
+              typeof value === "number" ? value : 0
+            );
+            const sanitizedDec = data.DECDistanceRaw.map((value) =>
+              typeof value === "number" ? value : 0
+            );
+
+            this.RADistanceRaw = sanitizedRA;
+            this.DECDistanceRaw = sanitizedDec;
+
+          } else {
+            console.warn("Fehler beim Abrufen der Daten:", guiderResponse.message);
+          }
+        }
+
       } catch (error) {
         this.isConnected = false;
         console.error("Fehler beim Abrufen der Informationen:", error);
       }
     },
-     startFetchingInfo() {
+    startFetchingInfo() {
       this.intervalId = setInterval(this.fetchAllInfos, 1000);
     },
     stopFetchingInfo() {
@@ -88,50 +121,7 @@ export const apiStore = defineStore("store", {
         this.intervalId = null;
       }
     },
-    async fetchGuideGraphData ()  {
-      try {
-        const response = await apiService.fetchGuiderChartData();
-        if (response.success) {
-          const data = response.data;
+   
     
-          if (
-            !Array.isArray(data.RADistanceRaw) ||
-            !Array.isArray(data.DECDistanceRaw)
-          ) {
-            console.error("Ungültige Datenstruktur:", data);
-            return;
-          }
-    
-          if (data.RADistanceRaw.length === 0 || data.DECDistanceRaw.length === 0) {
-            console.warn("Leere Arrays empfangen:", data);
-            return;
-          }
-    
-          const sanitizedRA = data.RADistanceRaw.map((value) =>
-            typeof value === "number" ? value : 0
-          );
-          const sanitizedDec = data.DECDistanceRaw.map((value) =>
-            typeof value === "number" ? value : 0
-          );
-    
-          this.RADistanceRaw = sanitizedRA;
-          this.DECDistanceRaw = sanitizedDec;
-
-        } else {
-          console.warn("Fehler beim Abrufen der Daten:", response.message);
-        }
-      } catch (error) {
-        console.error("Fehler beim Abrufen der Guider-Daten:", error);
-      }
-    },
-    startFetchingGraph() {
-      this.intervalIdGraph = setInterval(this.fetchGuideGraphData, 1000);
-    },
-    stopFetchingGraph() {
-      if (this.intervalIdGraph) {
-        clearInterval(this.intervalIdGraph);
-        this.intervalIdGraph = null;
-      }
   }
-}
 });

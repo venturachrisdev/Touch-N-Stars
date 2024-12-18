@@ -87,14 +87,12 @@ watch(
 
 onMounted(() => {
   initGraph();
-  store.startFetchingGraph();
 });
 
 onBeforeUnmount(() => {
   if (chart) {
     chart.destroy(); // Zerstöre den Chart, um Speicherlecks zu vermeiden
   }
-  store.stopFetchingGraph;
 });
 </script>
 
