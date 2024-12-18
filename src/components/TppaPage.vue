@@ -8,7 +8,10 @@
         <h5 class="text-xl text-center font-bold text-white mb-4">
           Three Point Polar Alignment
         </h5>
-        <div class="flex space-x-4">
+        <div v-if="!store.cameraInfo.Connected | store.mountInfo.AtPark">
+          <p class=" text-red-800">Kamera muss verbunden sein und die Montierung muss ausgeparkt sein</p>
+        </div>
+        <div v-else class="flex space-x-4">
           <button class="default-button-cyan" @click="startAlignment">
             Start Alignment
           </button>
@@ -58,6 +61,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script setup>
@@ -69,7 +73,9 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
 } from '@heroicons/vue/24/outline';
+import { apiStore } from '@/store/store';
 
+const store = apiStore();
 const Nachricht = ref("");
 const currentMessage = ref(null);
 const startStop = ref(false);
