@@ -36,7 +36,7 @@ export default {
   },
   setup() {
     useHead({
-      title: "N.I.N.A.Mobile",
+      title: "TouchNStars",
     });
   },
   async mounted() {
