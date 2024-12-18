@@ -25,6 +25,7 @@
 <script setup>
 /* eslint-disable */
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { apiStore } from '@/store/store';
 import { useHead } from '@vueuse/head';
 import NavigationComp from './components/NavigationComp.vue';
 import apiService from "@/services/apiService";
@@ -34,6 +35,7 @@ useHead({
 });
 
 const isBackendReachable = ref(false);
+const store = apiStore();
 let checkInterval = null;
 
 async function checkBackendStatus() {
@@ -49,12 +51,16 @@ async function checkBackendStatus() {
 onMounted(async () => {
   await checkBackendStatus();
   checkInterval = setInterval(checkBackendStatus, 5000);
+
+  store.startFetchingInfo();
 });
 
 onBeforeUnmount(() => {
   if (checkInterval) {
     clearInterval(checkInterval);
   }
+  
+  store.stopFetchingInfo();
 });
 </script>
 
