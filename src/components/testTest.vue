@@ -9,6 +9,7 @@
         <button @click="store.stopFetchingInfo">stop</button>
         <div>
             <p>{{ store.Temperature }}</p>
+            <p>{{ store.cameraInfo.Temperature }}</p>
         </div>
     </div>
 </template>

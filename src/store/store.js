@@ -9,6 +9,7 @@ export const apiStore = defineStore("store", {
     Temperature: null,
     isConnected: true,
     intervalId: null,
+    cameraInfo: [],
   }),
   actions: {
     testFunktion() {
@@ -20,6 +21,7 @@ export const apiStore = defineStore("store", {
         const response = await apiService.cameraAction("info");
         if (response.Success) {
           const data = response.Response;
+          this.cameraInfo = data;
           this.IsExposing = data.IsExposing;
           this.Temperature = data.Temperature;
           console.log(data);
