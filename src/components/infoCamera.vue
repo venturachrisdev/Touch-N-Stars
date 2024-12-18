@@ -20,7 +20,7 @@
       enabledText="Tauheizung aktiv" disabledText="Tauheizung aus" />
   </div>
   <div v-else-if="showOnlyExposing" class="gap-2">
-    <StatusBool :isEnabled="IsExposing" enabledText="Aufnahme läuft" disabledText="Kamera standby" />
+    <StatusBool :isEnabled="store.cameraInfo.IsExposing" enabledText="Aufnahme läuft" disabledText="Kamera standby" />
   </div>
 </template>
 

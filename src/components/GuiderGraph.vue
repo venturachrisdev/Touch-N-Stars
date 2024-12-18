@@ -5,13 +5,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, watch, onMounted, onBeforeUnmount } from "vue";
 import Chart from "chart.js/auto";
-import apiService from "@/services/apiService";
+import { apiStore } from '@/store/store';
+const store = apiStore();
 
-const RADistanceRaw = ref([]);
-const DECDistanceRaw = ref([]);
-const intervalId = ref(null);
 const rmsGraph = ref(null);
 let chart = null; // Nicht reaktiv
 
@@ -64,72 +62,39 @@ const initGraph = () => {
   });
 };
 
-const fetchData = async () => {
-  try {
-    const response = await apiService.fetchGuiderChartData();
-    if (response.success) {
-      const data = response.data;
-
-      if (
-        !Array.isArray(data.RADistanceRaw) ||
-        !Array.isArray(data.DECDistanceRaw)
-      ) {
-        console.error("Ungültige Datenstruktur:", data);
-        return;
-      }
-
-      if (data.RADistanceRaw.length === 0 || data.DECDistanceRaw.length === 0) {
-        console.warn("Leere Arrays empfangen:", data);
-        return;
-      }
-
-      const sanitizedRA = data.RADistanceRaw.map((value) =>
-        typeof value === "number" ? value : 0
-      );
-      const sanitizedDec = data.DECDistanceRaw.map((value) =>
-        typeof value === "number" ? value : 0
-      );
-
-      RADistanceRaw.value = sanitizedRA;
-      DECDistanceRaw.value = sanitizedDec;
-
-      if (chart) {
-        chart.data.datasets[0].data = RADistanceRaw.value;
-        chart.data.datasets[1].data = DECDistanceRaw.value;
-        chart.update();
-      }
-    } else {
-      console.warn("Fehler beim Abrufen der Daten:", response.message);
+// Überwachung der Store-Daten
+watch(
+  () => store.RADistanceRaw, // Beobachte RADistanceRaw im Store
+  (newValues) => {
+    if (chart) {
+      chart.data.datasets[0].data = newValues; // Aktualisiere die RA-Daten
+      chart.update(); // Aktualisiere den Chart
     }
-  } catch (error) {
-    console.error("Fehler beim Abrufen der Guider-Daten:", error);
-  }
-};
+  },
+  { immediate: true } // Damit der Watcher direkt beim Mounten ausgeführt wird
+);
 
-const startFetching = () => {
-  intervalId.value = setInterval(async () => {
-    await fetchData();
-  }, 1000);
-};
-
-const stopFetching = () => {
-  if (intervalId.value) {
-    clearInterval(intervalId.value);
-    intervalId.value = null;
-  }
-};
+watch(
+  () => store.DECDistanceRaw, // Beobachte DECDistanceRaw im Store
+  (newValues) => {
+    if (chart) {
+      chart.data.datasets[1].data = newValues; // Aktualisiere die Dec-Daten
+      chart.update(); // Aktualisiere den Chart
+    }
+  },
+  { immediate: true }
+);
 
 onMounted(() => {
   initGraph();
-  fetchData();
-  startFetching();
+  store.startFetchingGraph();
 });
 
 onBeforeUnmount(() => {
-  stopFetching();
   if (chart) {
-    chart.destroy();
+    chart.destroy(); // Zerstöre den Chart, um Speicherlecks zu vermeiden
   }
+  store.stopFetchingGraph;
 });
 </script>
 

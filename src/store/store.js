@@ -4,10 +4,13 @@ import apiService from '@/services/apiService';
 export const apiStore = defineStore("store", {
   state: () => ({
     intervalId: null,
+    intervalIdGraph: null,
     cameraInfo: [],
     mountInfo: [],
     focuserInfo: [],
     guiderInfo: [],
+    RADistanceRaw: [],
+    DECDistanceRaw: []
   }),
   actions: {
     async fetchInfo() {
@@ -26,7 +29,6 @@ export const apiStore = defineStore("store", {
         console.error("Fehler beim Abrufen der Mount-Informationen:", error);
       }
     },
-
     async fetchAllInfos() {
       try {
         const [cameraResponse, mountResponse, focuserResponse, guiderResponse] = await Promise.all([
@@ -77,7 +79,6 @@ export const apiStore = defineStore("store", {
         console.error("Fehler beim Abrufen der Informationen:", error);
       }
     },
-    
      startFetchingInfo() {
       this.intervalId = setInterval(this.fetchAllInfos, 1000);
     },
@@ -86,6 +87,51 @@ export const apiStore = defineStore("store", {
         clearInterval(this.intervalId);
         this.intervalId = null;
       }
-    }
+    },
+    async fetchGuideGraphData ()  {
+      try {
+        const response = await apiService.fetchGuiderChartData();
+        if (response.success) {
+          const data = response.data;
+    
+          if (
+            !Array.isArray(data.RADistanceRaw) ||
+            !Array.isArray(data.DECDistanceRaw)
+          ) {
+            console.error("Ungültige Datenstruktur:", data);
+            return;
+          }
+    
+          if (data.RADistanceRaw.length === 0 || data.DECDistanceRaw.length === 0) {
+            console.warn("Leere Arrays empfangen:", data);
+            return;
+          }
+    
+          const sanitizedRA = data.RADistanceRaw.map((value) =>
+            typeof value === "number" ? value : 0
+          );
+          const sanitizedDec = data.DECDistanceRaw.map((value) =>
+            typeof value === "number" ? value : 0
+          );
+    
+          this.RADistanceRaw = sanitizedRA;
+          this.DECDistanceRaw = sanitizedDec;
+
+        } else {
+          console.warn("Fehler beim Abrufen der Daten:", response.message);
+        }
+      } catch (error) {
+        console.error("Fehler beim Abrufen der Guider-Daten:", error);
+      }
+    },
+    startFetchingGraph() {
+      this.intervalIdGraph = setInterval(this.fetchGuideGraphData, 1000);
+    },
+    stopFetchingGraph() {
+      if (this.intervalIdGraph) {
+        clearInterval(this.intervalIdGraph);
+        this.intervalIdGraph = null;
+      }
   }
+}
 });
