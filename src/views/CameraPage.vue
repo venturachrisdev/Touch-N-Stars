@@ -162,7 +162,7 @@ import apiService from "@/services/apiService";
 import Panzoom from 'panzoom';
 import infoCamera from '../components/infoCamera.vue';
 
-const isConnected = ref(false);
+const isConnected = ref(true);
 const exposureTime = ref(2);
 const remainingExposureTime = ref(0);
 const progress = ref(0);
