@@ -1,16 +1,16 @@
 <template>
   <div class="text-center">
-    <div v-show="isConnected" class="text-left mb-2">
+    <div v-show="store.cameraInfo.Connected" class="text-left mb-2">
       <h1 class="text-xl text-center font-bold">Fotoaufnahme</h1>
     </div>
 
     <infoCamera
-      v-model="isConnected"
+      v-model="store.cameraInfo.Connected"
       :show-all-info="showInfo"
       class="grid grid-cols-2 landscape:grid-cols-3 mb-4"
     />
 
-    <div v-show="isConnected">
+    <div v-show="store.cameraInfo.Connected">
       <div class="flex items-center space-x-3 mb-4">
         <div class="w-3 h-[1px] bg-gray-700"></div>
         <button
@@ -164,7 +164,6 @@ import infoCamera from '../components/infoCamera.vue';
 import { apiStore } from '@/store/store';
 
 const store = apiStore();
-const isConnected = store.cameraInfo.Connected;
 const exposureTime = ref(2);
 const remainingExposureTime = ref(0);
 const progress = ref(0);

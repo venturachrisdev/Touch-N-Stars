@@ -1,9 +1,9 @@
 <template>
   <div class="container flex items-center justify-center">
     <div class="container max-w-md landscape:max-w-xl">
-      <infoFocuser v-model="isConnected" class="grid grid-cols-2 landscape:grid-cols-3" />
+      <infoFocuser v-model="store.focuserInfo.Connected" class="grid grid-cols-2 landscape:grid-cols-3" />
 
-      <div v-if="isConnected" class="flex flex-col text-left mt-4">
+      <div v-if="store.focuserInfo.Connected" class="flex flex-col text-left mt-4">
         <div class="flex space-x-3 items-center">
           <label for="position" class="w-auto">Neue Position:</label>
           <input
@@ -38,10 +38,11 @@
 import { ref } from 'vue'
 import apiService from "@/services/apiService";
 import infoFocuser from '../components/infoFocuser.vue';
+import { apiStore } from '@/store/store';
 
+const store = apiStore();
 const position = ref(null)
 const loading = ref(false)
-const isConnected = ref(false)
 
 async function moveFocuser() {
   try {
