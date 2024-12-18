@@ -5,7 +5,7 @@ import CameraPage from '../views/CameraPage.vue';
 import FocusPage from '../views/FocusPage.vue';
 import MountPage from '../views/MountPage.vue';
 import GuidingPage from '../views/GuidingPage.vue';
-import TargetPic from '../components/TargetPic.vue';
+import TargetPic from '../components/testTest.vue';
 
 
 const routes = [

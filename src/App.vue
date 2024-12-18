@@ -16,12 +16,14 @@
       <!-- Hauptinhalt -->
       <div class="container mx-auto p-4 transition-all">
         <router-view />
+        
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+/* eslint-disable */
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useHead } from '@vueuse/head';
 import NavigationComp from './components/NavigationComp.vue';
