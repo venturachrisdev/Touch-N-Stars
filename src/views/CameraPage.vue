@@ -90,8 +90,8 @@
         <div class="flex w-full landscape:w-4/7">
           <div ref="imageContainer"
             class="image-container overflow-hidden min-h-[65vh] min-w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
-            <img v-if="imageData" ref="image" :src="imageData" alt="Aufgenommenes Bild" class="block"
-              style="touch-action: none; user-select: none;" />
+            <img v-if="imageData" ref="image" :src="imageData" alt="Aufgenommenes Bild" class="block" />
+
           </div>
         </div>
       </div>
@@ -111,6 +111,7 @@ const store = apiStore();
 const remainingExposureTime = ref(0);
 const progress = ref(0);
 const imageData = ref(null);
+const image = ref(null);
 const loading = ref(false);
 const isExposure = ref(false);
 const isLoadingImage = ref(false);
@@ -242,13 +243,11 @@ async function abortExposure() {
 watch(imageData, async (newValue) => {
   if (newValue) {
     await nextTick();
-    const image = document.querySelector('[ref="image"]');
-
-    if (image) {
+    if (image.value) {
       if (panzoomInstance) {
         panzoomInstance.dispose();
       }
-      panzoomInstance = Panzoom(image, {
+      panzoomInstance = Panzoom(image.value, {
         maxZoom: 30,
         minZoom: 0.9,
         bounds: true,
