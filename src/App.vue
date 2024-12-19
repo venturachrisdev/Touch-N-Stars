@@ -12,7 +12,6 @@
           <NavigationComp />
         </div>
       </nav>
-
       <!-- Hauptinhalt -->
       <div class="container mx-auto p-4 transition-all">
         <router-view />
@@ -22,7 +21,7 @@
 </template>
 
 <script setup>
-import {  onMounted, onBeforeUnmount } from 'vue';
+import { onMounted, onBeforeUnmount } from 'vue';
 import { apiStore } from '@/store/store';
 import { useHead } from '@vueuse/head';
 import NavigationComp from './components/NavigationComp.vue';
@@ -37,20 +36,17 @@ const store = apiStore();
 function handleVisibilityChange() {
   if (document.hidden) {
     console.log("Seite ausgeblendet");
-    
     store.stopFetchingInfo();
   } else {
     console.log("Seite sichtbar");
-    
+
     store.startFetchingInfo();
   }
 }
 
 onMounted(async () => {
-
   // Beobachte Sichtbarkeitsänderungen
   document.addEventListener("visibilitychange", handleVisibilityChange);
-
   // Starte Datenabruf des Stores
   store.startFetchingInfo();
 });
