@@ -35,13 +35,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import apiService from "@/services/apiService";
 import infoFocuser from '../components/infoFocuser.vue';
 import { apiStore } from '@/store/store';
 
 const store = apiStore();
-const position = ref(null)
+const position = ref(0)
 const loading = ref(false)
 
 async function moveFocuser() {
@@ -62,6 +62,13 @@ async function startAutofocus() {
     console.error("Fehler beim Autofokus", error);
   }
 }
+
+onMounted(
+  () => {
+      position.value = store.focuserInfo.Position || 0;
+  },
+);
+
 </script>
 
 <style scoped></style>
