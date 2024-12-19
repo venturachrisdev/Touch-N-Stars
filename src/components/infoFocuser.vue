@@ -1,6 +1,6 @@
 <template>
   <div v-if="!store.focuserInfo.Connected" class="text-red-500">
-    <p>Bitte Fokusierer verbinden</p>
+    <p>Bitte Okularauszug verbinden</p>
   </div>
   <div v-else class="gap-2">
     <StatusString :isEnabled="store.focuserInfo.Position" Name="Aktuelle Position:" :Value="store.focuserInfo.Position" />
