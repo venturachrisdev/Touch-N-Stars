@@ -17,11 +17,9 @@ export const apiStore = defineStore("store", {
     async fetchAllInfos() {
       try {
         this.isBackendReachable = await apiService.isBackendReachable();
-        console.log(
-          this.isBackendReachable
-            ? "Backend ist erreichbar"
-            : "Backend ist nicht erreichbar"
-        );
+        if (!this.isBackendReachable){
+          console.log("Backend ist nicht erreichbar")
+            }
       } catch (error) {
         console.error("Fehler beim Abrufen der Informationen:", error);
       }
@@ -38,7 +36,7 @@ export const apiStore = defineStore("store", {
           // Kamera
           if (cameraResponse.Success) {
             this.cameraInfo = cameraResponse.Response;
-            console.log("Kamera Info:", this.cameraInfo);
+           // console.log("Kamera Info:", this.cameraInfo);
           } else {
             this.isConnected = false;
             console.error("Fehler in der Kamera-API-Antwort:", cameraResponse.Error);
@@ -47,7 +45,7 @@ export const apiStore = defineStore("store", {
           // Montierung
           if (mountResponse.Success) {
             this.mountInfo = mountResponse.Response;
-            console.log("Mount Info:", this.mountInfo);
+            //console.log("Mount Info:", this.mountInfo);
           } else {
             this.isConnected = false;
             console.error("Fehler in der Mount-API-Antwort:", mountResponse.Error);
@@ -56,7 +54,7 @@ export const apiStore = defineStore("store", {
           // Fokussierer
           if (focuserResponse.Success) {
             this.focuserInfo = focuserResponse.Response;
-            console.log("Focuser Info:", this.focuserInfo);
+            //console.log("Focuser Info:", this.focuserInfo);
           } else {
             this.isConnected = false;
             console.error("Fehler in der Focuser-API-Antwort:", focuserResponse.Error);
@@ -65,7 +63,7 @@ export const apiStore = defineStore("store", {
           // Guider
           if (guiderResponse.Success) {
             this.guiderInfo = guiderResponse.Response;
-            console.log("Guider Info:", this.guiderInfo);
+            //console.log("Guider Info:", this.guiderInfo);
           } else {
             this.isConnected = false;
             console.error("Fehler in der Guider-API-Antwort:", guiderResponse.Error);
@@ -82,12 +80,6 @@ export const apiStore = defineStore("store", {
                 console.error("Ungültige Datenstruktur:", data);
                 return;
               }
-
-              if (data.RADistanceRaw.length === 0 || data.DECDistanceRaw.length === 0) {
-                console.warn("Leere Arrays empfangen:", data);
-                return;
-              }
-
               const sanitizedRA = data.RADistanceRaw.map((value) =>
                 typeof value === "number" ? value : 0
               );
@@ -98,9 +90,7 @@ export const apiStore = defineStore("store", {
               this.RADistanceRaw = sanitizedRA;
               this.DECDistanceRaw = sanitizedDec;
 
-            } else {
-              console.warn("Fehler beim Abrufen der Daten:", guiderResponse.message);
-            }
+            } 
           }
 
         } catch (error) {

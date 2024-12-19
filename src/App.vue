@@ -32,14 +32,12 @@ useHead({
 
 const store = apiStore();
 
-
 function handleVisibilityChange() {
   if (document.hidden) {
-    console.log("Seite ausgeblendet");
+    //console.log("Seite ausgeblendet");
     store.stopFetchingInfo();
   } else {
-    console.log("Seite sichtbar");
-
+    //console.log("Seite sichtbar");
     store.startFetchingInfo();
   }
 }

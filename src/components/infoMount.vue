@@ -3,7 +3,7 @@
       <p>Bitte Montierung verbinden</p>
     </div>
     <div v-else class="gap-2">
-      <StatusBool :isEnabled="!store.mountInfo.parkPosition" enabledText="Ausgeparkt" disabledText="Geparkt" />
+      <StatusBool :isEnabled="!store.mountInfo.AtPark" enabledText="Ausgeparkt" disabledText="Geparkt" />
       <StatusBool :isEnabled="store.mountInfo.TrackingEnabled" enabledText="Tracking ist aktiv" disabledText="Tracking deaktiviert" />
       <StatusBool :isEnabled="store.mountInfo.Slewing" enabledText="Montierung schwenkt" disabledText="Schwenkt nicht" />
     </div>

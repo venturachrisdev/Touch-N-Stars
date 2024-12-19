@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-white mb-2">{{ statusText }}</p>
+    
     <button
       @click="toggleConnection"
       class="min-w-64 min-h-10 rounded-md text-white font-medium transition-colors"
@@ -17,10 +17,6 @@ import { defineProps } from 'vue'
 const props = defineProps({
   isConnected: {
     type: Boolean,
-    required: true,
-  },
-  statusText: {
-    type: String,
     required: true,
   },
   connectText: {
