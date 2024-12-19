@@ -12,6 +12,9 @@ export const apiStore = defineStore("store", {
     RADistanceRaw: [],
     DECDistanceRaw: [],
     isBackendReachable: false,
+    exposureTime: 2,
+    gain: 0
+
   }),
   actions: {
     async fetchAllInfos() {

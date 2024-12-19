@@ -5,7 +5,7 @@
   </div>
   <div v-else-if="showAllInfo" class="gap-2">
     <StatusString :isEnabled="store.cameraInfo.Name" Name="Name:" :Value="store.cameraInfo.Name" />
-    <StatusString :isEnabled="store.cameraInfo.Gain" Name="Gain:" :Value="store.cameraInfo.Gain" />
+    <StatusString :isEnabled="true" Name="Gain:" :Value="store.cameraInfo.Gain" />
     <StatusString :isEnabled="store.cameraInfo.Offset" Name="Offset:" :Value="store.cameraInfo.Offset" />
     <StatusString :isEnabled="store.cameraInfo.XSize" Name="X-Size:" :Value="store.cameraInfo.XSize" />
     <StatusString :isEnabled="store.cameraInfo.YSize" Name="Y-Size:" :Value="store.cameraInfo.YSize" />

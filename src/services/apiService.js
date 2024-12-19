@@ -80,10 +80,13 @@ const apiService = {
   },
 
   // Start capture
-  async startCapture(duration) {
+  async startCapture(duration,gain) {
     try {
       const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
-        params: { duration, getResult: false },
+        params: { 
+          duration : duration,
+          gain : gain
+          },
       });
       return response.data;
     } catch (error) {
