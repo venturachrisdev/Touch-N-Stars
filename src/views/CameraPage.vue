@@ -1,15 +1,20 @@
 <template>
   <div class="text-center">
-    <div v-show="store.cameraInfo.Connected" class="text-left mb-2">
+    <div class="text-left mb-2">
       <h1 class="text-xl text-center font-bold">Fotoaufnahme</h1>
     </div>
+    <div v-if="!store.cameraInfo.Connected" class="text-red-500">
+      <p>Bitte Kamera verbinden</p>
+    </div>
+    <div v-else></div>
     <div v-show="showInfo">
       <div class="flex items-center space-x-3 mb-2">
         <div class="w-3 h-[1px] bg-gray-700"></div> <!-- kurze Linie -->
         <p class=" text-sm italic text-gray-400">Info</p>
         <div class="flex-grow h-[1px] bg-gray-700"></div> <!-- lange Linie -->
       </div>
-      <infoCamera v-model="store.cameraInfo.Connected" :show-all-info="true" class="grid grid-cols-2 landscape:grid-cols-3 mb-4" />
+      <infoCamera v-model="store.cameraInfo.Connected" :show-all-info="true"
+        class="grid grid-cols-2 landscape:grid-cols-3 mb-4" />
       <div class="flex items-center space-x-3 mb-2">
         <div class="w-3 h-[1px] bg-gray-700"></div> <!-- kurze Linie -->
         <p class=" text-sm italic text-gray-400">Einstellungen</p>
