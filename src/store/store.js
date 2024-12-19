@@ -36,7 +36,7 @@ export const apiStore = defineStore("store", {
           // Kamera
           if (cameraResponse.Success) {
             this.cameraInfo = cameraResponse.Response;
-           // console.log("Kamera Info:", this.cameraInfo);
+            //console.log("Kamera Info:", this.cameraInfo);
           } else {
             this.isConnected = false;
             console.error("Fehler in der Kamera-API-Antwort:", cameraResponse.Error);

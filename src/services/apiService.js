@@ -104,6 +104,43 @@ const apiService = {
       throw error;
     }
   },
+  // Set Temp / Start Cooling 
+  async startCooling(temp) {
+    try {
+      const response = await axios.get(`${BASE_URL}/equipment/camera/cool`, {
+        params: { temperature: temp },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error retrieving capture result:", error);
+      throw error;
+    }
+  },
+  // Stopp Cooling 
+  async stoppCooling() {
+    try {
+      const response = await axios.get(`${BASE_URL}/equipment/camera/cool`, {
+        params: { cancel: true },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error retrieving capture result:", error);
+      throw error;
+    }
+  },
+  //  Start Stopp Warming 
+  async startStoppWarming(cancel) { // cancel muss true oder false sein
+    try {
+      const response = await axios.get(`${BASE_URL}/equipment/camera/warm`, {
+        params: { cancel: cancel },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error retrieving capture result:", error);
+      throw error;
+    }
+  },
+
 
   //-------------------------------------  focuser ---------------------------------------
   // Focuser actions
