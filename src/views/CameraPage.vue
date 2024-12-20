@@ -20,7 +20,7 @@
         <p class=" text-sm italic text-gray-400">Einstellungen</p>
         <div class="flex-grow h-[1px] bg-gray-700"></div> <!-- lange Linie -->
       </div>
-      <settingsCamera class="mb-3 text-left " />
+      <settingsCamera class="grid grid-cols-2 landscape:grid-cols-3 mb-3 text-left " />
     </div>
 
     <div v-show="store.cameraInfo.Connected">
@@ -29,10 +29,11 @@
         <button @click="showInfo = !showInfo"
           class="w-7 h-7 bg-gray-700 active:bg-cyan-700 hover:bg-cyan-600 rounded-md border border-cyan-500/20 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white transition-transform duration-300"
-            :class="{ 'rotate-180': showInfo }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
+            :class="{ 'rotate-90': showInfo }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg> 
         </button>
+        <p class=" text-sm italic"> Infos & Einstellungen</p>
         <div class="flex-grow h-[1px] bg-gray-700"></div> <!-- lange Linie -->
       </div>
 
