@@ -151,6 +151,14 @@ const apiService = {
     return this._simpleGetRequest(`${BASE_URL}/equipment/focuser/${action}`);
   },
 
+  focuserAfAction(action) {
+    return this._simpleGetRequest(`${API_URL}autofocus?${action}`);
+  },
+
+  focuserLastAf() {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/focuser/last-af`);
+  },
+
   // Move focuser
   async moveFocuser(position) {
     try {

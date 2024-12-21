@@ -8,6 +8,7 @@ export const apiStore = defineStore("store", {
     cameraInfo: [],
     mountInfo: [],
     focuserInfo: [],
+    focuserAfInfo: [],
     guiderInfo: [],
     RADistanceRaw: [],
     DECDistanceRaw: [],
@@ -20,20 +21,21 @@ export const apiStore = defineStore("store", {
     async fetchAllInfos() {
       try {
         this.isBackendReachable = await apiService.isBackendReachable();
-        if (!this.isBackendReachable){
+        if (!this.isBackendReachable) {
           console.log("Backend ist nicht erreichbar")
-            }
+        }
       } catch (error) {
         console.error("Fehler beim Abrufen der Informationen:", error);
       }
       if (this.isBackendReachable) {
         try {
-          const [cameraResponse, mountResponse, focuserResponse, guiderResponse, GuiderChartResponse] = await Promise.all([
+          const [cameraResponse, mountResponse, focuserResponse, focuserAfAction, guiderResponse, GuiderChartResponse] = await Promise.all([
             apiService.cameraAction("info"),
             apiService.mountAction("info"),
             apiService.focusAction("info"),
+            apiService.focuserAfAction("info"),
             apiService.guiderAction("info"),
-            apiService.fetchGuiderChartData()
+            apiService.fetchGuiderChartData(),
           ]);
 
           // Kamera
@@ -61,6 +63,15 @@ export const apiStore = defineStore("store", {
           } else {
             this.isConnected = false;
             console.error("Fehler in der Focuser-API-Antwort:", focuserResponse.Error);
+          }
+
+          // Autofukus
+          if (focuserAfAction.Success) {
+            this.focuserAfInfo = focuserAfAction.Response;
+            console.log("AF-Focuser Info:", this.focuserAfAction);
+          } else {
+            this.isConnected = false;
+            console.error("Fehler in der Focuser-API-Antwort:", focuserAfAction.Error);
           }
 
           // Guider
@@ -93,7 +104,7 @@ export const apiStore = defineStore("store", {
               this.RADistanceRaw = sanitizedRA;
               this.DECDistanceRaw = sanitizedDec;
 
-            } 
+            }
           }
 
         } catch (error) {
