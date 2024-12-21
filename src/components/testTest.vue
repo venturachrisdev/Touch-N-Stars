@@ -1,13 +1,11 @@
 <template>
     <div>
         <h1>Test</h1>
-        <settingsCamera />
+        <AutofocusGrafik />
     </div>
 </template>
 
 <script setup>
-import settingsCamera from './settingsCamera.vue';
-//import { apiStore } from '@/store/store';
-//const store = apiStore();
+import AutofocusGrafik from './AutofocusGrafik.vue';
 
 </script>
