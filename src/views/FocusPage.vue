@@ -20,17 +20,16 @@
           </button>
         </div>
         <div class="mt-4">
-          <button
+          <button v-if="!store.focuserAfInfo.autofocus_running"
             class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
             @click="startAutofocus">
             Starte Autofokus
           </button>
-          <button
-            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+          <button v-else
+            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-red-700 items-center justify-center disabled:opacity-50"
             @click="stoppAutofocus">
-            Sopp Autofokus
+            Autofokus abbrechen
           </button>
-          <p> Status:  {{ store.focuserAfInfo.autofocus_running }}</p>
         </div>
       </div>
     </div>

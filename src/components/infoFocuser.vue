@@ -6,6 +6,7 @@
     <StatusString :isEnabled="store.focuserInfo.Position" Name="Aktuelle Position:" :Value="store.focuserInfo.Position" />
     <StatusString :isEnabled="isTemperatureEnabled" Name="Temperatur:" :Value="formattedTemperature" />
     <StatusBool :isEnabled="store.focuserInfo.IsMoving" enabledText="Bewegt sich" disabledText="Steht" />
+    <StatusBool :isEnabled="store.focuserAfInfo.autofocus_running" enabledText="Autofokus aktiv" disabledText="Autofokus" />
   </div>
 </template>
 
