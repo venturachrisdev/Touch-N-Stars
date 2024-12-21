@@ -29,7 +29,7 @@ export const apiStore = defineStore("store", {
       }
       if (this.isBackendReachable) {
         try {
-          const [cameraResponse, mountResponse, focuserResponse, focuserAfAction, guiderResponse, GuiderChartResponse] = await Promise.all([
+          const [cameraResponse, mountResponse, focuserResponse, focuserAfResponse, guiderResponse, GuiderChartResponse] = await Promise.all([
             apiService.cameraAction("info"),
             apiService.mountAction("info"),
             apiService.focusAction("info"),
@@ -66,12 +66,12 @@ export const apiStore = defineStore("store", {
           }
 
           // Autofukus
-          if (focuserAfAction.Success) {
-            this.focuserAfInfo = focuserAfAction;
+          if (focuserAfResponse.Success) {
+            this.focuserAfInfo = focuserAfResponse;
             console.log("AF-Focuser Info:", this.focuserAfInfo);
           } else {
             this.isConnected = false;
-            console.error("Fehler in der Focuser-API-Antwort:", focuserAfAction.Error);
+            console.error("Fehler in der Focuser-API-Antwort:", focuserAfResponse.Error);
           }
 
           // Guider
