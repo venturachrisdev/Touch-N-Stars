@@ -6,6 +6,7 @@
 
     <div class="container max-w-md landscape:max-w-xl">
       <infoFocuser v-model="store.focuserInfo.Connected" class="grid grid-cols-2 landscape:grid-cols-3" />
+      
 
       <div v-if="store.focuserInfo.Connected" class="flex flex-col text-left mt-4">
         <div class="flex space-x-3 items-center">

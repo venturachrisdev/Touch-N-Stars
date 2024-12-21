@@ -7,6 +7,7 @@
     <StatusString :isEnabled="isTemperatureEnabled" Name="Temperatur:" :Value="formattedTemperature" />
     <StatusBool :isEnabled="store.focuserInfo.IsMoving" enabledText="Bewegt sich" disabledText="Steht" />
     <StatusBool :isEnabled="store.focuserAfInfo.autofocus_running" enabledText="Autofokus aktiv" disabledText="Autofokus" />
+    <infoCamera :show-only-exposing="store.focuserAfInfo.autofocus_running"  />
   </div>
 </template>
 
@@ -14,7 +15,7 @@
 import { computed } from 'vue';
 import StatusBool from '../components/StatusBool.vue';
 import StatusString from '../components/StatusString.vue';
-
+import infoCamera from './infoCamera.vue';
 import { apiStore } from '@/store/store';
 const store = apiStore();
 
