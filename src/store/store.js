@@ -67,8 +67,8 @@ export const apiStore = defineStore("store", {
 
           // Autofukus
           if (focuserAfAction.Success) {
-            this.focuserAfInfo = focuserAfAction.Response;
-            console.log("AF-Focuser Info:", this.focuserAfAction);
+            this.focuserAfInfo = focuserAfAction;
+            console.log("AF-Focuser Info:", this.focuserAfInfo);
           } else {
             this.isConnected = false;
             console.error("Fehler in der Focuser-API-Antwort:", focuserAfAction.Error);

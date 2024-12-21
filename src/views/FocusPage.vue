@@ -25,6 +25,12 @@
             @click="startAutofocus">
             Starte Autofokus
           </button>
+          <button
+            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+            @click="stoppAutofocus">
+            Sopp Autofokus
+          </button>
+          <p> Status:  {{ store.focuserAfInfo.autofocus_running }}</p>
         </div>
       </div>
     </div>
@@ -54,11 +60,19 @@ async function moveFocuser() {
 
 async function startAutofocus() {
   try {
-    await apiService.focusAction("auto-focus");
+    await apiService.focuserAfAction("start");
   } catch (error) {
     console.error("Fehler beim Autofokus", error);
   }
 }
+async function stoppAutofocus() {
+  try {
+    await apiService.focuserAfAction("stopp");
+  } catch (error) {
+    console.error("Fehler beim Autofokus", error);
+  }
+}
+
 
 onMounted(
   () => {

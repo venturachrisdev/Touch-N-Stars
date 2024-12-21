@@ -155,7 +155,8 @@ def control_autofocus():
 
     # Statusabfrage
     if info_param:
-        return jsonify({"autofocus_running": afRun})
+        return jsonify({"Success": True,
+                        "autofocus_running": afRun})
 
     # Start des Autofokus
     if start_param:
