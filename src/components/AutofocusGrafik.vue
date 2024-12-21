@@ -1,15 +1,24 @@
 <template>
-    <div>
-      <canvas ref="chartCanvas"></canvas>
+    <div class=" h-screen">
+    <div class=" h-2/3 flex items-center justify-center">
+      <canvas ref="chartCanvas" class="w-full h-full"></canvas>
     </div>
+</div>
   </template>
   
   <script setup>
-  import { ref, onMounted } from "vue";
+  import { ref, onMounted, onUnmounted } from "vue";
   import { Chart } from "chart.js";
   
-  // Referenz für das Canvas-Element
   const chartCanvas = ref(null);
+  let chartInstance = null;
+  
+  // Funktion, um die Größe des Charts beim Fenster-Resize anzupassen
+  const resizeChart = () => {
+    if (chartInstance) {
+      chartInstance.resize();
+    }
+  };
   
   onMounted(() => {
     // Messdaten
@@ -18,13 +27,13 @@
   
     // Werte von HyperbolicMinimum und QuadraticMinimum
     const hyperbolicMinimum = {
-      position: 4189, // X-Wert
-      value: 2.8746860398499523, // Y-Wert
+      position: 4189,
+      value: 2.8746860398499523,
     };
   
     const quadraticMinimum = {
-      position: 4198, // X-Wert
-      value: 4.579738066634491, // Y-Wert
+      position: 4198,
+      value: 4.579738066634491,
     };
   
     // Quadratische Trendlinie berechnen
@@ -40,36 +49,37 @@
       hyperbolicFunction(x, 2.8746860398499523, 4188.625, 40.39624980612077)
     );
   
-    // Chart.js Diagramm erstellen
     const ctx = chartCanvas.value.getContext("2d");
-    new Chart(ctx, {
+  
+    // Chart.js erstellen
+    chartInstance = new Chart(ctx, {
       type: "line",
       data: {
-        labels: positions, // X-Achse: Positionen
+        labels: positions,
         datasets: [
           {
             label: "Measure Points",
-            data: values, // Y-Achse: Werte
+            data: values,
             borderColor: "blue",
             borderWidth: 2,
             fill: false,
-            pointRadius: 5, // Zeige die Messpunkte an
+            pointRadius: 5,
           },
           {
             label: "Quadratic Trendline",
-            data: quadraticTrendline, // Quadratische Trendlinie
+            data: quadraticTrendline,
             borderColor: "red",
             borderWidth: 2,
             fill: false,
-            tension: 0.4, // Geschwungene Linie
+            tension: 0.4,
           },
           {
             label: "Hyperbolic Trendline",
-            data: hyperbolicTrendline, // Hyperbolische Trendlinie
+            data: hyperbolicTrendline,
             borderColor: "green",
             borderWidth: 2,
             fill: false,
-            tension: 0.4, // Geschwungene Linie
+            tension: 0.4,
           },
           {
             label: "Quadratic Min",
@@ -93,6 +103,7 @@
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             display: true,
@@ -101,7 +112,7 @@
         },
         scales: {
           x: {
-            type: "linear", // Ermöglicht beliebige X-Werte
+            type: "linear",
             title: {
               display: true,
               text: "Position",
@@ -116,13 +127,22 @@
         },
       },
     });
+  
+    // Event Listener hinzufügen
+    window.addEventListener("resize", resizeChart);
+  });
+  
+  onUnmounted(() => {
+    // Event Listener entfernen
+    window.removeEventListener("resize", resizeChart);
+  
+    if (chartInstance) {
+      chartInstance.destroy();
+    }
   });
   </script>
   
   <style scoped>
-  canvas {
-    max-width: 100%;
-    height: auto;
-  }
+  /* Keine spezifischen Stile benötigt, da Tailwind verwendet wird */
   </style>
   
