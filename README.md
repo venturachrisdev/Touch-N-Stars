@@ -1,4 +1,4 @@
-# nina-webapp
+# Touch'N'Stars
 
 ## Project setup
 ```
