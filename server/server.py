@@ -141,15 +141,26 @@ def monitor_last_af():
 @app.route('/api/autofocus', methods=['GET'])
 def control_autofocus():
     """
-    Startet oder stoppt den Autofokus basierend auf dem Query-Parameter 'start'.
+    Steuert den Autofokus: Startet, stoppt oder gibt den Status zurück, basierend auf Query-Parametern.
     """
     global afRun
-    start_param = request.args.get('start', '').lower()  # Query-Parameter abrufen und in Kleinbuchstaben umwandeln
+
+    # Basis-URL für Autofokus-Aktionen
     target_url = f"{BASE_API_URL}/equipment/focuser/auto-focus"
-    if start_param == 'true':
+
+    # Abrufen der Query-Parameter
+    start_param = 'start' in request.args  
+    stopp_param = 'stopp' in request.args  
+    info_param = 'info' in request.args  
+
+    # Statusabfrage
+    if info_param:
+        return jsonify({"autofocus_running": afRun})
+
+    # Start des Autofokus
+    if start_param:
         afRun = True
         try:
-            # Anfrage an die Ziel-API senden
             response = requests.get(target_url)
             if response.status_code == 200:
                 return jsonify({"message": "Autofokus gestartet"}), 200
@@ -159,23 +170,22 @@ def control_autofocus():
             print(f"Fehler beim Starten des Autofokus: {e}")
             return jsonify({"error": "Interner Fehler beim Starten des Autofokus"}), 500
 
-    elif start_param == 'false':
+    # Stopp des Autofokus
+    if stopp_param:
         afRun = False
-        print("Autofokus gestoppt")
         try:
-            # Anfrage an die Ziel-API senden
             response = requests.get(f"{target_url}?cancel=true")
-            print(f"Anfrage-URL: {target_url}?cancel=true")
             if response.status_code == 200:
                 return jsonify({"message": "Autofokus gestoppt"}), 200
             else:
-                return jsonify({"error": f"Fehler beim stoppen des Autofokus: {response.content}"}), response.status_code
+                return jsonify({"error": f"Fehler beim Stoppen des Autofokus: {response.content}"}), response.status_code
         except Exception as e:
-            print(f"Fehler beim stoppen des Autofokus: {e}")
-            return jsonify({"error": "Interner Fehler beim stoppen des Autofokus"}), 500
+            print(f"Fehler beim Stoppen des Autofokus: {e}")
+            return jsonify({"error": "Interner Fehler beim Stoppen des Autofokus"}), 500
+
+    # Ungültiger Parameter
     else:
-        # Ungültiger Parameter
-        return jsonify({"error": "Ungültiger Wert für 'start'. Erlaubte Werte: 'true' oder 'false'"}), 400
+        return jsonify({"error": "Ungültige Anfrage. Verwenden Sie 'start=true', 'start=false' oder '?info'."}), 400
 
 
 @app.route('/api/guider-data', methods=['GET'])
