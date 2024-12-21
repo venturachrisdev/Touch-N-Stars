@@ -3,6 +3,9 @@
     <div class="h-2/3 flex items-center justify-center">
       <canvas ref="chartCanvas" class="w-full h-full"></canvas>
     </div>
+    <div class="text-center mt-4">
+      <p>{{ timestamp }}</p>
+    </div>
   </div>
 </template>
 
@@ -12,6 +15,7 @@ import { Chart } from "chart.js";
 import apiService from "@/services/apiService";
 
 const chartCanvas = ref(null);
+const timestamp = ref(""); // Timestamp für die Anzeige
 let chartInstance = null;
 
 // Funktion, um die Größe des Charts beim Fenster-Resize anzupassen
@@ -24,13 +28,10 @@ const resizeChart = () => {
 // Daten von der API abrufen und Chart aktualisieren
 async function fetchLastAf() {
   try {
-    const apiResponse = await apiService.focusAction("last-af");
-    console.log("API Response:", apiResponse);
+    const response = await apiService.focusAction("last-af");
 
-    // Zugriff auf den eigentlichen Response-Inhalt
-    const response = apiResponse.Response;
-
-    const measurePoints = response.MeasurePoints || [];
+    const apiData = response.Response;
+    const measurePoints = apiData.MeasurePoints || [];
 
     // Neue Daten extrahieren
     const positions = measurePoints.map((point) => point.Position);
@@ -38,6 +39,23 @@ async function fetchLastAf() {
 
     console.log("Positions:", positions);
     console.log("Values:", values);
+
+    // `hyperbolicMinimum` und `quadraticMinimum` aus Intersections
+    const hyperbolicMinimum = {
+      position: apiData.Intersections?.HyperbolicMinimum?.Position,
+      value: apiData.Intersections?.HyperbolicMinimum?.Value,
+    };
+
+    const quadraticMinimum = {
+      position: apiData.Intersections?.QuadraticMinimum?.Position,
+      value: apiData.Intersections?.QuadraticMinimum?.Value,
+    };
+
+    console.log("Hyperbolic Minimum:", hyperbolicMinimum);
+    console.log("Quadratic Minimum:", quadraticMinimum);
+
+    // `Timestamp` aus API speichern
+    timestamp.value = apiData.Timestamp;
 
     // Trendlinien berechnen
     const quadraticFunction = (x, a, b, c) => a * x ** 2 + b * x + c;
@@ -57,6 +75,15 @@ async function fetchLastAf() {
       chartInstance.data.datasets[0].data = values;
       chartInstance.data.datasets[1].data = quadraticTrendline;
       chartInstance.data.datasets[2].data = hyperbolicTrendline;
+
+      // Aktualisiere die Punkte für Minima
+      chartInstance.data.datasets[3].data = [
+        { x: quadraticMinimum.position, y: quadraticMinimum.value },
+      ];
+      chartInstance.data.datasets[4].data = [
+        { x: hyperbolicMinimum.position, y: hyperbolicMinimum.value },
+      ];
+
       chartInstance.update();
     }
   } catch (error) {
@@ -65,16 +92,6 @@ async function fetchLastAf() {
 }
 
 onMounted(() => {
-  const hyperbolicMinimum = {
-    position: 4189,
-    value: 2.8746860398499523,
-  };
-
-  const quadraticMinimum = {
-    position: 4198,
-    value: 4.579738066634491,
-  };
-
   const ctx = chartCanvas.value.getContext("2d");
 
   // Initialer Chart
@@ -109,7 +126,7 @@ onMounted(() => {
         },
         {
           label: "Quadratic Min",
-          data: [{ x: quadraticMinimum.position, y: quadraticMinimum.value }],
+          data: [], // Dynamisch aktualisiert
           borderColor: "red",
           backgroundColor: "red",
           pointRadius: 6,
@@ -118,7 +135,7 @@ onMounted(() => {
         },
         {
           label: "Hyperbolic Min",
-          data: [{ x: hyperbolicMinimum.position, y: hyperbolicMinimum.value }],
+          data: [], // Dynamisch aktualisiert
           borderColor: "green",
           backgroundColor: "green",
           pointRadius: 6,
