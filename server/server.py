@@ -24,6 +24,9 @@ guider_data = {
     "RADistanceRaw": [],
     "DECDistanceRaw": [],
 }
+afRun = False
+last_af_timestamp = None  
+
 lock = threading.Lock()
 #-----------------------------------------------------
 # Load data
@@ -109,9 +112,72 @@ def dms_to_degrees(dms_string):
     seconds = float(parts[2])
 
     return sign * (degrees + minutes / 60 + seconds / 3600)
+
+def monitor_last_af():
+    global afRun, last_af_timestamp
+    try:
+        while True:
+            try:
+               # print(afRun)
+                #print(last_af_timestamp)
+                response = requests.get(f"{BASE_API_URL}/equipment/focuser/last-af")
+                if response.status_code == 200:
+                    data = response.json()
+                    current_timestamp = data.get("Response", {}).get("Timestamp")
+                    if last_af_timestamp is not None and current_timestamp != last_af_timestamp:
+                        afRun = False
+                    last_af_timestamp = current_timestamp
+            except Exception as e:
+                print(f"Fehler beim Abrufen von 'last-af': {e}")
+            time.sleep(1)
+    except Exception as e:
+        print(f"Fehler in monitor_last_af: {e}")
+
+
+
 #-----------------------------------------------------
 # Routes
 #-----------------------------------------------------
+@app.route('/api/autofocus', methods=['GET'])
+def control_autofocus():
+    """
+    Startet oder stoppt den Autofokus basierend auf dem Query-Parameter 'start'.
+    """
+    global afRun
+    start_param = request.args.get('start', '').lower()  # Query-Parameter abrufen und in Kleinbuchstaben umwandeln
+    target_url = f"{BASE_API_URL}/equipment/focuser/auto-focus"
+    if start_param == 'true':
+        afRun = True
+        try:
+            # Anfrage an die Ziel-API senden
+            response = requests.get(target_url)
+            if response.status_code == 200:
+                return jsonify({"message": "Autofokus gestartet"}), 200
+            else:
+                return jsonify({"error": f"Fehler beim Starten des Autofokus: {response.content}"}), response.status_code
+        except Exception as e:
+            print(f"Fehler beim Starten des Autofokus: {e}")
+            return jsonify({"error": "Interner Fehler beim Starten des Autofokus"}), 500
+
+    elif start_param == 'false':
+        afRun = False
+        print("Autofokus gestoppt")
+        try:
+            # Anfrage an die Ziel-API senden
+            response = requests.get(f"{target_url}?cancel=true")
+            print(f"Anfrage-URL: {target_url}?cancel=true")
+            if response.status_code == 200:
+                return jsonify({"message": "Autofokus gestoppt"}), 200
+            else:
+                return jsonify({"error": f"Fehler beim stoppen des Autofokus: {response.content}"}), response.status_code
+        except Exception as e:
+            print(f"Fehler beim stoppen des Autofokus: {e}")
+            return jsonify({"error": "Interner Fehler beim stoppen des Autofokus"}), 500
+    else:
+        # Ungültiger Parameter
+        return jsonify({"error": "Ungültiger Wert für 'start'. Erlaubte Werte: 'true' oder 'false'"}), 400
+
+
 @app.route('/api/guider-data', methods=['GET'])
 def get_guider_data():
     """API-Endpunkt, um die letzten Guider-Werte bereitzustellen."""
@@ -265,6 +331,8 @@ def serve_vue(path):
         return send_from_directory(app.static_folder, path)
     return send_from_directory(app.static_folder, 'index.html')
 
+
+
 @app.after_request
 def add_cors_headers(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
@@ -274,7 +342,11 @@ def add_cors_headers(response):
 #-----------------------------------------------------
 # Hintergrund-Thread 
 #-----------------------------------------------------
-threading.Thread(target=fetch_and_store_data, daemon=True).start()
+
 
 if __name__ == '__main__':
+    threading.Thread(target=fetch_and_store_data, daemon=True).start()
+    print("Starte monitor_last_af")
+    threading.Thread(target=monitor_last_af, daemon=True).start()
+    print("monitor_last_af gestartet")
     app.run(host='0.0.0.0', port=5000)
