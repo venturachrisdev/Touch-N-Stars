@@ -9,15 +9,15 @@
     </div>
 
     <!-- Tabelle anzeigen, wenn Daten verfügbar sind -->
-    <table v-else class="min-w-full table-auto border-collapse border border-gray-800 text-gray-300">
+    <table v-else class="min-w-full table-auto border-collapse border border-gray-800 text-gray-300 text-sm">
       <thead>
         <tr class="bg-gray-800">
           <th class="border border-gray-300 px-4 py-2 text-left">Timestamp</th>
           <th class="border border-gray-300 px-4 py-2 text-left">Level</th>
           <th class="border border-gray-300 px-4 py-2 text-left">Message</th>
-          <th class="border border-gray-300 px-4 py-2 text-left">Member</th>
-          <th class="border border-gray-300 px-4 py-2 text-left">Source</th>
-          <th class="border border-gray-300 px-4 py-2 text-left">Line</th>
+          <th class="border border-gray-300 px-4 py-2 text-left hidden md:table-cell">Member</th>
+          <th class="border border-gray-300 px-4 py-2 text-left hidden md:table-cell">Source</th>
+          <th class="border border-gray-300 px-4 py-2 text-left hidden md:table-cell">Line</th>
         </tr>
       </thead>
       <tbody>
@@ -38,9 +38,9 @@
             {{ entry.level }}
           </td>
           <td class="border border-gray-300 px-4 py-2">{{ entry.message }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ entry.member }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ entry.source }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ entry.line }}</td>
+          <td class="border border-gray-300 px-4 py-2 hidden md:table-cell">{{ entry.member }}</td>
+          <td class="border border-gray-300 px-4 py-2 hidden md:table-cell">{{ entry.source }}</td>
+          <td class="border border-gray-300 px-4 py-2 hidden md:table-cell">{{ entry.line }}</td>
         </tr>
       </tbody>
     </table>
