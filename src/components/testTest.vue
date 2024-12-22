@@ -1,11 +1,11 @@
 <template>
     <div>
         <h1>Test</h1>
-        <AutofocusGrafik />
+        <LastLogs />
     </div>
 </template>
 
 <script setup>
-import AutofocusGrafik from './AutofocusGrafik.vue';
+import LastLogs from './LastLogs.vue';
 
 </script>

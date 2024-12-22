@@ -242,6 +242,18 @@ const apiService = {
     }
   },
 
+  //-------------------------------------  Logs ---------------------------------------
+  async getLastLogs(count,level) {
+    try {
+      const response = await axios.get(`${API_URL}logs`, {
+        params: { count, level },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error retrieving logs result:", error);
+      throw error;
+    }
+  },
   //-------------------------------------  Helper ---------------------------------------
   // Helper methods
   _simpleGetRequest(url) {

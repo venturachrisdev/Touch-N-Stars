@@ -143,7 +143,7 @@ def monitor_last_af():
 #-----------------------------------------------------
 # Logdatei auslesen 
 # http://192.168.2.128:5000/api/logs?count=10&level=Error 
-# Mögliche level: Error, Warning, Info
+# Mögliche level: Error, Warning, Info, 
 @app.route('/api/logs', methods=['GET'])
 def get_recent_logs():
     """
