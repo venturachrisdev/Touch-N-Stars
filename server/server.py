@@ -4,6 +4,7 @@ import pandas as pd
 import os
 import threading
 import time
+import glob
 
 app = Flask(__name__, static_folder='static')
 #-----------------------------------------------------
@@ -11,6 +12,7 @@ app = Flask(__name__, static_folder='static')
 #-----------------------------------------------------
 BASE_API_URL = "http://localhost:1888/v2/api"
 CACHE_PATH = os.path.join(os.getenv('LOCALAPPDATA', ''), 'NINA', 'FramingAssistantCache')
+LOG_PATH = os.path.join(os.getenv('LOCALAPPDATA', ''), 'NINA', 'Logs')
 XML_FILE_PATH = os.path.join(CACHE_PATH, 'CacheInfo.xml')
 TARGETPIC_CACHE_DIR = os.path.join(CACHE_PATH, 'TargetPicsCache')
 os.makedirs(TARGETPIC_CACHE_DIR, exist_ok=True)  # Sicherstellen, dass der Cache-Ordner existiert
@@ -136,10 +138,71 @@ def monitor_last_af():
         print(f"Fehler in monitor_last_af: {e}")
 
 
-
 #-----------------------------------------------------
 # Routes
 #-----------------------------------------------------
+# Logdatei auslesen 
+# http://192.168.2.128:5000/api/logs?count=10&level=Error 
+# Mögliche level: Error, Warning, Info
+@app.route('/api/logs', methods=['GET'])
+def get_recent_logs():
+    """
+    Gibt eine konfigurierbare Anzahl von Meldungen aus der aktuellsten Logdatei zurück,
+    optional gefiltert nach dem Log-Level.
+    """
+
+    print(LOG_PATH)
+    try:
+        # Anzahl der Logmeldungen aus dem Query-Parameter lesen, Standard: 5
+        count = request.args.get('count', default=5, type=int)
+
+        # Log-Level aus dem Query-Parameter lesen, Standard: None (kein Filter)
+        level_filter = request.args.get('level', default=None, type=str)
+
+        # Neueste Logdatei finden
+        log_files = glob.glob(os.path.join(LOG_PATH, '*.log'))
+        if not log_files:
+            return jsonify({"error": "Keine Logdateien gefunden"}), 404
+
+        latest_log = max(log_files, key=os.path.getmtime)
+        
+        # Alle Zeilen lesen
+        with open(latest_log, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+
+        # Nur relevante Zeilen (nach der Kopfzeile) verarbeiten
+        log_lines = [line for line in lines if '|' in line]
+
+        # Nach Level filtern, falls angegeben
+        if level_filter:
+            log_lines = [line for line in log_lines if f"|{level_filter.upper()}|" in line]
+
+        # Neueste `count` Logs auswählen
+        log_lines = log_lines[-count:]
+
+        # Neueste Logs zuerst
+        log_lines.reverse()
+
+        logs = []
+        for line in log_lines:
+            parts = line.split('|')
+            if len(parts) >= 6:
+                logs.append({
+                    "timestamp": parts[0],
+                    "level": parts[1],
+                    "source": parts[2],
+                    "member": parts[3],
+                    "line": parts[4],
+                    "message": '|'.join(parts[5:]).strip()
+                })
+
+        return jsonify({"logs": logs}), 200
+
+    except Exception as e:
+        print(f"Fehler beim Abrufen der Logs: {e}")
+        return jsonify({"error": "Fehler beim Abrufen der Logs"}), 500
+
+
 @app.route('/api/autofocus', methods=['GET'])
 def control_autofocus():
     """
