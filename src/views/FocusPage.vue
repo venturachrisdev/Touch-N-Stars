@@ -32,12 +32,23 @@
             Autofokus abbrechen
           </button>
         </div>
-        <div v-if="store.focuserAfInfo.newAfGraph" class="mt-6">
-          <p class="mb-4 text-center">Letzter Autofokus</p>
-          <AutofocusGrafik />
+
+        <div class="flex items-center space-x-3 mt-4">
+          <div class="w-3 h-[1px] bg-gray-700"></div> <!-- kurze Linie -->
+          <button @click="store.showAfGraph = !store.showAfGraph"
+            class="w-7 h-7 bg-gray-700 active:bg-cyan-700 hover:bg-cyan-600 rounded-md border border-cyan-500/20 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white transition-transform duration-300"
+              :class="{ 'rotate-90': store.showAfGraph }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+          <p class=" text-sm italic"> Autofokus Grafik</p>
+          <div class="flex-grow h-[1px] bg-gray-700"></div> <!-- lange Linie -->
         </div>
+        <div v-show="store.showAfGraph" class="mt-6">
         <!--Spinner-->
-        <div v-else-if="store.focuserAfInfo.autofocus_running" role="status" class="flex flex-col items-center h-screen mt-4 text-center">
+        <div v-if="store.focuserAfInfo.autofocus_running" role="status"
+          class="flex flex-col items-center h-screen mt-4 text-center">
           <p>Autofokus läuft</p>
           <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
             viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,6 +61,12 @@
           </svg>
           <span class="sr-only">Loading...</span>
         </div>
+        <div>
+        
+          <p class="mb-4 text-center">Letzter Autofokus</p>
+          <AutofocusGrafik />
+        </div>
+      </div>
 
       </div>
     </div>
@@ -64,8 +81,8 @@ import AutofocusGrafik from '@/components/AutofocusGrafik.vue';
 import { apiStore } from '@/store/store';
 
 const store = apiStore();
-const position = ref(0)
-const loading = ref(false)
+const position = ref(0);
+const loading = ref(false);
 
 async function moveFocuser() {
   try {

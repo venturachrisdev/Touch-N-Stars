@@ -14,7 +14,8 @@ export const apiStore = defineStore("store", {
     DECDistanceRaw: [],
     isBackendReachable: false,
     exposureTime: 2,
-    gain: 0
+    gain: 0,
+    showAfGraph: true,
 
   }),
   actions: {

@@ -36,29 +36,18 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
 </template>
 
 <script setup>
-/* eslint-disable */
 import { ref } from 'vue';
 import { apiStore } from '@/store/store';
 import apiService from '@/services/apiService';
 import toggleButton from './toggleButton.vue';
 
 const store = apiStore();
-const toggled = ref(false)
 
 let TemperatureSetPoint = ref(store.cameraInfo?.TemperatureSetPoint || 0);
 
-function test() {
-    console.log("huhu");
-};
 
 function toggloCooling() {
     if (store.cameraInfo.CoolerOn) {
