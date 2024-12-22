@@ -32,8 +32,8 @@
             Autofokus abbrechen
           </button>
         </div>
-        <div v-if="store.focuserAfInfo.newAfGraph">
-          <p>Letzter Autofokus</p>
+        <div v-if="store.focuserAfInfo.newAfGraph" class="mt-6">
+          <p class="mb-4 text-center">Letzter Autofokus</p>
         <AutofocusGrafik />
       </div>
       </div>
