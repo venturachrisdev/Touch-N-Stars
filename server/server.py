@@ -25,6 +25,7 @@ guider_data = {
     "DECDistanceRaw": [],
 }
 afRun = False
+newAfGraph = False
 last_af_timestamp = None  
 
 lock = threading.Lock()
@@ -114,7 +115,7 @@ def dms_to_degrees(dms_string):
     return sign * (degrees + minutes / 60 + seconds / 3600)
 
 def monitor_last_af():
-    global afRun, last_af_timestamp
+    global afRun, last_af_timestamp, newAfGraph
     try:
         while True:
             try:
@@ -126,6 +127,7 @@ def monitor_last_af():
                     current_timestamp = data.get("Response", {}).get("Timestamp")
                     if last_af_timestamp is not None and current_timestamp != last_af_timestamp:
                         afRun = False
+                        newAfGraph = True
                     last_af_timestamp = current_timestamp
             except Exception as e:
                 print(f"Fehler beim Abrufen von 'last-af': {e}")
@@ -143,7 +145,7 @@ def control_autofocus():
     """
     Steuert den Autofokus: Startet, stoppt oder gibt den Status zurück, basierend auf Query-Parametern.
     """
-    global afRun
+    global afRun , newAfGraph
 
     # Basis-URL für Autofokus-Aktionen
     target_url = f"{BASE_API_URL}/equipment/focuser/auto-focus"
@@ -156,11 +158,14 @@ def control_autofocus():
     # Statusabfrage
     if info_param:
         return jsonify({"Success": True,
-                        "autofocus_running": afRun})
+                        "autofocus_running": afRun,
+                        "newAfGraph" : newAfGraph
+                        })
 
     # Start des Autofokus
     if start_param:
         afRun = True
+        newAfGraph = False
         try:
             response = requests.get(target_url)
             if response.status_code == 200:
@@ -174,6 +179,7 @@ def control_autofocus():
     # Stopp des Autofokus
     if stopp_param:
         afRun = False
+        newAfGraph = False
         try:
             response = requests.get(f"{target_url}?cancel=true")
             if response.status_code == 200:

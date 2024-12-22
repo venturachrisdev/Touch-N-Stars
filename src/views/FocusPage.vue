@@ -32,6 +32,10 @@
             Autofokus abbrechen
           </button>
         </div>
+        <div v-if="store.focuserAfInfo.newAfGraph">
+          <p>Letzter Autofokus</p>
+        <AutofocusGrafik />
+      </div>
       </div>
     </div>
   </div>
@@ -41,6 +45,7 @@
 import { ref, onMounted } from 'vue'
 import apiService from "@/services/apiService";
 import infoFocuser from '../components/infoFocuser.vue';
+import AutofocusGrafik from '@/components/AutofocusGrafik.vue';
 import { apiStore } from '@/store/store';
 
 const store = apiStore();
