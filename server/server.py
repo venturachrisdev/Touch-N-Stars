@@ -151,6 +151,8 @@ def get_recent_logs():
     optional gefiltert nach dem Log-Level.
     """
 
+    excluded_members = ["GetEquipment", "RequestAll", "LoadPlugin"]
+
     print(LOG_PATH)
     try:
         # Anzahl der Logmeldungen aus dem Query-Parameter lesen, Standard: 5
@@ -176,6 +178,9 @@ def get_recent_logs():
         # Nach Level filtern, falls angegeben
         if level_filter:
             log_lines = [line for line in log_lines if f"|{level_filter.upper()}|" in line]
+
+        # Einträge filtern
+        log_lines = [line for line in log_lines if not any(f"|{member}|" in line for member in excluded_members)]
 
         # Neueste `count` Logs auswählen
         log_lines = log_lines[-count:]
