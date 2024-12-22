@@ -11,8 +11,11 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
-import { Chart } from "chart.js";
+import { Chart, registerables } from "chart.js";
 import apiService from "@/services/apiService";
+
+// Registriere alle Chart.js Komponenten
+Chart.register(...registerables);
 
 const chartCanvas = ref(null);
 const timestamp = ref(""); // Timestamp für die Anzeige
@@ -24,6 +27,40 @@ const resizeChart = () => {
     chartInstance.resize();
   }
 };
+
+// Funktion zum Parsen der Quadratischen Fitting-Formel
+function parseQuadraticFormula(formula) {
+  // Normalisiere die Formel, um "+ -" zu "-"
+  const normalizedFormula = formula.replace(/\+\s*-/g, '- ').replace(/-\s*-/g, '+ ');
+
+  console.log("Normalisierte Quadratische Formel:", normalizedFormula); // Debugging
+
+  // Beispiel: "y = 0.00019680336235060466 * x^2 - 1.6519748671780223 * x + 3472.2481556536904"
+  
+  const regex = /y\s*=\s*([+-]?\d*\.?\d+)\s*\*\s*x\^2\s*([+-]?\s*\d*\.?\d+)\s*\*\s*x\s*([+-]?\s*\d*\.?\d+)/;
+  const match = normalizedFormula.match(regex);
+  if (match) {
+    const a = parseFloat(match[1]);
+    const b = parseFloat(match[2].replace(/\s+/g, ""));
+    const c = parseFloat(match[3].replace(/\s+/g, ""));
+    return { a, b, c };
+  }
+  return null;
+}
+
+// Funktion zum Parsen der Hyperbolischen Fitting-Formel
+function parseHyperbolicFormula(formula) {
+  // Beispiel: "y = 4.993092983594653 * cosh(asinh((4199 - x) / 76.26876693295979))"
+  const regex = /y\s*=\s*([+-]?\d*\.?\d+)\s*\*\s*cosh\s*\(\s*asinh\s*\(\s*\(\s*(\d+)\s*-\s*x\s*\)\s*\/\s*([\d.]+)\s*\)\s*\)/;
+  const match = formula.match(regex);
+  if (match) {
+    const A = parseFloat(match[1]);
+    const B = parseFloat(match[2]);
+    const C = parseFloat(match[3]);
+    return { A, B, C };
+  }
+  return null;
+}
 
 // Daten von der API abrufen und Chart aktualisieren
 async function fetchLastAf() {
@@ -57,17 +94,31 @@ async function fetchLastAf() {
     // `Timestamp` aus API speichern
     timestamp.value = apiData.Timestamp;
 
-    // Trendlinien berechnen
-    const quadraticFunction = (x, a, b, c) => a * x ** 2 + b * x + c;
-    const quadraticTrendline = positions.map((x) =>
-      quadraticFunction(x, 0.0002335525970479781, -1.9609514027076933, 4120.708664127215)
-    );
+    // Fittings aus API extrahieren
+    const fittings = apiData.Fittings;
 
-    const hyperbolicFunction = (x, A, B, C) =>
-      A * Math.cosh(Math.asinh((B - x) / C));
-    const hyperbolicTrendline = positions.map((x) =>
-      hyperbolicFunction(x, 2.8746860398499523, 4188.625, 40.39624980612077)
-    );
+    // Quadratische Fitting-Parameter parsen
+    const quadraticParams = parseQuadraticFormula(fittings.Quadratic);
+    if (!quadraticParams) {
+      throw new Error("Quadratic Fitting-Formel konnte nicht geparst werden.");
+    }
+
+    // Hyperbolische Fitting-Parameter parsen
+    const hyperbolicParams = parseHyperbolicFormula(fittings.Hyperbolic);
+    if (!hyperbolicParams) {
+      throw new Error("Hyperbolic Fitting-Formel konnte nicht geparst werden.");
+    }
+
+    // Funktionen basierend auf den geparsten Parametern definieren
+    const quadraticFunction = (x) =>
+      quadraticParams.a * Math.pow(x, 2) + quadraticParams.b * x + quadraticParams.c;
+
+    const hyperbolicFunction = (x) =>
+      hyperbolicParams.A * Math.cosh(Math.asinh((hyperbolicParams.B - x) / hyperbolicParams.C));
+
+    // Berechne die y-Werte für die Trendlinien basierend auf den Positionen
+    const quadraticTrendline = positions.map((x) => quadraticFunction(x));
+    const hyperbolicTrendline = positions.map((x) => hyperbolicFunction(x));
 
     // Aktualisiere Chart-Daten
     if (chartInstance) {
@@ -94,7 +145,7 @@ async function fetchLastAf() {
 onMounted(() => {
   const ctx = chartCanvas.value.getContext("2d");
 
-  // Initialer Chart
+  // Initialer Chart ohne Gaussian Trendline
   chartInstance = new Chart(ctx, {
     type: "line",
     data: {
@@ -152,6 +203,15 @@ onMounted(() => {
           display: true,
           position: "top",
         },
+        tooltip: {
+          mode: "index",
+          intersect: false,
+        },
+      },
+      interaction: {
+        mode: "nearest",
+        axis: "x",
+        intersect: false,
       },
       scales: {
         x: {
