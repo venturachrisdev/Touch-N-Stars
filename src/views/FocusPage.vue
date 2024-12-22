@@ -64,7 +64,7 @@
         <div>
         
           <p class="mb-4 text-center">Letzter Autofokus</p>
-          <AutofocusGrafik />
+          <AutofocusGrafik class="flex-grow"/>
         </div>
       </div>
 
