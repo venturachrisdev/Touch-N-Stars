@@ -74,8 +74,8 @@ async function fetchLastAf() {
     const positions = measurePoints.map((point) => point.Position);
     const values = measurePoints.map((point) => parseFloat(point.Value.toFixed(2)));
 
-    console.log("Positions:", positions);
-    console.log("Values:", values);
+    //console.log("Positions:", positions);
+    //console.log("Values:", values);
 
     // `hyperbolicMinimum` und `quadraticMinimum` aus Intersections
     const hyperbolicMinimum = {
@@ -88,8 +88,8 @@ async function fetchLastAf() {
       value: apiData.Intersections?.QuadraticMinimum?.Value,
     };
 
-    console.log("Hyperbolic Minimum:", hyperbolicMinimum);
-    console.log("Quadratic Minimum:", quadraticMinimum);
+    //console.log("Hyperbolic Minimum:", hyperbolicMinimum);
+    //console.log("Quadratic Minimum:", quadraticMinimum);
 
     // `Timestamp` aus API speichern
     timestamp.value = apiData.Timestamp;

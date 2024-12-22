@@ -22,20 +22,19 @@
                     class="w-28 text-black px-3 h-8 border border-gray-300 rounded-lg  focus:outline-none focus:ring-2 focus:ring-cyan-700"
                     placeholder="1" />
             </div>
-
         </div>
         <div v-if="store.cameraInfo.CanSetTemperature">
-                <div class="flex flex-col min-w-44 border border-gray-500 p-1 pb-2 rounded-lg">
-                    <label for="TemperatureSetPoint" class="text-xs mb-1 text-gray-400">Kühler </label>
-                    <div class="flex space-x-2">
-                        <input id="TemperatureSetPoint" v-model="TemperatureSetPoint" type="number"
-                            class="w-28 text-black px-3 h-8  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
-                            placeholder="1" step="1" />
-                        <toggleButton @click="toggloCooling" :status-value="store.cameraInfo.CoolerOn" />
-                    </div>
+            <div class="flex flex-col min-w-44 border border-gray-500 p-1 pb-2 rounded-lg">
+                <label for="TemperatureSetPoint" class="text-xs mb-1 text-gray-400">Kühler </label>
+                <div class="flex space-x-2">
+                    <input id="TemperatureSetPoint" v-model="TemperatureSetPoint" type="number"
+                        class="w-28 text-black px-3 h-8  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+                        placeholder="1" step="1" />
+                    <toggleButton @click="toggloCooling" :status-value="store.cameraInfo.CoolerOn" />
                 </div>
             </div>
         </div>
+    </div>
 </template>
 
 <script setup>
