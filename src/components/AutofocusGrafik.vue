@@ -35,9 +35,8 @@ function parseQuadraticFormula(formula) {
 
   console.log("Normalisierte Quadratische Formel:", normalizedFormula); // Debugging
 
-  // Beispiel: "y = 0.00019680336235060466 * x^2 - 1.6519748671780223 * x + 3472.2481556536904"
-  
-  const regex = /y\s*=\s*([+-]?\d*\.?\d+)\s*\*\s*x\^2\s*([+-]?\s*\d*\.?\d+)\s*\*\s*x\s*([+-]?\s*\d*\.?\d+)/;
+  // Neuer Regex für Exponentialnotation
+  const regex = /y\s*=\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\*\s*x\^2\s*([+-]?\s*\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\*\s*x\s*([+-]?\s*\d*\.?\d+(?:[eE][+-]?\d+)?)/i;
   const match = normalizedFormula.match(regex);
   if (match) {
     const a = parseFloat(match[1]);
@@ -48,10 +47,13 @@ function parseQuadraticFormula(formula) {
   return null;
 }
 
+
 // Funktion zum Parsen der Hyperbolischen Fitting-Formel
 function parseHyperbolicFormula(formula) {
-  // Beispiel: "y = 4.993092983594653 * cosh(asinh((4199 - x) / 76.26876693295979))"
-  const regex = /y\s*=\s*([+-]?\d*\.?\d+)\s*\*\s*cosh\s*\(\s*asinh\s*\(\s*\(\s*(\d+)\s*-\s*x\s*\)\s*\/\s*([\d.]+)\s*\)\s*\)/;
+  console.log("Hyperbolic Fitting Formel:", formula); // Debugging
+
+  // Neuer Regex für Exponentialnotation und Hyperbolische Funktion
+  const regex = /y\s*=\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\*\s*cosh\s*\(\s*asinh\s*\(\s*\(\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*-\s*x\s*\)\s*\/\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\)\s*\)/i;
   const match = formula.match(regex);
   if (match) {
     const A = parseFloat(match[1]);
@@ -61,6 +63,7 @@ function parseHyperbolicFormula(formula) {
   }
   return null;
 }
+
 
 // Daten von der API abrufen und Chart aktualisieren
 async function fetchLastAf() {
@@ -145,7 +148,7 @@ async function fetchLastAf() {
 onMounted(() => {
   const ctx = chartCanvas.value.getContext("2d");
 
-  // Initialer Chart ohne Gaussian Trendline
+  // Initialer Chart 
   chartInstance = new Chart(ctx, {
     type: "line",
     data: {
