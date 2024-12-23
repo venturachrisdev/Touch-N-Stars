@@ -19,6 +19,8 @@ export const apiStore = defineStore("store", {
     showAfGraph: true,
     IsExposingTemp: false,
     imageData: null,
+    isLoadingImage: false,
+    captuerRunning: false,
 
 
   }),
@@ -139,6 +141,8 @@ export const apiStore = defineStore("store", {
         const maxRetries = 30; // Maximale Anzahl der Wiederholungen
         let retries = 0;
         let image = null;
+        this.isLoadingImage = true;
+       
     
         while (retries < maxRetries) {
           const result = await apiService.getCaptureResult();
@@ -167,6 +171,9 @@ export const apiStore = defineStore("store", {
         }
       } catch (error) {
         console.error("Fehler beim Laden des Bildes:", error);
+      } finally {
+        this.isLoadingImage = false;
+        this.captuerRunning = false;
       }
     },
     startFetchingInfo() {

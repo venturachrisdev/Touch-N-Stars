@@ -52,8 +52,8 @@
             </div>
             <button
               class="flex h-10 min-w-48 rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
-              @click="capturePhoto" :disabled="loading">
-              <template v-if="loading">
+              @click="capturePhoto" :disabled="store.captuerRunning">
+              <template v-if="store.captuerRunning">
                 <div v-if="isExposure" class="flex items-center">
                   <svg class="w-6 h-6" viewBox="0 0 36 36">
                     <path class="text-white text-opacity-30 fill-none stroke-current stroke-[2.8]" d="M18 2.0845
@@ -71,7 +71,7 @@
                     Aufnahme läuft {{ remainingExposureTime }}s
                   </span>
                 </div>
-                <div v-else-if="isLoadingImage" class="flex items-center">
+                <div v-else-if="store.isLoadingImage" class="flex items-center">
                   <svg class="w-6 h-6 animate-spin text-white" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
@@ -98,7 +98,6 @@
           <div ref="imageContainer"
             class="image-container overflow-hidden min-h-[65vh] min-w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
             <img v-if="store.imageData" ref="image" :src="store.imageData" alt="Aufgenommenes Bild" class="block" />
-
           </div>
         </div>
       </div>
@@ -119,9 +118,8 @@ const remainingExposureTime = ref(0);
 const progress = ref(0);
 const imageData = ref(null);
 const image = ref(null);
-const loading = ref(false);
 const isExposure = ref(false);
-const isLoadingImage = ref(false);
+
 const isLooping = ref(false);
 const isAbort = ref(false);
 const showInfo = ref(false);
@@ -129,9 +127,7 @@ const showInfo = ref(false);
 let panzoomInstance = null;
 let exposureCountdownTimer = null;
 
-function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+
 
 async function startExposureCountdown() {
   const totalTime = store.exposureTime;
@@ -144,7 +140,6 @@ async function startExposureCountdown() {
         reject(new Error("Belichtung wurde abgebrochen."));
         return;
       }
-
       remainingExposureTime.value--;
       progress.value =
         ((totalTime - remainingExposureTime.value) / totalTime) * 100;
@@ -166,11 +161,10 @@ async function capturePhoto() {
     return;
   }
 
-  loading.value = true;
   remainingExposureTime.value = store.exposureTime;
   progress.value = 0;
   isExposure.value = true;
-  isLoadingImage.value = false;
+
   isAbort.value = false;
 
   try {
@@ -179,45 +173,14 @@ async function capturePhoto() {
     await startExposureCountdown();
     await capturePromise;
 
+    store.captuerRunning = true;
     isExposure.value = false;
-    isLoadingImage.value = true;
 
-    let attempts = 0;
-    const maxAttempts = 15;
-    let image = null;
-
-    while (!image && attempts < maxAttempts && !isAbort.value) {
-      try {
-        const result = await apiService.getCaptureResult();
-        image = result?.Response?.Image;
-
-        if (image) {
-          imageData.value = `data:image/jpeg;base64,${image}`;
-          break;
-        }
-      } catch (error) {
-        console.error("Fehler beim Abrufen des Bildes:", error.message);
-      }
-
-      attempts++;
-      await wait(1000);
-    }
-
-    if (isAbort.value) {
-      console.log("Bildabruf wurde abgebrochen.");
-      return;
-    }
-
-    if (!image) {
-      console.error("Kein Bild verfügbar nach mehreren Versuchen.");
-      alert("Bild wurde nicht rechtzeitig bereitgestellt.");
-    }
   } catch (error) {
     console.error("Fehler bei der Aufnahme:", error.message);
     alert("Fehler bei der Aufnahme. Siehe Konsole.");
   } finally {
-    loading.value = false;
-    isLoadingImage.value = false;
+
 
     if (isLooping.value) {
       capturePhoto();
@@ -232,7 +195,7 @@ async function abortExposure() {
 
     isAbort.value = true;
     isExposure.value = false;
-    isLoadingImage.value = false;
+
     isLooping.value = false;
     remainingExposureTime.value = 0;
     progress.value = 0;
@@ -242,9 +205,7 @@ async function abortExposure() {
   } catch (error) {
     console.error("Fehler beim Abbrechen der Belichtung:", error);
     alert("Abbrechen fehlgeschlagen: " + (error.message || "Unbekannter Fehler"));
-  } finally {
-    loading.value = false;
-  }
+  } 
 }
 
 watch(imageData, async (newValue) => {
