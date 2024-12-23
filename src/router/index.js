@@ -6,6 +6,7 @@ import FocusPage from '../views/FocusPage.vue';
 import MountPage from '../views/MountPage.vue';
 import GuidingPage from '../views/GuidingPage.vue';
 import TargetPic from '../components/testTest.vue';
+import LastLogs from '@/components/LastLogs.vue';
 
 
 const routes = [
@@ -16,6 +17,7 @@ const routes = [
   { path: '/mount', component: MountPage },
   { path: '/guider', component: GuidingPage },
   { path: '/misc', component: TargetPic },
+  { path: '/logs', component: LastLogs },
 
 ];
 

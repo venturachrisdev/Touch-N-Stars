@@ -35,7 +35,9 @@
       </div>
       <!-- Footer -->
       <div>
+        <router-link to="/logs" class="fixed bottom-0 w-full">
         <LastMessage class="fixed bottom-0 w-full" />
+      </router-link>
       </div>
     </div>
   </div>
