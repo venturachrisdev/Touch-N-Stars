@@ -164,8 +164,8 @@ async function capturePhoto() {
   remainingExposureTime.value = store.exposureTime;
   progress.value = 0;
   isExposure.value = true;
-
   isAbort.value = false;
+  store.captuerRunning = true;
 
   try {
     const capturePromise = apiService.startCapture(store.exposureTime, store.gain);
@@ -173,7 +173,7 @@ async function capturePhoto() {
     await startExposureCountdown();
     await capturePromise;
 
-    store.captuerRunning = true;
+    
     isExposure.value = false;
 
   } catch (error) {
