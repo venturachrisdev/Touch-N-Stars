@@ -10,6 +10,7 @@ export const apiStore = defineStore("store", {
     focuserInfo: [],
     focuserAfInfo: [],
     guiderInfo: [],
+    LogsInfo: [],
     RADistanceRaw: [],
     DECDistanceRaw: [],
     isBackendReachable: false,
@@ -30,13 +31,14 @@ export const apiStore = defineStore("store", {
       }
       if (this.isBackendReachable) {
         try {
-          const [cameraResponse, mountResponse, focuserResponse, focuserAfResponse, guiderResponse, GuiderChartResponse] = await Promise.all([
+          const [cameraResponse, mountResponse, focuserResponse, focuserAfResponse, guiderResponse, GuiderChartResponse, LogsResponse] = await Promise.all([
             apiService.cameraAction("info"),
             apiService.mountAction("info"),
             apiService.focusAction("info"),
             apiService.focuserAfAction("info"),
             apiService.guiderAction("info"),
             apiService.fetchGuiderChartData(),
+            apiService.getLastLogs("10"),
           ]);
 
           // Kamera
@@ -73,6 +75,15 @@ export const apiStore = defineStore("store", {
           } else {
             this.isConnected = false;
             console.error("Fehler in der Focuser-API-Antwort:", focuserAfResponse.Error);
+          }
+
+          // Logs
+          if (LogsResponse) {
+            this.LogsInfo = LogsResponse;
+            console.log("Logs Info:", this.LogsInfo);
+          } else {
+            this.isConnected = false;
+            console.error("Fehler in der Logs-API-Antwort:", LogsResponse.Error);
           }
 
           // Guider
