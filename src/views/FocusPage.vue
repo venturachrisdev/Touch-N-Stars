@@ -61,10 +61,13 @@
           </svg>
           <span class="sr-only">Loading...</span>
         </div>
-        <div>
-        
+        <div v-if="!store.focuserAfInfo.afError"> 
           <p class="mb-4 text-center">Letzter Autofokus</p>
           <AutofocusGrafik class="flex-grow"/>
+        </div>
+        <div v-else class="text-center text-red-600">
+          <p >Fehler beim Autofokus</p>
+          <p class=" italic">{{ store.focuserAfInfo.afErrorText }}</p>
         </div>
       </div>
 

@@ -60,7 +60,7 @@ function formatTimestamp(timestamp) {
 // Daten von der API abrufen
 async function fetchLastLogs() {
   try {
-    const response = await apiService.getLastLogs("10");
+    const response = await apiService.getLastLogs("50");
 
     // Überprüfen Sie die Struktur der API-Antwort
     // Angenommen, die Logs befinden sich direkt in response.logs

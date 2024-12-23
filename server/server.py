@@ -27,6 +27,8 @@ guider_data = {
     "DECDistanceRaw": [],
 }
 afRun = False
+afError = False
+afErrorText =""
 newAfGraph = False
 last_af_timestamp = None  
 
@@ -42,6 +44,47 @@ data = pd.concat([
 #-----------------------------------------------------
 # Utility functions
 #-----------------------------------------------------
+def monitor_logs_for_autofocus():
+    """
+    Überwacht die Logdatei auf neue Warnungen oder Störungen mit dem Member 'StartAutoFocus'
+    und setzt 'afRun' auf False, falls eine gefunden wird.
+    """
+    global afRun , afError, afErrorText
+    last_checked_line = 0  # Die zuletzt gelesene Zeile
+
+    try:
+        while True:
+            log_files = glob.glob(os.path.join(LOG_PATH, '*.log'))
+            if not log_files:
+                time.sleep(1)  # Falls keine Logdateien existieren, warten und erneut prüfen
+                print("Keine Logdateien gefunden")
+                continue
+
+            latest_log = max(log_files, key=os.path.getmtime)
+            
+            with open(latest_log, 'r', encoding='utf-8') as file:
+                lines = file.readlines()
+
+            # Überprüfen nur der neuen Zeilen seit dem letzten Durchlauf
+            new_lines = lines[last_checked_line:]
+            last_checked_line = len(lines)  # Aktualisiere den Stand der zuletzt geprüften Zeile
+           
+            for line in new_lines:
+                # Prüfe, ob die Zeile eine Warnung oder Störung enthält und den Member 'StartAutoFocus'
+                if ('|WARNING|' in line or '|ERROR|' in line) and '|StartAutoFocus|' in line:
+                    print(f"Warnung/Störung gefunden: {line.strip()}")
+                    afRun = False  # Autofokus stoppen
+                    afError = True
+                    # Extrahiere den relevanten Teil der Log-Zeile
+                    parts = line.split('|')
+                    if len(parts) >= 6:
+                        afErrorText = parts[5].strip()
+                    break  # Keine weiteren Zeilen prüfen, da wir afRun bereits gestoppt haben
+
+            time.sleep(1)  # Kurze Pause, um die CPU-Belastung zu reduzieren
+    except Exception as e:
+        print(f"Fehler in monitor_logs_for_autofocus: {e}")
+
 def fetch_and_store_data():
     """Periodisch Guider-Daten abrufen und speichern."""
     while True:
@@ -143,7 +186,7 @@ def monitor_last_af():
 #-----------------------------------------------------
 # Logdatei auslesen 
 # http://192.168.2.128:5000/api/logs?count=10&level=Error 
-# Mögliche level: Error, Warning, Info, 
+# Mögliche level: Error, Warning, Info,  
 @app.route('/api/logs', methods=['GET'])
 def get_recent_logs():
     """
@@ -213,7 +256,7 @@ def control_autofocus():
     """
     Steuert den Autofokus: Startet, stoppt oder gibt den Status zurück, basierend auf Query-Parametern.
     """
-    global afRun , newAfGraph
+    global afRun , newAfGraph, afError, afErrorText
 
     # Basis-URL für Autofokus-Aktionen
     target_url = f"{BASE_API_URL}/equipment/focuser/auto-focus"
@@ -227,13 +270,17 @@ def control_autofocus():
     if info_param:
         return jsonify({"Success": True,
                         "autofocus_running": afRun,
-                        "newAfGraph" : newAfGraph
+                        "newAfGraph" : newAfGraph,
+                        "afError" : afError,
+                        "afErrorText" : afErrorText,
                         })
 
     # Start des Autofokus
     if start_param:
         afRun = True
         newAfGraph = False
+        afError = False
+        afErrorText = ""
         try:
             response = requests.get(target_url)
             if response.status_code == 200:
@@ -434,4 +481,6 @@ if __name__ == '__main__':
     print("Starte monitor_last_af")
     threading.Thread(target=monitor_last_af, daemon=True).start()
     print("monitor_last_af gestartet")
+    threading.Thread(target=monitor_logs_for_autofocus, daemon=True).start()
+    print("monitor_logs_for_autofocus gestartet")
     app.run(host='0.0.0.0', port=5000)
