@@ -3,16 +3,14 @@
     <div v-if="isLoading">Loading...</div>
     <div v-else>
       <div v-for="(entry, index) in firstLog" :key="index" 
-        class="grid grid-cols-4" :class="{
+        class="grid grid-cols-4 border-r border-gray-900 rounded-t-md bg-gray-800 shadow-md text-sm" :class="{
         'text-green-600': entry.level === 'INFO',
         'text-red-600': entry.level === 'ERROR',
         'text-yellow-600': entry.level === 'WARNING',
       }">
-        <p class="border border-gray-300 px-4 py-2 col-span-1 truncate overflow-hidden">{{ formatTimestamp(entry.timestamp) }}</p>
-        <p class="border border-gray-300 px-4 py-2 col-span-3 truncate overflow-hidden">{{ entry.message }}</p>
+        <p class="px-4 border-r border-gray-900 py-2 col-span-1 truncate overflow-hidden">{{ formatTimestamp(entry.timestamp) }}</p>
+        <p class="px-4 py-2 col-span-3 truncate overflow-hidden">{{ entry.message }}</p>
       </div>
-      <p class="text-ellipsis truncate overflow-hidden">Stellen Sie sicher, dass die maximale Breite festgelegt ist
-        Stellen Sie sicher, dass die maximale Breite festgelegt ist</p>
     </div>
   </div>
 </template>

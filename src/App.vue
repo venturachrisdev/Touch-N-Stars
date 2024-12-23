@@ -33,6 +33,10 @@
       <div class="container mx-auto p-4 transition-all">
         <router-view />
       </div>
+      <!-- Footer -->
+      <div>
+        <LastMessage class="fixed bottom-0 w-full" />
+      </div>
     </div>
   </div>
 </template>
@@ -42,6 +46,7 @@ import { onMounted, onBeforeUnmount } from 'vue';
 import { apiStore } from '@/store/store';
 import { useHead } from '@vueuse/head';
 import NavigationComp from './components/NavigationComp.vue';
+import LastMessage from './components/LastMessage.vue';
 
 useHead({
   title: "TouchNStars",
