@@ -97,7 +97,7 @@
         <div class="flex w-full landscape:w-4/7">
           <div ref="imageContainer"
             class="image-container overflow-hidden min-h-[65vh] min-w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700">
-            <img v-if="imageData" ref="image" :src="imageData" alt="Aufgenommenes Bild" class="block" />
+            <img v-if="store.imageData" ref="image" :src="store.imageData" alt="Aufgenommenes Bild" class="block" />
 
           </div>
         </div>
