@@ -17,6 +17,8 @@ export const apiStore = defineStore("store", {
 
     showAfGraph: true,
     imageData: null,
+    isLoadingImage: false,
+    captuerRunning: false,
 
 
   }),
