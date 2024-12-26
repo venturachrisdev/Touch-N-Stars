@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = "http://192.168.2.128:5000/v2/api";
-const API_URL = "http://192.168.2.128:5000/api/";
-const TARGETPIC_URL = "http://192.168.2.128:5000/api/targetpic";
+const BASE_URL = "http://localhost:5000/v2/api";
+const API_URL = "http://localhost:5000/api/";
+const TARGETPIC_URL = "http://localhost:5000/api/targetpic";
 
 const apiService = {
   // Backend reachability check
