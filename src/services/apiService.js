@@ -1,8 +1,13 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/v2/api";
-const API_URL = "http://localhost:5000/api/";
-const TARGETPIC_URL = "http://localhost:5000/api/targetpic";
+const backendProtokol = "http";
+const backendPort = 5000;
+
+const BASE_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}/v2/api`;
+const API_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}/api/`;
+const TARGETPIC_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}/api/targetpic"`;
+
+
 
 const apiService = {
   // Backend reachability check
