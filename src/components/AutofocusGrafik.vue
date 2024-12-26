@@ -252,5 +252,5 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Keine spezifischen Stile benötigt, da Tailwind verwendet wird */
+
 </style>

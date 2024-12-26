@@ -47,7 +47,7 @@
         </div>
         <div v-show="store.showAfGraph" class="mt-6">
         <!--Spinner-->
-        <div v-if="store.focuserAfInfo.autofocus_running" role="status"
+        <div v-if="store.focuserAfInfo.autofocus_running || !delayShowGraph" role="status"
           class="flex flex-col items-center h-screen mt-4 text-center">
           <p>Autofokus läuft</p>
           <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -61,7 +61,7 @@
           </svg>
           <span class="sr-only">Loading...</span>
         </div>
-        <div v-if="!store.focuserAfInfo.afError"> 
+        <div v-if="!store.focuserAfInfo.afError "> 
           <p class="mb-4 text-center">Letzter Autofokus</p>
           <AutofocusGrafik class="flex-grow"/>
         </div>
@@ -77,7 +77,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import apiService from "@/services/apiService";
 import infoFocuser from '../components/infoFocuser.vue';
 import AutofocusGrafik from '@/components/AutofocusGrafik.vue';
@@ -86,6 +86,7 @@ import { apiStore } from '@/store/store';
 const store = apiStore();
 const position = ref(0);
 const loading = ref(false);
+const delayShowGraph = ref(true);
 
 async function moveFocuser() {
   try {
@@ -119,6 +120,20 @@ onMounted(
     position.value = store.focuserInfo.Position || 0;
   },
 );
+
+watch(() => store.focuserAfInfo.autofocus_running, (newVal, oldVal) => {
+  console.log("Autofokus Running geändert:", oldVal, "->", newVal);
+  if (!newVal) {
+    delayShowGraph.value = false;
+    console.log("Delay Show Graph start");
+    setTimeout(() => {
+      delayShowGraph.value = true;
+      console.log("Delay Show Graph done");
+    }, 3000);
+  } else {
+    console.log("Watcher Autofocus Running");
+  }
+});
 
 </script>
 

@@ -12,7 +12,7 @@
 const props = defineProps({
   isEnabled: {
     type: Boolean,
-    required: true,
+    default: true,
   },
   enabledText: {
     type: String,

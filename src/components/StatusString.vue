@@ -11,7 +11,7 @@
 const props = defineProps({
   isEnabled: {
     type: Boolean,
-    required: true,
+    default: true,
   },
   Name: {
     type: String,
