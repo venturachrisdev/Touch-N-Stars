@@ -81,6 +81,7 @@
       </router-link>
 
       <router-link
+      v-show="false"
         to="/misc"
         class="nav-button"
         active-class="active-nav-button"
