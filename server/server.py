@@ -196,7 +196,6 @@ def get_recent_logs():
 
     excluded_members = ["GetEquipment", "RequestAll", "LoadPlugin"]
 
-    print(LOG_PATH)
     try:
         # Anzahl der Logmeldungen aus dem Query-Parameter lesen, Standard: 5
         count = request.args.get('count', default=5, type=int)
@@ -478,9 +477,6 @@ def add_cors_headers(response):
 
 if __name__ == '__main__':
     threading.Thread(target=fetch_and_store_data, daemon=True).start()
-    print("Starte monitor_last_af")
     threading.Thread(target=monitor_last_af, daemon=True).start()
-    print("monitor_last_af gestartet")
     threading.Thread(target=monitor_logs_for_autofocus, daemon=True).start()
-    print("monitor_logs_for_autofocus gestartet")
     app.run(host='0.0.0.0', port=5000)
