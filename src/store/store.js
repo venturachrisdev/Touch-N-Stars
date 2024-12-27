@@ -15,7 +15,8 @@ export const apiStore = defineStore("store", {
     RADistanceRaw: [],
     DECDistanceRaw: [],
     isBackendReachable: false,
-
+    filterName: "unbekannt",
+    filterNr: null,
     showAfGraph: true,
     imageData: null,
     isLoadingImage: false,
