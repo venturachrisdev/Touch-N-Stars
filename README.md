@@ -11,7 +11,12 @@ Die Anwendung soll die Steuerung und Anpassung bereits konfigurierter Profile er
 - Es wird das Plugin **Advanced API** in der Version 2.1.0.0 oder neuer benötigt.
   Der Port der API muss auf 1888 eingestellt sein und die V2 muss aktiv sein.
 - Für das Three Point Polar Alignment wird die Version 2.2.2.0 oder neuer benötigt.
-- Sie ist als Ergänzung zur Desktop-Software gedacht und bietet mobile Unterstützung für die grundlegenden Funktionen.  
+- Sie ist als Ergänzung zur Desktop-Software gedacht und bietet mobile Unterstützung für die grundlegenden Funktionen.
+  
+### 🔧 **Installieren**
+- Die Zip-Datei muss auf dem Rechner, auf dem NINA installiert ist, entpackt werden und TouchNStars.exe gestartet werden.
+- Wahrscheinlich muss die Windowsfirewall für die Anwendung freigegeben werden.
+- Anschließend ist Touch'N'Stars über http://"IP-von-NINA-PC":5000 erreichbar.
 
 ### 🧪 **Was bietet die Alpha-Version?**  
 - **Mobile Bedienbarkeit**: Greife einfach über dein Smartphone oder Tablet auf NINA zu.  
@@ -19,8 +24,13 @@ Die Anwendung soll die Steuerung und Anpassung bereits konfigurierter Profile er
 - **Fokus auf Praktikabilität**: Unterstützung für die wesentlichen Schritte bei der Einrichtung deiner Ausrüstung.  
 
 ### 🚧 **Geplante Funktionen**  
-In zukünftigen Versionen sind zusätzliche Features geplant.  
+- Integration des Filterrades
+- Kamera Aufwärmen und Tauheizung aktivieren
+- Planetensuche zum Schwenken auf den Planeten
+- Starten / Stoppen der Sequenz
+- Übersicht der laufenden Sequenz
+- ...
 
 ### 💙 **Dank**  
-Ein besonderer Dank gilt dem gesamten Entwicklerteam von **NINA**, deren großartige Arbeit diese WebApp erst möglich macht.  
+Mein Dank gilt dem gesamten Entwicklerteam von **NINA**, deren großartige Arbeit diese WebApp erst möglich macht.  
 Ein besonderes Dankeschön an **Christian**, den Entwickler der **Advanced API**, für seine Bemühungen und Unterstützung. Seine Arbeit hat die Entwicklung dieser WebApp maßgeblich ermöglicht.  
