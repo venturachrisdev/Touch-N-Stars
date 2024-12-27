@@ -2,8 +2,12 @@
     <div class="">
 
         <!-- Kamera-Steuerung -->
-        <ConnectionButton :isConnected="store.cameraInfo.Connected" connectText="Kamera verbinden" disconnectText="Kamera trennen"
-            :onToggle="toggleCameraConnection" />
+        <ConnectionButton :isConnected="store.cameraInfo.Connected" connectText="Kamera verbinden"
+            disconnectText="Kamera trennen" :onToggle="toggleCameraConnection" />
+
+        <!-- Filter-Steuerung -->
+        <ConnectionButton :isConnected="store.filterInfo.Connected" connectText="Filterrad verbinden"
+            disconnectText="Filterrad trennen" :onToggle="toggleFilterConnection" />
 
         <!-- Montierungs-Steuerung -->
         <ConnectionButton :isConnected="store.mountInfo.Connected" connectText="Montierung verbinden"
@@ -14,8 +18,8 @@
             disconnectText="Fokusierer trennen" :onToggle="toggleFocuserConnection" />
 
         <!-- Guider-Steuerung -->
-        <ConnectionButton :isConnected="store.guiderInfo.Connected" connectText="Guider verbinden" disconnectText="Guider trennen"
-            :onToggle="toggleGuiderConnection" />
+        <ConnectionButton :isConnected="store.guiderInfo.Connected" connectText="Guider verbinden"
+            disconnectText="Guider trennen" :onToggle="toggleGuiderConnection" />
 
     </div>
 </template>
@@ -47,7 +51,19 @@ async function toggleMountConnection() {
             await apiService.mountAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Kamera-Steuerung:", error.response?.data || error);
+        console.error("Fehler bei der Mount-Steuerung:", error.response?.data || error);
+    }
+}
+
+async function toggleFilterConnection() {
+    try {
+        if (store.filterInfo.Connected) {
+            await apiService.filterAction("disconnect");
+        } else {
+            await apiService.filterAction("connect");
+        }
+    } catch (error) {
+        console.error("Fehler bei der Filter-Steuerung:", error.response?.data || error);
     }
 }
 
