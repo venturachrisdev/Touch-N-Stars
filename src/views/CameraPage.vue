@@ -30,6 +30,7 @@
         <div class="flex-grow h-[1px] bg-gray-700"></div>
       </div>
       <settingsCamera class="grid grid-cols-2 landscape:grid-cols-3 mb-3 text-left" />
+      <changeFilter v-if="store.filterInfo.Connected" class="grid grid-cols-2 landscape:grid-cols-3 mb-3 text-left" />
     </div>
 
     <!-- Hauptbereich, wenn Kamera verbunden -->
@@ -201,6 +202,7 @@ import { useCameraStore } from '@/store/cameraStore'
 import apiService from '@/services/apiService'
 import infoCamera from '@/components/infoCamera.vue'
 import settingsCamera from '@/components/settingsCamera.vue'
+import changeFilter from '@/components/changeFilter.vue'
 
 // Initialisiere Stores
 const store = apiStore()

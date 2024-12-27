@@ -67,7 +67,7 @@ export const apiStore = defineStore("store", {
           // Montierung
           if (filterResponse.Success) {
             this.filterInfo = filterResponse.Response;
-            console.log("Filter Info:", this.filterInfo);
+            //console.log("Filter Info:", this.filterInfo);
           } else {
             this.isConnected = false;
             console.error("Fehler in der Filter-API-Antwort:", filterResponse.Error);
