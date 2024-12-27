@@ -3,7 +3,7 @@
 ### 🚀 **Aktueller Status: Alpha-Version**  
 Diese WebApp befindet sich in der **Entwicklungsphase** und richtet sich an Astro-Enthusiasten, die ihre Ausrüstung mit der Astrosoftware **NINA** (Nighttime Imaging 'N' Astronomy) bequem per Touchgerät einrichten möchten.  
 
-### 🛠 **Ziel der WebApp**  
+### 🏁 **Ziel der WebApp**  
 Die Anwendung soll die Steuerung und Anpassung bereits konfigurierter Profile erleichtern – direkt über ein Tablet oder Smartphone. Damit wird die Handhabung mobiler und komfortabler, besonders beim Aufbau der Ausrüstung und dem Start der Aufnahme.  
 
 ### 🧩 **Wichtige Hinweise**  
