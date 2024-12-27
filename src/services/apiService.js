@@ -5,7 +5,7 @@ const backendPort = 5000;
 
 const BASE_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}/v2/api`;
 const API_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}/api/`;
-const TARGETPIC_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}/api/targetpic"`;
+const TARGETPIC_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}/api/targetpic`;
 
 
 
