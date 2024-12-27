@@ -147,7 +147,7 @@ async function fetchLastAf() {
 
 onMounted(() => {
   const ctx = chartCanvas.value.getContext("2d");
-
+  console.log("Grafik laden");
   // Initialer Chart 
   chartInstance = new Chart(ctx, {
     type: "line",

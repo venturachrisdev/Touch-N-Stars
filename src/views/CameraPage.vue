@@ -217,22 +217,27 @@ let panzoomInstance = null
 watch(
   () => cameraStore.imageData,
   async (newValue) => {
-    if (newValue) {
-      await nextTick()
-      if (image.value) {
-        if (panzoomInstance) {
-          panzoomInstance.dispose()
-        }
-        panzoomInstance = Panzoom(image.value, {
-          maxZoom: 30,
-          minZoom: 0.9,
-          bounds: true,
-          boundsPadding: 0.1,
-          contain: 'inside',
-          origin: 'center',
-        })
-      }
+    if (!newValue) return
+    await nextTick()
+    if (!image.value) return
+
+    // Panzoom-Instanz immer erst aufräumen
+    if (panzoomInstance) {
+      panzoomInstance.dispose()
     }
+
+    // Und dann neu initialisieren
+    panzoomInstance = Panzoom(image.value, {
+      maxZoom: 30,
+      minZoom: 0.9,
+      bounds: true,
+      boundsPadding: 0.1,
+      contain: 'inside',
+      origin: 'center',
+    })
+  },
+  {
+    immediate: true
   }
 )
 </script>
