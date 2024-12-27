@@ -85,13 +85,13 @@ const apiService = {
   },
 
   // Start capture
-  async startCapture(duration,gain) {
+  async startCapture(duration, gain) {
     try {
       const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
-        params: { 
-          duration : duration,
-          gain : gain
-          },
+        params: {
+          duration: duration,
+          gain: gain
+        },
       });
       return response.data;
     } catch (error) {
@@ -149,6 +149,24 @@ const apiService = {
     }
   },
 
+  //-------------------------------------  Filterwheel ---------------------------------------
+  // Focuser actions
+  focusAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/filterwheel/${action}`);
+  },
+
+  // Change Filter 
+  async changeFilter(filterNr) {
+    try {
+      const response = await axios.get(`${BASE_URL}/equipment/filterwheel/change-filter`, {
+        params: { filterId: filterNr },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error changing filter:", error);
+      throw error;
+    }
+  },
 
   //-------------------------------------  focuser ---------------------------------------
   // Focuser actions
@@ -248,7 +266,7 @@ const apiService = {
   },
 
   //-------------------------------------  Logs ---------------------------------------
-  async getLastLogs(count,level) {
+  async getLastLogs(count, level) {
     try {
       const response = await axios.get(`${API_URL}logs`, {
         params: { count, level },
