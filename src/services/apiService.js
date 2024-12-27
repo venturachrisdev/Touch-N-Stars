@@ -151,7 +151,7 @@ const apiService = {
 
   //-------------------------------------  Filterwheel ---------------------------------------
   // Focuser actions
-  focusAction(action) {
+  filterAction(action) {
     return this._simpleGetRequest(`${BASE_URL}/equipment/filterwheel/${action}`);
   },
 
