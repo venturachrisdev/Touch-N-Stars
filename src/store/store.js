@@ -5,8 +5,9 @@ export const apiStore = defineStore("store", {
   state: () => ({
     intervalId: null,
     intervalIdGraph: null,
-    cameraInfo: { IsExposing: false }, 
+    cameraInfo: { IsExposing: false },
     mountInfo: [],
+    filterInfo: [],
     focuserInfo: [],
     focuserAfInfo: [],
     guiderInfo: [],
@@ -34,9 +35,10 @@ export const apiStore = defineStore("store", {
       }
       if (this.isBackendReachable) {
         try {
-          const [cameraResponse, mountResponse, focuserResponse, focuserAfResponse, guiderResponse, GuiderChartResponse, LogsResponse] = await Promise.all([
+          const [cameraResponse, mountResponse, filterResponse, focuserResponse, focuserAfResponse, guiderResponse, GuiderChartResponse, LogsResponse] = await Promise.all([
             apiService.cameraAction("info"),
             apiService.mountAction("info"),
+            apiService.filterAction("info"),
             apiService.focusAction("info"),
             apiService.focuserAfAction("info"),
             apiService.guiderAction("info"),
@@ -61,6 +63,15 @@ export const apiStore = defineStore("store", {
             console.error("Fehler in der Mount-API-Antwort:", mountResponse.Error);
           }
 
+          // Montierung
+          if (filterResponse.Success) {
+            this.filterInfo = filterResponse.Response;
+            console.log("Filter Info:", this.filterInfo);
+          } else {
+            this.isConnected = false;
+            console.error("Fehler in der Filter-API-Antwort:", filterResponse.Error);
+          }
+
           // Fokussierer
           if (focuserResponse.Success) {
             this.focuserInfo = focuserResponse.Response;
@@ -73,7 +84,7 @@ export const apiStore = defineStore("store", {
           // Autofukus
           if (focuserAfResponse.Success) {
             this.focuserAfInfo = focuserAfResponse;
-           // console.log("AF-Focuser Info:", this.focuserAfInfo);
+            // console.log("AF-Focuser Info:", this.focuserAfInfo);
           } else {
             this.isConnected = false;
             console.error("Fehler in der Focuser-API-Antwort:", focuserAfResponse.Error);
@@ -136,8 +147,8 @@ export const apiStore = defineStore("store", {
         this.intervalId = null;
       }
     },
- 
+
   }
-  
+
 });
 
