@@ -20,6 +20,7 @@
               class="min-w-15 min-h-10 bg-cyan-900 rounded-md text-white font-medium transition-colors w-full">
         Siderial
       </button>
+      <!-- aktuell deaktiviert da NINA nur Siderial umsetzt
       <button @click="setTrackingMode(1)"
               class="min-w-15 min-h-10 bg-cyan-900 rounded-md text-white font-medium transition-colors w-full">
         Lunar
@@ -32,6 +33,7 @@
               class="min-w-15 min-h-10 bg-cyan-900 rounded-md text-white font-medium transition-colors w-full">
         King
       </button>
+       -->
       <button @click="setTrackingMode(4)"
               class="min-w-15 min-h-10 bg-red-800 rounded-md text-white font-medium transition-colors w-full">
         Stopp

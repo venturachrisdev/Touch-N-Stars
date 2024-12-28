@@ -7,16 +7,13 @@
     <StatusString :isEnabled="store.cameraInfo.Name" Name="Name:" :Value="store.cameraInfo.Name" />
     <StatusString :isEnabled="true" Name="Gain:" :Value="store.cameraInfo.Gain" />
     <StatusString :isEnabled="store.cameraInfo.Offset" Name="Offset:" :Value="store.cameraInfo.Offset" />
-    <StatusString :isEnabled="store.cameraInfo.XSize" Name="X-Size:" :Value="store.cameraInfo.XSize" />
-    <StatusString :isEnabled="store.cameraInfo.YSize" Name="Y-Size:" :Value="store.cameraInfo.YSize" />
-    <StatusString :isEnabled="store.cameraInfo.PixelSize" Name="Pixel-Size:" :Value="store.cameraInfo.PixelSize" />
     <StatusString :isEnabled="store.cameraInfo.CanSetTemperature" Name="Aktuelle Temperatur:"
       :Value="store.cameraInfo.Temperature" />
     <StatusBool class="col-start-1" :isEnabled="store.cameraInfo.IsExposing" enabledText="Aufnahme läuft"
       disabledText="Kamera standby" />
     <StatusBool v-if="store.cameraInfo.CanSetTemperature" :isEnabled="store.cameraInfo.CoolerOn"
       enabledText="Kühler aktiv" disabledText="Kühler aus" />
-    <StatusBool v-if="store.cameraInfo.CanSetTemperature" :isEnabled="store.cameraInfo.DewHeaterOn"
+    <StatusBool v-if="store.cameraInfo.HasDewHeater" :isEnabled="store.cameraInfo.DewHeaterOn"
       enabledText="Tauheizung aktiv" disabledText="Tauheizung aus" />
   </div>
   <div v-else-if="showOnlyExposing" class="gap-2">

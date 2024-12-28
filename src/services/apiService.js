@@ -149,6 +149,19 @@ const apiService = {
     }
   },
 
+    //  Start Stopp Tauheizung 
+    async startStoppDewheater (power) { // power muss true oder false sein
+      try {
+        const response = await axios.get(`${BASE_URL}/equipment/camera/dew-heater`, {
+          params: { power: power },
+        });
+        return response.data;
+      } catch (error) {
+        console.error("Error retrieving capture result:", error);
+        throw error;
+      }
+    },
+
   //-------------------------------------  Filterwheel ---------------------------------------
   // Focuser actions
   filterAction(action) {
