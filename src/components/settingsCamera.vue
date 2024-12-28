@@ -23,7 +23,7 @@
                     placeholder="1" />
             </div>
         </div>
-        <div v-if="store.cameraInfo.CanSetTemperature && false">
+        <div v-if="store.cameraInfo.CanSetTemperature">
             <div class="flex flex-col min-w-44 border border-gray-500 p-1 pb-2 rounded-lg">
                 <label for="TemperatureSetPoint" class="text-xs mb-1 text-gray-400">Kühler </label>
                 <div class="flex space-x-2">

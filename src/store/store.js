@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia';
 import apiService from '@/services/apiService';
 
-export const apiStore = defineStore("store", {
+export const apiStore = defineStore('store', {
   state: () => ({
     intervalId: null,
     intervalIdGraph: null,
+    profileInfo: [],
     cameraInfo: { IsExposing: false },
     mountInfo: [],
     filterInfo: [],
@@ -15,133 +16,134 @@ export const apiStore = defineStore("store", {
     RADistanceRaw: [],
     DECDistanceRaw: [],
     isBackendReachable: false,
-    filterName: "unbekannt",
+    filterName: 'unbekannt',
     filterNr: null,
     showAfGraph: true,
     imageData: null,
     isLoadingImage: false,
-    captuerRunning: false,
-
-
+    captureRunning: false,
   }),
+
   actions: {
     async fetchAllInfos() {
       try {
         this.isBackendReachable = await apiService.isBackendReachable();
+
         if (!this.isBackendReachable) {
-          console.log("Backend ist nicht erreichbar")
+          console.warn('Backend ist nicht erreichbar');
+          return;
         }
+
+        const [
+          cameraResponse,
+          mountResponse,
+          filterResponse,
+          focuserResponse,
+          focuserAfResponse,
+          guiderResponse,
+          guiderChartResponse,
+          logsResponse,
+        ] = await Promise.all([
+          apiService.cameraAction('info'),
+          apiService.mountAction('info'),
+          apiService.filterAction('info'),
+          apiService.focusAction('info'),
+          apiService.focuserAfAction('info'),
+          apiService.guiderAction('info'),
+          apiService.fetchGuiderChartData(),
+          apiService.getLastLogs('10'),
+        ]);
+
+        this.handleApiResponses({
+          cameraResponse,
+          mountResponse,
+          filterResponse,
+          focuserResponse,
+          focuserAfResponse,
+          guiderResponse,
+          guiderChartResponse,
+          logsResponse,
+        });
       } catch (error) {
-        console.error("Fehler beim Abrufen der Informationen:", error);
+        console.error('Fehler beim Abrufen der Informationen:', error);
       }
-      if (this.isBackendReachable) {
-        try {
-          const [cameraResponse, mountResponse, filterResponse, focuserResponse, focuserAfResponse, guiderResponse, GuiderChartResponse, LogsResponse] = await Promise.all([
-            apiService.cameraAction("info"),
-            apiService.mountAction("info"),
-            apiService.filterAction("info"),
-            apiService.focusAction("info"),
-            apiService.focuserAfAction("info"),
-            apiService.guiderAction("info"),
-            apiService.fetchGuiderChartData(),
-            apiService.getLastLogs("10"),
-          ]);
+    },
 
-          // Kamera
-          if (cameraResponse.Success) {
-            this.cameraInfo = cameraResponse.Response;
-          } else {
-            this.isConnected = false;
-            console.error("Fehler in der Kamera-API-Antwort:", cameraResponse.Error);
-          }
-
-          // Montierung
-          if (mountResponse.Success) {
-            this.mountInfo = mountResponse.Response;
-            //console.log("Mount Info:", this.mountInfo);
-          } else {
-            this.isConnected = false;
-            console.error("Fehler in der Mount-API-Antwort:", mountResponse.Error);
-          }
-
-          // Montierung
-          if (filterResponse.Success) {
-            this.filterInfo = filterResponse.Response;
-            //console.log("Filter Info:", this.filterInfo);
-          } else {
-            this.isConnected = false;
-            console.error("Fehler in der Filter-API-Antwort:", filterResponse.Error);
-          }
-
-          // Fokussierer
-          if (focuserResponse.Success) {
-            this.focuserInfo = focuserResponse.Response;
-            //console.log("Focuser Info:", this.focuserInfo);
-          } else {
-            this.isConnected = false;
-            console.error("Fehler in der Focuser-API-Antwort:", focuserResponse.Error);
-          }
-
-          // Autofukus
-          if (focuserAfResponse.Success) {
-            this.focuserAfInfo = focuserAfResponse;
-            // console.log("AF-Focuser Info:", this.focuserAfInfo);
-          } else {
-            this.isConnected = false;
-            console.error("Fehler in der Focuser-API-Antwort:", focuserAfResponse.Error);
-          }
-
-          // Logs
-          if (LogsResponse) {
-            this.LogsInfo = LogsResponse;
-            //console.log("Logs Info:", this.LogsInfo);
-          } else {
-            this.isConnected = false;
-            console.error("Fehler in der Logs-API-Antwort:", LogsResponse.Error);
-          }
-
-          // Guider
-          if (guiderResponse.Success) {
-            this.guiderInfo = guiderResponse.Response;
-            //console.log("Guider Info:", this.guiderInfo);
-          } else {
-            this.isConnected = false;
-            console.error("Fehler in der Guider-API-Antwort:", guiderResponse.Error);
-          }
-
-          if (GuiderChartResponse.success) {
-            if (GuiderChartResponse.success) {
-              const data = GuiderChartResponse.data;
-
-              if (
-                !Array.isArray(data.RADistanceRaw) ||
-                !Array.isArray(data.DECDistanceRaw)
-              ) {
-                console.error("Ungültige Datenstruktur:", data);
-                return;
-              }
-              const sanitizedRA = data.RADistanceRaw.map((value) =>
-                typeof value === "number" ? value : 0
-              );
-              const sanitizedDec = data.DECDistanceRaw.map((value) =>
-                typeof value === "number" ? value : 0
-              );
-
-              this.RADistanceRaw = sanitizedRA;
-              this.DECDistanceRaw = sanitizedDec;
-
-            }
-          }
-
-        } catch (error) {
-          console.error("Fehler beim Abrufen der Informationen:", error);
-        }
+    handleApiResponses({
+      cameraResponse,
+      mountResponse,
+      filterResponse,
+      focuserResponse,
+      focuserAfResponse,
+      guiderResponse,
+      guiderChartResponse,
+      logsResponse,
+    }) {
+      if (cameraResponse.Success) {
+        this.cameraInfo = cameraResponse.Response;
+      } else {
+        console.error('Fehler in der Kamera-API-Antwort:', cameraResponse.Error);
       }
+
+      if (mountResponse.Success) {
+        this.mountInfo = mountResponse.Response;
+      } else {
+        console.error('Fehler in der Mount-API-Antwort:', mountResponse.Error);
+      }
+
+      if (filterResponse.Success) {
+        this.filterInfo = filterResponse.Response;
+      } else {
+        console.error('Fehler in der Filter-API-Antwort:', filterResponse.Error);
+      }
+
+      if (focuserResponse.Success) {
+        this.focuserInfo = focuserResponse.Response;
+      } else {
+        console.error('Fehler in der Focuser-API-Antwort:', focuserResponse.Error);
+      }
+
+      if (focuserAfResponse.Success) {
+        this.focuserAfInfo = focuserAfResponse;
+      } else {
+        console.error('Fehler in der Focuser-AF-API-Antwort:', focuserAfResponse.Error);
+      }
+
+      if (logsResponse) {
+        this.LogsInfo = logsResponse;
+      } else {
+        console.error('Fehler in der Logs-API-Antwort:', logsResponse.Error);
+      }
+
+      if (guiderResponse.Success) {
+        this.guiderInfo = guiderResponse.Response;
+      } else {
+        console.error('Fehler in der Guider-API-Antwort:', guiderResponse.Error);
+      }
+
+      if (guiderChartResponse.success) {
+        this.processGuiderChartData(guiderChartResponse.data);
+      } else {
+        console.error('Fehler in der Guider-Chart-API-Antwort:', guiderChartResponse);
+      }
+    },
+
+    processGuiderChartData(data) {
+      if (!Array.isArray(data.RADistanceRaw) || !Array.isArray(data.DECDistanceRaw)) {
+        console.error('Ungültige Datenstruktur:', data);
+        return;
+      }
+
+      this.RADistanceRaw = data.RADistanceRaw.map(value => (typeof value === 'number' ? value : 0));
+      this.DECDistanceRaw = data.DECDistanceRaw.map(value => (typeof value === 'number' ? value : 0));
     },
 
     startFetchingInfo() {
-      this.intervalId = setInterval(this.fetchAllInfos, 1000);
+      if (!this.intervalId) {
+        this.intervalId = setInterval(this.fetchAllInfos, 1000);
+      }
     },
+
     stopFetchingInfo() {
       if (this.intervalId) {
         clearInterval(this.intervalId);
@@ -149,7 +151,24 @@ export const apiStore = defineStore("store", {
       }
     },
 
-  }
+    async fetchProfilInfos() {
+      try {
+        if (!this.isBackendReachable) {
+          console.warn('Backend ist nicht erreichbar');
+          return;
+        }
 
+        const profileInfoResponse = await apiService.profileAction("show?active=true");
+
+        if (profileInfoResponse && profileInfoResponse.Response) {
+          this.profileInfo = profileInfoResponse.Response;
+          console.log('Profilinformationen abgerufen:', this.profileInfo);
+        } else {
+          console.error('Fehler in der Profil-API-Antwort:', profileInfoResponse?.Error);
+        }
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Profilinformationen:', error);
+      }
+    },
+  },
 });
-
