@@ -47,7 +47,6 @@ function parseQuadraticFormula(formula) {
   return null;
 }
 
-
 // Funktion zum Parsen der Hyperbolischen Fitting-Formel
 function parseHyperbolicFormula(formula) {
   console.log("Hyperbolic Fitting Formel:", formula); // Debugging
@@ -64,12 +63,10 @@ function parseHyperbolicFormula(formula) {
   return null;
 }
 
-
 // Daten von der API abrufen und Chart aktualisieren
 async function fetchLastAf() {
   try {
     const response = await apiService.focusAction("last-af");
-
     const apiData = response.Response;
     const measurePoints = apiData.MeasurePoints || [];
 
@@ -77,66 +74,72 @@ async function fetchLastAf() {
     const positions = measurePoints.map((point) => point.Position);
     const values = measurePoints.map((point) => parseFloat(point.Value.toFixed(2)));
 
-    //console.log("Positions:", positions);
-    //console.log("Values:", values);
-
-    // `hyperbolicMinimum` und `quadraticMinimum` aus Intersections
+    // Minima aus Intersections
     const hyperbolicMinimum = {
       position: apiData.Intersections?.HyperbolicMinimum?.Position,
       value: apiData.Intersections?.HyperbolicMinimum?.Value,
     };
-
     const quadraticMinimum = {
       position: apiData.Intersections?.QuadraticMinimum?.Position,
       value: apiData.Intersections?.QuadraticMinimum?.Value,
     };
 
-    //console.log("Hyperbolic Minimum:", hyperbolicMinimum);
-    //console.log("Quadratic Minimum:", quadraticMinimum);
-
-    // `Timestamp` aus API speichern
+    // Timestamp aus API speichern
     timestamp.value = apiData.Timestamp;
 
     // Fittings aus API extrahieren
-    const fittings = apiData.Fittings;
+    const fittings = apiData.Fittings || {};
 
-    // Quadratische Fitting-Parameter parsen
-    const quadraticParams = parseQuadraticFormula(fittings.Quadratic);
-    if (!quadraticParams) {
-      throw new Error("Quadratic Fitting-Formel konnte nicht geparst werden.");
+    // Quadratisch parsen
+    let quadraticTrendline = [];
+    if (fittings.Quadratic) {
+      const quadraticParams = parseQuadraticFormula(fittings.Quadratic);
+      if (!quadraticParams) {
+        console.warn("Quadratic Fitting-Formel konnte nicht geparst werden.");
+      } else {
+        // Falls parse erfolgreich, Trendline berechnen
+        const quadraticFunction = (x) =>
+          quadraticParams.a * Math.pow(x, 2) + quadraticParams.b * x + quadraticParams.c;
+        quadraticTrendline = positions.map((x) => quadraticFunction(x));
+      }
+    } else {
+      console.warn("Keine Quadratic-Formel vorhanden. (fittings.Quadratic leer)");
     }
 
-    // Hyperbolische Fitting-Parameter parsen
-    const hyperbolicParams = parseHyperbolicFormula(fittings.Hyperbolic);
-    if (!hyperbolicParams) {
-      throw new Error("Hyperbolic Fitting-Formel konnte nicht geparst werden.");
+    // Hyperbolisch parsen
+    let hyperbolicTrendline = [];
+    if (fittings.Hyperbolic) {
+      const hyperbolicParams = parseHyperbolicFormula(fittings.Hyperbolic);
+      if (!hyperbolicParams) {
+        console.warn("Hyperbolic Fitting-Formel konnte nicht geparst werden.");
+      } else {
+        // Falls parse erfolgreich, Trendline berechnen
+        const hyperbolicFunction = (x) =>
+          hyperbolicParams.A *
+          Math.cosh(Math.asinh((hyperbolicParams.B - x) / hyperbolicParams.C));
+        hyperbolicTrendline = positions.map((x) => hyperbolicFunction(x));
+      }
+    } else {
+      console.warn("Keine Hyperbolic-Formel vorhanden. (fittings.Hyperbolic leer)");
     }
 
-    // Funktionen basierend auf den geparsten Parametern definieren
-    const quadraticFunction = (x) =>
-      quadraticParams.a * Math.pow(x, 2) + quadraticParams.b * x + quadraticParams.c;
-
-    const hyperbolicFunction = (x) =>
-      hyperbolicParams.A * Math.cosh(Math.asinh((hyperbolicParams.B - x) / hyperbolicParams.C));
-
-    // Berechne die y-Werte für die Trendlinien basierend auf den Positionen
-    const quadraticTrendline = positions.map((x) => quadraticFunction(x));
-    const hyperbolicTrendline = positions.map((x) => hyperbolicFunction(x));
-
-    // Aktualisiere Chart-Daten
+    // Chart aktualisieren, falls vorhanden
     if (chartInstance) {
       chartInstance.data.labels = positions;
+      // 0 = Measure Points
       chartInstance.data.datasets[0].data = values;
+      // 1 = Quadratic Trendline
       chartInstance.data.datasets[1].data = quadraticTrendline;
+      // 2 = Hyperbolic Trendline
       chartInstance.data.datasets[2].data = hyperbolicTrendline;
-
-      // Aktualisiere die Punkte für Minima
-      chartInstance.data.datasets[3].data = [
-        { x: quadraticMinimum.position, y: quadraticMinimum.value },
-      ];
-      chartInstance.data.datasets[4].data = [
-        { x: hyperbolicMinimum.position, y: hyperbolicMinimum.value },
-      ];
+      // 3 = Quadratic Min (nur setzen, falls es Werte gibt)
+      chartInstance.data.datasets[3].data = quadraticMinimum?.position !== undefined
+        ? [{ x: quadraticMinimum.position, y: quadraticMinimum.value }]
+        : [];
+      // 4 = Hyperbolic Min (nur setzen, falls es Werte gibt)
+      chartInstance.data.datasets[4].data = hyperbolicMinimum?.position !== undefined
+        ? [{ x: hyperbolicMinimum.position, y: hyperbolicMinimum.value }]
+        : [];
 
       chartInstance.update();
     }
@@ -148,6 +151,7 @@ async function fetchLastAf() {
 onMounted(() => {
   const ctx = chartCanvas.value.getContext("2d");
   console.log("Grafik laden");
+
   // Initialer Chart 
   chartInstance = new Chart(ctx, {
     type: "line",
@@ -251,6 +255,4 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

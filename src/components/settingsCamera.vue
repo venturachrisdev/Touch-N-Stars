@@ -56,7 +56,7 @@ function toggloCooling() {
         console.log("stopp")
     } else {
         startCooling();
-        console.log("startg")
+        console.log("start")
     }
 }
 
