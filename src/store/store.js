@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia';
 import apiService from '@/services/apiService';
 
-import { cameraStore } from '@/store/cameraStore';
+import { useCameraStore } from '@/store/cameraStore';
 
-const cStore = cameraStore();
 
 export const apiStore = defineStore('store', {
   state: () => ({
@@ -167,6 +166,7 @@ export const apiStore = defineStore('store', {
         if (profileInfoResponse && profileInfoResponse.Response) {
           this.profileInfo = profileInfoResponse.Response;
           console.log('Profilinformationen abgerufen:', this.profileInfo);
+          this.setDefaultCameraSettings();
         } else {
           console.error('Fehler in der Profil-API-Antwort:', profileInfoResponse?.Error);
         }
@@ -175,10 +175,12 @@ export const apiStore = defineStore('store', {
       }
     },
     setDefaultCameraSettings() {
+      const cStore = useCameraStore();
       cStore.coolingTemp = this.profileInfo?.CameraSettings.Temperature ?? -10;
       cStore.coolingTime = this.profileInfo?.CameraSettings.CoolingDuration ?? 10;
       cStore.warmingTime = this.profileInfo?.CameraSettings.WarmingDuration ?? 10;
       cStore.gain = this.profileInfo?.CameraSettings.Gain ?? 0;
+      console.log('Kameraeinstellungen gesetzt:', cStore.coolingTemp, cStore.coolingTime, cStore.warmingTime, cStore.gain); // eslint-disable-line
     },
   },
 });
