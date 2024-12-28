@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia';
 import apiService from '@/services/apiService';
 
+import { cameraStore } from '@/store/cameraStore';
+
+const cStore = cameraStore();
+
 export const apiStore = defineStore('store', {
   state: () => ({
     intervalId: null,
@@ -169,6 +173,12 @@ export const apiStore = defineStore('store', {
       } catch (error) {
         console.error('Fehler beim Abrufen der Profilinformationen:', error);
       }
+    },
+    setDefaultCameraSettings() {
+      cStore.coolingTemp = this.profileInfo?.CameraSettings.Temperature ?? -10;
+      cStore.coolingTime = this.profileInfo?.CameraSettings.CoolingDuration ?? 10;
+      cStore.warmingTime = this.profileInfo?.CameraSettings.WarmingDuration ?? 10;
+      cStore.gain = this.profileInfo?.CameraSettings.Gain ?? 0;
     },
   },
 });

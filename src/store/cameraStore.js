@@ -15,6 +15,9 @@ export const useCameraStore = defineStore('cameraStore', () => {
   const isAbort = ref(false)
   const showInfo = ref(false)
   const gain = ref(0)
+  const coolingTemp = ref(-10)
+  const coolingTime = ref(10)
+  const warmingTime = ref(10)
 
   let exposureCountdownTimer = null
 
@@ -158,6 +161,9 @@ export const useCameraStore = defineStore('cameraStore', () => {
     isAbort,
     showInfo,
     gain,
+    coolingTemp,
+    coolingTime,
+    warmingTime,
 
     // Actions
     capturePhoto,

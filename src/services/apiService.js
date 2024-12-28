@@ -113,10 +113,12 @@ const apiService = {
     }
   },
   // Set Temp / Start Cooling 
-  async startCooling(temp) {
+  async startCooling(temp, minutes) {
     try {
       const response = await axios.get(`${BASE_URL}/equipment/camera/cool`, {
-        params: { temperature: temp },
+        params: { temperature: temp,
+                  minutes: minutes
+         },
       });
       return response.data;
     } catch (error) {
@@ -137,10 +139,12 @@ const apiService = {
     }
   },
   //  Start Stopp Warming 
-  async startStoppWarming(cancel) { // cancel muss true oder false sein
+  async startStoppWarming(cancel, minutes) { // cancel muss true oder false sein
     try {
       const response = await axios.get(`${BASE_URL}/equipment/camera/warm`, {
-        params: { cancel: cancel },
+        params: { cancel: cancel,
+                  minutes: minutes
+         },
       });
       return response.data;
     } catch (error) {
