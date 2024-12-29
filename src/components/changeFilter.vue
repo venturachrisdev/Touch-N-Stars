@@ -19,6 +19,7 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
 import apiService from '@/services/apiService';
 import { apiStore } from '@/store/store'
 
@@ -35,4 +36,9 @@ async function changeFilter() {
         console.log("Fehler:", error);
     }
 }
+
+onMounted(async () => {
+    store.filterNr = store.filterInfo.SelectedFilter.Id;
+    store.filterInfo = store.filterInfo.SelectedFilter.Name;
+});
 </script>

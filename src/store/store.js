@@ -197,7 +197,6 @@ export const apiStore = defineStore('store', {
       console.log('Kameraeinstellungen gesetzt:', cStore.coolingTemp, cStore.coolingTime, cStore.warmingTime, cStore.gain); 
     },
     setDefaultRotatorSettings() {
-
       this.rotatorMechanicalPosition = this.rotatorInfo?.MechanicalPosition ?? 0;
       console.log('Rotatoreinstellung gesetzt:', this.rotatorMechanicalPosition); 
     },
