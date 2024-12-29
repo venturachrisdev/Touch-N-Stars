@@ -185,6 +185,38 @@ const apiService = {
     }
   },
 
+    //-------------------------------------  Rotator ---------------------------------------
+  // Focuser actions
+  rotatorAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/rotator/${action}`);
+  },
+
+  // Move Rotator 
+  async moveRotator(position) {
+    try {
+      const response = await axios.get(`${BASE_URL}/equipment/rotator/move`, {
+        params: { position: position },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error moving Rotator:", error);
+      throw error;
+    }
+  },
+
+    // Move Rotator mechanical 
+    async moveMechanicalRotator(position) {
+      try {
+        const response = await axios.get(`${BASE_URL}/equipment/rotator/move-mechanical`, {
+          params: { position: position },
+        });
+        return response.data;
+      } catch (error) {
+        console.error("Error moving mechanical Rotator:", error);
+        throw error;
+      }
+    },
+
   //-------------------------------------  focuser ---------------------------------------
   // Focuser actions
   focusAction(action) {
