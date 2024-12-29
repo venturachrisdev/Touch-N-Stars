@@ -102,6 +102,7 @@ export const apiStore = defineStore('store', {
 
       if (filterResponse.Success) {
         this.filterInfo = filterResponse.Response;
+        //console.log('Filterinformationen abgerufen:', this.filterInfo);
       } else {
         console.error('Fehler in der Filter-API-Antwort:', filterResponse.Error);
       }
@@ -155,7 +156,7 @@ export const apiStore = defineStore('store', {
 
     startFetchingInfo() {
       if (!this.intervalId) {
-        this.intervalId = setInterval(this.fetchAllInfos, 1000);
+        this.intervalId = setInterval(this.fetchAllInfos, 2000);
       }
     },
 
