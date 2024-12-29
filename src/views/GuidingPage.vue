@@ -37,7 +37,7 @@
 
 <script setup>
 import apiService from "@/services/apiService";
-import rmsGraph from '../components/GuiderGraph.vue';
+import rmsGraph from '@/components/guider/GuiderGraph.vue';
 import { apiStore } from '@/store/store';
 
 const store = apiStore();

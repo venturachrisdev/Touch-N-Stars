@@ -10,8 +10,8 @@
 
 <script setup>
 //import { computed } from 'vue';
-import StatusBool from '../components/StatusBool.vue';
-import StatusString from '../components/StatusString.vue';
+import StatusBool from '@/components/helpers/StatusBool.vue';
+import StatusString from '@/components/helpers/StatusString.vue';
 import { apiStore } from '@/store/store';
 const store = apiStore();
 

@@ -48,11 +48,11 @@
 
 <script setup>
 import { ref } from 'vue'
-import TppaPage from '../components/TppaPage.vue';
-import TargetSearch from '../components/TargetSearch.vue';
-import infoMount from '../components/infoMount.vue';
-import infoCamera from '../components/infoCamera.vue';
-import controlMount from '../components/controlMount.vue';
+import TppaPage from '@/components/tppa/TppaPage.vue';
+import TargetSearch from '@/components/framing/TargetSearch.vue';
+import infoMount from '@/components/mount/infoMount.vue';
+import infoCamera from '@/components/camera/infoCamera.vue';
+import controlMount from '@/components/mount/controlMount.vue';
 import { apiStore } from '@/store/store';
 
 const store = apiStore();

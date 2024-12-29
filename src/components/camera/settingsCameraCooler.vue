@@ -49,7 +49,7 @@
 import { apiStore } from '@/store/store';
 import { useCameraStore } from '@/store/cameraStore';
 import apiService from '@/services/apiService';
-import toggleButton from './toggleButton.vue';
+import toggleButton from '@/components/helpers/toggleButton.vue';
 
 const store = apiStore();
 const cameraStore = useCameraStore();

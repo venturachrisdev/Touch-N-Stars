@@ -54,8 +54,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import apiService from "@/services/apiService";
-import slewAndCenter from '../components/slewAndCenter.vue';
-import TargetPic from '../components/TargetPic.vue';
+import slewAndCenter from '@/components/framing/slewAndCenter.vue';
+import TargetPic from '@/components/framing/TargetPic.vue';
 
 const searchQuery = ref('');
 // suggestions wird als Array initialisiert

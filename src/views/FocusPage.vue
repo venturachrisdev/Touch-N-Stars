@@ -79,8 +79,8 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import apiService from "@/services/apiService";
-import infoFocuser from '../components/infoFocuser.vue';
-import AutofocusGrafik from '@/components/AutofocusGrafik.vue';
+import infoFocuser from '@/components/focuser/infoFocuser.vue';
+import AutofocusGrafik from '@/components/focuser/AutofocusGrafik.vue';
 import { apiStore } from '@/store/store';
 
 const store = apiStore();

@@ -148,11 +148,11 @@ import { useCameraStore } from '@/store/cameraStore'
 
 // Services & Components
 import apiService from '@/services/apiService'
-import infoCamera from '@/components/infoCamera.vue'
-import settingsCamera from '@/components/settingsCamera.vue'
-import settingsCameraCooler from '@/components/settingsCameraCooler.vue'
-import changeFilter from '@/components/changeFilter.vue'
-import controlRotator from '@/components/controlRotator.vue'
+import infoCamera from '@/components/camera/infoCamera.vue'
+import settingsCamera from '@/components/camera/settingsCamera.vue'
+import settingsCameraCooler from '@/components/camera/settingsCameraCooler.vue'
+import changeFilter from '@/components/filterwheel/changeFilter.vue'
+import controlRotator from '@/components/rotator/controlRotator.vue'
 
 // Initialisiere Stores
 const store = apiStore()

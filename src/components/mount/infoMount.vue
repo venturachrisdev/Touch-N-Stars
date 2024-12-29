@@ -10,7 +10,7 @@
   </template>
   
   <script setup>
-  import StatusBool from '../components/StatusBool.vue';
+  import StatusBool from '@/components/helpers/StatusBool.vue';
   import { apiStore } from '@/store/store';
 
   const store = apiStore();

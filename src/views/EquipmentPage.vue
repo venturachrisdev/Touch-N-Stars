@@ -10,7 +10,7 @@
 
 <script setup>
 
-import profilSelect from "@/components/profilSelect.vue";
+import profilSelect from "@/components/profil/profilSelect.vue";
 import connectEquipment from '@/components/connectEquipment.vue';
 import { apiStore } from '@/store/store';
 

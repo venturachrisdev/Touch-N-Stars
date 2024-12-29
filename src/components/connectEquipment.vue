@@ -31,7 +31,7 @@
 <script setup>
 import { apiStore } from '@/store/store';
 import apiService from "@/services/apiService";
-import ConnectionButton from "@/components/ConnectionButton.vue";
+import ConnectionButton from "@/components/helpers/ConnectionButton.vue";
 
 const store = apiStore();
 
