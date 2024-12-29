@@ -26,6 +26,7 @@ export const apiStore = defineStore('store', {
     imageData: null,
     isLoadingImage: false,
     captureRunning: false,
+    rotatorMechanicalPosition:0,
   }),
 
   actions: {
@@ -178,6 +179,7 @@ export const apiStore = defineStore('store', {
           this.profileInfo = profileInfoResponse.Response;
           console.log('Profilinformationen abgerufen:', this.profileInfo);
           this.setDefaultCameraSettings();
+          this.setDefaultRotatorSettings();
         } else {
           console.error('Fehler in der Profil-API-Antwort:', profileInfoResponse?.Error);
         }
@@ -192,6 +194,11 @@ export const apiStore = defineStore('store', {
       cStore.warmingTime = this.profileInfo?.CameraSettings.WarmingDuration ?? 10;
       cStore.gain = this.profileInfo?.CameraSettings.Gain ?? 0;
       console.log('Kameraeinstellungen gesetzt:', cStore.coolingTemp, cStore.coolingTime, cStore.warmingTime, cStore.gain); // eslint-disable-line
+    },
+    setDefaultRotatorSettings() {
+
+      this.rotatorMechanicalPosition = this.rotatorInfo?.MechanicalPosition ?? 0;
+      console.log('Rotatoreinstellung gesetzt:', this.rotatorMechanicalPosition); 
     },
   },
 });
