@@ -13,6 +13,7 @@ export const apiStore = defineStore('store', {
     mountInfo: [],
     filterInfo: [],
     focuserInfo: [],
+    rotatorInfo: [],
     focuserAfInfo: [],
     guiderInfo: [],
     LogsInfo: [],
@@ -41,6 +42,7 @@ export const apiStore = defineStore('store', {
           cameraResponse,
           mountResponse,
           filterResponse,
+          rotatorResponse,
           focuserResponse,
           focuserAfResponse,
           guiderResponse,
@@ -50,6 +52,7 @@ export const apiStore = defineStore('store', {
           apiService.cameraAction('info'),
           apiService.mountAction('info'),
           apiService.filterAction('info'),
+          apiService.rotatorAction('info'),
           apiService.focusAction('info'),
           apiService.focuserAfAction('info'),
           apiService.guiderAction('info'),
@@ -61,6 +64,7 @@ export const apiStore = defineStore('store', {
           cameraResponse,
           mountResponse,
           filterResponse,
+          rotatorResponse,
           focuserResponse,
           focuserAfResponse,
           guiderResponse,
@@ -76,6 +80,7 @@ export const apiStore = defineStore('store', {
       cameraResponse,
       mountResponse,
       filterResponse,
+      rotatorResponse,
       focuserResponse,
       focuserAfResponse,
       guiderResponse,
@@ -98,6 +103,12 @@ export const apiStore = defineStore('store', {
         this.filterInfo = filterResponse.Response;
       } else {
         console.error('Fehler in der Filter-API-Antwort:', filterResponse.Error);
+      }
+
+      if (rotatorResponse.Success) {
+        this.rotatorInfo = rotatorResponse.Response;
+      } else {
+        console.error('Fehler in der Rotator-API-Antwort:', rotatorResponse.Error);
       }
 
       if (focuserResponse.Success) {
