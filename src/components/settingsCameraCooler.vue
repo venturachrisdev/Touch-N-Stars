@@ -6,8 +6,8 @@
 
             <div class=" flex flex-col border border-gray-500 p-1 pb-2 rounded-lg  ">
                 <label for="Cooler" class="text-xs mb-1 text-gray-400">Kamerakühlung </label>
-                <div class="flex gap-2">
-                    <div class="flex flex-col col-span-2  border border-gray-500 p-1 pb-2 rounded-lg">
+                <div class="flex flex-col md:flex-row gap-2">
+                    <div class="flex flex-col col-span-2 w-full  border border-gray-500 p-1 pb-2 rounded-lg">
                         <label for="TemperatureSetPoint" class="text-xs mb-1 text-gray-400">Solltemperatur </label>
                         <div class="flex space-x-2">
                             <input id="TemperatureSetPoint" v-model="cameraStore.coolingTemp" type="number"
@@ -15,20 +15,20 @@
                                 placeholder="1" step="1" />
                         </div>
                     </div>
-                    <div class="flex flex-col col-span-2  border border-gray-500 p-1 pb-2 rounded-lg">
+                    <div class="flex flex-col col-span-2 w-full border border-gray-500 p-1 pb-2 rounded-lg">
                         <label for="TemperatureDurationTime" class="text-xs mb-1 text-gray-400">Abkühlzeit </label>
                         <input id="TemperatureDurationTime" v-model="cameraStore.coolingTime" type="number"
                             class="w-28 text-black px-3 h-8  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
                             placeholder="1" step="1" />
                     </div>
-                    <div class="flex flex-col col-span-2  border border-gray-500 p-1 pb-2 rounded-lg">
+                    <div class="flex flex-col col-span-2 w-full border border-gray-500 p-1 pb-2 rounded-lg">
                         <label for="TemperatureDurationTime" class="text-xs mb-1 text-gray-400">Aufwärmzeit </label>
                         <input id="TemperatureDurationTime" v-model="cameraStore.warmingTime" type="number"
                             class="w-28 text-black px-3 h-8  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
                             placeholder="1" step="1" />
                     </div>
 
-                    <toggleButton @click="toggleCooling" :status-value="store.cameraInfo.CoolerOn" />
+                    <toggleButton @click="toggleCooling" :status-value="cameraStore.buttonCoolerOn" class=" pr-5 pl-5"/>
                 </div>
             </div>
             
@@ -89,7 +89,7 @@ async function startCooling() {
         const dataWarm = await apiService.startStoppWarming(true);
         Promise.all([dataWarm]);
         console.log("Antwort warming:", dataWarm);
-
+        cameraStore.buttonCoolerOn = true;
         const dataCool = apiService.startCooling(cameraStore.coolingTemp, cameraStore.coolingTime);
         console.log("Antwort cooling:", dataCool);
         console.log("SollTemp:", cameraStore.coolingTemp);
@@ -102,6 +102,7 @@ async function stoppCooling() {
     try {
         const dataCool = await apiService.stoppCooling();
         Promise.all([dataCool]);
+        cameraStore.buttonCoolerOn = false;
         console.log("Antwort cooling:", dataCool);
         const dataWarm = apiService.startStoppWarming(false, cameraStore.warmingTime);
         console.log("Antwort warming:", dataWarm);

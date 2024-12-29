@@ -29,7 +29,7 @@
         <p class="text-sm italic text-gray-400">Einstellungen</p>
         <div class="flex-grow h-[1px] bg-gray-700"></div>
       </div>
-      <settingsCameraCooler class="grid grid-cols-2 landscape:grid-cols-3 mb-3 text-left" />
+      <settingsCameraCooler class="grid grid-cols-1  mb-3 text-left" />
       <settingsCamera class="grid grid-cols-2 landscape:grid-cols-3 mb-3 text-left" />
       <changeFilter v-if="store.filterInfo.Connected" class="grid rid-flow-row-dense grid-cols-2 landscape:grid-cols-3 mb-3 text-left" />
     </div>

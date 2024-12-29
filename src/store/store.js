@@ -193,7 +193,8 @@ export const apiStore = defineStore('store', {
       cStore.coolingTime = this.profileInfo?.CameraSettings.CoolingDuration ?? 10;
       cStore.warmingTime = this.profileInfo?.CameraSettings.WarmingDuration ?? 10;
       cStore.gain = this.profileInfo?.CameraSettings.Gain ?? 0;
-      console.log('Kameraeinstellungen gesetzt:', cStore.coolingTemp, cStore.coolingTime, cStore.warmingTime, cStore.gain); // eslint-disable-line
+      cStore.buttonCoolerOn = this.cameraInfo?.CoolerOn ?? false;
+      console.log('Kameraeinstellungen gesetzt:', cStore.coolingTemp, cStore.coolingTime, cStore.warmingTime, cStore.gain); 
     },
     setDefaultRotatorSettings() {
 
