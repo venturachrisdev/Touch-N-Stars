@@ -2,13 +2,13 @@
   <div class="container ">
       <h1>Test</h1>
     
-    <changeFilter />
+    <infoRotator />
       <LastLogs />
   </div>
 </template>
 
 <script setup>
 
-import changeFilter from './changeFilter.vue';
+import infoRotator from './infoRotator.vue';
 
 </script>
