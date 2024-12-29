@@ -15,7 +15,6 @@
 </template>
 
 <script setup>
-/* eslint-disable */
 import apiService from "@/services/apiService";
 import { apiStore } from '@/store/store';
 

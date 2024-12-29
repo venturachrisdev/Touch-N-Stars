@@ -17,6 +17,10 @@
         <ConnectionButton :isConnected="store.focuserInfo.Connected" connectText="Fokusierer verbinden"
             disconnectText="Fokusierer trennen" :onToggle="toggleFocuserConnection" />
 
+        <!-- Rotator-Steuerung -->
+        <ConnectionButton :isConnected="store.rotatorInfo.Connected" connectText="Rotator verbinden"
+            disconnectText="Rotator trennen" :onToggle="toggleRotatorConnection" />
+
         <!-- Guider-Steuerung -->
         <ConnectionButton :isConnected="store.guiderInfo.Connected" connectText="Guider verbinden"
             disconnectText="Guider trennen" :onToggle="toggleGuiderConnection" />
@@ -76,6 +80,18 @@ async function toggleFocuserConnection() {
         }
     } catch (error) {
         console.error("Fehler bei der Kamera-Steuerung:", error.response?.data || error);
+    }
+}
+
+async function toggleRotatorConnection() {
+    try {
+        if (store.rotatorInfo.Connected) {
+            await apiService.rotatorAction("disconnect");
+        } else {
+            await apiService.rotatorAction("connect");
+        }
+    } catch (error) {
+        console.error("Fehler bei der Rotator-Steuerung:", error.response?.data || error);
     }
 }
 
