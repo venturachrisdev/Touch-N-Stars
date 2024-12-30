@@ -65,7 +65,7 @@ class WebSocketService {
     };
   }
 
-  // Aktualisierte Methode zum Senden von Nachrichten als einfache Strings
+  // Methode zum Senden von Nachrichten als einfache Strings
   sendMessage(message) {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       // Nachricht direkt als String senden

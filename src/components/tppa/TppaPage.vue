@@ -19,9 +19,9 @@
             Stop Alignment
           </button>
         </div>
-        <div v-if="currentMessage" class="mt-10">
+        <div v-if="tppaStore.currentMessage" class="mt-10">
           <div v-if="startStop">
-            <p>{{ formatMessage(currentMessage.message) }}</p>
+            <p>{{ formatMessage(tppaStore.currentMessage.message) }}</p>
           </div>
           <div v-else class="space-y-4">
             <div class="flex space-x-4">
@@ -48,12 +48,12 @@
               <p class="w-52"><strong>Gesamtfehler: </strong></p>
               <p>{{ showTotalError }}</p>
             </div>
-            <div v-if="currentMessage" class="mt-20">
+            <div v-if="tppaStore.currentMessage" class="mt-20">
               <p style="white-space: pre-wrap;">
-                {{ formatMessage(currentMessage.message) }}
+                {{ formatMessage(tppaStore.currentMessage.message) }}
               </p>
               <p class="text-xs">
-                <strong>Letzte Aktualisierung:</strong> {{ currentMessage.time }}
+                <strong>Letzte Aktualisierung:</strong> {{ tppaStore.currentMessage.time }}
               </p>
             </div>
           </div>
@@ -74,10 +74,10 @@ import {
   ArrowRightIcon,
 } from '@heroicons/vue/24/outline';
 import { apiStore } from '@/store/store';
+import { useTppaStore } from '@/store/tppaStore'; 
 
+const tppaStore = useTppaStore();
 const store = apiStore();
-const Nachricht = ref("");
-const currentMessage = ref(null);
 const startStop = ref(false);
 const isConnected = ref(false);
 const showAzimuthError = ref("");
@@ -169,13 +169,13 @@ function stopAlignment() {
 onMounted(() => {
   websocketService.setStatusCallback((status) => {
     console.log("Status aktualisiert:", status);
-    Nachricht.value = status;
     isConnected.value = (status === "Verbunden");
+    tppaStore.isConnected = isConnected.value;
   });
 
   websocketService.setMessageCallback((message) => {
     console.log("Neue Nachricht erhalten:", message);
-    currentMessage.value = {
+    tppaStore.currentMessage = {
       message: message,
       time: getCurrentTime(),
     };
