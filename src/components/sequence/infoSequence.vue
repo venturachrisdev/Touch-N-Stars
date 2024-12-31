@@ -26,14 +26,8 @@ import { apiStore } from '@/store/store';
 
   import RecursiveItem from './RecursiveItem.vue'
   
-  /**
-   * Pinia-Store laden (Passe den Pfad deines Stores entsprechend an)
-   */
    const store = apiStore();
-  
-  /**
-   * Beispiel: Unterschiedliche Textfarben basierend auf dem Status
-   */
+
   function statusColor(status) {
     switch (status) {
       case 'FINISHED':
@@ -45,12 +39,12 @@ import { apiStore } from '@/store/store';
       case 'SKIPPED':
         return 'text-gray-400'
       default:
-        return 'text-black'
+        return 'text-white'
     }
   }
   </script>
   
   <style scoped>
-  /* Zusätzliche Stile (optional) */
+
   </style>
   
