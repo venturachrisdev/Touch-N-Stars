@@ -81,13 +81,12 @@
       </router-link>
 
       <router-link
-      v-show="false"
-        to="/misc"
+        to="/sequence"
         class="nav-button"
         active-class="active-nav-button"
-        title="Sonstiges"
+        title="Sequenz"
       >
-        <Cog6ToothIcon class="icon" />
+        <ListBulletIcon class="icon" />
       </router-link>
     </div>
   </div>
@@ -98,7 +97,7 @@ import {
   LinkIcon,
   CameraIcon,
   EyeIcon,
-  Cog6ToothIcon,
+  ListBulletIcon,
 } from '@heroicons/vue/24/outline';
 </script>
 
