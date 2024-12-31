@@ -8,7 +8,6 @@ const API_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}
 const TARGETPIC_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}/api/targetpic`;
 
 
-
 const apiService = {
   // Backend reachability check
   async isBackendReachable() {
@@ -19,6 +18,12 @@ const apiService = {
       console.error("Error reaching backend:", error.message);
       return false;
     }
+  },
+
+    //-------------------------------------  Mount ---------------------------------------
+  // Mount actions
+  sequenceAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/sequence/${action}`);
   },
 
   //-------------------------------------  Mount ---------------------------------------
