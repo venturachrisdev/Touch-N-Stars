@@ -26,7 +26,6 @@ function statusColor(status) {
       :key="index"
       class="border-l border-gray-200 pl-4 mb-2"
     >
-      <!-- Hier geht's weiter ... -->
       <div class="flex items-center justify-between mb-1">
         <h3 class="font-medium">{{ item.Name }}</h3>
         <span :class="statusColor(item.Status)">
@@ -34,12 +33,24 @@ function statusColor(status) {
         </span>
       </div>
       
-      <!-- Beispiel-Felder -->
+      <!-- Felder -->
       <div class="text-sm text-gray-600" v-if="typeof item.ExposureCount !== 'undefined'">
-        ExposureCount: {{ item.ExposureCount }}
+        Belichtungen: {{ item.ExposureCount }} von {{ item.Iterations }}
       </div>
       <div class="text-sm text-gray-600" v-if="typeof item.ExposureTime !== 'undefined'">
         Belichtungszeit: {{ item.ExposureTime }}s
+      </div>
+      <div class="text-sm text-gray-600" v-if="typeof item.Gain	 !== 'undefined'">
+        Gain: {{ item.Gain }}
+      </div>
+      <div class="text-sm text-gray-600" v-if="typeof item.Filter !== 'Current'">
+        Filter: {{ item.Filter	}}
+      </div>
+      <div class="text-sm text-gray-600" v-if="typeof item.DitherTargetExposures !== 'undefined' && item.DitherTargetExposures !== 0">
+        Dither alle {{ item.DitherTargetExposures	}} Aufnamen
+      </div>
+      <div class="text-sm text-gray-600" v-if="typeof item.Type	 !== 'undefined' ">
+        Type: {{ item.Type}} 
       </div>
 
       <!-- Rekursion bei verschachtelten Items -->
