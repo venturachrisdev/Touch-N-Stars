@@ -1,12 +1,15 @@
 <template>
-    <div class="flex items-center justify-center w-full">
-        <div class="flex space-x-4 ">  
-          <button class="default-button-cyan min-w-40" @click="startSequence">
-            Starte Sequenz
-          </button>
-          <button class="default-button-orange min-w-40" @click="stopSequence">
-            Stoppe Sequenz
-          </button>
+    <div v-if="!store.sequenceIsLoaded" class="text-red-500">
+        <p>Keine Sequenz geladten</p>
+    </div>
+    <div v-else class="flex items-center justify-center w-full">
+        <div class="flex space-x-4 ">
+            <button class="default-button-cyan min-w-40" @click="startSequence">
+                Starte Sequenz
+            </button>
+            <button class="default-button-orange min-w-40" @click="stopSequence">
+                Stoppe Sequenz
+            </button>
         </div>
     </div>
 </template>
@@ -14,10 +17,10 @@
 <script setup>
 import { onMounted } from 'vue';
 import apiService from '@/services/apiService';
-//import { apiStore } from '@/store/store'
+import { apiStore } from '@/store/store'
 
 // Initialisiere Stores
-//const store = apiStore()
+const store = apiStore()
 
 async function startSequence() {
     try {

@@ -28,6 +28,7 @@ export const apiStore = defineStore('store', {
     isLoadingImage: false,
     captureRunning: false,
     rotatorMechanicalPosition:0,
+    sequenceIsLoaded: false,
   }),
 
   actions: {
@@ -95,9 +96,11 @@ export const apiStore = defineStore('store', {
     }) {
       if (sequenceResponse.Success) {
         this.sequenceInfo = sequenceResponse.Response;
-        console.log('Sequenzinformationen abgerufen:', this.sequenceInfo);
+        this.sequenceIsLoaded = true;
+        //console.log('Sequenzinformationen abgerufen:', this.sequenceInfo);
       } else {
-        console.error('Fehler in der Sequence-API-Antwort:', sequenceResponse.Error);
+        this.sequenceIsLoaded = false;
+        //console.error('Fehler in der Sequence-API-Antwort:', sequenceResponse.Error);
       }
 
       if (cameraResponse.Success) {
