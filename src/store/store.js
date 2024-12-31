@@ -9,6 +9,7 @@ export const apiStore = defineStore('store', {
     intervalId: null,
     intervalIdGraph: null,
     profileInfo: [],
+    sequenceInfo:[],
     cameraInfo: { IsExposing: false },
     mountInfo: [],
     filterInfo: [],
@@ -40,6 +41,7 @@ export const apiStore = defineStore('store', {
         }
 
         const [
+          sequenceResponse,
           cameraResponse,
           mountResponse,
           filterResponse,
@@ -50,6 +52,7 @@ export const apiStore = defineStore('store', {
           guiderChartResponse,
           logsResponse,
         ] = await Promise.all([
+          apiService.sequenceAction('json'),
           apiService.cameraAction('info'),
           apiService.mountAction('info'),
           apiService.filterAction('info'),
@@ -62,6 +65,7 @@ export const apiStore = defineStore('store', {
         ]);
 
         this.handleApiResponses({
+          sequenceResponse,
           cameraResponse,
           mountResponse,
           filterResponse,
@@ -78,6 +82,7 @@ export const apiStore = defineStore('store', {
     },
 
     handleApiResponses({
+      sequenceResponse,
       cameraResponse,
       mountResponse,
       filterResponse,
@@ -88,6 +93,12 @@ export const apiStore = defineStore('store', {
       guiderChartResponse,
       logsResponse,
     }) {
+      if (sequenceResponse.Success) {
+        this.sequenceInfo = sequenceResponse.Response;
+      } else {
+        console.error('Fehler in der Sequence-API-Antwort:', sequenceResponse.Error);
+      }
+
       if (cameraResponse.Success) {
         this.cameraInfo = cameraResponse.Response;
       } else {
