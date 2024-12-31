@@ -95,6 +95,7 @@ export const apiStore = defineStore('store', {
     }) {
       if (sequenceResponse.Success) {
         this.sequenceInfo = sequenceResponse.Response;
+        console.log('Sequenzinformationen abgerufen:', this.sequenceInfo);
       } else {
         console.error('Fehler in der Sequence-API-Antwort:', sequenceResponse.Error);
       }
