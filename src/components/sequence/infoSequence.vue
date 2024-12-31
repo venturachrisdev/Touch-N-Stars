@@ -4,10 +4,10 @@
       <div
         v-for="(container, containerIndex) in store.sequenceInfo"
         :key="containerIndex"
-        class="border border-gray-200 rounded-md mb-4 p-4"
+        class="border border-gray-400 rounded-md mb-4 p-4"
       >
         <div class="flex items-center justify-between mb-2">
-          <h2 class="font-bold text-lg">{{ container.Name }}</h2>
+          <h2 class="font-bold ">{{ container.Name }}</h2>
           <span :class="statusColor(container.Status)">
             {{ container.Status }}
           </span>
