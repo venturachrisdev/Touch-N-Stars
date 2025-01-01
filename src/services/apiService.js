@@ -20,8 +20,8 @@ const apiService = {
     }
   },
 
-    //-------------------------------------  Mount ---------------------------------------
-  // Mount actions
+    //-------------------------------------  sequence ---------------------------------------
+  // sequence actions
   sequenceAction(action) {
     return this._simpleGetRequest(`${BASE_URL}/sequence/${action}`);
   },
@@ -331,6 +331,19 @@ const apiService = {
       throw error;
     }
   },
+
+    //-------------------------------------  Logs ---------------------------------------
+    async getWshv() {
+      try {
+        const response = await axios.get(`${API_URL}wshv`, {
+        });
+        console.log(response.data);
+        return response.data;
+      } catch (error) {
+        console.error("Error retrieving wshv result:", error);
+        throw error;
+      }
+    },
   //-------------------------------------  Helper ---------------------------------------
   // Helper methods
   _simpleGetRequest(url) {
