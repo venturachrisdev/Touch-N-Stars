@@ -31,6 +31,9 @@ afError = False
 afErrorText =""
 newAfGraph = False
 last_af_timestamp = None  
+wshvAktiv = False # Web Session History Viewer aktiv
+wshvPort = 80
+
 
 lock = threading.Lock()
 #-----------------------------------------------------
@@ -44,12 +47,12 @@ data = pd.concat([
 #-----------------------------------------------------
 # Utility functions
 #-----------------------------------------------------
-def monitor_logs_for_autofocus():
+def monitor_logs_for_events():
     """
     Überwacht die Logdatei auf neue Warnungen oder Störungen mit dem Member 'StartAutoFocus'
     und setzt 'afRun' auf False, falls eine gefunden wird.
     """
-    global afRun , afError, afErrorText
+    global afRun , afError, afErrorText, wshvAktiv, wshvPort
     last_checked_line = 0  # Die zuletzt gelesene Zeile
 
     try:
@@ -70,6 +73,38 @@ def monitor_logs_for_autofocus():
             last_checked_line = len(lines)  # Aktualisiere den Stand der zuletzt geprüften Zeile
            
             for line in new_lines:
+                # --- 1. Prüfung: Zeile enthält WebServerTask und "http://localhost:XXXX/dist"? ---
+                if "WebServerTask" in line and "http://localhost:" in line and "/dist" in line:
+                    # Beispielzeile:
+                    # 2025-01-01T15:15:37.2624|INFO|HttpServer.cs|WebServerTask|62|starting web server, listening at http://localhost:5001/dist
+                    
+                    # Schritt 1: Teilstring hinter "http://localhost:"
+                    parts_after_localhost = line.split("http://localhost:", 1)
+                    if len(parts_after_localhost) < 2:
+                        # Sicherheitshalber, falls doch nichts gefunden wurde
+                        continue
+                    
+                    # parts_after_localhost[1] sollte jetzt "5001/dist ..." oder ähnlich enthalten
+                    substring = parts_after_localhost[1]
+                    
+                    # Schritt 2: Abschneiden ab "/dist"
+                    parts_before_dist = substring.split("/dist", 1)
+                    if len(parts_before_dist) < 2:
+                        continue
+                    
+                    # parts_before_dist[0] sollte jetzt "5001" sein
+                    port_candidate = parts_before_dist[0].strip()
+                    
+                    # Optional prüfen, ob nur Ziffern enthalten sind
+                    if port_candidate.isdigit():
+                        wshvPort = port_candidate
+                        wshvAktiv = True
+                        print(f"Server-Port gefunden: {wshvPort}")
+                    else:
+                        print(f"Konnte Port nicht ermitteln: {port_candidate}")
+
+
+
                 # Prüfe, ob die Zeile eine Warnung oder Störung enthält und den Member 'StartAutoFocus'
                 if ('|WARNING|' in line or '|ERROR|' in line) and '|StartAutoFocus|' in line:
                     print(f"Warnung/Störung gefunden: {line.strip()}")
@@ -83,7 +118,7 @@ def monitor_logs_for_autofocus():
 
             time.sleep(1)  # Kurze Pause, um die CPU-Belastung zu reduzieren
     except Exception as e:
-        print(f"Fehler in monitor_logs_for_autofocus: {e}")
+        print(f"Fehler in monitor_logs_for_events: {e}")
 
 def fetch_and_store_data():
     """Periodisch Guider-Daten abrufen und speichern."""
@@ -249,6 +284,12 @@ def get_recent_logs():
         print(f"Fehler beim Abrufen der Logs: {e}")
         return jsonify({"error": "Fehler beim Abrufen der Logs"}), 500
 
+@app.route('/api/wshv', methods=['GET'])
+def get_wshv_data():
+    """API-Endpunkt für wshv."""
+    global wshvAktiv, wshvPort
+    with lock:
+        return jsonify({"wshvAktiv": wshvAktiv, "wshvPort": wshvPort})
 
 @app.route('/api/autofocus', methods=['GET'])
 def control_autofocus():
@@ -256,7 +297,6 @@ def control_autofocus():
     Steuert den Autofokus: Startet, stoppt oder gibt den Status zurück, basierend auf Query-Parametern.
     """
     global afRun , newAfGraph, afError, afErrorText
-
     # Basis-URL für Autofokus-Aktionen
     target_url = f"{BASE_API_URL}/equipment/focuser/auto-focus"
 
@@ -478,5 +518,5 @@ def add_cors_headers(response):
 if __name__ == '__main__':
     threading.Thread(target=fetch_and_store_data, daemon=True).start()
     threading.Thread(target=monitor_last_af, daemon=True).start()
-    threading.Thread(target=monitor_logs_for_autofocus, daemon=True).start()
+    threading.Thread(target=monitor_logs_for_events, daemon=True).start()
     app.run(host='0.0.0.0', port=5000)
