@@ -2,17 +2,15 @@
   <div class="container ">
     <h1>Test</h1>
 
-    <controlSequence />
-    <infoSequence />
+
+    <wshvFrame />
 
 
   </div>
 </template>
 
 <script setup>
-import controlSequence from './sequence/controlSequence.vue';
-import infoSequence from './sequence/infoSequence.vue';
-
+import wshvFrame from './sequence/wshvFrame.vue';
 
 
 </script>

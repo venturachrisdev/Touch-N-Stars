@@ -4,6 +4,8 @@
 
     <controlSequence />
     <infoSequence />
+    <wshvFrame v-if="false"/>
+    
 
 
   </div>
@@ -13,5 +15,6 @@
 
 import infoSequence from '@/components/sequence/infoSequence.vue';
 import controlSequence from '@/components/sequence/controlSequence.vue';
+import wshvFrame from '@/components/sequence/wshvFrame.vue';
 
 </script>
