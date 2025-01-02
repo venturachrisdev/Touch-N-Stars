@@ -17,12 +17,20 @@ function statusColor(status) {
     default: return 'text-white'
   }
 }
+
+function removeTriggerSuffix(name) {
+  return name.replace(/_Trigger$/, '')
+}
 </script>
 
 <template>
   <div>
-    <div v-for="(item, index) in props.items" :key="index"
-      class="border-l border-gray-400 pl-4 mb-2 text-xs md:text-base">
+    <div
+      v-for="(item, index) in props.items"
+      :key="index"
+      class="border-l border-gray-400 pl-4 mb-2 text-xs md:text-base"
+    >
+      <!-- Name & Status -->
       <div class="flex items-center justify-between mb-1">
         <h3 class="font-medium ">{{ item.Name }}</h3>
         <span :class="statusColor(item.Status)">
@@ -31,8 +39,8 @@ function statusColor(status) {
       </div>
 
       <!-- Felder -->
-      <div class="text-x md:text-base text-gray-500">
-        <div class=" " v-if="typeof item.ExposureCount !== 'undefined'">
+      <div class="text-gray-500">
+        <div v-if="typeof item.ExposureCount !== 'undefined'">
           Belichtungen: {{ item.ExposureCount }} von {{ item.Iterations }}
         </div>
         <div v-if="typeof item.ExposureTime !== 'undefined'">
@@ -45,10 +53,26 @@ function statusColor(status) {
           Filter: {{ item.Filter }}
         </div>
         <div v-if="typeof item.DitherTargetExposures !== 'undefined' && item.DitherTargetExposures !== 0">
-          Dither alle {{ item.DitherTargetExposures }} Aufnamen
+          Dither alle {{ item.DitherTargetExposures }} Aufnahmen
         </div>
         <div v-if="typeof item.Type !== 'undefined'">
           Type: {{ item.Type }}
+        </div>
+      </div>
+
+      <!-- Triggers anzeigen -->
+      <div v-if="item.Triggers && item.Triggers.length" class="pl-4 mt-2">
+        <h4 class="font-semibold mb-1 text-sm md:text-base">Triggers:</h4>
+        <div
+          v-for="(trigger, tIndex) in item.Triggers"
+          :key="tIndex"
+          class="flex items-center justify-between mb-1 border-l border-gray-300 pl-2"
+        >
+          <span class="text-gray-500">{{ removeTriggerSuffix(trigger.Name) }}</span>
+          <!-- Trigger-Status -->
+          <span :class="statusColor(trigger.Status)">
+            {{ trigger.Status }}
+          </span>
         </div>
       </div>
 
