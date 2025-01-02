@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="text-xl text-center font-bold mb-5">Sequenz</h1>
+    <h1 class="text-xl text-center font-bold mb-5">{{ $t('components.sequence.title') }}</h1>
     <div v-if="wshvAktiv" class="container flex flex-col w-full">
       <!-- Weiße Linie -->
       <div class="w-full h-[2px] bg-gray-300 mb-0"></div>
@@ -8,11 +8,11 @@
       <div class="flex justify-start mb-3">
         <button class="border-2 border-gray-500 rounded-b-md w-24 h-10"
           :class="{ 'bg-gray-600': showSequenz, 'bg-gray-800': !showSequenz }" @click="toggleShowSequenz">
-          Sequenz
+          {{ $t('components.sequence.title') }}
         </button>
         <button class="border-2 border-gray-500 rounded-b-md w-24 h-10"
           :class="{ 'bg-gray-600': showWshv, 'bg-gray-800': !showWshv }" @click="toggleShowWshv">
-          WSHV
+          {{ $t('components.sequence.wshv') }}
         </button>
       </div>
     </div>

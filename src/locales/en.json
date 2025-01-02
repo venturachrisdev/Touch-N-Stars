@@ -38,7 +38,11 @@
       "guider": {
         "connect": "Connect guider",
         "disconnect": "Disconnect guider",
-        "error": "Error controlling guider:"
+        "error": "Error controlling guider:",
+        "title": "Guiding",
+        "start": "Start",
+        "stop": "Stop",
+        "rms_error": "RMS Error in Arcseconds"
       }
     },
     "lastLogs": {
@@ -70,8 +74,11 @@
       "slew": "Slew"
     },
     "guider": {
-      "connect": "Please connect guider",
-      "rms_error": "RMS Error in Arcseconds"
+      "title": "Guiding",
+      "connect": "Please connect guider", 
+      "rms_error": "RMS Error in Arcseconds",
+      "start": "Start",
+      "stop": "Stop"
     },
     "focuser": {
       "title": "Focuser",
@@ -104,7 +111,7 @@
       "last_update": "Last update:"
     },
     "logs": {
-      "loading": "Loading data...",
+      "loading": "Loading...",
       "error": "Error loading data:"
     },
     "test": {

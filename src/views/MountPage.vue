@@ -1,7 +1,7 @@
 <template>
   <div class="container flex items-center justify-center">
     <div class="container max-w-md landscape:max-w-xl">
-      <h5 class="text-xl text-center font-bold text-white mb-4">Montierung</h5>
+      <h5 class="text-xl text-center font-bold text-white mb-4">{{ $t('components.mount.title') }}</h5>
       <infoMount v-model="store.mountInfo.Connected" class="grid grid-cols-2 landscape:grid-cols-3" />
       <infoCamera :show-only-exposing="showTppa" class="grid grid-cols-2 landscape:grid-cols-3 mt-2" />
       <div v-if="store.mountInfo.Connected">
@@ -12,21 +12,21 @@
               :class="{ 'bg-gray-600': showMount, 'bg-gray-800': !showMount }"
               @click="toggleShowMount"
             >
-              Montierung
+              {{ $t('components.mount.title') }}
             </button>
             <button
               class="border-2 border-gray-500 rounded-b-md w-24 h-10"
               :class="{ 'bg-gray-600': showSlew, 'bg-gray-800': !showSlew }"
               @click="toggleShowSlew"
             >
-              Schwenken
+              {{ $t('components.mount.slew') }}
             </button>
             <button
               class="border-2 border-gray-500 rounded-b-md w-24 h-10"
               :class="{ 'bg-gray-600': showTppa, 'bg-gray-800': !showTppa }"
               @click="toggleShowTppa"
             >
-              TPPA
+              {{ $t('components.tppa.title') }}
             </button>
           </div>
           <div class="container pl-5 pb-5 pr-5">

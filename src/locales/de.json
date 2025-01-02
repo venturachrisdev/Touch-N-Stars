@@ -38,7 +38,11 @@
       "guider": {
         "connect": "Guider verbinden",
         "disconnect": "Guider trennen",
-        "error": "Fehler bei der Guider-Steuerung:"
+        "error": "Fehler bei der Guider-Steuerung:",
+        "title": "Guiding",
+        "start": "Start",
+        "stop": "Stop",
+        "rms_error": "RMS Fehler in Arcseconds"
       }
     },
     "lastLogs": {
@@ -70,8 +74,11 @@
       "slew": "Schwenken"
     },
     "guider": {
+      "title": "Guiding",
       "connect": "Bitte Guider verbinden",
-      "rms_error": "RMS Fehler in Arcseconds"
+      "rms_error": "RMS Fehler in Arcseconds",
+      "start": "Start",
+      "stop": "Stop"
     },
     "focuser": {
       "title": "Okularauszug",
@@ -104,7 +111,7 @@
       "last_update": "Letzte Aktualisierung:"
     },
     "logs": {
-      "loading": "Daten werden geladen...",
+      "loading": "Lade...",
       "error": "Fehler beim Laden der Daten:"
     },
     "test": {

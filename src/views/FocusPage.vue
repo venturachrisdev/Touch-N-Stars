@@ -1,6 +1,6 @@
 <template>
   <div class="text-left mb-2">
-    <h1 class="text-xl text-center font-bold">Okularauszug</h1>
+    <h1 class="text-xl text-center font-bold">{{ $t('components.focuser.title') }}</h1>
   </div>
   <div class="container flex items-center justify-center">
 
@@ -10,26 +10,26 @@
 
       <div v-if="store.focuserInfo.Connected" class="flex flex-col text-left mt-4">
         <div class="flex space-x-3 items-center">
-          <label for="position" class="w-auto">Neue Position:</label>
+          <label for="position" class="w-auto">{{ $t('components.focuser.new_position') }}</label>
           <input id="position" v-model.number="position" type="number"
             class="text-black px-4 h-10 w-40 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-700"
             placeholder="1" step="50" />
           <button
             class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
             @click="moveFocuser">
-            Bewegen
+            {{ $t('components.focuser.move') }}
           </button>
         </div>
         <div class="mt-4">
           <button v-if="!store.focuserAfInfo.autofocus_running"
             class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
             @click="startAutofocus">
-            Starte Autofokus
+            {{ $t('components.focuser.start_autofocus') }}
           </button>
           <button v-else
             class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-red-700 items-center justify-center disabled:opacity-50"
             @click="stoppAutofocus">
-            Autofokus abbrechen
+            {{ $t('components.focuser.cancel_autofocus') }}
           </button>
         </div>
 
@@ -42,14 +42,14 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </button>
-          <p class=" text-sm italic"> Autofokus Grafik</p>
+          <p class=" text-sm italic"> {{ $t('components.focuser.autofocus_graph') }}</p>
           <div class="flex-grow h-[1px] bg-gray-700"></div> <!-- lange Linie -->
         </div>
         <div v-show="store.showAfGraph" class="mt-6">
           <!--Spinner-->
           <div v-if="store.focuserAfInfo.autofocus_running || !delayShowGraph" role="status"
             class="flex flex-col items-center h-screen mt-4 text-center">
-            <p>Autofokus läuft</p>
+            <p>{{ $t('components.focuser.autofocus_running') }}</p>
             <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
               viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -66,7 +66,7 @@
             <AutofocusGrafik class="flex-grow" />
           </div>
           <div v-else class="text-center text-red-600">
-            <p>Fehler beim Autofokus</p>
+            <p>{{ $t('components.focuser.autofocus_error') }}</p>
             <p class=" italic">{{ store.focuserAfInfo.afErrorText }}</p>
           </div>
         </div>
