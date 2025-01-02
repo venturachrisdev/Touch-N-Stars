@@ -28,19 +28,27 @@
               <p class="w-52"><strong>Altitude Fehler:</strong></p>
               <p>{{ showAltitudeError }}</p>
               <div v-if="showAltitudeError">
-                <ArrowUpIcon v-if="altitudeCorDirectionTop" class="size-6 text-blue-500" />
-                <ArrowDownIcon v-else class="size-6 text-blue-500" />
+                <div v-if="altitudeCorDirectionTop" class="flex flex-row space-x-2">
+                  <ArrowUpIcon  class="size-6 text-blue-500" />
+                  <p>Up</p>
+                </div>
+                <div v-else  class="flex flex-row space-x-2"> 
+                <ArrowDownIcon class="size-6 text-blue-500" />
+                <p>Down</p>
+              </div>
               </div>
             </div>
             <div class="flex space-x-4">
               <p class="w-52"><strong>Azimuth Fehler:</strong> </p>
               <p>{{ showAzimuthError }}</p>
               <div v-if="showAzimuthError">
-                <div v-if="azimuthCorDirectionLeft">
+                <div v-if="azimuthCorDirectionLeft" class="flex flex-row space-x-2">
                   <ArrowLeftIcon class="size-6 text-blue-500 " />
+                  <p>West</p>
                 </div>
-                <div v-else class="flex space-x-4">
+                <div v-else class="flex flex-row space-x-2">
                   <ArrowRightIcon class="size-6 text-blue-500" />
+                  <p>Ost</p>
                 </div>
               </div>
             </div>
