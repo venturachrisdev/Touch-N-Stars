@@ -71,9 +71,9 @@
       "slew": "Slew"
     },
     "guider": {
-      "title": "Guider",
-      "connect": "Please connect guider", 
-      "rms_error": "RMS Error in Arcseconds"
+      "connect": "Please connect guider",
+      "rms_error": "RMS Error in Arcseconds",
+      "title": "Guider"
     },
     "focuser": {
       "title": "Focuser",
@@ -93,7 +93,9 @@
       "capture_running": "Capture running",
       "image_loading": "Image loading...",
       "start_capture": "Start capture",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "exposure_time": "Exposure time:",
+      "gain_iso": "Gain / ISO:"
     },
     "tppa": {
       "title": "Three Point Polar Alignment",
@@ -104,7 +106,7 @@
       "azimuth_error": "Azimuth Error:",
       "total_error": "Total Error:",
       "last_update": "Last update:",
-      "error_values_missing": "Error values missing",
+      "error_values_missing": "Missing error values",
       "unknown_response_format": "Unknown response format"
     },
     "logs": {

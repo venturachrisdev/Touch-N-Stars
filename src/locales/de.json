@@ -93,7 +93,9 @@
       "capture_running": "Aufnahme läuft",
       "image_loading": "Bild lädt...",
       "start_capture": "Aufnahme starten",
-      "cancel": "Abbrechen"
+      "cancel": "Abbrechen",
+      "exposure_time": "Belichtungszeit:",
+      "gain_iso": "Gain / ISO:"
     },
     "tppa": {
       "title": "Three Point Polar Alignment",
