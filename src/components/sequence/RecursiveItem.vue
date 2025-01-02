@@ -18,12 +18,12 @@ function statusColor(status) {
   }
 }
 
-function removeTriggerSuffix(name) {
-  return name.replace(/_Trigger$/, '')
+function removeSuffix(name) {
+  return name.replace(/_Trigger$|_Container$/, '')
 }
 
-function filterTriggerFields(trigger) {
-  const excludedKeys = ['Name', 'Status', 'Coordinates']
+function filterFields(trigger) {
+  const excludedKeys = ['Name', 'Status', 'Coordinates', 'Binning', 'Conditions', 'Triggers', 'Items']
   return Object.entries(trigger).filter(([key]) => {
     return !excludedKeys.includes(key)
   })
@@ -37,14 +37,15 @@ function filterTriggerFields(trigger) {
       class="border-l border-gray-400 pl-4 mb-2 text-xs md:text-base">
       <!-- Name & Status -->
       <div class="flex items-center justify-between mb-1">
-        <h3 class="font-medium ">{{ item.Name }}</h3>
+        <h3 class="font-medium ">{{ removeSuffix(item.Name) }}</h3>
         <span :class="statusColor(item.Status)">
           {{ item.Status }}
         </span>
       </div>
 
-      <!-- Felder -->
-      <div class="text-gray-500">
+      <!-- Items -->
+       <div class="border-l border-gray-400">
+      <div class="text-gray-500 text-xs pl-4  ">
         <div v-if="typeof item.ExposureCount !== 'undefined'">
           Belichtungen: {{ item.ExposureCount }} von {{ item.Iterations }}
         </div>
@@ -63,6 +64,19 @@ function filterTriggerFields(trigger) {
         <div v-if="typeof item.Type !== 'undefined'">
           Type: {{ item.Type }}
         </div>
+        <div v-if="typeof item.DeltaHFR !== 'undefined'">
+          DeltaHFR: {{ item.DeltaHFR }}
+        </div>
+
+        <div v-if="typeof item.SampleSize !== 'undefined'">
+          SampleSize: {{ item.SampleSize }}
+        </div>
+      </div>
+    </div>
+
+     <!-- Rekursion bei verschachtelten Items -->
+     <div v-if="item.Items && item.Items.length" class="pl-4 mt-2">
+        <RecursiveItem :items="item.Items" />
       </div>
 
       <!-- Triggers anzeigen -->
@@ -72,9 +86,7 @@ function filterTriggerFields(trigger) {
           <div class="border-l border-gray-300 pl-2">
             <div class="flex items-center justify-between mb-1 pl-2">
               <!-- Trigger-Name -->
-              <span>{{ removeTriggerSuffix(trigger.Name) }}</span>
-
-
+              <span>{{ removeSuffix(trigger.Name) }}</span>
 
               <!-- Trigger-Status -->
               <span :class="statusColor(trigger.Status)">
@@ -83,18 +95,13 @@ function filterTriggerFields(trigger) {
             </div>
             <div class="flex flex-col  justify-between ml-4 mb-1 border-l border-gray-300 pl-2">
               <!-- Unbekannte (dynamische) Felder -->
-              <div v-for="[key, value] in filterTriggerFields(trigger)" :key="key" class="text-xs text-gray-600 ">
+              <div v-for="[key, value] in filterFields(trigger)" :key="key" class="text-xs text-gray-600 ">
                 <!-- key zeigt den Feldnamen an, value den Inhalt -->
                 <span>{{ key }}: {{ value }} </span>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Rekursion bei verschachtelten Items -->
-      <div v-if="item.Items && item.Items.length" class="pl-4 mt-2">
-        <RecursiveItem :items="item.Items" />
       </div>
     </div>
   </div>
