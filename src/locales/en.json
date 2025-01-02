@@ -5,6 +5,7 @@
     }
   },
   "app": {
+    "title": "Touch'N'Stars",
     "unreachable": "NINA is unreachable!",
     "connecting": "Attempting to establish connection"
   },
@@ -38,11 +39,7 @@
       "guider": {
         "connect": "Connect guider",
         "disconnect": "Disconnect guider",
-        "error": "Error controlling guider:",
-        "title": "Guiding",
-        "start": "Start",
-        "stop": "Stop",
-        "rms_error": "RMS Error in Arcseconds"
+        "error": "Error controlling guider:"
       }
     },
     "lastLogs": {
@@ -74,11 +71,9 @@
       "slew": "Slew"
     },
     "guider": {
-      "title": "Guiding",
+      "title": "Guider",
       "connect": "Please connect guider", 
-      "rms_error": "RMS Error in Arcseconds",
-      "start": "Start",
-      "stop": "Stop"
+      "rms_error": "RMS Error in Arcseconds"
     },
     "focuser": {
       "title": "Focuser",
@@ -108,10 +103,12 @@
       "altitude_error": "Altitude Error:",
       "azimuth_error": "Azimuth Error:",
       "total_error": "Total Error:",
-      "last_update": "Last update:"
+      "last_update": "Last update:",
+      "error_values_missing": "Error values missing",
+      "unknown_response_format": "Unknown response format"
     },
     "logs": {
-      "loading": "Loading...",
+      "loading": "Loading data...",
       "error": "Error loading data:"
     },
     "test": {

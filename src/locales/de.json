@@ -5,6 +5,7 @@
     }
   },
   "app": {
+    "title": "Touch'N'Stars",
     "unreachable": "NINA ist nicht erreichbar!",
     "connecting": "Versuche Verbindung herzustellen"
   },
@@ -38,11 +39,7 @@
       "guider": {
         "connect": "Guider verbinden",
         "disconnect": "Guider trennen",
-        "error": "Fehler bei der Guider-Steuerung:",
-        "title": "Guiding",
-        "start": "Start",
-        "stop": "Stop",
-        "rms_error": "RMS Fehler in Arcseconds"
+        "error": "Fehler bei der Guider-Steuerung:"
       }
     },
     "lastLogs": {
@@ -74,11 +71,9 @@
       "slew": "Schwenken"
     },
     "guider": {
-      "title": "Guiding",
+      "title": "Guider",
       "connect": "Bitte Guider verbinden",
-      "rms_error": "RMS Fehler in Arcseconds",
-      "start": "Start",
-      "stop": "Stop"
+      "rms_error": "RMS Fehler in Arcseconds"
     },
     "focuser": {
       "title": "Okularauszug",
@@ -108,10 +103,12 @@
       "altitude_error": "Altitude Fehler:",
       "azimuth_error": "Azimuth Fehler:",
       "total_error": "Gesamtfehler:",
-      "last_update": "Letzte Aktualisierung:"
+      "last_update": "Letzte Aktualisierung:",
+      "error_values_missing": "Fehlende Fehlerwerte",
+      "unknown_response_format": "Unbekanntes Antwortformat"
     },
     "logs": {
-      "loading": "Lade...",
+      "loading": "Daten werden geladen...",
       "error": "Fehler beim Laden der Daten:"
     },
     "test": {

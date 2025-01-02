@@ -105,6 +105,7 @@
             <button
               v-for="lang in languages"
               :key="lang.code"
+              :class="{ 'bg-cyan-700': lang.code === currentLanguage }"
               @click="changeLanguage(lang.code)"
               class="block w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-600"
             >
@@ -125,12 +126,18 @@ import {
   ListBulletIcon,
   GlobeAltIcon,
 } from '@heroicons/vue/24/outline';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { locale, t } = useI18n();
 const $t = t;
 const showLanguageMenu = ref(false);
+
+const currentLanguage = ref(locale.value);
+
+watchEffect(() => {
+  currentLanguage.value = locale.value;
+});
 
 const languages = [
   { code: 'en', name: $t('components.language.en') },
