@@ -19,8 +19,6 @@
         <RecursiveItem :items="container.GlobalTriggers" />
       </div>
 
-
-
     </div>
   </div>
 </template>

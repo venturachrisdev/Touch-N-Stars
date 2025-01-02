@@ -59,7 +59,7 @@ onBeforeMount(async () => {
     const data = await apiService.getWshv();
     wshvAktiv.value = data.wshvAktiv;
     wshvUrl.value = `http://${window.location.hostname}:${data.wshvPort}/dist`;
-    console.log(wshvUrl.value);
+    //console.log(wshvUrl.value);
   } catch (error) {
     console.error('Fehler beim Abrufen von WSHV-Daten:', error);
   }

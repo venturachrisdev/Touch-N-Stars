@@ -337,7 +337,7 @@ const apiService = {
       try {
         const response = await axios.get(`${API_URL}wshv`, {
         });
-        console.log(response.data);
+        //console.log(response.data);
         return response.data;
       } catch (error) {
         console.error("Error retrieving wshv result:", error);
