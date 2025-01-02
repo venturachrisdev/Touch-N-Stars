@@ -1,6 +1,6 @@
 <template>
     <div v-if="!store.sequenceIsLoaded" class="text-red-500">
-        <p>Keine Sequenz geladten</p>
+        <p>Keine Sequenz geladen</p>
     </div>
     <div v-else class="flex items-center justify-center w-full">
         <div class="flex space-x-4 ">
