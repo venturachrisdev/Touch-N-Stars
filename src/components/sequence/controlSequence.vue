@@ -3,7 +3,7 @@
         <p>Keine Sequenz geladen</p>
     </div>
     <div v-else class="flex items-center justify-center w-full">
-        <div class="flex space-x-4 ">
+        <div class="flex flex-col gap-1 sm:flex-row sm:space-x-4 ">
             <button class="default-button-cyan min-w-40" @click="startSequence">
                 Starte Sequenz
             </button>
