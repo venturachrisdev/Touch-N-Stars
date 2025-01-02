@@ -102,6 +102,14 @@
       "azimuth_error": "Azimuth Fehler:",
       "total_error": "Gesamtfehler:",
       "last_update": "Letzte Aktualisierung:"
-    }
+    },
+    "logs": {
+      "loading": "Daten werden geladen...",
+      "error": "Fehler beim Laden der Daten:"
+    },
+    "test": {
+      "title": "Test"
+    },
+    "loading": "Lade..."
   }
 }
