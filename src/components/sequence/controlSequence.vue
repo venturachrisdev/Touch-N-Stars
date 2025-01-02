@@ -10,6 +10,9 @@
             <button class="default-button-orange min-w-40" @click="stopSequence">
                 Stoppe Sequenz
             </button>
+            <button class="default-button-red min-w-40" @click="resetSequence">
+                Reset Sequenz
+            </button>
         </div>
     </div>
 </template>
@@ -34,6 +37,15 @@ async function startSequence() {
 async function stopSequence() {
     try {
         const data = apiService.sequenceAction("stop");
+        console.log("Antwort:", data);
+    } catch (error) {
+        console.log("Fehler:", error);
+    }
+}
+
+async function resetSequence() {
+    try {
+        const data = apiService.sequenceAction("reset");
         console.log("Antwort:", data);
     } catch (error) {
         console.log("Fehler:", error);

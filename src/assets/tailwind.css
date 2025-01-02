@@ -12,11 +12,11 @@
   }
 
   .default-button-orange {
-    @apply min-w-24 min-h-10 bg-orange-800 rounded-md text-white font-medium transition-colors w-full;
+    @apply min-w-24 min-h-10 bg-orange-700 rounded-md text-white font-medium transition-colors w-full;
   }
 
   .default-button-orange:active {
-    @apply bg-orange-700;
+    @apply bg-orange-600;
   }
 
   .default-button-red {
