@@ -1,6 +1,6 @@
 <template>
   <div class="container ">
-    <h1>Test</h1>
+    <h1>{{ $t('components.test.title') }}</h1>
 
 
     <wshvFrame />

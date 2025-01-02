@@ -41,10 +41,12 @@
 </template>
 
 <script setup>
-import { apiStore } from '@/store/store';
-import apiService from "@/services/apiService";
-import ConnectionButton from "@/components/helpers/ConnectionButton.vue";
+import { useI18n } from 'vue-i18n';
+import { apiStore } from '../store/store';
+import apiService from '../services/apiService';
+import ConnectionButton from './helpers/ConnectionButton.vue';
 
+const { t } = useI18n();
 const store = apiStore();
 
 async function toggleCameraConnection() {
@@ -55,7 +57,7 @@ async function toggleCameraConnection() {
             await apiService.cameraAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Kamera-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.camera.error'), error.response?.data || error);
     }
 }
 
@@ -67,7 +69,7 @@ async function toggleMountConnection() {
             await apiService.mountAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Mount-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.mount.error'), error.response?.data || error);
     }
 }
 
@@ -79,7 +81,7 @@ async function toggleFilterConnection() {
             await apiService.filterAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Filter-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.filter.error'), error.response?.data || error);
     }
 }
 
@@ -91,7 +93,7 @@ async function toggleFocuserConnection() {
             await apiService.focusAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Kamera-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.focuser.error'), error.response?.data || error);
     }
 }
 
@@ -103,7 +105,7 @@ async function toggleRotatorConnection() {
             await apiService.rotatorAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Rotator-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.rotator.error'), error.response?.data || error);
     }
 }
 
@@ -115,8 +117,7 @@ async function toggleGuiderConnection() {
             await apiService.guiderAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Kamera-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.guider.error'), error.response?.data || error);
     }
 }
-
 </script>

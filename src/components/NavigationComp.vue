@@ -88,6 +88,31 @@
       >
         <ListBulletIcon class="icon" />
       </router-link>
+      
+      <div class="relative">
+        <button
+          class="nav-button"
+          :title="$t('components.language.select')"
+          @click="toggleLanguageMenu"
+        >
+          <GlobeAltIcon class="icon" />
+        </button>
+        <div
+          v-if="showLanguageMenu"
+          class="absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5"
+        >
+          <div class="py-1">
+            <button
+              v-for="lang in languages"
+              :key="lang.code"
+              @click="changeLanguage(lang.code)"
+              class="block w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-600"
+            >
+              {{ lang.name }}
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -98,7 +123,28 @@ import {
   CameraIcon,
   EyeIcon,
   ListBulletIcon,
+  GlobeAltIcon,
 } from '@heroicons/vue/24/outline';
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { locale, t } = useI18n();
+const $t = t;
+const showLanguageMenu = ref(false);
+
+const languages = [
+  { code: 'en', name: $t('components.language.en') },
+  { code: 'de', name: $t('components.language.de') }
+];
+
+function toggleLanguageMenu() {
+  showLanguageMenu.value = !showLanguageMenu.value;
+}
+
+function changeLanguage(lang) {
+  locale.value = lang;
+  showLanguageMenu.value = false;
+}
 </script>
 
 <style scoped>

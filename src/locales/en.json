@@ -1,4 +1,9 @@
 {
+  "pages": {
+    "equipment": {
+      "title": "Equipment Control"
+    }
+  },
   "app": {
     "unreachable": "NINA is unreachable!",
     "connecting": "Attempting to establish connection"
@@ -7,27 +12,33 @@
     "connectEquipment": {
       "camera": {
         "connect": "Connect camera",
-        "disconnect": "Disconnect camera"
+        "disconnect": "Disconnect camera",
+        "error": "Error controlling camera:"
       },
       "filter": {
         "connect": "Connect filter wheel",
-        "disconnect": "Disconnect filter wheel"
+        "disconnect": "Disconnect filter wheel",
+        "error": "Error controlling filter wheel:"
       },
       "mount": {
         "connect": "Connect mount",
-        "disconnect": "Disconnect mount"
+        "disconnect": "Disconnect mount",
+        "error": "Error controlling mount:"
       },
       "focuser": {
         "connect": "Connect focuser",
-        "disconnect": "Disconnect focuser"
+        "disconnect": "Disconnect focuser",
+        "error": "Error controlling focuser:"
       },
       "rotator": {
         "connect": "Connect rotator",
-        "disconnect": "Disconnect rotator"
+        "disconnect": "Disconnect rotator",
+        "error": "Error controlling rotator:"
       },
       "guider": {
         "connect": "Connect guider",
-        "disconnect": "Disconnect guider"
+        "disconnect": "Disconnect guider",
+        "error": "Error controlling guider:"
       }
     },
     "lastLogs": {
@@ -41,6 +52,64 @@
       "mount": "Mount",
       "guider": "Guider",
       "sequence": "Sequence"
-    }
+    },
+    "language": {
+      "en": "English",
+      "de": "German",
+      "select": "Select language"
+    },
+    "equipment": {
+      "control": "Equipment Control"
+    },
+    "sequence": {
+      "title": "Sequence",
+      "wshv": "WSHV"
+    },
+    "mount": {
+      "title": "Mount",
+      "slew": "Slew"
+    },
+    "guider": {
+      "connect": "Please connect guider",
+      "rms_error": "RMS Error in Arcseconds"
+    },
+    "focuser": {
+      "title": "Focuser",
+      "new_position": "New position:",
+      "move": "Move",
+      "start_autofocus": "Start autofocus",
+      "cancel_autofocus": "Cancel autofocus",
+      "autofocus_graph": "Autofocus graph",
+      "autofocus_running": "Autofocus running",
+      "autofocus_error": "Autofocus error"
+    },
+    "camera": {
+      "title": "Camera",
+      "connect": "Please connect camera",
+      "settings": "Settings",
+      "loop": "Loop",
+      "capture_running": "Capture running",
+      "image_loading": "Image loading...",
+      "start_capture": "Start capture",
+      "cancel": "Cancel"
+    },
+    "tppa": {
+      "title": "Three Point Polar Alignment",
+      "camera_mount_required": "Camera must be connected and mount must be unparked",
+      "start_alignment": "Start Alignment",
+      "stop_alignment": "Stop Alignment",
+      "altitude_error": "Altitude Error:",
+      "azimuth_error": "Azimuth Error:",
+      "total_error": "Total Error:",
+      "last_update": "Last update:"
+    },
+    "logs": {
+      "loading": "Loading data...",
+      "error": "Error loading data:"
+    },
+    "test": {
+      "title": "Test"
+    },
+    "loading": "Loading..."
   }
 }

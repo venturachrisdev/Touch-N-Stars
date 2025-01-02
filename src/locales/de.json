@@ -1,33 +1,44 @@
 {
+  "pages": {
+    "equipment": {
+      "title": "Ausrüstungs-Steuerung"
+    }
+  },
   "app": {
     "unreachable": "NINA ist nicht erreichbar!",
-    "connecting": "Es wird versucht eine Verbindung aufzubauen"
+    "connecting": "Versuche Verbindung herzustellen"
   },
   "components": {
     "connectEquipment": {
       "camera": {
         "connect": "Kamera verbinden",
-        "disconnect": "Kamera trennen"
+        "disconnect": "Kamera trennen",
+        "error": "Fehler bei der Kamera-Steuerung:"
       },
       "filter": {
         "connect": "Filterrad verbinden",
-        "disconnect": "Filterrad trennen"
+        "disconnect": "Filterrad trennen",
+        "error": "Fehler bei der Filterrad-Steuerung:"
       },
       "mount": {
         "connect": "Montierung verbinden",
-        "disconnect": "Montierung trennen"
+        "disconnect": "Montierung trennen",
+        "error": "Fehler bei der Montierungs-Steuerung:"
       },
       "focuser": {
-        "connect": "Fokusierer verbinden",
-        "disconnect": "Fokusierer trennen"
+        "connect": "Fokussierer verbinden",
+        "disconnect": "Fokussierer trennen",
+        "error": "Fehler bei der Fokussierer-Steuerung:"
       },
       "rotator": {
         "connect": "Rotator verbinden",
-        "disconnect": "Rotator trennen"
+        "disconnect": "Rotator trennen",
+        "error": "Fehler bei der Rotator-Steuerung:"
       },
       "guider": {
         "connect": "Guider verbinden",
-        "disconnect": "Guider trennen"
+        "disconnect": "Guider trennen",
+        "error": "Fehler bei der Guider-Steuerung:"
       }
     },
     "lastLogs": {
@@ -41,6 +52,56 @@
       "mount": "Montierung",
       "guider": "Guider",
       "sequence": "Sequenz"
+    },
+    "language": {
+      "en": "Englisch",
+      "de": "Deutsch",
+      "select": "Sprache auswählen"
+    },
+    "equipment": {
+      "control": "Ausrüstungs-Steuerung"
+    },
+    "sequence": {
+      "title": "Sequenz",
+      "wshv": "WSHV"
+    },
+    "mount": {
+      "title": "Montierung",
+      "slew": "Schwenken"
+    },
+    "guider": {
+      "connect": "Bitte Guider verbinden",
+      "rms_error": "RMS Fehler in Arcseconds"
+    },
+    "focuser": {
+      "title": "Okularauszug",
+      "new_position": "Neue Position:",
+      "move": "Bewegen",
+      "start_autofocus": "Starte Autofokus",
+      "cancel_autofocus": "Autofokus abbrechen",
+      "autofocus_graph": "Autofokus Grafik",
+      "autofocus_running": "Autofokus läuft",
+      "autofocus_error": "Fehler beim Autofokus"
+    },
+    "camera": {
+      "title": "Fotoaufnahme",
+      "connect": "Bitte Kamera verbinden",
+      "settings": "Einstellungen",
+      "loop": "Dauerschleife",
+      "capture_running": "Aufnahme läuft",
+      "image_loading": "Bild lädt...",
+      "start_capture": "Aufnahme starten",
+      "cancel": "Abbrechen"
+    },
+    "tppa": {
+      "title": "Three Point Polar Alignment",
+      "camera_mount_required": "Kamera muss verbunden sein und die Montierung muss ausgeparkt sein",
+      "start_alignment": "Start Alignment",
+      "stop_alignment": "Stop Alignment",
+      "altitude_error": "Altitude Fehler:",
+      "azimuth_error": "Azimuth Fehler:",
+      "total_error": "Gesamtfehler:",
+      "last_update": "Letzte Aktualisierung:"
     }
   }
 }

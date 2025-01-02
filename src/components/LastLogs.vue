@@ -1,11 +1,11 @@
 <template>
   <div class="p-4">
-    <!-- Ladeanzeige -->
-    <div v-if="isLoading" class="text-gray-500">Daten werden geladen...</div>
+    <!-- Loading indicator -->
+    <div v-if="isLoading" class="text-gray-500">{{ $t('components.logs.loading') }}</div>
 
-    <!-- Fehleranzeige -->
+    <!-- Error message -->
     <div v-else-if="error" class="text-red-500">
-      Fehler beim Laden der Daten: {{ error.message }}
+      {{ $t('components.logs.error') }} {{ error.message }}
     </div>
 
     <!-- Tabelle anzeigen, wenn Daten verfügbar sind -->
