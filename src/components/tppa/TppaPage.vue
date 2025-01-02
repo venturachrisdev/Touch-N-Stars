@@ -30,11 +30,11 @@
               <div v-if="showAltitudeError">
                 <div v-if="altitudeCorDirectionTop" class="flex flex-row space-x-2">
                   <ArrowUpIcon  class="size-6 text-blue-500" />
-                  <p>Up</p>
+                  <p>Rauf</p>
                 </div>
                 <div v-else  class="flex flex-row space-x-2"> 
                 <ArrowDownIcon class="size-6 text-blue-500" />
-                <p>Down</p>
+                <p>Runter</p>
               </div>
               </div>
             </div>
