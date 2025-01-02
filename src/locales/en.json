@@ -1,0 +1,46 @@
+{
+  "app": {
+    "unreachable": "NINA is unreachable!",
+    "connecting": "Attempting to establish connection"
+  },
+  "components": {
+    "connectEquipment": {
+      "camera": {
+        "connect": "Connect camera",
+        "disconnect": "Disconnect camera"
+      },
+      "filter": {
+        "connect": "Connect filter wheel",
+        "disconnect": "Disconnect filter wheel"
+      },
+      "mount": {
+        "connect": "Connect mount",
+        "disconnect": "Disconnect mount"
+      },
+      "focuser": {
+        "connect": "Connect focuser",
+        "disconnect": "Disconnect focuser"
+      },
+      "rotator": {
+        "connect": "Connect rotator",
+        "disconnect": "Disconnect rotator"
+      },
+      "guider": {
+        "connect": "Connect guider",
+        "disconnect": "Disconnect guider"
+      }
+    },
+    "lastLogs": {
+      "loading": "Loading data...",
+      "error": "Error loading data:"
+    },
+    "navigation": {
+      "equipment": "Equipment",
+      "camera": "Camera",
+      "autofocus": "Autofocus",
+      "mount": "Mount",
+      "guider": "Guider",
+      "sequence": "Sequence"
+    }
+  }
+}

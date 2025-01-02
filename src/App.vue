@@ -2,8 +2,8 @@
   <div class="dark min-h-screen bg-gray-900 text-white">
     <div v-if="!store.isBackendReachable">
       <div class="flex flex-col w-full min-h-screen items-center justify-center text-2xl text-red-700 text-center">
-        <p>NINA ist nicht erreichbar!</p>
-        <p>Es wird versucht eine Verbinung aufzubauen</p>
+        <p>{{ t('app.unreachable') }}</p>
+        <p>{{ t('app.connecting') }}</p>
         <!--Spinner-->
         <div role="status" class="mt-4">
           <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -47,6 +47,9 @@
 import { onMounted, onBeforeUnmount } from 'vue';
 import { apiStore } from '@/store/store';
 import { useHead } from '@vueuse/head';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 import NavigationComp from './components/NavigationComp.vue';
 import LastMessage from './components/LastMessage.vue';
 

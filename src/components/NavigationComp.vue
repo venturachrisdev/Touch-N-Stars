@@ -5,7 +5,7 @@
         to="/equipment"
         class="nav-button"
         active-class="active-nav-button"
-        title="Ausrüstung"
+        :title="$t('components.navigation.equipment')"
       >
         <LinkIcon class="icon" />
       </router-link>
@@ -13,7 +13,7 @@
         to="/camera"
         class="nav-button"
         active-class="active-nav-button"
-        title="Kamera"
+        :title="$t('components.navigation.camera')"
       >
         <CameraIcon class="icon" />
       </router-link>
@@ -21,7 +21,7 @@
         to="/autofocus"
         class="nav-button"
         active-class="active-nav-button"
-        title="Autofokus"
+        :title="$t('components.navigation.autofocus')"
       >
         <EyeIcon class="icon" />
       </router-link>
@@ -30,7 +30,7 @@
         to="/mount"
         class="nav-button"
         active-class="active-nav-button"
-        title="Montierung"
+        :title="$t('components.navigation.mount')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@
         to="/guider"
         class="nav-button"
         active-class="active-nav-button"
-        title="Guider"
+        :title="$t('components.navigation.guider')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@
         to="/sequence"
         class="nav-button"
         active-class="active-nav-button"
-        title="Sequenz"
+        :title="$t('components.navigation.sequence')"
       >
         <ListBulletIcon class="icon" />
       </router-link>

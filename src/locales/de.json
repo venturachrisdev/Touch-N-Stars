@@ -1,0 +1,46 @@
+{
+  "app": {
+    "unreachable": "NINA ist nicht erreichbar!",
+    "connecting": "Es wird versucht eine Verbindung aufzubauen"
+  },
+  "components": {
+    "connectEquipment": {
+      "camera": {
+        "connect": "Kamera verbinden",
+        "disconnect": "Kamera trennen"
+      },
+      "filter": {
+        "connect": "Filterrad verbinden",
+        "disconnect": "Filterrad trennen"
+      },
+      "mount": {
+        "connect": "Montierung verbinden",
+        "disconnect": "Montierung trennen"
+      },
+      "focuser": {
+        "connect": "Fokusierer verbinden",
+        "disconnect": "Fokusierer trennen"
+      },
+      "rotator": {
+        "connect": "Rotator verbinden",
+        "disconnect": "Rotator trennen"
+      },
+      "guider": {
+        "connect": "Guider verbinden",
+        "disconnect": "Guider trennen"
+      }
+    },
+    "lastLogs": {
+      "loading": "Daten werden geladen...",
+      "error": "Fehler beim Laden der Daten:"
+    },
+    "navigation": {
+      "equipment": "Ausrüstung",
+      "camera": "Kamera",
+      "autofocus": "Autofokus",
+      "mount": "Montierung",
+      "guider": "Guider",
+      "sequence": "Sequenz"
+    }
+  }
+}
