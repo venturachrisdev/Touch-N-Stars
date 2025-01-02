@@ -95,7 +95,12 @@
       "start_capture": "Aufnahme starten",
       "cancel": "Abbrechen",
       "exposure_time": "Belichtungszeit:",
-      "gain_iso": "Gain / ISO:"
+      "gain_iso": "Gain / ISO:",
+      "name": "Kameraname",
+      "gain": "Gain",
+      "offset": "Offset",
+      "temperature": "Temperatur",
+      "standby": "Standby"
     },
     "tppa": {
       "title": "Three Point Polar Alignment",
