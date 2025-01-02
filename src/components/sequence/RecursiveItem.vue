@@ -21,15 +21,20 @@ function statusColor(status) {
 function removeTriggerSuffix(name) {
   return name.replace(/_Trigger$/, '')
 }
+
+function filterTriggerFields(trigger) {
+  const excludedKeys = ['Name', 'Status', 'Coordinates']
+  return Object.entries(trigger).filter(([key]) => {
+    return !excludedKeys.includes(key)
+  })
+}
+
 </script>
 
 <template>
   <div>
-    <div
-      v-for="(item, index) in props.items"
-      :key="index"
-      class="border-l border-gray-400 pl-4 mb-2 text-xs md:text-base"
-    >
+    <div v-for="(item, index) in props.items" :key="index"
+      class="border-l border-gray-400 pl-4 mb-2 text-xs md:text-base">
       <!-- Name & Status -->
       <div class="flex items-center justify-between mb-1">
         <h3 class="font-medium ">{{ item.Name }}</h3>
@@ -61,18 +66,29 @@ function removeTriggerSuffix(name) {
       </div>
 
       <!-- Triggers anzeigen -->
-      <div v-if="item.Triggers && item.Triggers.length" class="pl-4 mt-2">
+      <div v-if="item.Triggers && item.Triggers.length" class="pl-4 mt-2 ">
         <h4 class="font-semibold mb-1 text-sm md:text-base">Triggers:</h4>
-        <div
-          v-for="(trigger, tIndex) in item.Triggers"
-          :key="tIndex"
-          class="flex items-center justify-between mb-1 border-l border-gray-300 pl-2"
-        >
-          <span class="text-gray-500">{{ removeTriggerSuffix(trigger.Name) }}</span>
-          <!-- Trigger-Status -->
-          <span :class="statusColor(trigger.Status)">
-            {{ trigger.Status }}
-          </span>
+        <div v-for="(trigger, tIndex) in item.Triggers" :key="tIndex">
+          <div class="border-l border-gray-300 pl-2">
+            <div class="flex items-center justify-between mb-1 pl-2">
+              <!-- Trigger-Name -->
+              <span>{{ removeTriggerSuffix(trigger.Name) }}</span>
+
+
+
+              <!-- Trigger-Status -->
+              <span :class="statusColor(trigger.Status)">
+                {{ trigger.Status }}
+              </span>
+            </div>
+            <div class="flex flex-col  justify-between ml-4 mb-1 border-l border-gray-300 pl-2">
+              <!-- Unbekannte (dynamische) Felder -->
+              <div v-for="[key, value] in filterTriggerFields(trigger)" :key="key" class="text-xs text-gray-600 ">
+                <!-- key zeigt den Feldnamen an, value den Inhalt -->
+                <span>{{ key }}: {{ value }} </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
