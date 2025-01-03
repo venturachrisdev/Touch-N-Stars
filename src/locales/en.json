@@ -11,23 +11,6 @@
   },
   "components": {
     "framing": {
-      "slewAndCenter": {
-        "title": "Slew and Center",
-        "ra": "RA:",
-        "dec": "Dec:",
-        "slew": "Slew",
-        "slewAndCenter": "Slew and Center",
-        "errors": {
-          "invalidRAFormat": "Invalid RA format. Please use HH:MM:SS.",
-          "invalidDECFormat": "Invalid DEC format. Please use ±DD:MM:SS.",
-          "invalidRAInput": "Invalid RA input.",
-          "invalidDECInput": "Invalid DEC input.",
-          "apiUnreachable": "Framing API unreachable",
-          "apiResponseError": "Error in API response:",
-          "mountInfoError": "Error getting mount information:",
-          "invalidFormat": "Invalid format. Expected: ±DD:MM:SS.s"
-        }
-      },
       "search": {
         "title": "Search",
         "placeholder": "Enter a search term..."
@@ -95,7 +78,25 @@
     },
     "sequence": {
       "title": "Sequence",
-      "wshv": "WSHV"
+      "wshv": "WSHV",
+      "noSequenceLoaded": "No sequence loaded",
+      "startSequence": "Start sequence",
+      "stopSequence": "Stop sequence",
+      "resetSequence": "Reset sequence",
+      "exposures": "Exposures",
+      "exposureTime": "Exposure time",
+      "filter": "Filter",
+      "ditherEvery": "Dither every",
+      "type": "Type",
+      "deltaHFR": "DeltaHFR",
+      "sampleSize": "Sample size",
+      "triggers": "Triggers",
+      "details": {
+        "of": "of",
+        "gain": "Gain",
+        "ditherAfter": "Dither after",
+        "exposures": "exposures"
+      }
     },
     "mount": {
       "title": "Mount",
@@ -203,6 +204,25 @@
       "title": "Test"
     },
     "loading": "Loading...",
+    "slewAndCenter": {
+      "title": "Slew and Center",
+      "ra": "RA:",
+      "dec": "Dec:",
+      "ra_placeholder": "RA 03:47:28.2",
+      "dec_placeholder": "Dec +24:06:19",
+      "slew": "Slew",
+      "slew_and_center": "Slew and Center",
+      "errors": {
+        "invalidRAFormat": "Invalid RA format. Please use HH:MM:SS.",
+        "invalidDECFormat": "Invalid DEC format. Please use ±DD:MM:SS.",
+        "invalidRAInput": "Invalid RA input.",
+        "invalidDECInput": "Invalid DEC input.",
+        "apiUnreachable": "Framing API unreachable",
+        "invalidFormat": "Invalid format. Expected: ±DD:MM:SS.s",
+        "apiResponseError": "Error in API response:",
+        "mountInfoError": "Error fetching mount information:"
+      }
+    },
     "filterwheel": {
       "filter": "Filter:",
       "unknown": "Unknown",

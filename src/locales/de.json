@@ -11,23 +11,6 @@
   },
   "components": {
     "framing": {
-      "slewAndCenter": {
-        "title": "Schwenken und Zentrieren",
-        "ra": "RA:",
-        "dec": "Dec:",
-        "slew": "Schwenken",
-        "slewAndCenter": "Schwenken und Zentrieren",
-        "errors": {
-          "invalidRAFormat": "Ungültiges RA-Format. Bitte verwenden Sie HH:MM:SS.",
-          "invalidDECFormat": "Ungültiges DEC-Format. Bitte verwenden Sie ±DD:MM:SS.",
-          "invalidRAInput": "Ungültige RA-Eingabe.",
-          "invalidDECInput": "Ungültige DEC-Eingabe.",
-          "apiUnreachable": "Framing API nicht erreicht",
-          "apiResponseError": "Fehler in der API-Antwort:",
-          "mountInfoError": "Fehler beim Abrufen der Mount-Informationen:",
-          "invalidFormat": "Ungültiges Format. Erwartet: ±DD:MM:SS.s"
-        }
-      },
       "search": {
         "title": "Suche",
         "placeholder": "Geben Sie einen Suchbegriff ein..."
@@ -95,7 +78,25 @@
     },
     "sequence": {
       "title": "Sequenz",
-      "wshv": "WSHV"
+      "wshv": "WSHV",
+      "noSequenceLoaded": "Keine Sequenz geladen",
+      "startSequence": "Starte Sequenz",
+      "stopSequence": "Stoppe Sequenz",
+      "resetSequence": "Reset Sequenz",
+      "exposures": "Belichtungen",
+      "exposureTime": "Belichtungszeit",
+      "filter": "Filter",
+      "ditherEvery": "Dither alle",
+      "type": "Type",
+      "deltaHFR": "DeltaHFR",
+      "sampleSize": "SampleSize",
+      "triggers": "Triggers",
+      "details": {
+        "of": "von",
+        "gain": "Gain",
+        "ditherAfter": "Dither nach",
+        "exposures": "Belichtungen"
+      }
     },
     "mount": {
       "title": "Montierung",
@@ -131,7 +132,7 @@
       "title": "Guider",
       "connect": "Bitte Guider verbinden",
       "disconnect": "Guider trennen",
-      "error":"Fehler bei der Kamera-Steuerung:",
+      "error": "Fehler bei der Kamera-Steuerung:",
       "rms_error": "RMS Fehler in Arcseconds",
       "start": "Start",
       "stop": "Stop"
@@ -203,6 +204,25 @@
       "title": "Test"
     },
     "loading": "Lade...",
+    "slewAndCenter": {
+      "title": "Schwenken und Zentrieren",
+      "ra": "RA:",
+      "dec": "Dec:",
+      "ra_placeholder": "RA 03:47:28.2",
+      "dec_placeholder": "Dec +24:06:19",
+      "slew": "Schwenken",
+      "slew_and_center": "Schwenken und Zentrieren",
+      "errors": {
+        "invalidRAFormat": "Ungültiges RA-Format. Bitte verwenden Sie HH:MM:SS.",
+        "invalidDECFormat": "Ungültiges DEC-Format. Bitte verwenden Sie ±DD:MM:SS.",
+        "invalidRAInput": "Ungültige RA-Eingabe.",
+        "invalidDECInput": "Ungültige DEC-Eingabe.",
+        "apiUnreachable": "Framing API nicht erreichbar",
+        "invalidFormat": "Ungültiges Format. Erwartet: ±DD:MM:SS.s",
+        "apiResponseError": "Fehler in der API-Antwort:",
+        "mountInfoError": "Fehler beim Abrufen der Montierungs-Informationen:"
+      }
+    },
     "filterwheel": {
       "filter": "Filter:",
       "unknown": "Unbekannt",

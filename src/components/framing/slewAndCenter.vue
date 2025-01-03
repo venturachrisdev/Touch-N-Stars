@@ -1,33 +1,33 @@
 <template>
     <div class="container flex items-center justify-center">
       <div class="container max-w-md">
-        <h5 class="text-xl font-bold text-white mb-4">{{ $t('components.framing.slewAndCenter.title') }}</h5>
+        <h5 class="text-xl font-bold text-white mb-4">{{ $t('components.slewAndCenter.title') }}</h5>
         <div class="flex flex-row justify-center items-center space-x-4">
-          <p>{{ $t('components.framing.slewAndCenter.ra') }}</p>
+          <p>{{ $t('components.slewAndCenter.ra') }}</p>
           <input
             type="text"
             v-model="localRAangleString"
             @blur="handleBlurRA"
             @keyup.enter="handleBlurRA"
             class="text-black w-full p-2 border border-gray-300 rounded"
-            placeholder="RA 03:47:28.2"
+            :placeholder="$t('components.slewAndCenter.ra_placeholder')"
           />
-          <p>{{ $t('components.framing.slewAndCenter.dec') }}</p>
+          <p>{{ $t('components.slewAndCenter.dec') }}</p>
           <input
             type="text"
             v-model="localDECangleString"
             @blur="handleBlurDEC"
             @keyup.enter="handleBlurDEC"
             class="text-black w-full p-2 border border-gray-300 rounded"
-            placeholder="Dec +24:06:19"
+            :placeholder="$t('components.slewAndCenter.dec_placeholder')"
           />
         </div>
         <div class="mt-4 grid sm:grid-cols-2 space-y-2 sm:space-x-2 sm:space-y-0">
           <button @click="slew" class="default-button-cyan">
-            {{ $t('components.framing.slewAndCenter.slew') }}
+            {{ $t('components.slewAndCenter.slew') }}
           </button>
           <button @click="slewAndCenter" class="default-button-cyan">
-            {{ $t('components.framing.slewAndCenter.slewAndCenter') }}
+            {{ $t('components.slewAndCenter.slew_and_center') }}
           </button>
         </div>
       </div>
@@ -77,10 +77,10 @@
     const isDECValid = validateDEC(localDECangleString.value);
   
     if (!isRAValid) {
-      alert(t('components.framing.slewAndCenter.errors.invalidRAFormat'));
+      alert(t('components.slewAndCenter.errors.invalidRAFormat'));
     }
     if (!isDECValid) {
-      alert(t('components.framing.slewAndCenter.errors.invalidDECFormat'));
+      alert(t('components.slewAndCenter.errors.invalidDECFormat'));
     }
   
     return isRAValid && isDECValid;
@@ -90,7 +90,7 @@
     if (validateRA(localRAangleString.value)) {
       updateRA();
     } else {
-      alert(t('components.framing.slewAndCenter.errors.invalidRAInput'));
+      alert(t('components.slewAndCenter.errors.invalidRAInput'));
     }
   }
   
@@ -98,7 +98,7 @@
     if (validateDEC(localDECangleString.value)) {
       updateDec();
     } else {
-      alert(t('components.framing.slewAndCenter.errors.invalidDECInput'));
+      alert(t('components.slewAndCenter.errors.invalidDECInput'));
     }
   }
   
@@ -116,7 +116,7 @@
     try {
       await apiService.slewAndCenter(RAangle.value, DECangle.value, false);
     } catch (error) {
-      console.error(t('components.framing.slewAndCenter.errors.apiUnreachable'), error);
+      console.error(t('components.slewAndCenter.errors.apiUnreachable'), error);
     }
   }
   
@@ -126,7 +126,7 @@
     try {
       await apiService.slewAndCenter(RAangle.value, DECangle.value, true);
     } catch (error) {
-      console.error(t('components.framing.slewAndCenter.errors.apiUnreachable'), error);
+      console.error(t('components.slewAndCenter.errors.apiUnreachable'), error);
     }
     emit("update:RAangleString", localRAangleString.value);
     emit("update:DECangleString", localDECangleString.value);
@@ -146,7 +146,7 @@
     const parts = stripped.split(":");
   
     if (parts.length !== 3) {
-      throw new Error(t('components.framing.slewAndCenter.errors.invalidFormat'));
+      throw new Error(t('components.slewAndCenter.errors.invalidFormat'));
     }
   
     const degrees = parseFloat(parts[0]);
@@ -162,10 +162,10 @@
       if (response.Success) {
         Info.value = response.Response;
       } else {
-        console.error(t('components.framing.slewAndCenter.errors.apiResponseError'), response.Error);
+        console.error(t('components.slewAndCenter.errors.apiResponseError'), response.Error);
       }
     } catch (error) {
-      console.error(t('components.framing.slewAndCenter.errors.mountInfoError'), error);
+      console.error(t('components.slewAndCenter.errors.mountInfoError'), error);
     }
   }
   
