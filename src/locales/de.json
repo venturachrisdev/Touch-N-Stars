@@ -139,7 +139,8 @@
       "moving": "Bewegt sich",
       "stopped": "Steht",
       "autofocus_active": "Autofokus aktiv",
-      "autofocus": "Autofokus"
+      "autofocus": "Autofokus",
+      "last_autofocus": "Letzter Autofokus"
     },
     "camera": {
       "title": "Fotoaufnahme",

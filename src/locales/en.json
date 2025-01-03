@@ -137,7 +137,8 @@
       "moving": "Moving",
       "stopped": "Stopped",
       "autofocus_active": "Autofocus active",
-      "autofocus": "Autofocus"
+      "autofocus": "Autofocus",
+      "last_autofocus": "Last autofocus"
     },
     "camera": {
       "title": "Camera",
