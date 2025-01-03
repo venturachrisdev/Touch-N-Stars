@@ -20,7 +20,23 @@ const apiService = {
     }
   },
 
-    //-------------------------------------  sequence ---------------------------------------
+  //-------------------------------------  Image History ---------------------------------------
+  // application actions
+  async imageHistoryAll() {
+    try {
+      const response = await axios.get(`${BASE_URL}/image-history`, {
+        params: { all: true, },
+      });
+      //console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error read Image History:", error);
+      throw error;
+    }
+  },
+
+
+  //-------------------------------------  sequence ---------------------------------------
   // sequence actions
   sequenceAction(action) {
     return this._simpleGetRequest(`${BASE_URL}/sequence/${action}`);

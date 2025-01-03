@@ -3,14 +3,14 @@
     <h1>Test</h1>
 
 
-    <wshvFrame />
+    <SequenzGraph />
 
 
   </div>
 </template>
 
 <script setup>
-import wshvFrame from './sequence/wshvFrame.vue';
+import SequenzGraph from './sequence/SequenzGraph.vue';
 
 
 </script>

@@ -9,6 +9,7 @@ export const apiStore = defineStore('store', {
     intervalId: null,
     intervalIdGraph: null,
     profileInfo: [],
+    imageHistoryInfo:[],
     sequenceInfo:[],
     cameraInfo: { IsExposing: false },
     mountInfo: [],
@@ -42,6 +43,7 @@ export const apiStore = defineStore('store', {
         }
 
         const [
+          imageHistoryResponse,
           sequenceResponse,
           cameraResponse,
           mountResponse,
@@ -53,6 +55,7 @@ export const apiStore = defineStore('store', {
           guiderChartResponse,
           logsResponse,
         ] = await Promise.all([
+          apiService.imageHistoryAll(),
           apiService.sequenceAction('json'),
           apiService.cameraAction('info'),
           apiService.mountAction('info'),
@@ -66,6 +69,7 @@ export const apiStore = defineStore('store', {
         ]);
 
         this.handleApiResponses({
+          imageHistoryResponse,
           sequenceResponse,
           cameraResponse,
           mountResponse,
@@ -83,6 +87,7 @@ export const apiStore = defineStore('store', {
     },
 
     handleApiResponses({
+      imageHistoryResponse,
       sequenceResponse,
       cameraResponse,
       mountResponse,
@@ -94,6 +99,14 @@ export const apiStore = defineStore('store', {
       guiderChartResponse,
       logsResponse,
     }) {
+      if (imageHistoryResponse.Success) {
+        this.imageHistoryInfo = imageHistoryResponse.Response;
+        console.log('Image History abgerufen:', this.imageHistoryInfo);
+      } else {
+        this.sequenceIsLoaded = false;
+        //console.error('Fehler in der Sequence-API-Antwort:', sequenceResponse.Error);
+      }
+
       if (sequenceResponse.Success) {
         this.sequenceInfo = sequenceResponse.Response;
         this.sequenceIsLoaded = true;
