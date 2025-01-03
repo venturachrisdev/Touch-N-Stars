@@ -157,10 +157,10 @@ function formatMessage(message) {
         azimuthCorDirectionLeft.value = AzimuthError > 0 ? true : false;
         altitudeCorDirectionTop.value = AltitudeError < 0 ? true : false;
       } else {
-        return t('tppa.error_values_missing');
+        return t('components.tppa.error_values_missing');
       }
       } else {
-        return t('tppa.unknown_response_format');
+        return t('components.tppa.unknown_response_format');
       }
   } else {
     return JSON.stringify(message, null, 2);

@@ -121,6 +121,7 @@
       "error_values_missing": "Fehlende Fehlerwerte",
       "unknown_response_format": "Unbekanntes Antwortformat",
       "west": "Westen",
+      "east": "Osten",
       "down": "Runter",
       "up": "Hoch",
       "not_available": "Nicht verfügbar"
