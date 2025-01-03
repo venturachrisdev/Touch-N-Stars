@@ -57,7 +57,13 @@
       "rotator": {
         "connect": "Rotator verbinden",
         "disconnect": "Rotator trennen",
-        "error": "Fehler bei der Rotator-Steuerung:"
+        "error": "Fehler bei der Rotator-Steuerung:",
+        "label": "Rotator:",
+        "move": "Bewegen",
+        "notConnected": "Bitte Rotator verbinden",
+        "currentPosition": "Aktuelle Position:",
+        "moving": "Bewegt sich",
+        "stopped": "Steht"
       },
       "guider": {
         "connect": "Guider verbinden",
@@ -124,6 +130,8 @@
     "guider": {
       "title": "Guider",
       "connect": "Bitte Guider verbinden",
+      "disconnect": "Guider trennen",
+      "error":"Fehler bei der Kamera-Steuerung:",
       "rms_error": "RMS Fehler in Arcseconds",
       "start": "Start",
       "stop": "Stop"

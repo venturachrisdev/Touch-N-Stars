@@ -57,14 +57,20 @@
       "rotator": {
         "connect": "Connect rotator",
         "disconnect": "Disconnect rotator",
-        "error": "Error controlling rotator:"
+        "error": "Error controlling rotator:",
+        "label": "Rotator:",
+        "move": "Move",
+        "notConnected": "Please connect rotator",
+        "currentPosition": "Current position:",
+        "moving": "Moving",
+        "stopped": "Stopped"
       },
       "guider": {
         "connect": "Connect guider",
         "disconnect": "Disconnect guider",
         "error": "Error controlling guider:",
         "start": "Start",
-        "stop" : "Stop"
+        "stop": "Stop"
       }
     },
     "lastLogs": {
@@ -121,13 +127,15 @@
         "notSlewing": "Not slewing"
       }
     },
-    "guider": {
-      "title": "Guider",
-      "connect": "Please connect guider",
-      "rms_error": "RMS Error in Arcseconds",
-      "start": "Start",
-      "stop": "Stop"
-    },
+      "guider": {
+        "connect": "Connect guider",
+        "disconnect": "Disconnect guider",
+        "error": "Error controlling guider:",
+        "start": "Start",
+        "stop": "Stop",
+        "rms_error": "RMS Error in Arcseconds",
+        "title": "Guider"
+      },
     "focuser": {
       "title": "Focuser",
       "new_position": "New position:",
