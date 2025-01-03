@@ -83,7 +83,14 @@
       "cancel_autofocus": "Cancel autofocus",
       "autofocus_graph": "Autofocus graph",
       "autofocus_running": "Autofocus running",
-      "autofocus_error": "Autofocus error"
+      "autofocus_error": "Autofocus error",
+      "please_connect_focuser": "Please connect focuser",
+      "current_position": "Current position:",
+      "temperature": "Temperature:",
+      "moving": "Moving",
+      "stopped": "Stopped",
+      "autofocus_active": "Autofocus active",
+      "autofocus": "Autofocus"
     },
     "camera": {
       "title": "Camera",

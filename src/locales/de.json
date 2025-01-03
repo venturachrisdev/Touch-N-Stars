@@ -83,7 +83,14 @@
       "cancel_autofocus": "Autofokus abbrechen",
       "autofocus_graph": "Autofokus Grafik",
       "autofocus_running": "Autofokus läuft",
-      "autofocus_error": "Fehler beim Autofokus"
+      "autofocus_error": "Fehler beim Autofokus",
+      "please_connect_focuser": "Bitte Okularauszug verbinden",
+      "current_position": "Aktuelle Position:",
+      "temperature": "Temperatur:",
+      "moving": "Bewegt sich",
+      "stopped": "Steht",
+      "autofocus_active": "Autofokus aktiv",
+      "autofocus": "Autofokus"
     },
     "camera": {
       "title": "Fotoaufnahme",
