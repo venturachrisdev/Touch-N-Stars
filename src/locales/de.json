@@ -39,7 +39,9 @@
       "guider": {
         "connect": "Guider verbinden",
         "disconnect": "Guider trennen",
-        "error": "Fehler bei der Guider-Steuerung:"
+        "error": "Fehler bei der Guider-Steuerung:",
+        "start": "Start",
+        "stop": "Stop"
       }
     },
     "lastLogs": {
@@ -143,7 +145,8 @@
     "loading": "Lade...",
     "filterwheel": {
       "filter": "Filter:",
-      "unknown": "Unbekannt"
+      "unknown": "Unbekannt",
+      "nofilteravailable": "Keine Filter vorhanden"
     }
   }
 }

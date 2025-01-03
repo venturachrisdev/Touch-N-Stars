@@ -73,7 +73,9 @@
     "guider": {
       "connect": "Please connect guider",
       "rms_error": "RMS Error in Arcseconds",
-      "title": "Guider"
+      "title": "Guider",
+      "start": "Start",
+      "stop": "Stop"
     },
     "focuser": {
       "title": "Focuser",
@@ -143,7 +145,8 @@
     "loading": "Loading...",
     "filterwheel": {
       "filter": "Filter:",
-      "unknown": "Unknown"
+      "unknown": "Unknown",
+      "nofilteravailable": "No filter available"
     }
   }
 }
