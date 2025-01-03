@@ -10,6 +10,25 @@
     "connecting": "Versuche Verbindung herzustellen"
   },
   "components": {
+    "framing": {
+      "slewAndCenter": {
+        "title": "Schwenken und Zentrieren",
+        "ra": "RA:",
+        "dec": "Dec:",
+        "slew": "Schwenken",
+        "slewAndCenter": "Schwenken und Zentrieren",
+        "errors": {
+          "invalidRAFormat": "Ungültiges RA-Format. Bitte verwenden Sie HH:MM:SS.",
+          "invalidDECFormat": "Ungültiges DEC-Format. Bitte verwenden Sie ±DD:MM:SS.",
+          "invalidRAInput": "Ungültige RA-Eingabe.",
+          "invalidDECInput": "Ungültige DEC-Eingabe.",
+          "apiUnreachable": "Framing API nicht erreicht",
+          "apiResponseError": "Fehler in der API-Antwort:",
+          "mountInfoError": "Fehler beim Abrufen der Mount-Informationen:",
+          "invalidFormat": "Ungültiges Format. Erwartet: ±DD:MM:SS.s"
+        }
+      }
+    },
     "connectEquipment": {
       "camera": {
         "connect": "Kamera verbinden",

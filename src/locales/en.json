@@ -10,6 +10,25 @@
     "connecting": "Attempting to establish connection"
   },
   "components": {
+    "framing": {
+      "slewAndCenter": {
+        "title": "Slew and Center",
+        "ra": "RA:",
+        "dec": "Dec:",
+        "slew": "Slew",
+        "slewAndCenter": "Slew and Center",
+        "errors": {
+          "invalidRAFormat": "Invalid RA format. Please use HH:MM:SS.",
+          "invalidDECFormat": "Invalid DEC format. Please use ±DD:MM:SS.",
+          "invalidRAInput": "Invalid RA input.",
+          "invalidDECInput": "Invalid DEC input.",
+          "apiUnreachable": "Framing API unreachable",
+          "apiResponseError": "Error in API response:",
+          "mountInfoError": "Error fetching mount information:",
+          "invalidFormat": "Invalid format. Expected: ±DD:MM:SS.s"
+        }
+      }
+    },
     "connectEquipment": {
       "camera": {
         "connect": "Connect camera",
