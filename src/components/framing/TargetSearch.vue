@@ -1,14 +1,14 @@
 <template>
   <div class="container flex items-center justify-center">
     <div class="container max-w-md">
-      <h5 class="text-xl font-bold mb-4">Suche</h5>
+      <h5 class="text-xl font-bold mb-4">{{ $t('components.framing.search.title') }}</h5>
       <div class="text-black mx-auto">
         <input
           type="text"
           v-model="searchQuery"
           @input="fetchSuggestions"
           class="w-full p-2 border border-gray-300 rounded"
-          placeholder="Geben Sie einen Suchbegriff ein..."
+          :placeholder="$t('components.framing.search.placeholder')"
         />
         <!-- Überprüfe, ob suggestions ein Array ist und Elemente hat -->
         <ul v-if="Array.isArray(suggestions) && suggestions.length > 0" class="bg-white border border-gray-300 rounded mt-1 z-10">

@@ -27,6 +27,10 @@
           "mountInfoError": "Error getting mount information:",
           "invalidFormat": "Invalid format. Expected: ±DD:MM:SS.s"
         }
+      },
+      "search": {
+        "title": "Search",
+        "placeholder": "Enter a search term..."
       }
     },
     "connectEquipment": {

@@ -27,6 +27,10 @@
           "mountInfoError": "Fehler beim Abrufen der Mount-Informationen:",
           "invalidFormat": "Ungültiges Format. Erwartet: ±DD:MM:SS.s"
         }
+      },
+      "search": {
+        "title": "Suche",
+        "placeholder": "Geben Sie einen Suchbegriff ein..."
       }
     },
     "connectEquipment": {
