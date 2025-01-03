@@ -2,21 +2,21 @@
   <div class="container flex items-center justify-center">
     <div class="container max-w-md">
       <div v-if="!isConnected" class="text-gray-600">
-        {{ $t('tppa.not_available') }}
+        {{ $t('components.tppa.not_available') }}
       </div>
       <div v-else>
         <h5 class="text-xl text-center font-bold text-white mb-4">
-          {{ $t('tppa.title') }}
+          {{ $t('components.tppa.title') }}
         </h5>
         <div v-if="!store.cameraInfo.Connected | store.mountInfo.AtPark">
-          <p class=" text-red-800">{{ $t('tppa.camera_mount_required') }}</p>
+          <p class=" text-red-800">{{ $t('components.tppa.camera_mount_required') }}</p>
         </div>
         <div v-else class="flex space-x-4">
           <button class="default-button-cyan" @click="startAlignment">
-            {{ $t('tppa.start_alignment') }}
+            {{ $t('components.tppa.start_alignment') }}
           </button>
           <button class="default-button-cyan" @click="stopAlignment">
-            {{ $t('tppa.stop_alignment') }}
+            {{ $t('components.tppa.stop_alignment') }}
           </button>
         </div>
         <div v-if="tppaStore.currentMessage" class="mt-10">
@@ -25,35 +25,35 @@
           </div>
           <div v-else class="space-y-4">
             <div class="flex space-x-4">
-              <p class="w-52"><strong>{{ $t('tppa.altitude_error') }}</strong></p>
+              <p class="w-52"><strong>{{ $t('components.tppa.altitude_error') }}</strong></p>
               <p>{{ showAltitudeError }}</p>
               <div v-if="showAltitudeError">
                 <div v-if="altitudeCorDirectionTop" class="flex flex-row space-x-2">
                   <ArrowUpIcon  class="size-6 text-blue-500" />
-                  <p>{{ $t('tppa.up') }}</p>
+                  <p>{{ $t('components.tppa.up') }}</p>
                 </div>
                 <div v-else  class="flex flex-row space-x-2"> 
                 <ArrowDownIcon class="size-6 text-blue-500" />
-                <p>{{ $t('tppa.down') }}</p>
+                <p>{{ $t('components.tppa.down') }}</p>
               </div>
               </div>
             </div>
             <div class="flex space-x-4">
-              <p class="w-52"><strong>{{ $t('tppa.azimuth_error') }}</strong></p>
+              <p class="w-52"><strong>{{ $t('components.tppa.azimuth_error') }}</strong></p>
               <p>{{ showAzimuthError }}</p>
               <div v-if="showAzimuthError">
                 <div v-if="azimuthCorDirectionLeft" class="flex flex-row space-x-2">
                   <ArrowLeftIcon class="size-6 text-blue-500 " />
-                  <p>{{ $t('tppa.west') }}</p>
+                  <p>{{ $t('components.tppa.west') }}</p>
                 </div>
                 <div v-else class="flex flex-row space-x-2">
                   <ArrowRightIcon class="size-6 text-blue-500" />
-                  <p>{{ $t('tppa.east') }}</p>
+                  <p>{{ $t('components.tppa.east') }}</p>
                 </div>
               </div>
             </div>
             <div class="flex space-x-4">
-              <p class="w-52"><strong>{{ $t('tppa.total_error') }}</strong></p>
+              <p class="w-52"><strong>{{ $t('components.tppa.total_error') }}</strong></p>
               <p>{{ showTotalError }}</p>
             </div>
             <div v-if="tppaStore.currentMessage" class="mt-20">
@@ -61,7 +61,7 @@
                 {{ formatMessage(tppaStore.currentMessage.message) }}
               </p>
               <p class="text-xs">
-                <strong>{{ $t('tppa.last_update') }}:</strong> {{ tppaStore.currentMessage.time }}
+                <strong>{{ $t('components.tppa.last_update') }}:</strong> {{ tppaStore.currentMessage.time }}
               </p>
             </div>
           </div>

@@ -112,14 +112,18 @@
     "tppa": {
       "title": "Three Point Polar Alignment",
       "camera_mount_required": "Kamera muss verbunden sein und die Montierung muss ausgeparkt sein",
-      "start_alignment": "Start Alignment",
-      "stop_alignment": "Stop Alignment",
+      "start_alignment": "Starte Ausrichtung",
+      "stop_alignment": "Stoppe Ausrichtung",
       "altitude_error": "Altitude Fehler:",
       "azimuth_error": "Azimuth Fehler:",
       "total_error": "Gesamtfehler:",
       "last_update": "Letzte Aktualisierung:",
       "error_values_missing": "Fehlende Fehlerwerte",
-      "unknown_response_format": "Unbekanntes Antwortformat"
+      "unknown_response_format": "Unbekanntes Antwortformat",
+      "west": "Westen",
+      "down": "Runter",
+      "up": "Hoch",
+      "not_available": "Nicht verfügbar"
     },
     "logs": {
       "loading": "Daten werden geladen...",

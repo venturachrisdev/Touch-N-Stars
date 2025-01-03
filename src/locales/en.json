@@ -119,7 +119,12 @@
       "total_error": "Total Error:",
       "last_update": "Last update:",
       "error_values_missing": "Missing error values",
-      "unknown_response_format": "Unknown response format"
+      "unknown_response_format": "Unknown response format",
+      "east": "East",
+      "west": "West",
+      "down": "Down",
+      "up": "Up",
+      "not_available": "Not available"
     },
     "logs": {
       "loading": "Loading data...",
