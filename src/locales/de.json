@@ -100,7 +100,14 @@
       "gain": "Gain",
       "offset": "Offset",
       "temperature": "Temperatur",
-      "standby": "Standby"
+      "standby": "Standby",
+      "info": "Info",
+      "info_settings": "Infos & Einstellungen",
+      "please_connect": "Bitte Kamera verbinden",
+      "cooler_on": "Kühlung an",
+      "cooler_off": "Kühlung aus",
+      "dew_heater_on": "Tauheizung an",
+      "dew_heater_off": "Tauheizung aus"
     },
     "tppa": {
       "title": "Three Point Polar Alignment",
@@ -121,6 +128,10 @@
     "test": {
       "title": "Test"
     },
-    "loading": "Lade..."
+    "loading": "Lade...",
+    "filterwheel": {
+      "filter": "Filter:",
+      "unknown": "Unbekannt"
+    }
   }
 }

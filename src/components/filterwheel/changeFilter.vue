@@ -1,13 +1,13 @@
 <template>
     <div class="">
         <div class="flex flex-col border border-gray-500 p-1 pb-2 rounded-lg h-full">
-            <label for="gain" class="text-xs mb-1 text-gray-400">Filter: </label>
+            <label for="gain" class="text-xs mb-1 text-gray-400">$t('components.filterwheel.filter') </label>
             
                 <select id="filter" v-model.number="store.filterNr"
                     @change="changeFilter"
                     class="w-28 text-black px-3 h-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700">
                     <!-- Option für 'Unbekannt' hinzufügen -->
-                    <option :value="null" disabled>Unbekannt</option>
+                    <option :value="null" disabled>$t('components.filterwheel.unknown')</option>
                     <!-- Name anzeigen und ID speichern -->
                     <option v-for="filter in store.filterInfo.AvailableFilters" :key="filter.Id" :value="filter.Id">
                         {{ filter.Name }}

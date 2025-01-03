@@ -16,7 +16,7 @@
       :enabledText="$t('components.camera.dew_heater_on')" :disabledText="$t('components.camera.dew_heater_off')" />
   </div>
   <div v-else-if="showOnlyExposing" class="gap-2">
-    <StatusBool :isEnabled="store.cameraInfo.IsExposing" enabledText="Aufnahme läuft" disabledText="Kamera standby" />
+    <StatusBool :isEnabled="store.cameraInfo.IsExposing" :enabledText="$t('components.camera.capture_running')" :disabledText="$t('components.camera.standby')" />
   </div>
 </template>
 
