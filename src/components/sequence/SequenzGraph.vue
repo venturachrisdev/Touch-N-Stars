@@ -133,7 +133,7 @@
   <style scoped>
   canvas {
     max-width: 100%;
-    height: 200px;g
+    height: 200px;
   }
   </style>
   
