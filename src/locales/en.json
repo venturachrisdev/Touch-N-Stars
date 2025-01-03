@@ -58,7 +58,9 @@
       "guider": {
         "connect": "Connect guider",
         "disconnect": "Disconnect guider",
-        "error": "Error controlling guider:"
+        "error": "Error controlling guider:",
+        "start": "Start",
+        "stop" : "Stop"
       }
     },
     "lastLogs": {
