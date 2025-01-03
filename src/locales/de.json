@@ -89,12 +89,40 @@
     },
     "mount": {
       "title": "Montierung",
-      "slew": "Schwenken"
+      "slew": "Schwenken",
+      "control": {
+        "park": "Parken",
+        "unpark": "Ausparken",
+        "home": "Home",
+        "trackingMode": "Tracking Mode",
+        "siderial": "Siderial",
+        "lunar": "Lunar",
+        "solar": "Solar",
+        "king": "King",
+        "stop": "Stopp",
+        "errors": {
+          "park": "Fehler beim parken der Montierung",
+          "unpark": "Fehler beim ausparken der Montierung",
+          "home": "Fehler beim home der Montierung",
+          "tracking": "Fehler beim setzen des Tracking Mode"
+        }
+      },
+      "info": {
+        "notConnected": "Bitte Montierung verbinden",
+        "parked": "Geparkt",
+        "unparked": "Ausgeparkt",
+        "trackingActive": "Tracking ist aktiv",
+        "trackingDisabled": "Tracking deaktiviert",
+        "slewing": "Montierung schwenkt",
+        "notSlewing": "Schwenkt nicht"
+      }
     },
     "guider": {
       "title": "Guider",
       "connect": "Bitte Guider verbinden",
-      "rms_error": "RMS Fehler in Arcseconds"
+      "rms_error": "RMS Fehler in Arcseconds",
+      "start": "Start",
+      "stop": "Stop"
     },
     "focuser": {
       "title": "Okularauszug",

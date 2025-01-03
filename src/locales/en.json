@@ -24,7 +24,7 @@
           "invalidDECInput": "Invalid DEC input.",
           "apiUnreachable": "Framing API unreachable",
           "apiResponseError": "Error in API response:",
-          "mountInfoError": "Error fetching mount information:",
+          "mountInfoError": "Error getting mount information:",
           "invalidFormat": "Invalid format. Expected: ±DD:MM:SS.s"
         }
       }
@@ -87,12 +87,38 @@
     },
     "mount": {
       "title": "Mount",
-      "slew": "Slew"
+      "slew": "Slew",
+      "control": {
+        "park": "Park",
+        "unpark": "Unpark",
+        "home": "Home",
+        "trackingMode": "Tracking Mode",
+        "siderial": "Siderial",
+        "lunar": "Lunar",
+        "solar": "Solar",
+        "king": "King",
+        "stop": "Stop",
+        "errors": {
+          "park": "Error parking mount",
+          "unpark": "Error unparking mount",
+          "home": "Error homing mount",
+          "tracking": "Error setting tracking mode"
+        }
+      },
+      "info": {
+        "notConnected": "Please connect mount",
+        "parked": "Parked",
+        "unparked": "Unparked",
+        "trackingActive": "Tracking is active",
+        "trackingDisabled": "Tracking disabled",
+        "slewing": "Mount is slewing",
+        "notSlewing": "Not slewing"
+      }
     },
     "guider": {
+      "title": "Guider",
       "connect": "Please connect guider",
       "rms_error": "RMS Error in Arcseconds",
-      "title": "Guider",
       "start": "Start",
       "stop": "Stop"
     },
