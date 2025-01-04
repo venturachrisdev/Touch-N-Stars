@@ -57,7 +57,7 @@ const apiService = {
   // sequence actions
   sequenceAction(action) {
     if (action === "reset") {
-      return this._simpleGetRequest(`${BASE_URL}/sequence/stop`)
+      return this._simpleGetRequest(`${BASE_URL}/sequence/reset`)
         .then(response => {
           // Return success response for reset
           return {
