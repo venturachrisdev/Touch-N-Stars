@@ -1,11 +1,11 @@
 <template>
   <div class="p-4">
-    <!-- Ladeanzeige -->
-    <div v-if="isLoading" class="text-gray-500">Daten werden geladen...</div>
+    <!-- Loading indicator -->
+    <div v-if="isLoading" class="text-gray-500">{{ $t('components.logs.loading') }}</div>
 
-    <!-- Fehleranzeige -->
+    <!-- Error message -->
     <div v-else-if="error" class="text-red-500">
-      Fehler beim Laden der Daten: {{ error.message }}
+      {{ $t('components.logs.error') }} {{ error.message }}
     </div>
 
     <!-- Tabelle anzeigen, wenn Daten verfügbar sind -->
@@ -13,11 +13,11 @@
       <table class="w-full table-fixed border-collapse border border-gray-800 text-gray-300 text-sm">
         <thead>
           <tr class="bg-gray-800">
-            <th class="border border-gray-300 px-4 py-2 text-left w-1/10">Timestamp</th>
-            <th class="border border-gray-300 px-4 py-2 text-left w-1/10">Level</th>
-            <th class="border border-gray-300 px-4 py-2 text-left w-2/5">Message</th>
-            <th class="border border-gray-300 px-4 py-2 text-left hidden landscape:table-cell w-1/10">Member</th>
-            <th class="border border-gray-300 px-4 py-2 text-left hidden landscape:table-cell w-1/10">Line</th>
+            <th class="border border-gray-300 px-4 py-2 text-left w-1/10">{{ $t('components.lastLogs.timestamp') }}</th>
+            <th class="border border-gray-300 px-4 py-2 text-left w-1/10">{{ $t('components.lastLogs.level') }}</th>
+            <th class="border border-gray-300 px-4 py-2 text-left w-2/5">{{ $t('components.lastLogs.message') }}</th>
+            <th class="border border-gray-300 px-4 py-2 text-left hidden landscape:table-cell w-1/10">{{ $t('components.lastLogs.member') }}</th>
+            <th class="border border-gray-300 px-4 py-2 text-left hidden landscape:table-cell w-1/10">{{ $t('components.lastLogs.line') }}</th>
           </tr>
         </thead>
         <tbody>

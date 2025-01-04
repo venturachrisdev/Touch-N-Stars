@@ -122,20 +122,41 @@ def monitor_logs_for_events():
 
 def fetch_and_store_data():
     """Periodisch Guider-Daten abrufen und speichern."""
+    print("--------Guider-Daten-------------------")
     while True:
         try:
             response = requests.get(f"{BASE_API_URL}/equipment/guider/info")
             if response.status_code == 200:
-                data = response.json()
+                try:
+                    data = response.json()
+                    if not isinstance(data, dict):
+                        print("Ungültiges Response-Format: Response ist kein Dictionary")
+                        time.sleep(5)
+                        continue
 
-                # Prüfen, ob die Verbindung aktiv ist
-                if data.get("Success") and data["Response"].get("Connected"):
+                    # Prüfen, ob die Verbindung aktiv ist
+                    if not data.get("Success", False): 
+                        time.sleep(5)
+                        continue 
+                    
                     response_data = data.get("Response", {})
+                    if not isinstance(response_data, dict):
+                        print("Ungültiges Response-Format: Response ist kein Dictionary")
+                        time.sleep(5)
+                        continue
+
+                    if not response_data.get("Connected", False):
+                        time.sleep(5)
+                        continue
 
                     # Prüfen, ob LastGuideStep existiert
-                    if "LastGuideStep" in response_data:
-                        last_guide_step = response_data["LastGuideStep"]
+                    last_guide_step = response_data.get("LastGuideStep", {})
+                    if not isinstance(last_guide_step, dict):
+                        print("Ungültiges LastGuideStep-Format: Kein Dictionary")
+                        time.sleep(5)
+                        continue
 
+                    try:
                         ra_distance = round(float(last_guide_step.get("RADistanceRaw", 0)) * float(response_data.get("PixelScale", 1)), 2)
                         dec_distance = round(float(last_guide_step.get("DECDistanceRaw", 0)) * float(response_data.get("PixelScale", 1)), 2)
 
@@ -148,10 +169,10 @@ def fetch_and_store_data():
 
                             add_value_if_changed(guider_data["RADistanceRaw"], ra_distance)
                             add_value_if_changed(guider_data["DECDistanceRaw"], dec_distance)
-                    else:
-                        print("Schlüssel 'LastGuideStep' fehlt in der API-Antwort.")
-                #else:
-                    #print("Guider nicht verbunden")
+                    except (ValueError, TypeError) as e:
+                        print(f"Fehler bei der Berechnung der Distanzen: {e}")
+                except ValueError as e:
+                    print(f"Ungültiges JSON-Format: {e}")
             else:
                 print(f"Fehlerhafte API-Antwort: {response.status_code}")
         except Exception as e:
@@ -199,16 +220,50 @@ def monitor_last_af():
     try:
         while True:
             try:
-               # print(afRun)
-                #print(last_af_timestamp)
                 response = requests.get(f"{BASE_API_URL}/equipment/focuser/last-af")
                 if response.status_code == 200:
-                    data = response.json()
-                    current_timestamp = data.get("Response", {}).get("Timestamp")
-                    if last_af_timestamp is not None and current_timestamp != last_af_timestamp:
-                        afRun = False
-                        newAfGraph = True
-                    last_af_timestamp = current_timestamp
+                    try:
+                        # Log raw response for debugging
+                       # print(f"Raw response: {response.text[:200]}...")  # Log first 200 chars
+                        
+                        data = response.json()
+                        if not isinstance(data, dict):
+                            print(f"Ungültiges Datenformat: API-Antwort ist kein Dictionary. Typ: {type(data)}")
+                            time.sleep(1)
+                            continue
+                            
+                        response_data = data.get("Response", {})
+                        # Handle case where Response is empty string
+                        if isinstance(response_data, str) and not response_data:
+                            response_data = {}
+                            
+                        if not isinstance(response_data, dict):
+                            print(f"Ungültiges Response-Format: Response ist kein Dictionary. Typ: {type(response_data)}")
+                            time.sleep(1)
+                            continue
+                            
+                        # Handle "No AF available" error case
+                        if data.get("Error") == "No AF available":
+                            print("Keine AF-Daten verfügbar")
+                            time.sleep(1)
+                            continue
+                            
+                        current_timestamp = response_data.get("Timestamp")
+                        if current_timestamp is None:
+                            print("Kein Timestamp in der Response gefunden")
+                            time.sleep(1)
+                            continue
+                            
+                        if last_af_timestamp is not None and current_timestamp != last_af_timestamp:
+                            afRun = False
+                            newAfGraph = True
+                        last_af_timestamp = current_timestamp
+                        
+                    except ValueError as e:
+                        print(f"Fehler beim Parsen der JSON-Antwort: {e}")
+                        print(f"Response content: {response.text[:200]}...")  # Log first 200 chars
+                else:
+                    print(f"API-Antwort mit Statuscode {response.status_code}")
             except Exception as e:
                 print(f"Fehler beim Abrufen von 'last-af': {e}")
             time.sleep(1)

@@ -1,5 +1,7 @@
 # Touch'N'Stars: WebApp für die mobile Steuerung von NINA
 
+[English version available here](README_en.md)
+
 ### 🚀 **Aktueller Status: Alpha-Version**  
 Diese WebApp befindet sich in der **Entwicklungsphase** und richtet sich an Astro-Enthusiasten, die ihre Ausrüstung mit der Astrosoftware **NINA** (Nighttime Imaging 'N' Astronomy) bequem per Touchgerät einrichten möchten.  
 
@@ -33,4 +35,4 @@ Die Anwendung soll die Steuerung und Anpassung bereits konfigurierter Profile er
 
 ### 💙 **Dank**  
 Mein Dank gilt dem gesamten Entwicklerteam von **NINA**, deren großartige Arbeit diese WebApp erst möglich macht.  
-Ein besonderes Dankeschön an **Christian**, den Entwickler der **Advanced API**, für seine Bemühungen und Unterstützung. Seine Arbeit hat die Entwicklung dieser WebApp maßgeblich ermöglicht.  
+Ein besonderes Dankeschön an **Christian**, den Entwickler der **Advanced API**, für seine Bemühungen und Unterstützung. Seine Arbeit hat die Entwicklung dieser WebApp maßgeblich ermöglicht.

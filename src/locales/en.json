@@ -1,0 +1,243 @@
+{
+  "general": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "pages": {
+    "equipment": {
+      "title": "Equipment Control"
+    }
+  },
+  "app": {
+    "title": "Touch'N'Stars",
+    "unreachable": "NINA is unreachable!",
+    "connecting": "Attempting to establish connection"
+  },
+  "components": {
+    "framing": {
+      "search": {
+        "title": "Search",
+        "placeholder": "Enter a search term..."
+      }
+    },
+    "connectEquipment": {
+      "camera": {
+        "connect": "Connect camera",
+        "disconnect": "Disconnect camera",
+        "error": "Error controlling camera:"
+      },
+      "filter": {
+        "connect": "Connect filter wheel",
+        "disconnect": "Disconnect filter wheel",
+        "error": "Error controlling filter wheel:"
+      },
+      "mount": {
+        "connect": "Connect mount",
+        "disconnect": "Disconnect mount",
+        "error": "Error controlling mount:"
+      },
+      "focuser": {
+        "connect": "Connect focuser",
+        "disconnect": "Disconnect focuser",
+        "error": "Error controlling focuser:"
+      },
+      "rotator": {
+        "connect": "Connect rotator",
+        "disconnect": "Disconnect rotator",
+        "error": "Error controlling rotator:",
+        "label": "Rotator:",
+        "move": "Move",
+        "notConnected": "Please connect rotator",
+        "currentPosition": "Current position:",
+        "moving": "Moving",
+        "stopped": "Stopped"
+      },
+      "guider": {
+        "connect": "Connect guider",
+        "disconnect": "Disconnect guider",
+        "error": "Error controlling guider:",
+        "start": "Start",
+        "stop": "Stop"
+      }
+    },
+    "lastLogs": {
+      "loading": "Loading data...",
+      "error": "Error loading data:",
+      "timestamp": "Timestamp",
+      "level": "Level", 
+      "message": "Message",
+      "member": "Member",
+      "line": "Line"
+    },
+    "navigation": {
+      "equipment": "Equipment",
+      "camera": "Camera",
+      "autofocus": "Autofocus",
+      "mount": "Mount",
+      "guider": "Guider",
+      "sequence": "Sequence"
+    },
+    "language": {
+      "en": "English",
+      "de": "German",
+      "select": "Select language"
+    },
+    "equipment": {
+      "control": "Equipment Control"
+    },
+    "sequence": {
+      "title": "Sequence",
+      "wshv": "WSHV",
+      "noSequenceLoaded": "No sequence loaded",
+      "startSequence": "Start sequence",
+      "stopSequence": "Stop sequence",
+      "resetSequence": "Reset sequence",
+      "resetConfirmationTitle": "Confirm Reset",
+      "resetConfirmationMessage": "Are you sure you want to reset the sequence? This action cannot be undone.",
+      "exposures": "Exposures",
+      "exposureTime": "Exposure time",
+      "filter": "Filter",
+      "ditherEvery": "Dither every",
+      "type": "Type",
+      "deltaHFR": "DeltaHFR",
+      "sampleSize": "Sample size",
+      "triggers": "Triggers",
+      "details": {
+        "of": "of",
+        "gain": "Gain",
+        "ditherAfter": "Dither after",
+        "exposures": "exposures"
+      }
+    },
+    "mount": {
+      "title": "Mount",
+      "slew": "Slew",
+      "control": {
+        "park": "Park",
+        "unpark": "Unpark",
+        "home": "Home",
+        "trackingMode": "Tracking Mode",
+        "siderial": "Siderial",
+        "lunar": "Lunar",
+        "solar": "Solar",
+        "king": "King",
+        "stop": "Stop",
+        "errors": {
+          "park": "Error parking mount",
+          "unpark": "Error unparking mount",
+          "home": "Error homing mount",
+          "tracking": "Error setting tracking mode"
+        }
+      },
+      "info": {
+        "notConnected": "Please connect mount",
+        "parked": "Parked",
+        "unparked": "Unparked",
+        "trackingActive": "Tracking is active",
+        "trackingDisabled": "Tracking disabled",
+        "slewing": "Mount is slewing",
+        "notSlewing": "Not slewing"
+      }
+    },
+      "guider": {
+        "connect": "Connect guider",
+        "disconnect": "Disconnect guider",
+        "error": "Error controlling guider:",
+        "start": "Start",
+        "stop": "Stop",
+        "rms_error": "RMS Error in Arcseconds",
+        "title": "Guider"
+      },
+    "focuser": {
+      "title": "Focuser",
+      "new_position": "New position:",
+      "move": "Move",
+      "start_autofocus": "Start autofocus",
+      "cancel_autofocus": "Cancel autofocus",
+      "autofocus_graph": "Autofocus graph",
+      "autofocus_running": "Autofocus running",
+      "autofocus_error": "Autofocus error",
+      "please_connect_focuser": "Please connect focuser",
+      "current_position": "Current position:",
+      "temperature": "Temperature:",
+      "moving": "Moving",
+      "stopped": "Stopped",
+      "autofocus_active": "Autofocus active",
+      "autofocus": "Autofocus",
+      "last_autofocus": "Last autofocus"
+    },
+    "camera": {
+      "title": "Camera",
+      "connect": "Please connect camera",
+      "settings": "Settings",
+      "loop": "Loop",
+      "capture_running": "Capture running",
+      "image_loading": "Image loading...",
+      "start_capture": "Start capture",
+      "cancel": "Cancel",
+      "exposure_time": "Exposure time:",
+      "gain_iso": "Gain / ISO:",
+      "name": "Camera name",
+      "gain": "Gain",
+      "offset": "Offset",
+      "temperature": "Temperature",
+      "standby": "Standby",
+      "info": "Info",
+      "info_settings": "Info & Settings",
+      "please_connect": "Please connect camera",
+      "cooler_on": "Cooling On",
+      "cooler_off": "Cooling Off",
+      "dew_heater_on": "Dewheater On",
+      "dew_heater_off": "Dewheater Off"
+    },
+    "tppa": {
+      "title": "Three Point Polar Alignment",
+      "camera_mount_required": "Camera must be connected and mount must be unparked",
+      "start_alignment": "Start Alignment",
+      "stop_alignment": "Stop Alignment",
+      "altitude_error": "Altitude Error:",
+      "azimuth_error": "Azimuth Error:",
+      "total_error": "Total Error:",
+      "last_update": "Last update:",
+      "error_values_missing": "Missing error values",
+      "unknown_response_format": "Unknown response format",
+      "east": "East",
+      "west": "West",
+      "down": "Down",
+      "up": "Up",
+      "not_available": "Not available"
+    },
+    "logs": {
+      "loading": "Loading data...",
+      "error": "Error loading data:"
+    },
+    "test": {
+      "title": "Test"
+    },
+    "loading": "Loading...",
+    "slewAndCenter": {
+      "title": "Slew and Center",
+      "ra": "RA:",
+      "dec": "Dec:",
+      "ra_placeholder": "RA 03:47:28.2",
+      "dec_placeholder": "Dec +24:06:19",
+      "slew": "Slew",
+      "slew_and_center": "Slew and Center",
+      "errors": {
+        "invalidRAFormat": "Invalid RA format. Please use HH:MM:SS.",
+        "invalidDECFormat": "Invalid DEC format. Please use ±DD:MM:SS.",
+        "invalidRAInput": "Invalid RA input.",
+        "invalidDECInput": "Invalid DEC input.",
+        "apiUnreachable": "Framing API unreachable",
+        "invalidFormat": "Invalid format. Expected: ±DD:MM:SS.s",
+        "apiResponseError": "Error in API response:",
+        "mountInfoError": "Error fetching mount information:"
+      }
+    },
+    "filterwheel": {
+      "filter": "Filter:",
+      "unknown": "Unknown",
+      "nofilteravailable": "No filter available"
+    }
+  }
+}

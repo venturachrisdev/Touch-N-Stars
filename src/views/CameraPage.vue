@@ -2,21 +2,21 @@
   <div class="text-center">
     <!-- Titel -->
     <div class="text-left mb-2">
-      <h1 class="text-xl text-center font-bold">Fotoaufnahme</h1>
+      <h1 class="text-xl text-center font-bold">{{ $t('components.camera.title') }}</h1>
     </div>
 
     <!-- Kamera-Verbindungsstatus -->
 <div class="w-full flex justify-center">
     <div class=" max-w-xl ">
       <div v-if="!store.cameraInfo.Connected" class="text-red-500">
-        <p>Bitte Kamera verbinden</p>
+        <p>{{ $t('components.camera.connect') }}</p>
       </div>
 
       <!-- Infos & Einstellungen (nur anzeigen, wenn showInfo=true) -->
       <div v-show="cameraStore.showInfo">
         <div class="flex items-center space-x-3 mb-2">
           <div class="w-3 h-[1px] bg-gray-700"></div>
-          <p class="text-sm italic text-gray-400">Info</p>
+          <p class="text-sm italic text-gray-400">{{ $t('components.camera.settings') }}</p>
           <div class="flex-grow h-[1px] bg-gray-700"></div>
         </div>
 
@@ -25,7 +25,7 @@
 
         <div class="flex items-center space-x-3 mb-2">
           <div class="w-3 h-[1px] bg-gray-700"></div>
-          <p class="text-sm italic text-gray-400">Einstellungen</p>
+          <p class="text-sm italic text-gray-400">{{ $t('components.camera.settings') }}</p>
           <div class="flex-grow h-[1px] bg-gray-700"></div>
         </div>
         <settingsCameraCooler class="grid grid-cols-1  mb-3 text-left" />
@@ -51,7 +51,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </button>
-        <p class="text-sm italic">Infos & Einstellungen</p>
+        <p class="text-sm italic">{{ $t('components.camera.settings') }}</p>
         <div class="flex-grow h-[1px] bg-gray-700"></div>
       </div>
 
@@ -68,7 +68,7 @@
                        focus:ring-cyan-500 dark:focus:ring-cyan-600 dark:ring-offset-gray-800
                        focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
               <label for="checkDauerschleife" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                Dauerschleife
+                {{ $t('components.camera.loop') }}
               </label>
             </div>
 
@@ -92,8 +92,8 @@
                          a 15.9155 15.9155 0 0 1 0 31.831
                          a 15.9155 15.9155 0 0 1 0 -31.831" />
                   </svg>
-                  <span class="ml-2 text-white text-sm font-medium">
-                    Aufnahme läuft {{ cameraStore.remainingExposureTime }}s
+                <span class="ml-2 text-white text-sm font-medium">
+                    {{ $t('components.camera.capture_running') }} {{ cameraStore.remainingExposureTime }}s
                   </span>
                 </div>
                 <!-- Wenn Bild gerade geladen wird -->
@@ -103,12 +103,12 @@
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                   </svg>
                   <span class="ml-2 text-white text-sm font-medium">
-                    Bild lädt...
+                    {{ $t('components.camera.image_loading') }}
                   </span>
                 </div>
               </template>
               <template v-else>
-                Aufnahme starten
+                {{ $t('components.camera.start_capture') }}
               </template>
             </button>
 
@@ -116,7 +116,7 @@
             <div class="pt-2">
               <button v-if="cameraStore.isExposure" @click="cameraStore.abortExposure(apiService)"
                 class="flex h-10 w-full rounded-md text-white font-medium bg-red-800 items-center justify-center">
-                Abbrechen
+                {{ $t('components.camera.cancel') }}
               </button>
             </div>
           </div>
@@ -141,18 +141,18 @@ import { ref, watch, nextTick } from 'vue'
 import Panzoom from 'panzoom'
 
 // Dein globaler API-Store
-import { apiStore } from '@/store/store'
+import { apiStore } from "@/store/store"
 
 // Dein Pinia-Store
-import { useCameraStore } from '@/store/cameraStore'
+import { useCameraStore } from "@/store/cameraStore"
 
 // Services & Components
-import apiService from '@/services/apiService'
-import infoCamera from '@/components/camera/infoCamera.vue'
-import settingsCamera from '@/components/camera/settingsCamera.vue'
-import settingsCameraCooler from '@/components/camera/settingsCameraCooler.vue'
-import changeFilter from '@/components/filterwheel/changeFilter.vue'
-import controlRotator from '@/components/rotator/controlRotator.vue'
+import apiService from "@/services/apiService"
+import infoCamera from "@/components/camera/infoCamera.vue"
+import settingsCamera from "@/components/camera/settingsCamera.vue"
+import settingsCameraCooler from "@/components/camera/settingsCameraCooler.vue"
+import changeFilter from "@/components/filterwheel/changeFilter.vue"
+import controlRotator from "@/components/rotator/controlRotator.vue"
 
 // Initialisiere Stores
 const store = apiStore()

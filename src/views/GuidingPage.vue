@@ -1,9 +1,9 @@
 <template>
   <div class="container flex items-center justify-center">
     <div class="container max-w-md">
-      <h5 class="text-xl text-center font-bold text-white mb-4">Guiding</h5>
+      <h5 class="text-xl text-center font-bold text-white mb-4">{{ $t('components.guider.title') }}</h5>
       <div v-if="!store.guiderInfo.Connected" class="text-red-500">
-        <p>Bitte Guider verbinden</p>
+        <p>{{ $t('components.guider.connect') }}</p>
       </div>
       <div v-else>
         <!-- Wenn verbunden dann hier der Inhalt -->
@@ -12,17 +12,17 @@
             class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
             @click="guiderStartStop('start')"
           >
-            Start
+            {{ $t('components.guider.start') }}
           </button>
           <button
             class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
             @click="guiderStartStop('stop')"
           >
-            Stop
+            {{ $t('components.guider.stop') }}
           </button>
         </div>
         <div class="mt-5">
-          <p class="">RMS Fehler in Arcseconds</p>
+          <p class="">{{ $t('components.guider.rms_error') }}</p>
           <p>RA: {{ store.guiderInfo.RMSError.Dec.Arcseconds.toFixed(2) }}</p>
           <p>DEC: {{ store.guiderInfo.RMSError.RA.Arcseconds.toFixed(2) }}</p>
           <p>Total: {{ store.guiderInfo.RMSError.Total.Arcseconds.toFixed(2) }}</p>

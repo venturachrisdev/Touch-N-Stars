@@ -5,7 +5,7 @@
         to="/equipment"
         class="nav-button"
         active-class="active-nav-button"
-        title="Ausrüstung"
+        :title="$t('components.navigation.equipment')"
       >
         <LinkIcon class="icon" />
       </router-link>
@@ -13,7 +13,7 @@
         to="/camera"
         class="nav-button"
         active-class="active-nav-button"
-        title="Kamera"
+        :title="$t('components.navigation.camera')"
       >
         <CameraIcon class="icon" />
       </router-link>
@@ -21,7 +21,7 @@
         to="/autofocus"
         class="nav-button"
         active-class="active-nav-button"
-        title="Autofokus"
+        :title="$t('components.navigation.autofocus')"
       >
         <EyeIcon class="icon" />
       </router-link>
@@ -30,7 +30,7 @@
         to="/mount"
         class="nav-button"
         active-class="active-nav-button"
-        title="Montierung"
+        :title="$t('components.navigation.mount')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@
         to="/guider"
         class="nav-button"
         active-class="active-nav-button"
-        title="Guider"
+        :title="$t('components.navigation.guider')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -84,10 +84,36 @@
         to="/sequence"
         class="nav-button"
         active-class="active-nav-button"
-        title="Sequenz"
+        :title="$t('components.navigation.sequence')"
       >
         <ListBulletIcon class="icon" />
       </router-link>
+      
+      <div class="relative">
+        <button
+          class="nav-button"
+          :title="$t('components.language.select')"
+          @click="toggleLanguageMenu"
+        >
+          <GlobeAltIcon class="icon" />
+        </button>
+        <div
+          v-if="showLanguageMenu"
+          class="absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5"
+        >
+          <div class="py-1">
+            <button
+              v-for="lang in languages"
+              :key="lang.code"
+              :class="{ 'bg-cyan-700': lang.code === currentLanguage }"
+              @click="changeLanguage(lang.code)"
+              class="block w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-600"
+            >
+              {{ lang.name }}
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -98,7 +124,34 @@ import {
   CameraIcon,
   EyeIcon,
   ListBulletIcon,
+  GlobeAltIcon,
 } from '@heroicons/vue/24/outline';
+import { ref, watchEffect } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { locale, t } = useI18n();
+const $t = t;
+const showLanguageMenu = ref(false);
+
+const currentLanguage = ref(locale.value);
+
+watchEffect(() => {
+  currentLanguage.value = locale.value;
+});
+
+const languages = [
+  { code: 'en', name: $t('components.language.en') },
+  { code: 'de', name: $t('components.language.de') }
+];
+
+function toggleLanguageMenu() {
+  showLanguageMenu.value = !showLanguageMenu.value;
+}
+
+function changeLanguage(lang) {
+  locale.value = lang;
+  showLanguageMenu.value = false;
+}
 </script>
 
 <style scoped>
