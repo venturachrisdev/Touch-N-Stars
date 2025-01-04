@@ -29,10 +29,11 @@ jobs:
       run: npm run build
       
     - name: Copy dist to server/static
+      shell: pwsh
       run: |
-        mkdir -p server/static
-        cp -r dist/* server/static/
-        cp -r server/katalog server/static/katalog
+        New-Item -ItemType Directory -Force -Path server/static
+        Copy-Item -Path dist/* -Destination server/static/ -Recurse
+        Copy-Item -Path server/katalog -Destination server/static/katalog -Recurse
         
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -48,18 +49,26 @@ jobs:
         pyinstaller --name "TouchNStars" --onefile --add-data "static;static" server.py
         
     - name: Prepare release package
+      shell: pwsh
       run: |
-        mkdir -p dist/TouchNStars-${{ github.event.inputs.version }}
-        cp server/dist/TouchNStars.exe dist/TouchNStars-${{ github.event.inputs.version }}/
-        cp -r server/katalog dist/TouchNStars-${{ github.event.inputs.version }}/
-        cd dist
-        zip -r TouchNStars-${{ github.event.inputs.version }}.zip TouchNStars-${{ github.event.inputs.version }}
+        $version = "${{ github.event.inputs.version }}"
+        $releaseDir = "dist/TouchNStars-$version"
+        
+        # Create release directory
+        New-Item -ItemType Directory -Force -Path $releaseDir
+        
+        # Copy files
+        Copy-Item "server/dist/TouchNStars.exe" -Destination "$releaseDir/"
+        Copy-Item "server/katalog" -Destination "$releaseDir/" -Recurse
+        
+        # Create zip file
+        Compress-Archive -Path "$releaseDir/*" -DestinationPath "dist/TouchNStars-$version.zip" -Force
 
     - name: Create and upload release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        gh release create ${{ github.event.inputs.version }} \
-          --title "Release ${{ github.event.inputs.version }}" \
-          --notes "Release ${{ github.event.inputs.version }}" \
-          dist/TouchNStars-${{ github.event.inputs.version }}.zip
+        gh release create ${{ github.event.inputs.version }} `
+          --title "Release ${{ github.event.inputs.version }}" `
+          --notes "Release ${{ github.event.inputs.version }}" `
+          "dist/TouchNStars-${{ github.event.inputs.version }}.zip"
