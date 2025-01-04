@@ -87,7 +87,7 @@
     },
     "sequence": {
       "title": "Sequenz",
-      "wshv": "WSHV",
+      "stats": "Statistiken",
       "noSequenceLoaded": "Keine Sequenz geladen",
       "startSequence": "Sequenz starten",
       "stopSequence": "Sequenz stoppen",

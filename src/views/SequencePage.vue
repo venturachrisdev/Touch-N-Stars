@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div v-if="!store.sequenceIsLoaded" class="text-red-500">
+        <p>{{ $t('components.sequence.noSequenceLoaded') }}</p>
+    </div>
+  <div v-else class="container">
     <h1 class="text-xl text-center font-bold mb-5">{{ $t('components.sequence.title') }}</h1>
     <div v-if="true" class="container flex flex-col w-full">
       <!-- Weiße Linie -->
@@ -12,7 +15,7 @@
         </button>
         <button class="border-2 border-gray-500 rounded-b-md w-24 h-10"
           :class="{ 'bg-gray-600': showSeqStats, 'bg-gray-800': !showSeqStats }" @click="toggleShowSeqStats">
-          {{ $t('components.sequence.wshv') }}
+          {{ $t('components.sequence.stats') }}
         </button>
       </div>
     </div>
@@ -20,7 +23,7 @@
       <controlSequence />
       <infoSequence />
     </div>
-    <sequenceStats v-show="showSeqStats" :src="wshvUrl" />
+    <sequenceStats v-show="showSeqStats" />
   </div>
 </template>
 
@@ -31,6 +34,9 @@ import controlSequence from '@/components/sequence/controlSequence.vue';
 import sequenceStats from '@/components/sequence/sequenceStats.vue';
 import apiService from '@/services/apiService';
 import { onBeforeMount, ref } from 'vue';
+import { apiStore } from '@/store/store';
+
+const store = apiStore();
 
 // Reaktiver Zustand
 const wshvAktiv = ref(false);
