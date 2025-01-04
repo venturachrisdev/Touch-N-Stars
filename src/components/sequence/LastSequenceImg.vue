@@ -5,7 +5,7 @@
                    touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40
                    rounded-xl border border-cyan-700">
             <img v-if="imageData" ref="image" @click="openModal" :src="imageData" alt="Aufgenommenes Bild"
-                class="block w-full max-h-[45svh]" />
+                class="block w-full h-auto" />
         </div>
         <div v-if="imageData"
             class="border min-w-60 border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl p-4 portrait:mt-2 landscape:ml-4 text-sm space-y-2">
