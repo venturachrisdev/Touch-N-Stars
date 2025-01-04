@@ -16,7 +16,7 @@
       <div v-show="cameraStore.showInfo">
         <div class="flex items-center space-x-3 mb-2">
           <div class="w-3 h-[1px] bg-gray-700"></div>
-          <p class="text-sm italic text-gray-400">{{ $t('components.camera.settings') }}</p>
+          <p class="text-sm italic text-gray-400">{{ $t('components.camera.info') }}</p>
           <div class="flex-grow h-[1px] bg-gray-700"></div>
         </div>
 
@@ -51,7 +51,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </button>
-        <p class="text-sm italic">{{ $t('components.camera.settings') }}</p>
+        <p class="text-sm italic">{{ $t('components.camera.settings') }} & {{ $t('components.camera.info') }}</p>
         <div class="flex-grow h-[1px] bg-gray-700"></div>
       </div>
 
