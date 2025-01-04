@@ -1,4 +1,8 @@
 {
+  "general": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
   "pages": {
     "equipment": {
       "title": "Equipment Control"
@@ -83,6 +87,8 @@
       "startSequence": "Start sequence",
       "stopSequence": "Stop sequence",
       "resetSequence": "Reset sequence",
+      "resetConfirmationTitle": "Confirm Reset",
+      "resetConfirmationMessage": "Are you sure you want to reset the sequence? This action cannot be undone.",
       "exposures": "Exposures",
       "exposureTime": "Exposure time",
       "filter": "Filter",

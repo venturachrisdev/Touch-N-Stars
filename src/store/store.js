@@ -9,7 +9,8 @@ export const apiStore = defineStore('store', {
     intervalId: null,
     intervalIdGraph: null,
     profileInfo: [],
-    sequenceInfo:[],
+    sequenceInfo: [],
+    collapsedStates: {},
     cameraInfo: { IsExposing: false },
     mountInfo: [],
     filterInfo: [],
@@ -29,9 +30,24 @@ export const apiStore = defineStore('store', {
     captureRunning: false,
     rotatorMechanicalPosition:0,
     sequenceIsLoaded: false,
+    sequenceRunning: false,
   }),
 
   actions: {
+    setSequenceRunning(isRunning) {
+      this.sequenceRunning = isRunning;
+    },
+    toggleCollapsedState(containerName) {
+      this.collapsedStates = {
+        ...this.collapsedStates,
+        [containerName]: !this.collapsedStates[containerName]
+      };
+    },
+    
+    isCollapsed(containerName) {
+      return !!this.collapsedStates[containerName];
+    },
+
     async fetchAllInfos() {
       try {
         this.isBackendReachable = await apiService.isBackendReachable();
