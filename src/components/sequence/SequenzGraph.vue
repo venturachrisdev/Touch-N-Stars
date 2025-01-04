@@ -111,7 +111,7 @@ watch(
     () => store.imageHistoryInfo,
     (newVal, oldVal) => {
         //Prüfen, ob es mehr Elemente als vorher gibt
-        if (newVal.length > oldVal.length) {
+        if (!oldVal || newVal.length > oldVal.length) {
             console.log("Neuer Datensatz hinzugekommen!");
             if (chart && newVal) {
                 console.log("Daten aktualisieren");
