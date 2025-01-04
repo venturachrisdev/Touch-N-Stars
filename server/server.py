@@ -122,6 +122,7 @@ def monitor_logs_for_events():
 
 def fetch_and_store_data():
     """Periodisch Guider-Daten abrufen und speichern."""
+    print("--------Guider-Daten-------------------")
     while True:
         try:
             response = requests.get(f"{BASE_API_URL}/equipment/guider/info")
@@ -130,25 +131,30 @@ def fetch_and_store_data():
                     data = response.json()
                     if not isinstance(data, dict):
                         print("Ungültiges Response-Format: Response ist kein Dictionary")
-                        return
+                        time.sleep(5)
+                        continue
 
                     # Prüfen, ob die Verbindung aktiv ist
-                    if not data.get("Success", False):
-                        return
+                    if not data.get("Success", False): 
+                        time.sleep(5)
+                        continue 
                     
                     response_data = data.get("Response", {})
                     if not isinstance(response_data, dict):
                         print("Ungültiges Response-Format: Response ist kein Dictionary")
-                        return
+                        time.sleep(5)
+                        continue
 
                     if not response_data.get("Connected", False):
-                        return
+                        time.sleep(5)
+                        continue
 
                     # Prüfen, ob LastGuideStep existiert
                     last_guide_step = response_data.get("LastGuideStep", {})
                     if not isinstance(last_guide_step, dict):
                         print("Ungültiges LastGuideStep-Format: Kein Dictionary")
-                        return
+                        time.sleep(5)
+                        continue
 
                     try:
                         ra_distance = round(float(last_guide_step.get("RADistanceRaw", 0)) * float(response_data.get("PixelScale", 1)), 2)
