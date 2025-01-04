@@ -107,7 +107,14 @@
         "gain": "Gain",
         "ditherAfter": "Dither nach",
         "exposures": "Belichtungen"
-      }
+      },
+      "date": "Datum",
+      "hfr": "HFR",
+      "stars": "Sterne",
+      "mean": "Mittelwert",
+      "median": "Median",
+      "stDev": "St. Dev",
+      "rmsText": "RMS"
     },
     "mount": {
       "title": "Montierung",

@@ -8,12 +8,12 @@
       <!-- Weiße Linie -->
       <div class="w-full h-[2px] bg-gray-300 mb-0"></div>
       <!-- Buttons links ausrichten -->
-      <div class="flex justify-start mb-3">
-        <button class="border-2 border-gray-500 rounded-b-md w-24 h-10"
+      <div class="text-sm flex justify-between space-x-2 p-1 pb-3">
+        <button class="border-2 border-gray-500 rounded-md h-10 flex-1"
           :class="{ 'bg-gray-600': showSequenz, 'bg-gray-800': !showSequenz }" @click="toggleShowSequenz">
           {{ $t('components.sequence.title') }}
         </button>
-        <button class="border-2 border-gray-500 rounded-b-md w-24 h-10"
+        <button class="border-2 border-gray-500 rounded-md h-10 flex-1"
           :class="{ 'bg-gray-600': showSeqStats, 'bg-gray-800': !showSeqStats }" @click="toggleShowSeqStats">
           {{ $t('components.sequence.stats') }}
         </button>

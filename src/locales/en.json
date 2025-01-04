@@ -107,7 +107,14 @@
         "gain": "Gain",
         "ditherAfter": "Dither after",
         "exposures": "exposures"
-      }
+      },
+      "date": "Date",
+      "hfr": "HFR",
+      "stars": "Stars",
+      "mean": "Mean",
+      "median": "Median",
+      "stDev": "St. Dev.",
+      "rmsText": "RMS"
     },
     "mount": {
       "title": "Mount",
