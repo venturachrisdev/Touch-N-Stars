@@ -8,10 +8,12 @@ on:
         required: true
         type: string
       changelog:
-        description: 'Changelog/Release notes'
+        description: 'Changelog/Release notes (supports markdown)'
         required: false
-        type: string
-        default: 'No changelog provided'
+        type: text
+        default: |
+          ### What's Changed
+          - No changelog provided
 
 jobs:
   build:
@@ -76,8 +78,4 @@ jobs:
     - name: Create and upload release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        gh release create ${{ github.event.inputs.version }} `
-          --title "Release ${{ github.event.inputs.version }}" `
-          --notes "${{ github.event.inputs.changelog }}" `
-          "dist/TouchNStars-${{ github.event.inputs.version }}.zip"
+      run: gh release create ${{ github.event.inputs.version }} --title "Release ${{ github.event.inputs.version }}" --notes "${{ github.event.inputs.changelog }}" "dist/TouchNStars-${{ github.event.inputs.version }}.zip"
