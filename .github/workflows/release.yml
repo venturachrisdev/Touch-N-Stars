@@ -11,14 +11,16 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: write
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: 16
+        node-version: 20
     
     - name: Install dependencies
       run: npm install
@@ -33,7 +35,7 @@ jobs:
         cp -r server/katalog server/static/katalog
         
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
         
@@ -45,21 +47,19 @@ jobs:
         cd server
         pyinstaller --name "TouchNStars" --onefile --add-data "static;static" server.py
         
-    - name: Create release
-      id: create_release
-      uses: actions/create-release@v1
+    - name: Prepare release package
+      run: |
+        mkdir -p dist/TouchNStars-${{ github.event.inputs.version }}
+        cp server/dist/TouchNStars.exe dist/TouchNStars-${{ github.event.inputs.version }}/
+        cp -r server/katalog dist/TouchNStars-${{ github.event.inputs.version }}/
+        cd dist
+        zip -r TouchNStars-${{ github.event.inputs.version }}.zip TouchNStars-${{ github.event.inputs.version }}
+
+    - name: Create and upload release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.event.inputs.version }}
-        release_name: Release ${{ github.event.inputs.version }}
-        draft: false
-        prerelease: false
-        
-    - name: Upload release asset
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: server/dist/TouchNStars.exe
-        asset_name: TouchNStars.exe
-        asset_content_type: application/octet-stream
+      run: |
+        gh release create ${{ github.event.inputs.version }} \
+          --title "Release ${{ github.event.inputs.version }}" \
+          --notes "Release ${{ github.event.inputs.version }}" \
+          dist/TouchNStars-${{ github.event.inputs.version }}.zip
