@@ -5,10 +5,10 @@
         <div v-if="store.cameraInfo.CanSetTemperature">
 
             <div class=" flex flex-col border border-gray-500 p-1 pb-2 rounded-lg  ">
-                <label for="Cooler" class="text-xs mb-1 text-gray-400">Kamerakühlung </label>
+                <label for="Cooler" class="text-xs mb-1 text-gray-400">{{ $t('components.camera.camera_cooling') }} </label>  
                 <div class="flex flex-col md:flex-row gap-2">
                     <div class="flex flex-col col-span-2 w-full  border border-gray-500 p-1 pb-2 rounded-lg">
-                        <label for="TemperatureSetPoint" class="text-xs mb-1 text-gray-400">Solltemperatur </label>
+                        <label for="TemperatureSetPoint" class="text-xs mb-1 text-gray-400">{{ $t('components.camera.target_temperature') }} </label>
                         <div class="flex space-x-2">
                             <input id="TemperatureSetPoint" v-model="cameraStore.coolingTemp" type="number"
                                 class="w-28 text-black px-3 h-8  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
@@ -16,13 +16,13 @@
                         </div>
                     </div>
                     <div class="flex flex-col col-span-2 w-full border border-gray-500 p-1 pb-2 rounded-lg">
-                        <label for="TemperatureDurationTime" class="text-xs mb-1 text-gray-400">Abkühlzeit </label>
+                        <label for="TemperatureDurationTime" class="text-xs mb-1 text-gray-400">{{ $t('components.camera.cooling_time') }} </label>
                         <input id="TemperatureDurationTime" v-model="cameraStore.coolingTime" type="number"
                             class="w-28 text-black px-3 h-8  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
                             placeholder="1" step="1" />
                     </div>
                     <div class="flex flex-col col-span-2 w-full border border-gray-500 p-1 pb-2 rounded-lg">
-                        <label for="TemperatureDurationTime" class="text-xs mb-1 text-gray-400">Aufwärmzeit </label>
+                        <label for="TemperatureDurationTime" class="text-xs mb-1 text-gray-400">{{ $t('components.camera.warm_up_time') }} </label>
                         <input id="TemperatureDurationTime" v-model="cameraStore.warmingTime" type="number"
                             class="w-28 text-black px-3 h-8  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
                             placeholder="1" step="1" />
@@ -35,7 +35,7 @@
         </div>
         <div v-if="store.cameraInfo.HasDewHeater">
             <div class="flex flex-col min-w-44 border border-gray-500 p-1 pb-2 rounded-lg">
-                <label for="DewHeater" class="text-xs mb-1 text-gray-400">Tauheizung </label>
+                <label for="DewHeater" class="text-xs mb-1 text-gray-400">{{ $t('components.camera.dew_heater') }} </label>
                 <div class="flex space-x-2">
                     <toggleButton @click="toggleDewHeater" :status-value="store.cameraInfo.DewHeaterOn" />
                 </div>

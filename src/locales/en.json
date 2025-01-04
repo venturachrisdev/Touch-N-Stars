@@ -187,8 +187,13 @@
       "please_connect": "Please connect camera",
       "cooler_on": "Cooling On",
       "cooler_off": "Cooling Off",
+      "dew_heater": "Dewheater",
       "dew_heater_on": "Dewheater On",
-      "dew_heater_off": "Dewheater Off"
+      "dew_heater_off": "Dewheater Off",
+      "camera_cooling": "Camera cooling",  
+      "target_temperature": "Target temperature",
+      "warm_up_time": "Warm-up time",
+      "cooling_time": "Cooling time"
     },
     "tppa": {
       "title": "Three Point Polar Alignment",

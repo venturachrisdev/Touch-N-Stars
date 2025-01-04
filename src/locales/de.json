@@ -187,8 +187,13 @@
       "please_connect": "Bitte Kamera verbinden",
       "cooler_on": "Kühlung ein",
       "cooler_off": "Kühlung aus",
+      "dew_heater": "Taupunktregler",
       "dew_heater_on": "Taupunktregler ein",
-      "dew_heater_off": "Taupunktregler aus"
+      "dew_heater_off": "Taupunktregler aus",
+      "camera_cooling": "Kamerakühlung",  
+      "target_temperature": "Solltemperatur",
+      "warm_up_time": "Aufwärmzeit",
+      "cooling_time": "Abkühlzeit"
     },
     "tppa": {
       "title": "Drei-Punkt-Polarausrichtung",

@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount } from "vue";
+import { ref, watch } from "vue";
 import { apiStore } from "@/store/store";
 import apiService from "@/services/apiService";
 import ImageModal from "./imageModal.vue";
@@ -100,27 +100,16 @@ function setSelectedDataset(datasetIndex) {
 
     }
 }
-
-
-onMounted(() => {
-
-});
-
-onBeforeUnmount(() => {
-
-});
-
-
-
 watch(
     () => store.imageHistoryInfo,
     (newVal, oldVal) => {
         //Prüfen, ob es mehr Elemente als vorher gibt
-        if (newVal.length > oldVal.length) {
+        if (!oldVal || newVal.length > oldVal.length) {
             // Letztes Element im Array
-            const latestEntry = newVal[newVal.length - 1];
+            //const latestEntry = newVal[newVal.length - 1];
             // Index-Wert des neuesten Datensatzes
-            const latestIndex = latestEntry.Index;
+           // const latestIndex = latestEntry.Index;
+           const latestIndex = newVal.length - 1;
             console.log("Neuster Datensatz, Index:", latestIndex);
              getlastImage(latestIndex, 80, false, 1);
         }
