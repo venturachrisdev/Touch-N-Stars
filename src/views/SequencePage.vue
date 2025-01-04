@@ -1,18 +1,21 @@
 <template>
-  <div class="container">
+  <div v-if="!store.sequenceIsLoaded" class="text-red-500">
+        <p>{{ $t('components.sequence.noSequenceLoaded') }}</p>
+    </div>
+  <div v-else class="container">
     <h1 class="text-xl text-center font-bold mb-5">{{ $t('components.sequence.title') }}</h1>
-    <div v-if="wshvAktiv" class="container flex flex-col w-full">
+    <div v-if="true" class="container flex flex-col w-full">
       <!-- Weiße Linie -->
       <div class="w-full h-[2px] bg-gray-300 mb-0"></div>
       <!-- Buttons links ausrichten -->
-      <div class="flex justify-start mb-3">
-        <button class="border-2 border-gray-500 rounded-b-md w-24 h-10"
+      <div class="text-sm flex justify-between space-x-2 p-1 pb-3">
+        <button class="border-2 border-gray-500 rounded-md h-10 flex-1"
           :class="{ 'bg-gray-600': showSequenz, 'bg-gray-800': !showSequenz }" @click="toggleShowSequenz">
           {{ $t('components.sequence.title') }}
         </button>
-        <button class="border-2 border-gray-500 rounded-b-md w-24 h-10"
-          :class="{ 'bg-gray-600': showWshv, 'bg-gray-800': !showWshv }" @click="toggleShowWshv">
-          {{ $t('components.sequence.wshv') }}
+        <button class="border-2 border-gray-500 rounded-md h-10 flex-1"
+          :class="{ 'bg-gray-600': showSeqStats, 'bg-gray-800': !showSeqStats }" @click="toggleShowSeqStats">
+          {{ $t('components.sequence.stats') }}
         </button>
       </div>
     </div>
@@ -20,7 +23,7 @@
       <controlSequence />
       <infoSequence />
     </div>
-    <wshvFrame v-if="wshvAktiv" v-show="showWshv" :src="wshvUrl" />
+    <sequenceStats v-show="showSeqStats" />
   </div>
 </template>
 
@@ -28,28 +31,31 @@
 <script setup>
 import infoSequence from '@/components/sequence/infoSequence.vue';
 import controlSequence from '@/components/sequence/controlSequence.vue';
-import wshvFrame from '@/components/sequence/wshvFrame.vue';
+import sequenceStats from '@/components/sequence/sequenceStats.vue';
 import apiService from '@/services/apiService';
 import { onBeforeMount, ref } from 'vue';
+import { apiStore } from '@/store/store';
+
+const store = apiStore();
 
 // Reaktiver Zustand
 const wshvAktiv = ref(false);
 const wshvUrl = ref("http://localhost:80/dist");
 const showSequenz = ref(true);
-const showWshv = ref(false);
+const showSeqStats = ref(false);
 
 function toggleShowSequenz() {
   showSequenz.value = !showSequenz.value;
   if (showSequenz.value) {
     showSequenz.value = true;
-    showWshv.value = false;
+    showSeqStats.value = false;
   }
 }
-function toggleShowWshv() {
-  showWshv.value = !showWshv.value;
-  if (showWshv.value) {
+function toggleShowSeqStats() {
+  showSeqStats.value = !showSeqStats.value;
+  if (showSeqStats.value) {
     showSequenz.value = false;
-    showWshv.value = true;
+    showSeqStats.value = true;
   }
 }
 

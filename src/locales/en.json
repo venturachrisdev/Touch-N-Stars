@@ -87,7 +87,7 @@
     },
     "sequence": {
       "title": "Sequence",
-      "wshv": "WSHV",
+      "stats": "Stats",
       "noSequenceLoaded": "No sequence loaded",
       "startSequence": "Start sequence",
       "stopSequence": "Stop sequence",
@@ -107,7 +107,14 @@
         "gain": "Gain",
         "ditherAfter": "Dither after",
         "exposures": "exposures"
-      }
+      },
+      "date": "Date",
+      "hfr": "HFR",
+      "stars": "Stars",
+      "mean": "Mean",
+      "median": "Median",
+      "stDev": "St. Dev.",
+      "rmsText": "RMS"
     },
     "mount": {
       "title": "Mount",
