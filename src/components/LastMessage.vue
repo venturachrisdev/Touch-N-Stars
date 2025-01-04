@@ -17,7 +17,7 @@
 
 <script setup>
 import { apiStore } from '@/store/store';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch} from 'vue';
 
 const store = apiStore();
 const isLoading = ref(true);
@@ -52,6 +52,17 @@ onMounted(() => {
     }
   });
 });
+watch(
+    () => store.LogsInfo,
+    (newVal, oldVal) => {
+        if (!oldVal || newVal.length > oldVal.length) {
+          isLoading.value = false;
+          console.log("ja")
+        }
+    },
+    { immediate: false }
+);
+
 </script>
 
 <style scoped></style>

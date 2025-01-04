@@ -4,7 +4,7 @@
 
 
     
-    <LastSequenceImg />
+    <LastMessage />
 
 
 
@@ -13,7 +13,8 @@
 
 <script setup>
 //import SequenzGraph from './sequence/SequenzGraph.vue';
-import LastSequenceImg from './sequence/LastSequenceImg.vue';
-
+//import LastSequenceImg from './sequence/LastSequenceImg.vue';
+//import LastLogs from './LastLogs.vue';
+import LastMessage from './LastMessage.vue';
 
 </script>

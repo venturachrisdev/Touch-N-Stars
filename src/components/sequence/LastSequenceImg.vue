@@ -1,16 +1,25 @@
 <template>
 
     <div class="flex flex-col landscape:flex-row justify-center ">
-        <div ref="imageContainer" class="image-container  landscape:max-w-[75%]  overflow-hidden 
+        <div v-if="isLoadingImg">
+            <!--Spinner-->
+            <div class="flex items-center justify-center  ">
+                <div
+                    class="w-12 h-12 border-4 border-blue-500 border-t-transparent border-solid rounded-full animate-spin">
+                </div>
+            </div>
+        </div>
+        <div v-else ref="imageContainer" class="image-container  landscape:max-w-[75%]  overflow-hidden 
                    touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40
                    rounded-xl border border-cyan-700">
             <img v-if="imageData" ref="image" @click="openModal" :src="imageData" alt="Aufgenommenes Bild"
                 class="block w-full h-auto" />
         </div>
-        <div v-if="imageData"
+
+        <div v-if="!isLoadingImg"
             class="border min-w-60 border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl p-4 portrait:mt-2 landscape:ml-4 text-sm space-y-2">
             <div v-if="formattedDate" class="flex justify-between">
-                <span class="font-bold">{{ $t('components.sequence.date') }}:  </span>
+                <span class="font-bold">{{ $t('components.sequence.date') }}: </span>
                 <span>{{ formattedDate }}</span>
             </div>
             <div v-if="ExposureTime" class="flex justify-between">
@@ -63,6 +72,7 @@ import { apiStore } from "@/store/store";
 import apiService from "@/services/apiService";
 import ImageModal from "./imageModal.vue";
 
+let isLoadingImg = ref(true);
 
 const store = apiStore();
 const imageData = ref(null);
@@ -111,6 +121,7 @@ async function getlastImage(index, quality, resize, scale) {
             imageData.value = `data:image/jpeg;base64,${image}`;
             setSelectedDataset(index);
             lastImgIndex.value = index;
+            isLoadingImg = false;
         }
         const resultModal = await apiService.getSequenceImage(index, 100, false, 1);
         const imageModal = resultModal?.Response;
