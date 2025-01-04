@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { apiStore } from "@/store/store";
 import apiService from "@/services/apiService";
 import ImageModal from "./imageModal.vue";
@@ -82,7 +82,7 @@ async function getlastImage(index, quality, resize, scale) {
             setSelectedDataset(index);
             lastImgIndex.value = index;
         }
-        const resultModal = await apiService.getSequenceImage(index, 80, false, 1);
+        const resultModal = await apiService.getSequenceImage(index, 100, false, 1);
         const imageModal = resultModal?.Response;
         if (imageModal) {
             imageDataModal.value = `data:image/jpeg;base64,${imageModal}`;
@@ -115,11 +115,17 @@ watch(
     (newVal, oldVal) => {
         if (!oldVal || newVal.length > oldVal.length) {
             const latestIndex = newVal.length - 1;
-            getlastImage(latestIndex, 80, false, 1);
+            getlastImage(latestIndex, 80, true, 0.6);
         }
     },
     { immediate: false }
 );
+
+onMounted(() => {
+    const latestIndex = store.imageHistoryInfo.length - 1
+    getlastImage(latestIndex, 80, true, 0.6);
+});
+
 </script>
 
 
