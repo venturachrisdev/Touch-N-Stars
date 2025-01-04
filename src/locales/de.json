@@ -114,7 +114,8 @@
       "mean": "Mittelwert",
       "median": "Median",
       "stDev": "St. Dev",
-      "rmsText": "RMS"
+      "rmsText": "RMS",
+      "sequence_control": "Sequenze Kontrolle"
     },
     "mount": {
       "title": "Montierung",
