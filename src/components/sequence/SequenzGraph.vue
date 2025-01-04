@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <canvas ref="rmsGraph"></canvas>
+    <div class=" h-96">
+        <canvas  ref="rmsGraph"></canvas>
     </div>
 </template>
 
@@ -110,8 +110,7 @@ function initGraph() {
 watch(
     () => store.imageHistoryInfo,
     (newVal, oldVal) => {
-        if (!newVal || !oldVal) return; // Falls beim ersten Mal oldVal leer ist
-        // Beispiel: Prüfen, ob es mehr Elemente als vorher gibt
+        //Prüfen, ob es mehr Elemente als vorher gibt
         if (newVal.length > oldVal.length) {
             console.log("Neuer Datensatz hinzugekommen!");
             if (chart && newVal) {
@@ -136,8 +135,4 @@ watch(
 </script>
 
 <style scoped>
-canvas {
-    max-width: 100%;
-    height: 200px;
-}
 </style>

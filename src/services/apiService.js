@@ -21,7 +21,6 @@ const apiService = {
   },
 
   //-------------------------------------  Image History ---------------------------------------
-  // application actions
   async imageHistoryAll() {
     try {
       const response = await axios.get(`${BASE_URL}/image-history`, {
@@ -35,6 +34,24 @@ const apiService = {
     }
   },
 
+    //-------------------------------------  Image  ---------------------------------------
+  // Get Image
+  async getSequenceImage(index, quality, resize, scale) {
+    try {
+      const response = await axios.get(`${BASE_URL}/image/${index}`, {
+        params: { 
+          quality: quality , //80
+          resize: resize, //true
+          scale: scale, //0.1
+        },
+      });
+      //console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error read Image :", error);
+      throw error;
+    }
+  },
 
   //-------------------------------------  sequence ---------------------------------------
   // sequence actions

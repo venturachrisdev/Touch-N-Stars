@@ -3,14 +3,17 @@
     <h1>Test</h1>
 
 
-    <SequenzGraph />
+    
+    <LastSequenceImg />
+
 
 
   </div>
 </template>
 
 <script setup>
-import SequenzGraph from './sequence/SequenzGraph.vue';
+//import SequenzGraph from './sequence/SequenzGraph.vue';
+import LastSequenceImg from './sequence/LastSequenceImg.vue';
 
 
 </script>
