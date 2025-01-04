@@ -1,7 +1,9 @@
 {
   "general": {
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "hide": "Hide",
+    "show": "Show"
   },
   "pages": {
     "equipment": {

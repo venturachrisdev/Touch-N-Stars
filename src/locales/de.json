@@ -1,7 +1,9 @@
 {
   "general": {
     "cancel": "Abbrechen",
-    "confirm": "Bestätigen"
+    "confirm": "Bestätigen",
+    "hide": "Ausblenden",
+    "show": "Anzeigen"
   },
   "pages": {
     "equipment": {

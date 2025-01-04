@@ -5,25 +5,25 @@
       <infoMount v-model="store.mountInfo.Connected" class="grid grid-cols-2 landscape:grid-cols-3" />
       <infoCamera :show-only-exposing="showTppa" class="grid grid-cols-2 landscape:grid-cols-3 mt-2" />
       <div v-if="store.mountInfo.Connected">
-        <div class="mt-4 border border-gray-600 rounded-b-lg bg-gray-800/10">
+          <div class="mt-4 border border-gray-700 rounded-b-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg">
           <div class="text-sm flex justify-between space-x-2 p-2">
             <button
-              class="border-2 border-gray-500 rounded-md w-full h-10 flex-1"
-              :class="{ 'bg-gray-600': showMount, 'bg-gray-800': !showMount }"
+              class="border-2 border-gray-600 rounded-md w-full h-10 flex-1 bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
+              :class="{ 'from-blue-600 to-blue-500': showMount, 'from-gray-800 to-gray-900': !showMount }"
               @click="toggleShowMount"
             >
               {{ $t('components.mount.title') }}
             </button>
             <button
-              class="border-2 border-gray-500 rounded-md w-full h-10 flex-1"
-              :class="{ 'bg-gray-600': showSlew, 'bg-gray-800': !showSlew }"
+              class="border-2 border-gray-600 rounded-md w-full h-10 flex-1 bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
+              :class="{ 'from-purple-600 to-purple-500': showSlew, 'from-gray-800 to-gray-900': !showSlew }"
               @click="toggleShowSlew"
             >
               {{ $t('components.mount.slew') }}
             </button>
             <button
-              class="border-2 border-gray-500 rounded-md w-full h-10 flex-1"
-              :class="{ 'bg-gray-600': showTppa, 'bg-gray-800': !showTppa }"
+              class="border-2 border-gray-600 rounded-md w-full h-10 flex-1 bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
+              :class="{ 'from-green-600 to-green-500': showTppa, 'from-gray-800 to-gray-900': !showTppa }"
               @click="toggleShowTppa"
             >
               {{ $t('components.tppa.title') }}
