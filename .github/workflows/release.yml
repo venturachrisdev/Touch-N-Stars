@@ -7,6 +7,11 @@ on:
         description: 'Release version'
         required: true
         type: string
+      changelog:
+        description: 'Changelog/Release notes'
+        required: false
+        type: string
+        default: 'No changelog provided'
 
 jobs:
   build:
@@ -74,5 +79,5 @@ jobs:
       run: |
         gh release create ${{ github.event.inputs.version }} `
           --title "Release ${{ github.event.inputs.version }}" `
-          --notes "Release ${{ github.event.inputs.version }}" `
+          --notes "${{ github.event.inputs.changelog }}" `
           "dist/TouchNStars-${{ github.event.inputs.version }}.zip"
