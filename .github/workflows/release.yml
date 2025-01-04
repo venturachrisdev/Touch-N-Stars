@@ -1,0 +1,63 @@
+name: Release Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Build project
+      run: npm run build
+      
+    - name: Copy dist to server/static
+      run: |
+        mkdir -p server/static
+        cp -r dist/* server/static/
+        cp -r server/katalog server/static/katalog
+        
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install pyinstaller
+      run: pip install pyinstaller
+      
+    - name: Build executable
+      run: |
+        cd server
+        pyinstaller --name "TouchNStars" --onefile --add-data "static;static" server.py
+        
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: v${{ github.event.inputs.version }}
+        release_name: Release v${{ github.event.inputs.version }}
+        draft: false
+        prerelease: false
+        
+    - name: Upload release asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: server/dist/TouchNStars.exe
+        asset_name: TouchNStars.exe
+        asset_content_type: application/octet-stream
