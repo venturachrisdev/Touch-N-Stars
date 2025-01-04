@@ -23,6 +23,18 @@ const apiService = {
     //-------------------------------------  sequence ---------------------------------------
   // sequence actions
   sequenceAction(action) {
+    if (action === "reset") {
+      return this._simpleGetRequest(`${BASE_URL}/sequence/stop`)
+        .then(response => {
+          // Return success response for reset
+          return {
+            ...response,
+            Response: 'Sequence reset',
+            Success: true
+          };
+        });
+    }
+    // Handle stop and other actions normally
     return this._simpleGetRequest(`${BASE_URL}/sequence/${action}`);
   },
 

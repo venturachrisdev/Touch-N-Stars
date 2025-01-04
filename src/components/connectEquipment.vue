@@ -1,38 +1,52 @@
 <template>
     <div class="">
 
-        <!-- Kamera-Steuerung -->
-        <ConnectionButton :isConnected="store.cameraInfo.Connected" connectText="Kamera verbinden"
-            disconnectText="Kamera trennen" :onToggle="toggleCameraConnection" />
+        <!-- Camera Control -->
+        <ConnectionButton :isConnected="store.cameraInfo.Connected" 
+            :connectText="$t('components.connectEquipment.camera.connect')"
+            :disconnectText="$t('components.connectEquipment.camera.disconnect')" 
+            :onToggle="toggleCameraConnection" />
 
-        <!-- Filter-Steuerung -->
-        <ConnectionButton :isConnected="store.filterInfo.Connected" connectText="Filterrad verbinden"
-            disconnectText="Filterrad trennen" :onToggle="toggleFilterConnection" />
+        <!-- Filter Control -->
+        <ConnectionButton :isConnected="store.filterInfo.Connected" 
+            :connectText="$t('components.connectEquipment.filter.connect')"
+            :disconnectText="$t('components.connectEquipment.filter.disconnect')" 
+            :onToggle="toggleFilterConnection" />
 
-        <!-- Montierungs-Steuerung -->
-        <ConnectionButton :isConnected="store.mountInfo.Connected" connectText="Montierung verbinden"
-            disconnectText="Montierung trennen" :onToggle="toggleMountConnection" />
+        <!-- Mount Control -->
+        <ConnectionButton :isConnected="store.mountInfo.Connected" 
+            :connectText="$t('components.connectEquipment.mount.connect')"
+            :disconnectText="$t('components.connectEquipment.mount.disconnect')" 
+            :onToggle="toggleMountConnection" />
 
-        <!-- Focuser-Steuerung -->
-        <ConnectionButton :isConnected="store.focuserInfo.Connected" connectText="Fokusierer verbinden"
-            disconnectText="Fokusierer trennen" :onToggle="toggleFocuserConnection" />
+        <!-- Focuser Control -->
+        <ConnectionButton :isConnected="store.focuserInfo.Connected" 
+            :connectText="$t('components.connectEquipment.focuser.connect')"
+            :disconnectText="$t('components.connectEquipment.focuser.disconnect')" 
+            :onToggle="toggleFocuserConnection" />
 
-        <!-- Rotator-Steuerung -->
-        <ConnectionButton :isConnected="store.rotatorInfo.Connected" connectText="Rotator verbinden"
-            disconnectText="Rotator trennen" :onToggle="toggleRotatorConnection" />
+        <!-- Rotator Control -->
+        <ConnectionButton :isConnected="store.rotatorInfo.Connected" 
+            :connectText="$t('components.connectEquipment.rotator.connect')"
+            :disconnectText="$t('components.connectEquipment.rotator.disconnect')" 
+            :onToggle="toggleRotatorConnection" />
 
-        <!-- Guider-Steuerung -->
-        <ConnectionButton :isConnected="store.guiderInfo.Connected" connectText="Guider verbinden"
-            disconnectText="Guider trennen" :onToggle="toggleGuiderConnection" />
+        <!-- Guider Control -->
+        <ConnectionButton :isConnected="store.guiderInfo.Connected" 
+            :connectText="$t('components.connectEquipment.guider.connect')"
+            :disconnectText="$t('components.connectEquipment.guider.disconnect')" 
+            :onToggle="toggleGuiderConnection" />
 
     </div>
 </template>
 
 <script setup>
-import { apiStore } from '@/store/store';
-import apiService from "@/services/apiService";
-import ConnectionButton from "@/components/helpers/ConnectionButton.vue";
+import { useI18n } from 'vue-i18n';
+import { apiStore } from '../store/store';
+import apiService from '../services/apiService';
+import ConnectionButton from './helpers/ConnectionButton.vue';
 
+const { t } = useI18n();
 const store = apiStore();
 
 async function toggleCameraConnection() {
@@ -43,7 +57,7 @@ async function toggleCameraConnection() {
             await apiService.cameraAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Kamera-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.camera.error'), error.response?.data || error);
     }
 }
 
@@ -55,7 +69,7 @@ async function toggleMountConnection() {
             await apiService.mountAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Mount-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.mount.error'), error.response?.data || error);
     }
 }
 
@@ -67,7 +81,7 @@ async function toggleFilterConnection() {
             await apiService.filterAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Filter-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.filter.error'), error.response?.data || error);
     }
 }
 
@@ -79,7 +93,7 @@ async function toggleFocuserConnection() {
             await apiService.focusAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Kamera-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.focuser.error'), error.response?.data || error);
     }
 }
 
@@ -91,7 +105,7 @@ async function toggleRotatorConnection() {
             await apiService.rotatorAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Rotator-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.rotator.error'), error.response?.data || error);
     }
 }
 
@@ -103,8 +117,7 @@ async function toggleGuiderConnection() {
             await apiService.guiderAction("connect");
         }
     } catch (error) {
-        console.error("Fehler bei der Kamera-Steuerung:", error.response?.data || error);
+        console.error(t('components.connectEquipment.guider.error'), error.response?.data || error);
     }
 }
-
 </script>

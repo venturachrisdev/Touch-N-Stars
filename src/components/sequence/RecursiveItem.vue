@@ -47,29 +47,29 @@ function filterFields(trigger) {
        <div class="border-l border-gray-400">
       <div class="text-gray-500 text-xs pl-4  ">
         <div v-if="typeof item.ExposureCount !== 'undefined'">
-          Belichtungen: {{ item.ExposureCount }} von {{ item.Iterations }}
+          {{ $t('components.sequence.exposures') }}: {{ item.ExposureCount }} {{ $t('components.sequence.details.of') }} {{ item.Iterations }}
         </div>
         <div v-if="typeof item.ExposureTime !== 'undefined'">
-          Belichtungszeit: {{ item.ExposureTime }}s
+          {{ $t('components.sequence.exposureTime') }}: {{ item.ExposureTime }}s
         </div>
         <div v-if="typeof item.Gain !== 'undefined'">
-          Gain: {{ item.Gain }}
+          {{ $t('components.sequence.details.gain') }}: {{ item.Gain }}
         </div>
         <div v-if="typeof item.Filter !== 'undefined'">
-          Filter: {{ item.Filter }}
+          {{ $t('components.sequence.filter') }}: {{ item.Filter }}
         </div>
         <div v-if="typeof item.DitherTargetExposures !== 'undefined' && item.DitherTargetExposures !== 0">
-          Dither alle {{ item.DitherTargetExposures }} Aufnahmen
+          {{ $t('components.sequence.ditherEvery') }} {{ item.DitherTargetExposures }} {{ $t('components.sequence.details.exposures') }}
         </div>
         <div v-if="typeof item.Type !== 'undefined'">
-          Type: {{ item.Type }}
+          {{ $t('components.sequence.type') }}: {{ item.Type }}
         </div>
         <div v-if="typeof item.DeltaHFR !== 'undefined'">
-          DeltaHFR: {{ item.DeltaHFR }}
+          {{ $t('components.sequence.deltaHFR') }}: {{ item.DeltaHFR }}
         </div>
 
         <div v-if="typeof item.SampleSize !== 'undefined'">
-          SampleSize: {{ item.SampleSize }}
+          {{ $t('components.sequence.sampleSize') }}: {{ item.SampleSize }}
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@ function filterFields(trigger) {
 
       <!-- Triggers anzeigen -->
       <div v-if="item.Triggers && item.Triggers.length" class="pl-4 mt-2 ">
-        <h4 class="font-semibold mb-1 text-sm md:text-base">Triggers:</h4>
+        <h4 class="font-semibold mb-1 text-sm md:text-base">{{ $t('components.sequence.triggers') }}:</h4>
         <div v-for="(trigger, tIndex) in item.Triggers" :key="tIndex">
           <div class="border-l border-gray-300 pl-2">
             <div class="flex items-center justify-between mb-1 pl-2">

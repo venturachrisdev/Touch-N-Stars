@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isLoading">Loading...</div>
+    <div v-if="isLoading">{{ $t('components.loading') }}</div>
     <div v-else>
       <div v-for="(entry, index) in firstLog" :key="index" 
         class="grid grid-cols-4 border-r border-gray-900 rounded-t-md bg-gray-800 shadow-md text-sm" :class="{
