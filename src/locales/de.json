@@ -62,7 +62,12 @@
     },
     "lastLogs": {
       "loading": "Lade Daten...",
-      "error": "Fehler beim Laden der Daten:"
+      "error": "Fehler beim Laden der Daten:",
+      "timestamp": "Zeitstempel",
+      "level": "Level",
+      "message": "Nachricht",
+      "member": "Mitglied",
+      "line": "Zeile"
     },
     "navigation": {
       "equipment": "Geräte",

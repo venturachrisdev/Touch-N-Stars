@@ -62,7 +62,12 @@
     },
     "lastLogs": {
       "loading": "Loading data...",
-      "error": "Error loading data:"
+      "error": "Error loading data:",
+      "timestamp": "Timestamp",
+      "level": "Level", 
+      "message": "Message",
+      "member": "Member",
+      "line": "Line"
     },
     "navigation": {
       "equipment": "Equipment",
