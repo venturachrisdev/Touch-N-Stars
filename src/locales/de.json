@@ -91,6 +91,7 @@
       "title": "Sequenz",
       "stats": "Statistiken",
       "noSequenceLoaded": "Keine Sequenz geladen",
+      "noSequenceData": "noch keine Daten verfügbar",
       "startSequence": "Sequenz starten",
       "stopSequence": "Sequenz stoppen",
       "resetSequence": "Sequenz zurücksetzen",
