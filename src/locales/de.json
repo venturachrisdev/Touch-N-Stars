@@ -1,7 +1,9 @@
 {
   "general": {
     "cancel": "Abbrechen",
-    "confirm": "Bestätigen"
+    "confirm": "Bestätigen",
+    "hide": "Ausblenden",
+    "show": "Anzeigen"
   },
   "pages": {
     "equipment": {
@@ -114,7 +116,8 @@
       "mean": "Mittelwert",
       "median": "Median",
       "stDev": "St. Dev",
-      "rmsText": "RMS"
+      "rmsText": "RMS",
+      "sequence_control": "Sequenze Kontrolle"
     },
     "mount": {
       "title": "Montierung",

@@ -1,7 +1,9 @@
 {
   "general": {
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "hide": "Hide",
+    "show": "Show"
   },
   "pages": {
     "equipment": {
@@ -114,7 +116,8 @@
       "mean": "Mean",
       "median": "Median",
       "stDev": "St. Dev.",
-      "rmsText": "RMS"
+      "rmsText": "RMS",
+      "sequence_control": "Sequence Controls"
     },
     "mount": {
       "title": "Mount",

@@ -3,33 +3,54 @@
         <p>{{ $t('components.sequence.noSequenceLoaded') }}</p>
     </div>
     <div v-else class="flex items-center justify-center w-full">
-        <div class="flex flex-col gap-4 sm:flex-row sm:gap-6">
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-100 mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2a1 1 0 011 1v3a1 1 0 11-2 0V3a1 1 0 011-1zm0 15a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm10-5a1 1 0 01-1 1h-3a1 1 0 110-2h3a1 1 0 011 1zM7 12a1 1 0 01-1 1H3a1 1 0 110-2h3a1 1 0 011 1zm12.071 7.071a1 1 0 01-1.414 0l-2.121-2.121a1 1 0 011.414-1.414l2.121 2.121a1 1 0 010 1.414zM8.464 8.464a1 1 0 01-1.414 0L4.93 6.344a1 1 0 011.414-1.414L8.464 7.05a1 1 0 010 1.414zM4.93 19.071a1 1 0 01-1.414-1.414l2.121-2.121a1 1 0 011.414 1.414l-2.121 2.121a1 1 0 01-1.414 0zM15.536 8.464a1 1 0 01-1.414-1.414l2.121-2.121a1 1 0 011.414 1.414l-2.121 2.121a1 1 0 01-1.414 0z" />
+                </svg>
+                {{ $t('components.sequence.sequence_control') }}
+            </h3>
+            
+            <div class="flex flex-col gap-3 sm:flex-row sm:gap-4">
                 <button 
                     :class="[
-                        'btn-primary bg-blue-500',
-                        store.sequenceRunning ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+                        'btn-primary bg-gradient-to-br from-blue-600 to-blue-500',
+                        store.sequenceRunning ? 'opacity-75 cursor-not-allowed' : 'hover:from-blue-700 hover:to-blue-600'
                     ]"
                     @click="startSequence"
                     :disabled="store.sequenceRunning"
+                    v-tooltip="'Start the imaging sequence'"
                 >
                     <span v-if="store.sequenceRunning" class="animate-spin mr-2">&#9696;</span>
+                    <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                    </svg>
                     {{ store.sequenceRunning ? 'RUNNING' : $t('components.sequence.startSequence') }}
                 </button>
-            
-            <button 
-                class="btn-primary bg-red-500 hover:bg-red-600"
-                @click="stopSequence"
-            >
-                {{ $t('components.sequence.stopSequence') }}
-            </button>
-            
-            <button 
-                class="btn-primary bg-pink-500 hover:bg-pink-600"
-                @click="showResetConfirmation = true"
-                :disabled="store.sequenceRunning"
-            >
-                {{ $t('components.sequence.resetSequence') }}
-            </button>
+                
+                <button 
+                    class="btn-primary bg-gradient-to-br from-red-600 to-red-500 hover:from-red-700 hover:to-red-600"
+                    @click="stopSequence"
+                    v-tooltip="'Stop the current sequence'"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd" />
+                    </svg>
+                    {{ $t('components.sequence.stopSequence') }}
+                </button>
+                
+                <button 
+                    class="btn-primary bg-gradient-to-br from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600"
+                    @click="showResetConfirmation = true"
+                    :disabled="store.sequenceRunning"
+                    v-tooltip="'Reset sequence state'"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                    </svg>
+                    {{ $t('components.sequence.resetSequence') }}
+                </button>
+            </div>
         </div>
 
         <!-- Reset Confirmation Dialog -->
@@ -149,17 +170,4 @@ async function confirmReset() {
   opacity: 0;
 }
 
-.btn-primary {
-    @apply px-6 py-3 rounded-lg text-white font-medium transition-all duration-200;
-    @apply flex items-center justify-center min-w-[160px];
-    @apply shadow-lg hover:shadow-xl;
-}
-
-.btn-secondary {
-    @apply px-4 py-2 rounded-md text-gray-300 bg-gray-700 hover:bg-gray-600 transition-colors;
-}
-
-.btn-danger {
-    @apply px-4 py-2 rounded-md text-white bg-red-600 hover:bg-red-700 transition-colors;
-}
 </style>
