@@ -37,7 +37,7 @@
     </div>
 
     <!-- Main Sequence Containers -->
-     <div v-for="(container, containerIndex) in store.sequenceInfo.slice(0, -1)" :key="containerIndex"
+     <div v-for="(container, containerIndex) in store.sequenceInfo.slice(1)" :key="containerIndex"
       class="bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-lg mb-4 p-6 shadow-lg">
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center space-x-3">
