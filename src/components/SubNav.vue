@@ -1,0 +1,49 @@
+<template>
+
+  <div class="subnav bg-gray-800 shadow-sm absolute top-[65px] left-0">
+    <div class="flex mx-auto max-w-4xl h-12 items-center justify-center px-4 space-x-4">
+      <button v-for="item in items" :key="item.name" class="subnav-button"
+        :class="{ 'active-subnav-button': item.value === activeItem }" @click="selectItem(item.value)"
+        :title="item.name">
+        {{ item.name }}
+      </button>
+    </div>
+  </div>
+
+</template>
+
+<script setup>
+import { defineProps, defineEmits } from 'vue';
+
+defineProps({
+  items: {
+    type: Array,
+    required: true,
+  },
+  activeItem: {
+    type: String,
+    required: true,
+  },
+});
+
+const emit = defineEmits(['update:activeItem']);
+
+function selectItem(value) {
+  emit('update:activeItem', value);
+  //console.log(activeItem);
+}
+</script>
+
+<style scoped>
+.subnav {
+  @apply w-full border-t border-cyan-500/20 z-10;
+}
+
+.subnav-button {
+  @apply text-gray-300 text-sm px-3 py-2 rounded hover:bg-gray-700 hover:text-white transition-all;
+}
+
+.active-subnav-button {
+  @apply text-white bg-cyan-700 rounded;
+}
+</style>

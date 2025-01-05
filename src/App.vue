@@ -20,17 +20,16 @@
 
       </div>
 
-
     </div>
     <div v-else>
       <!-- Navigation -->
       <nav>
-        <div>
+        <div class="z-20">
           <NavigationComp />
         </div>
       </nav>
       <!-- Hauptinhalt -->
-      <div class="container mx-auto p-4 transition-all">
+      <div class="container mx-auto p-0.5 transition-all">
         <router-view />
       </div>
       <!-- Footer -->

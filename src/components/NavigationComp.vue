@@ -99,7 +99,7 @@
         </button>
         <div
           v-if="showLanguageMenu"
-          class="absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5"
+          class="absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 z-20"
         >
           <div class="py-1">
             <button

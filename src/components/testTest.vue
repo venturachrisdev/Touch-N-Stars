@@ -1,20 +1,18 @@
 <template>
-  <div class="container ">
-    <h1>{{ $t('components.test.title') }}</h1>
+    <div>
 
-
-    
-    <LastMessage />
-
-
+    <SubNav :links="subnavLinks" />
 
   </div>
+
+
 </template>
 
 <script setup>
-//import SequenzGraph from './sequence/SequenzGraph.vue';
-//import LastSequenceImg from './sequence/LastSequenceImg.vue';
-//import LastLogs from './LastLogs.vue';
-import LastMessage from './LastMessage.vue';
-
+import SubNav from './SubNav.vue';
+const subnavLinks = [
+  { name: 'Overview', path: '/section/overview' },
+  { name: 'Details', path: '/section/details' },
+  { name: 'Settings', path: '/section/settings' }
+];
 </script>
