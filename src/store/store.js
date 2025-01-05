@@ -116,10 +116,10 @@ export const apiStore = defineStore('store', {
     }) {
       if (imageHistoryResponse.Success) {
         this.imageHistoryInfo = imageHistoryResponse.Response;
-        console.log('Image History abgerufen:', this.imageHistoryInfo);
+        //console.log('Image History abgerufen:', this.imageHistoryInfo);
       } else {
         this.sequenceIsLoaded = false;
-        //console.error('Fehler in der Sequence-API-Antwort:', sequenceResponse.Error);
+        console.error('Fehler in der Sequence-API-Antwort:', sequenceResponse.Error);
       }
 
       if (sequenceResponse.Success) {
