@@ -18,7 +18,10 @@ export const apiStore = defineStore('store', {
     rotatorInfo: [],
     focuserAfInfo: [],
     guiderInfo: [],
-    safetyInfo:[],
+    safetyInfo: {
+      Connected: false,
+      IsSafe: false
+    },
     LogsInfo: [],
     RADistanceRaw: [],
     DECDistanceRaw: [],

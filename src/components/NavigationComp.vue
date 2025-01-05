@@ -1,6 +1,7 @@
 <template>
   <div class="top-0 h-16 bg-gray-800 shadow-md">
     <div class="flex inset-x-0 mx-auto max-w-sm h-16 items-center justify-around">
+      <StatusIndicator v-if="isSafetyConnected" class="mr-2" />
       <router-link
         to="/equipment"
         class="nav-button"
@@ -126,14 +127,21 @@ import {
   ListBulletIcon,
   GlobeAltIcon,
 } from '@heroicons/vue/24/outline';
-import { ref, watchEffect } from 'vue';
+import { ref, watchEffect, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { apiStore } from '../store/store';
+import StatusIndicator from './helpers/StatusIndicator.vue';
 
+const store = apiStore();
 const { locale, t } = useI18n();
 const $t = t;
 const showLanguageMenu = ref(false);
 
 const currentLanguage = ref(locale.value);
+
+const isSafetyConnected = computed(() => {
+  return store.safetyInfo?.Connected || false;
+});
 
 watchEffect(() => {
   currentLanguage.value = locale.value;
