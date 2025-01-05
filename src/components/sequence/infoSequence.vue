@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 space-y-4">
+  <div class="space-y-4">
     <!-- Global Triggers Container - Only show if we have valid global triggers -->
     <div v-if="globalTriggers.length > 0"
       class="bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-lg mb-4 p-6 shadow-lg">
