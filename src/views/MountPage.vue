@@ -1,42 +1,24 @@
 <template>
-  <div class="container flex items-center justify-center">
+  <SubNav :items="[
+    { name: t('components.mount.title'), value: 'showMount' },
+    { name: t('components.mount.slew'), value: 'showSlew' },
+    { name: t('components.tppa.title'), value: 'showTppa' }
+  ]" v-model:activeItem="currentTab" />
+  <div class="container pt-16 flex items-center justify-center">
     <div class="container max-w-md landscape:max-w-xl">
       <h5 class="text-xl text-center font-bold text-white mb-4">{{ $t('components.mount.title') }}</h5>
       <infoMount v-model="store.mountInfo.Connected" class="grid grid-cols-2 landscape:grid-cols-3" />
       <infoCamera :show-only-exposing="showTppa" class="grid grid-cols-2 landscape:grid-cols-3 mt-2" />
       <div v-if="store.mountInfo.Connected">
-          <div class="mt-4 border border-gray-700 rounded-b-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg">
-          <div class="text-sm flex justify-between space-x-2 p-2">
-            <button
-              class="border-2 border-gray-600 rounded-md w-full h-10 flex-1 bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
-              :class="{ 'from-blue-600 to-blue-500': showMount, 'from-gray-800 to-gray-900': !showMount }"
-              @click="toggleShowMount"
-            >
-              {{ $t('components.mount.title') }}
-            </button>
-            <button
-              class="border-2 border-gray-600 rounded-md w-full h-10 flex-1 bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
-              :class="{ 'from-purple-600 to-purple-500': showSlew, 'from-gray-800 to-gray-900': !showSlew }"
-              @click="toggleShowSlew"
-            >
-              {{ $t('components.mount.slew') }}
-            </button>
-            <button
-              class="border-2 border-gray-600 rounded-md w-full h-10 flex-1 bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 transition-all duration-200"
-              :class="{ 'from-green-600 to-green-500': showTppa, 'from-gray-800 to-gray-900': !showTppa }"
-              @click="toggleShowTppa"
-            >
-              {{ $t('components.tppa.title') }}
-            </button>
-          </div>
+        <div class="mt-4 border border-gray-700 rounded-b-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg">
           <div class="container pl-5 pb-5 pr-5">
-            <div v-if="showMount" class="mt-5">
+            <div v-if="currentTab === 'showMount'" class="mt-5">
               <controlMount />
             </div>
-            <div v-if="showTppa" class="mt-5">
+            <div v-if="currentTab === 'showTppa'" class="mt-5">
               <TppaPage />
             </div>
-            <div v-if="showSlew" class="mt-5">
+            <div v-if="currentTab === 'showSlew'" class="mt-5">
               <TargetSearch />
             </div>
           </div>
@@ -54,35 +36,14 @@ import infoMount from '@/components/mount/infoMount.vue';
 import infoCamera from '@/components/camera/infoCamera.vue';
 import controlMount from '@/components/mount/controlMount.vue';
 import { apiStore } from '@/store/store';
+import SubNav from '@/components/SubNav.vue';
+import { useI18n } from 'vue-i18n';
+
+const currentTab = ref('showMount'); // Standardwert
+const { t } = useI18n()
 
 const store = apiStore();
-const showTppa = ref(false);
-const showSlew = ref(false);
-const showMount = ref(true);
 
-function toggleShowMount() {
-  showMount.value = !showMount.value;
-  if (showMount.value) {
-    showSlew.value = false;
-    showTppa.value = false;
-  }
-}
-
-function toggleShowSlew() {
-  showSlew.value = !showSlew.value;
-  if (showSlew.value) {
-    showTppa.value = false;
-    showMount.value = false;
-  }
-}
-
-function toggleShowTppa() {
-  showTppa.value = !showTppa.value;
-  if (showTppa.value) {
-    showSlew.value = false;
-    showMount.value = false;
-  }
-}
 </script>
 
 <style scoped></style>
