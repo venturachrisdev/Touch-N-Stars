@@ -10,7 +10,7 @@
       <infoMount v-model="store.mountInfo.Connected" class="grid grid-cols-2 landscape:grid-cols-3" />
       <infoCamera :show-only-exposing="showTppa" class="grid grid-cols-2 landscape:grid-cols-3 mt-2" />
       <div v-if="store.mountInfo.Connected">
-        <div class="mt-4 border border-gray-700 rounded-b-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg">
+        <div class="mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg">
           <div class="container pl-5 pb-5 pr-5">
             <div v-if="currentTab === 'showMount'" class="mt-5">
               <controlMount />
