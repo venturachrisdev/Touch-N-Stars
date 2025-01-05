@@ -8,16 +8,12 @@
       <div v-else>
         <!-- Wenn verbunden dann hier der Inhalt -->
         <div class="flex space-x-4">
-          <button
-            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
-            @click="guiderStartStop('start')"
-          >
+          <button class="btn-primary bg-gradient-to-br from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600"
+            @click="guiderStartStop('start')">
             {{ $t('components.guider.start') }}
           </button>
-          <button
-            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
-            @click="guiderStartStop('stop')"
-          >
+          <button class="btn-primary bg-gradient-to-br from-red-600 to-red-500 hover:from-red-700 hover:to-red-600"
+            @click="guiderStartStop('stop')">
             {{ $t('components.guider.stop') }}
           </button>
         </div>

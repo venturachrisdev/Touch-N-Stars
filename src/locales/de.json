@@ -1,7 +1,9 @@
 {
   "general": {
     "cancel": "Abbrechen",
-    "confirm": "Bestätigen"
+    "confirm": "Bestätigen",
+    "hide": "Ausblenden",
+    "show": "Anzeigen"
   },
   "pages": {
     "equipment": {
@@ -115,6 +117,7 @@
       "median": "Median",
       "stDev": "St. Dev",
       "rmsText": "RMS",
+      "sequence_control": "Sequenze Kontrolle",
       "temperature": "Temperatur"
     },
     "mount": {
