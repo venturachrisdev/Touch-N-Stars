@@ -114,7 +114,8 @@
       "mean": "Mean",
       "median": "Median",
       "stDev": "St. Dev.",
-      "rmsText": "RMS"
+      "rmsText": "RMS",
+      "temperature": "Temperature"
     },
     "mount": {
       "title": "Mount",

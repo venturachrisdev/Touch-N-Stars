@@ -24,7 +24,7 @@
             </div>
             <div v-if="ExposureTime" class="flex justify-between">
                 <span class="font-bold">{{ $t('components.sequence.exposureTime') }}:</span>
-                <span>{{ ExposureTime.toFixed(2) }}</span>
+                <span>{{ ExposureTime.toFixed(2) }} s</span>
             </div>
             <div v-if="HFR" class="flex justify-between">
                 <span class="font-bold">{{ $t('components.sequence.hfr') }}:</span>
@@ -52,7 +52,7 @@
             </div>
             <div v-if="Temperature !== 'NaN'" class="flex justify-between">
                 <span class="font-bold">{{ $t('components.sequence.temperature') }}:</span>
-                <span>{{ Temperature }}</span>
+                <span>{{ Temperature }} °C</span>
             </div>
             <div v-if="Filter" class="flex justify-between">
                 <span class="font-bold">{{ $t('components.sequence.filter') }}:</span>
