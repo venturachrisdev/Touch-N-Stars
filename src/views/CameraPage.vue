@@ -49,23 +49,23 @@
     <!-- Hauptbereich, wenn Kamera verbunden -->
     <div v-show="store.cameraInfo.Connected">
       <!-- Toggle Button for Info/Settings -->
-      <div class="flex items-center justify-center mb-6">
-        <button @click="cameraStore.showInfo = !cameraStore.showInfo"
-          class="flex items-center space-x-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg border border-gray-700 transition-all duration-200">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 transition-transform duration-300"
-            :class="{ '-rotate-90': cameraStore.showInfo }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-          <span class="text-sm font-medium text-gray-300">
-            {{ cameraStore.showInfo ? $t('general.hide') : $t('general.show') }} {{ $t('components.camera.settings') }} & {{ $t('components.camera.info') }}
-          </span>
-        </button>
-      </div>
+      <div class="flex items-center space-x-3 mb-4">
+          <div class="w-3 h-[1px] bg-gray-700"></div> <!-- kurze Linie -->
+          <button @click="cameraStore.showInfo = !cameraStore.showInfo"
+            class="w-7 h-7 bg-gray-700 active:bg-cyan-700 hover:bg-cyan-600 rounded-md border border-cyan-500/20 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white transition-transform duration-300"
+              :class="{ '-rotate-90': cameraStore.showInfo }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+          <p class=" text-sm italic"> {{ $t('components.camera.info_settings') }}</p>
+          <div class="flex-grow h-[1px] bg-gray-700"></div> <!-- lange Linie -->
+        </div>
 
       <!-- Capture Controls and Image Display -->
       <div class="flex flex-col landscape:flex-row gap-6">
         <!-- Left Panel - Controls -->
-        <div class="flex flex-col landscape:w-1/3 space-y-4">
+        <div class="flex flex-col landscape:w-1/6 space-y-4">
           <!-- Loop Checkbox -->
           <div class="flex items-center p-4 bg-gray-800/50 rounded-lg border border-gray-700/50">
             <input v-model="cameraStore.isLooping" id="checkDauerschleife" type="checkbox" 
@@ -126,7 +126,7 @@
         </div>
 
         <!-- Right Panel - Image Display -->
-        <div class="flex w-full landscape:w-2/3">
+        <div class="flex w-full landscape:w-5/6">
           <div ref="imageContainer" class="image-container overflow-hidden min-h-[65vh] w-full
                    touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40
                    rounded-xl border border-cyan-700/50">
