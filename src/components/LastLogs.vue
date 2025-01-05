@@ -21,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(entry, index) in log.logs" :key="index" class="odd:bg-gray-900 even:bg-gray-600">
+          <tr v-for="(entry, index) in store.LogsInfo.logs" :key="index" class="odd:bg-gray-900 even:bg-gray-600">
             <td class="border border-gray-300 px-4 py-2">{{ formatTimestamp(entry.timestamp) }}</td>
             <td class="border border-gray-300 px-4 py-2" :class="{
               'text-green-600': entry.level === 'INFO',
@@ -41,53 +41,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import apiService from "@/services/apiService";
-
-// Initialisieren von log mit einer leeren logs-Array
-const log = ref({ logs: [] });
-
-// Zustände für Laden und Fehler
-const isLoading = ref(true);
-const error = ref(null);
+import { apiStore } from "@/store/store";
+const store = apiStore();
 
 // Funktion zum Formatieren des Timestamps (optional)
 function formatTimestamp(timestamp) {
   const date = new Date(timestamp);
   return date.toLocaleString();
 }
-
-// Daten von der API abrufen
-async function fetchLastLogs() {
-  try {
-    const response = await apiService.getLastLogs("50");
-
-    // Überprüfen Sie die Struktur der API-Antwort
-    // Angenommen, die Logs befinden sich direkt in response.logs
-    if (response && Array.isArray(response.logs)) {
-      log.value = response;
-    } else if (response && response.data && Array.isArray(response.data.logs)) {
-      // Falls die Logs in response.data.logs liegen
-      log.value = response.data;
-    } else {
-      throw new Error("Unerwartete API-Antwortstruktur");
-    }
-
-    console.log("API Response:", log.value);
-  } catch (err) {
-    console.error("Fehler beim Abrufen der Daten:", err);
-    error.value = err;
-  } finally {
-    isLoading.value = false;
-  }
-}
-
-// Beim Mounten der Komponente die Daten abrufen
-onMounted(() => {
-  fetchLastLogs();
-});
 </script>
 
 <style scoped>
-/* Keine spezifischen Stile benötigt, da Tailwind verwendet wird */
+
 </style>

@@ -80,7 +80,7 @@ export const apiStore = defineStore('store', {
           apiService.focuserAfAction('info'),
           apiService.guiderAction('info'),
           apiService.fetchGuiderChartData(),
-          apiService.getLastLogs('10'),
+          apiService.getLastLogs('100'),
         ]);
 
         this.handleApiResponses({
