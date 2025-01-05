@@ -2,26 +2,27 @@
   <div class="text-left mb-2">
     <h1 class="text-xl text-center font-bold">{{ $t('components.focuser.title') }}</h1>
   </div>
-  <div class="container flex items-center justify-center">
-
+  <div v-if="!store.focuserInfo.Connected" class="p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+    <p class="text-red-400 font-medium text-center">{{ $t('components.focuser.please_connect_focuser') }}</p>
+  </div>
+  <div v-else class="container flex items-center justify-center">
     <div class="container max-w-md landscape:max-w-xl">
       <infoFocuser v-model="store.focuserInfo.Connected" class="grid grid-cols-2 landscape:grid-cols-3" />
-
-
       <div v-if="store.focuserInfo.Connected" class="flex flex-col text-left mt-4">
         <div class="flex space-x-3 items-center">
           <label for="position" class="w-auto">{{ $t('components.focuser.new_position') }}</label>
           <input id="position" v-model.number="position" type="number"
-            class="text-black px-4 h-10 w-40 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-700"
+            class="text-black px-4 h-10 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-700"
             placeholder="1" step="50" />
-          <button class="btn-primary bg-gradient-to-br from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600"
+          <button
+            class="btn-primary bg-gradient-to-br from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600 w-full"
             @click="moveFocuser">
             {{ $t('components.focuser.move') }}
           </button>
         </div>
         <div class="mt-4">
           <button v-if="!store.focuserAfInfo.autofocus_running"
-            class="flex h-10 w-full rounded-md text-white font-medium transition-colors bg-cyan-700 items-center justify-center disabled:opacity-50"
+            class="btn-primary bg-gradient-to-br  from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600 flex h-10 w-full "
             @click="startAutofocus">
             {{ $t('components.focuser.start_autofocus') }}
           </button>
@@ -127,7 +128,7 @@ watch(() => store.focuserAfInfo.autofocus_running, (newVal, oldVal) => {
     setTimeout(() => {
       delayShowGraph.value = true;
     }, 5000);
-  } 
+  }
 });
 
 </script>
