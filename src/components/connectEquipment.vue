@@ -37,6 +37,12 @@
             :disconnectText="$t('components.connectEquipment.guider.disconnect')" 
             :onToggle="toggleGuiderConnection" />
 
+        <!-- Safety Control -->
+        <ConnectionButton :isConnected="store.safetyInfo.Connected" 
+            :connectText="$t('components.connectEquipment.safety.connect')"
+            :disconnectText="$t('components.connectEquipment.safety.disconnect')" 
+            :onToggle="toggleSafetyConnection" />
+
     </div>
 </template>
 
@@ -118,6 +124,18 @@ async function toggleGuiderConnection() {
         }
     } catch (error) {
         console.error(t('components.connectEquipment.guider.error'), error.response?.data || error);
+    }
+}
+
+async function toggleSafetyConnection() {
+    try {
+        if (store.safetyInfo.Connected) {
+            await apiService.safetyAction("disconnect");
+        } else {
+            await apiService.safetyAction("connect");
+        }
+    } catch (error) {
+        console.error(t('components.connectEquipment.safety.error'), error.response?.data || error);
     }
 }
 </script>

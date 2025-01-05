@@ -60,6 +60,11 @@
         "error": "Fehler bei der Steuerung des Guiders:",
         "start": "Starten",
         "stop": "Stoppen"
+      },
+      "safety":{
+        "connect": "Safety Monitor verbinden",
+        "disconnect": "Safety Monitor trennen",
+        "error": "Fehler bei der Steuerng des Safety Monitors"
       }
     },
     "lastLogs": {

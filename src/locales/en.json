@@ -60,6 +60,11 @@
         "error": "Error controlling guider:",
         "start": "Start",
         "stop": "Stop"
+      },
+      "safety":{
+        "connect": "Connect Safety Monitor",
+        "disconnect": "Disconnect Safety Monitor",
+        "error": "Error controlling Safety Monitor"
       }
     },
     "lastLogs": {
