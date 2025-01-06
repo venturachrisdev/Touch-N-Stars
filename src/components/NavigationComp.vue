@@ -1,6 +1,25 @@
 <template>
   <div class="top-0 h-16 bg-gray-800 shadow-md">
     <div class="flex inset-x-0 mx-auto max-w-sm h-16 items-center justify-around">
+      <div v-if="isSafetyConnected" class="mr-2">
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="24" 
+          height="24" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"
+          :class="isSafe ? 'text-green-500' : 'text-red-500'"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/>
+          <path d="M12 11m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>
+          <path d="M12 12l0 2.5"/>
+        </svg>
+      </div>
       <router-link
         to="/equipment"
         class="nav-button"
@@ -126,14 +145,24 @@ import {
   ListBulletIcon,
   GlobeAltIcon,
 } from '@heroicons/vue/24/outline';
-import { ref, watchEffect } from 'vue';
+import { ref, watchEffect, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { apiStore } from '@/store/store';
 
+const store = apiStore();
 const { locale, t } = useI18n();
 const $t = t;
 const showLanguageMenu = ref(false);
 
 const currentLanguage = ref(locale.value);
+
+const isSafetyConnected = computed(() => {
+  return store.safetyInfo?.Connected || false;
+});
+
+const isSafe = computed(() => {
+  return store.safetyInfo?.IsSafe || false;
+});
 
 watchEffect(() => {
   currentLanguage.value = locale.value;

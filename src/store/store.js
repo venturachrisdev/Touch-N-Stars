@@ -18,6 +18,10 @@ export const apiStore = defineStore('store', {
     rotatorInfo: [],
     focuserAfInfo: [],
     guiderInfo: [],
+    safetyInfo: {
+      Connected: false,
+      IsSafe: false
+    },
     LogsInfo: [],
     RADistanceRaw: [],
     DECDistanceRaw: [],
@@ -68,6 +72,7 @@ export const apiStore = defineStore('store', {
           focuserAfResponse,
           guiderResponse,
           guiderChartResponse,
+          safetyResponse,
           logsResponse,
         ] = await Promise.all([
           apiService.imageHistoryAll(),
@@ -80,6 +85,7 @@ export const apiStore = defineStore('store', {
           apiService.focuserAfAction('info'),
           apiService.guiderAction('info'),
           apiService.fetchGuiderChartData(),
+          apiService.safetyAction('info'),
           apiService.getLastLogs('100'),
         ]);
 
@@ -94,6 +100,7 @@ export const apiStore = defineStore('store', {
           focuserAfResponse,
           guiderResponse,
           guiderChartResponse,
+          safetyResponse,
           logsResponse,
         });
       } catch (error) {
@@ -112,6 +119,7 @@ export const apiStore = defineStore('store', {
       focuserAfResponse,
       guiderResponse,
       guiderChartResponse,
+      safetyResponse,
       logsResponse,
     }) {
       if (imageHistoryResponse.Success) {
@@ -172,6 +180,12 @@ export const apiStore = defineStore('store', {
         this.LogsInfo = logsResponse;
       } else {
         console.error('Fehler in der Logs-API-Antwort:', logsResponse.Error);
+      }
+
+      if (safetyResponse.Success) {
+        this.safetyInfo = safetyResponse.Response;
+      } else {
+        console.error('Fehler in der Safety-API-Antwort:', safetyResponse.Error);
       }
 
       if (guiderResponse.Success) {

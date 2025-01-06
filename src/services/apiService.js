@@ -364,6 +364,12 @@ const apiService = {
     }
   },
 
+  //-------------------------------------  safety ---------------------------------------
+  // Safety Monitor actions
+  safetyAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/safetymonitor/${action}`);
+  },
+
   //-------------------------------------  Logs ---------------------------------------
   async getLastLogs(count, level) {
     try {
