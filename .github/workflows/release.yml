@@ -71,6 +71,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        gh release create ${{ github.event.inputs.version }} `
-          --title "Release ${{ github.event.inputs.version }}" `
-          --notes "Release ${{ github.event.inputs.version }}" `
+        gh release create ${{ github.event.inputs.version }} --title "Release ${{ github.event.inputs.version }}" --generate-notes "dist/TouchNStars-${{ github.event.inputs.version }}.zip"
