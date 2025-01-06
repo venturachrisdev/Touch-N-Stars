@@ -3,9 +3,13 @@
     <p>{{$t('components.dome.please_connect_dome')}}</p>
   </div>
   <div v-else class="gap-2">
-      <StatusString :isEnabled="store.domeInfo.Azimuth !== undefined && !isNaN(store.domeInfo.Azimuth)" :Name="$t('components.focuser.azimuth')" :Value="store.focuserInfo.Azimuth" />
-      <StatusBool :isEnabled="store.focuserInfo.IsMoving" :enabledText="$t('components.focuser.moving')" :disabledText="$t('components.focuser.stopped')" />
- />    
+      <StatusString :isEnabled="store.domeInfo.Azimuth !== undefined && !isNaN(store.domeInfo.Azimuth)" :Name="$t('components.dome.azimuth')" :Value="store.domeInfo.Azimuth" />
+      <StatusBool :isEnabled="store.domeInfo.Slewing" :enabledText="$t('components.dome.slewing')" :disabledText="$t('components.dome.slewing_stopped')" />
+      <StatusBool :isEnabled="store.domeInfo.DriverFollowing" :enabledText="$t('components.dome.following')" :disabledText="$t('components.dome.following_stopped')" />
+      <StatusBool :isEnabled="store.domeInfo.AtHome" :enabledText="$t('components.dome.at_home')" :disabledText="$t('components.dome.not_at_home')" />
+      <StatusBool :isEnabled="!store.domeInfo.AtPark" :enabledText="$t('components.dome.unpark')" :disabledText="$t('components.dome.park')" />
+      <StatusBool :isEnabled="!store.domeInfo.ShutterStatus" :enabledText="$t('components.dome.shutter_open')" :disabledText="$t('components.dome.shutter_close')" />
+    
   </div>
 </template>
 

@@ -193,6 +193,30 @@
       "autofocus": "Autofocus",
       "last_autofocus": "Last autofocus"
     },
+    "dome": {
+      "title": "Dome",
+      "azimuth": "azimuth",
+      "slewing": "slewing",
+      "slewing_stopped": "slewing stopped",
+      "following": "following",
+      "following_stopped": "following stopped",
+      "at_home": "Home",
+      "not_at_home": "not at home",
+      "park": "park",
+      "unpark": "unpark",
+      "shutter_close": "shutter close",
+      "shutter_open": "shutter open",
+      "control" :{
+        "open": "open shutter",
+        "close": "close shutter",
+        "stop": "stop shutter movement",
+        "errors": {
+          "open": "Error open shutter",
+          "close": "Error close shutter",
+          "stop": "Error stop shutter"
+        }
+      }
+    },
     "camera": {
       "title": "Camera",
       "connect": "Please connect camera",

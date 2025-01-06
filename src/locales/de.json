@@ -193,6 +193,30 @@
       "autofocus": "Autofokus",
       "last_autofocus": "Letzter Autofokus"
     },
+    "dome": {
+      "title": "Dome",
+      "azimuth": "Azimuth",
+      "slewing": "Schwenkt",
+      "slewing_stopped": "Schwenkt nicht",
+      "following": "Verfolgt",
+      "following_stopped": "Verfolgung gestopped",
+      "at_home": "Home",
+      "not_at_home": "Nicht Homepoisition",
+      "park": "Park",
+      "unpark": "Ausgeparkt",
+      "shutter_close": "Dach geschlossen",
+      "shutter_open": "Dach offen",
+      "control" :{
+        "open": "Dach öffnen",
+        "close": "Dach schließen",
+        "stop": "Stopp",
+        "errors": {
+          "open": "Fehler beim öffnen des Daches",
+          "close": "Fehler beim schließen des Daches",
+          "stop": "Fehler beim stoppen des Daches"
+        }
+      }
+    },
     "camera": {
       "title": "Kamera",
       "connect": "Bitte Kamera verbinden",

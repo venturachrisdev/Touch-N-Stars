@@ -89,7 +89,7 @@ export const apiStore = defineStore('store', {
           apiService.focuserAfAction('info'),
           apiService.guiderAction('info'),
           apiService.flatdeviceAction('info'),
-          apiService.DomeAction('info'),
+          apiService.domeAction('info'),
           apiService.fetchGuiderChartData(),
           apiService.safetyAction('info'),
           apiService.getLastLogs('100'),
