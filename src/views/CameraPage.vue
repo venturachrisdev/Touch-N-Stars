@@ -31,9 +31,8 @@
           <div class="flex-grow border-t border-gray-700"></div>
         </div>
         
-        <div class="space-y-6">
+        <div class="space-y-1">
           <settingsCameraCooler class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
-          
           <div class="grid grid-flow-row-dense grid-cols-1 landscape:grid-cols-2 gap-6">
             <changeFilter v-if="store.filterInfo.Connected" class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
             <controlRotator v-if="store.rotatorInfo.Connected" class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
