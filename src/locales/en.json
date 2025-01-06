@@ -92,6 +92,7 @@
       "autofocus": "Autofocus",
       "mount": "Mount",
       "guider": "Guider",
+      "dome": "Dome",
       "sequence": "Sequence"
     },
     "language": {
@@ -207,9 +208,9 @@
       "shutter_close": "shutter close",
       "shutter_open": "shutter open",
       "control" :{
-        "open": "open shutter",
-        "close": "close shutter",
-        "stop": "stop shutter movement",
+        "open": "Open shutter",
+        "close": "Close shutter",
+        "stop": "Stop shutter movement",
         "errors": {
           "open": "Error open shutter",
           "close": "Error close shutter",
