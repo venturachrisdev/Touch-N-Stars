@@ -2,7 +2,7 @@
 
 [English version available here](README_en.md)
 
-### 🚀 **Aktueller Status: Alpha-Version**  
+### 🚀 **Aktueller Status: Beta-Version**  
 Diese WebApp befindet sich in der **Entwicklungsphase** und richtet sich an Astro-Enthusiasten, die ihre Ausrüstung mit der Astrosoftware **NINA** (Nighttime Imaging 'N' Astronomy) bequem per Touchgerät einrichten möchten.  
 
 ### 🏁 **Ziel der WebApp**  
@@ -14,24 +14,17 @@ Die Anwendung soll die Steuerung und Anpassung bereits konfigurierter Profile er
   Der Port der API muss auf 1888 eingestellt sein und die V2 muss aktiv sein.
 - Für das Three Point Polar Alignment wird die Version 2.2.2.0 oder neuer benötigt.
 - Sie ist als Ergänzung zur Desktop-Software gedacht und bietet mobile Unterstützung für die grundlegenden Funktionen.
+- Ich übernehme keine Haftung!
   
 ### 🔧 **Installieren**
 - Die Zip-Datei muss auf dem Rechner, auf dem NINA installiert ist, entpackt werden und TouchNStars.exe gestartet werden.
 - Wahrscheinlich muss die Windowsfirewall für die Anwendung freigegeben werden.
 - Anschließend ist Touch'N'Stars über http://"IP-von-NINA-PC":5000 erreichbar.
 
-### 🧪 **Was bietet die Alpha-Version?**  
+### 🧪 **Was bietet die akutelle Version?**  
 - **Mobile Bedienbarkeit**: Greife einfach über dein Smartphone oder Tablet auf NINA zu.  
 - **Benutzerfreundliches Design**: Einfache und intuitive Benutzeroberfläche, die speziell für mobile Geräte optimiert wird.  
 - **Fokus auf Praktikabilität**: Unterstützung für die wesentlichen Schritte bei der Einrichtung deiner Ausrüstung.  
-
-### 🚧 **Geplante Funktionen**  
-- Integration des Filterrades
-- Kamera Aufwärmen und Tauheizung aktivieren
-- Planetensuche zum Schwenken auf den Planeten
-- Starten / Stoppen der Sequenz
-- Übersicht der laufenden Sequenz
-- ...
 
 ### 💙 **Dank**  
 Mein Dank gilt dem gesamten Entwicklerteam von **NINA**, deren großartige Arbeit diese WebApp erst möglich macht.  
