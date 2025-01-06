@@ -10,7 +10,7 @@ Die Anwendung soll die Steuerung und Anpassung bereits konfigurierter Profile er
 
 ### 🧩 **Wichtige Hinweise**  
 - Diese WebApp **setzt eine vollständig konfigurierte und laufende Installation von NINA** voraus.  
-- Es wird das Plugin **Advanced API** in der Version 2.1.0.0 oder neuer benötigt.
+- Es wird das Plugin **Advanced API** in der aktuellesten Betaversion benötigt.
   Der Port der API muss auf 1888 eingestellt sein und die V2 muss aktiv sein.
 - Für das Three Point Polar Alignment wird die Version 2.2.2.0 oder neuer benötigt.
 - Sie ist als Ergänzung zur Desktop-Software gedacht und bietet mobile Unterstützung für die grundlegenden Funktionen.
