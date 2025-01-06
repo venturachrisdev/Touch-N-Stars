@@ -65,17 +65,17 @@
         "connect": "Connect Safety Monitor",
         "disconnect": "Disconnect Safety Monitor",
         "error": "Error controlling Safety Monitor"
+      },
+      "flat": {
+        "connect": "Connect flatdevice",
+        "disconnect": "Disconnect flatdevice",
+        "error": "Error controlling flatdevice:"
+      },
+      "dome": {
+        "connect": "Connect dome",
+        "disconnect": "Disconnect dome",
+        "error": "Error controlling dome:"
       }
-    },
-    "flat": {
-      "connect": "Connect flatdevice",
-      "disconnect": "Disconnect flatdevice",
-      "error": "Error controlling flatdevice:"
-    },
-    "dome": {
-      "connect": "Connect dome",
-      "disconnect": "Disconnect dome",
-      "error": "Error controlling dome:"
     },
     "lastLogs": {
       "loading": "Loading data...",

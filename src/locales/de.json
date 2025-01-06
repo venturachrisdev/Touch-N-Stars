@@ -61,23 +61,22 @@
         "start": "Starten",
         "stop": "Stoppen"
       },
+      "safety":{
+        "connect": "Safety Monitor verbinden",
+        "disconnect": "Safety Monitor trennen",
+        "error": "Fehler bei der Steuerng des Safety Monitors"
+      },
+      "flat": {
+        "connect": "Flatdevice verbinden",
+        "disconnect": "Flatdevice trennen",
+        "error": "Fehler bei der Steuerung des Flatdevice:"
+      },
+      "dome": {
+        "connect": "Dome verbinden",
+        "disconnect": "Dome trennen",
+        "error": "Fehler bei der Steuerung des Dome:"
+      }
     },
-    "safety":{
-      "connect": "Safety Monitor verbinden",
-      "disconnect": "Safety Monitor trennen",
-      "error": "Fehler bei der Steuerng des Safety Monitors"
-    },
-  },
-  "flat": {
-    "connect": "Flatdevice verbinden",
-    "disconnect": "Flatdevice trennen",
-    "error": "Fehler bei der Steuerung des Flatdevice:"
-  },
-  "dome": {
-    "connect": "Dome verbinden",
-    "disconnect": "Dome trennen",
-    "error": "Fehler bei der Steuerung des Dome:"
-  },
     "lastLogs": {
       "loading": "Lade Daten...",
       "error": "Fehler beim Laden der Daten:",

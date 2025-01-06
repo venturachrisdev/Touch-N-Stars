@@ -275,7 +275,7 @@ const apiService = {
 
   //-------------------------------------  dome ---------------------------------------
   // Dome actions
-  domeAction(action) {
+  DomeAction(action) {
     return this._simpleGetRequest(`${BASE_URL}/equipment/dome/${action}`);
   },
 

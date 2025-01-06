@@ -77,7 +77,6 @@ export const apiStore = defineStore('store', {
           domeResponse,
           guiderChartResponse,
           safetyResponse,
-          safetyResponse,
           logsResponse,
         ] = await Promise.all([
           apiService.imageHistoryAll(),
@@ -92,7 +91,6 @@ export const apiStore = defineStore('store', {
           apiService.flatdeviceAction('info'),
           apiService.DomeAction('info'),
           apiService.fetchGuiderChartData(),
-          apiService.safetyAction('info'),
           apiService.safetyAction('info'),
           apiService.getLastLogs('100'),
         ]);
@@ -110,7 +108,6 @@ export const apiStore = defineStore('store', {
           flatdeviceResponse,
           domeResponse,
           guiderChartResponse,
-          safetyResponse,
           safetyResponse,
           logsResponse,
         });
@@ -132,7 +129,6 @@ export const apiStore = defineStore('store', {
       flatdeviceResponse,
       domeResponse,
       guiderChartResponse,
-      safetyResponse,
       safetyResponse,
       logsResponse,
     }) {
@@ -194,12 +190,6 @@ export const apiStore = defineStore('store', {
         this.LogsInfo = logsResponse;
       } else {
         console.error('Fehler in der Logs-API-Antwort:', logsResponse.Error);
-      }
-
-      if (safetyResponse.Success) {
-        this.safetyInfo = safetyResponse.Response;
-      } else {
-        console.error('Fehler in der Safety-API-Antwort:', safetyResponse.Error);
       }
 
       if (safetyResponse.Success) {
