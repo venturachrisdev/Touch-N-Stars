@@ -209,7 +209,7 @@ def fetch_safety_monitor_status():
                         time.sleep(5)
                         continue
 
-                    # Prüfen, ob LastGuideStep existiert
+                    # Prüfen, ob IsSafe existiert
                     IsSafe = response_data.get("IsSafe", {})
                     if not isinstance(IsSafe, dict):
                         print("Ungültiges IsSafe-Format: Kein Dictionary")
