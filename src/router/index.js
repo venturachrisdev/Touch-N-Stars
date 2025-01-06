@@ -8,6 +8,7 @@ import GuidingPage from '../views/GuidingPage.vue';
 import TargetPic from '../components/testTest.vue';
 import LastLogs from '@/components/LastLogs.vue';
 import SequencePage from '@/views/SequencePage.vue';
+import DomePage from '@/views/DomePage.vue';
 
 
 const routes = [
@@ -20,7 +21,7 @@ const routes = [
   { path: '/misc', component: TargetPic },
   { path: '/logs', component: LastLogs },
   { path: '/sequence', component: SequencePage },
-
+  { path: '/dome', component: DomePage },
 ];
 
 const router = createRouter({
