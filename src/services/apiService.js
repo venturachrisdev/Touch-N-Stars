@@ -267,6 +267,18 @@ const apiService = {
       }
     },
 
+  //-------------------------------------  flatdevice ---------------------------------------
+  // flatdevice actions
+  flatdeviceAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/flatdevice/${action}`);
+  },
+
+  //-------------------------------------  dome ---------------------------------------
+  // Dome actions
+  DomeAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/dome/${action}`);
+  },
+
   //-------------------------------------  focuser ---------------------------------------
   // Focuser actions
   focusAction(action) {
@@ -364,6 +376,12 @@ const apiService = {
     }
   },
 
+  //-------------------------------------  safety ---------------------------------------
+  // Safety Monitor actions
+  safetyAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/safetymonitor/${action}`);
+  },
+
   //-------------------------------------  Logs ---------------------------------------
   async getLastLogs(count, level) {
     try {
@@ -377,18 +395,7 @@ const apiService = {
     }
   },
 
-    //-------------------------------------  Logs ---------------------------------------
-    async getWshv() {
-      try {
-        const response = await axios.get(`${API_URL}wshv`, {
-        });
-        //console.log(response.data);
-        return response.data;
-      } catch (error) {
-        console.error("Error retrieving wshv result:", error);
-        throw error;
-      }
-    },
+
   //-------------------------------------  Helper ---------------------------------------
   // Helper methods
   _simpleGetRequest(url) {

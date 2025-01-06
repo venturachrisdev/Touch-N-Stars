@@ -18,6 +18,12 @@ export const apiStore = defineStore('store', {
     rotatorInfo: [],
     focuserAfInfo: [],
     guiderInfo: [],
+    flatdeviceInfo: [],
+    domeInfo: [],
+    safetyInfo: {
+      Connected: false,
+      IsSafe: false
+    },
     LogsInfo: [],
     RADistanceRaw: [],
     DECDistanceRaw: [],
@@ -67,7 +73,10 @@ export const apiStore = defineStore('store', {
           focuserResponse,
           focuserAfResponse,
           guiderResponse,
+          flatdeviceResponse,
+          domeResponse,
           guiderChartResponse,
+          safetyResponse,
           logsResponse,
         ] = await Promise.all([
           apiService.imageHistoryAll(),
@@ -79,7 +88,10 @@ export const apiStore = defineStore('store', {
           apiService.focusAction('info'),
           apiService.focuserAfAction('info'),
           apiService.guiderAction('info'),
+          apiService.flatdeviceAction('info'),
+          apiService.DomeAction('info'),
           apiService.fetchGuiderChartData(),
+          apiService.safetyAction('info'),
           apiService.getLastLogs('100'),
         ]);
 
@@ -93,7 +105,10 @@ export const apiStore = defineStore('store', {
           focuserResponse,
           focuserAfResponse,
           guiderResponse,
+          flatdeviceResponse,
+          domeResponse,
           guiderChartResponse,
+          safetyResponse,
           logsResponse,
         });
       } catch (error) {
@@ -111,7 +126,10 @@ export const apiStore = defineStore('store', {
       focuserResponse,
       focuserAfResponse,
       guiderResponse,
+      flatdeviceResponse,
+      domeResponse,
       guiderChartResponse,
+      safetyResponse,
       logsResponse,
     }) {
       if (imageHistoryResponse.Success) {
@@ -174,10 +192,28 @@ export const apiStore = defineStore('store', {
         console.error('Fehler in der Logs-API-Antwort:', logsResponse.Error);
       }
 
+      if (safetyResponse.Success) {
+        this.safetyInfo = safetyResponse.Response;
+      } else {
+        console.error('Fehler in der Safety-API-Antwort:', safetyResponse.Error);
+      }
+
       if (guiderResponse.Success) {
         this.guiderInfo = guiderResponse.Response;
       } else {
         console.error('Fehler in der Guider-API-Antwort:', guiderResponse.Error);
+      }
+
+      if (flatdeviceResponse.Success) {
+        this.flatdeviceInfo = flatdeviceResponse.Response;
+      } else {
+        console.error('Fehler in der Flat-API-Antwort:', flatdeviceResponse.Error);
+      }
+
+      if (domeResponse.Success) {
+        this.domeInfo = domeResponse.Response;
+      } else {
+        console.error('Fehler in der Flat-API-Antwort:', domeResponse.Error);
       }
 
       if (guiderChartResponse.success) {
