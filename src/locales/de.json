@@ -60,6 +60,16 @@
         "error": "Fehler bei der Steuerung des Guiders:",
         "start": "Starten",
         "stop": "Stoppen"
+      },
+      "flat": {
+        "connect": "Flatdevice verbinden",
+        "disconnect": "Flatdevice trennen",
+        "error": "Fehler bei der Steuerung des Flatdevice:"
+      },
+      "dome": {
+        "connect": "Dome verbinden",
+        "disconnect": "Dome trennen",
+        "error": "Fehler bei der Steuerung des Dome:"
       }
     },
     "lastLogs": {

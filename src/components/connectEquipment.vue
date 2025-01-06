@@ -37,6 +37,18 @@
             :disconnectText="$t('components.connectEquipment.guider.disconnect')" 
             :onToggle="toggleGuiderConnection" />
 
+        <!-- Flat Control -->
+        <ConnectionButton :isConnected="store.flatdeviceInfo.Connected" 
+            :connectText="$t('components.connectEquipment.flat.connect')"
+            :disconnectText="$t('components.connectEquipment.flat.disconnect')" 
+            :onToggle="toggleFlatConnection" />
+
+        <!-- Dome Control -->
+        <ConnectionButton :isConnected="store.domeInfo.Connected" 
+            :connectText="$t('components.connectEquipment.dome.connect')"
+            :disconnectText="$t('components.connectEquipment.dome.disconnect')" 
+            :onToggle="toggleDomeConnection" />
+
     </div>
 </template>
 
@@ -118,6 +130,30 @@ async function toggleGuiderConnection() {
         }
     } catch (error) {
         console.error(t('components.connectEquipment.guider.error'), error.response?.data || error);
+    }
+}
+
+async function toggleFlatConnection() {
+    try {
+        if (store.flatdeviceInfo.Connected) {
+            await apiService.flatdeviceAction("disconnect");
+        } else {
+            await apiService.flatdeviceAction("connect");
+        }
+    } catch (error) {
+        console.error(t('components.connectEquipment.flat.error'), error.response?.data || error);
+    }
+}
+
+async function toggleDomeConnection() {
+    try {
+        if (store.domeInfo.Connected) {
+            await apiService.domeAction("disconnect");
+        } else {
+            await apiService.domeAction("connect");
+        }
+    } catch (error) {
+        console.error(t('components.connectEquipment.dome.error'), error.response?.data || error);
     }
 }
 </script>

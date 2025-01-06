@@ -60,6 +60,16 @@
         "error": "Error controlling guider:",
         "start": "Start",
         "stop": "Stop"
+      },
+      "flat": {
+        "connect": "Connect flatdevice",
+        "disconnect": "Disconnect flatdevice",
+        "error": "Error controlling flatdevice:"
+      },
+      "dome": {
+        "connect": "Connect dome",
+        "disconnect": "Disconnect dome",
+        "error": "Error controlling dome:"
       }
     },
     "lastLogs": {
