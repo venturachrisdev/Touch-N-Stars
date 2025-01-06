@@ -72,9 +72,9 @@
         "error": "Fehler bei der Steuerung des Flatdevice:"
       },
       "dome": {
-        "connect": "Dome verbinden",
-        "disconnect": "Dome trennen",
-        "error": "Fehler bei der Steuerung des Dome:"
+        "connect": "Kuppel verbinden",
+        "disconnect": "Kuppel trennen",
+        "error": "Fehler bei der Steuerung des Kuppel:"
       }
     },
     "lastLogs": {

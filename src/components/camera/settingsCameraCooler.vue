@@ -1,10 +1,8 @@
 <template>
 
-    <div class="flex items-center gap-2">
-
+    <div class="flex flex-col items-center gap-2 max-w-xl">
         <div v-if="store.cameraInfo.CanSetTemperature">
-
-            <div class=" flex flex-col border border-gray-500 p-1 pb-2 rounded-lg  ">
+            <div class=" flex flex-col border border-gray-500 p-1 pb-2 rounded-lg  min-w-36 ">
                 <label for="Cooler" class="text-xs mb-1 text-gray-400">{{ $t('components.camera.camera_cooling') }} </label>  
                 <div class="flex flex-col md:flex-row gap-2">
                     <div class="flex flex-col col-span-2 w-full  border border-gray-500 p-1 pb-2 rounded-lg">
@@ -28,15 +26,15 @@
                             placeholder="1" step="1" />
                     </div>
 
-                    <toggleButton @click="toggleCooling" :status-value="cameraStore.buttonCoolerOn" class=" pr-5 pl-5"/>
+                    <toggleButton @click="toggleCooling" :status-value="cameraStore.buttonCoolerOn" class=" pr-5 pl-5 justify-center"/>
                 </div>
             </div>
             
         </div>
-        <div v-if="store.cameraInfo.HasDewHeater">
-            <div class="flex flex-col min-w-44 border border-gray-500 p-1 pb-2 rounded-lg">
+        <div v-if="!store.cameraInfo.HasDewHeater">
+            <div class="flex flex-col min-w-36 border border-gray-500 p-1 pb-2 rounded-lg ">
                 <label for="DewHeater" class="text-xs mb-1 text-gray-400">{{ $t('components.camera.dew_heater') }} </label>
-                <div class="flex space-x-2">
+                <div class="flex space-x-2 justify-center">
                     <toggleButton @click="toggleDewHeater" :status-value="store.cameraInfo.DewHeaterOn" />
                 </div>
             </div>

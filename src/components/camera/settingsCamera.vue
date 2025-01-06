@@ -1,6 +1,6 @@
 <template>
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 ">
         <div class="flex flex-col  border border-gray-500  p-1 pb-2 rounded-lg">
             <label for="exposure" class="text-xs mb-1 text-gray-400">{{ $t('components.camera.exposure_time') }}</label>
             <input id="exposure" v-model.number="cameraStore.exposureTime" type="number"
@@ -23,7 +23,6 @@
                     placeholder="1" />
             </div>
         </div>
-
     </div>
 </template>
 
