@@ -37,7 +37,13 @@
             :disconnectText="$t('components.connectEquipment.guider.disconnect')" 
             :onToggle="toggleGuiderConnection" />
 
-        <!-- Flat Control -->
+        <!-- Safety Control -->
+        <ConnectionButton :isConnected="store.safetyInfo.Connected" 
+            :connectText="$t('components.connectEquipment.safety.connect')"
+            :disconnectText="$t('components.connectEquipment.safety.disconnect')" 
+            :onToggle="toggleSafetyConnection" />
+
+                    <!-- Flat Control -->
         <ConnectionButton :isConnected="store.flatdeviceInfo.Connected" 
             :connectText="$t('components.connectEquipment.flat.connect')"
             :disconnectText="$t('components.connectEquipment.flat.disconnect')" 
@@ -130,6 +136,18 @@ async function toggleGuiderConnection() {
         }
     } catch (error) {
         console.error(t('components.connectEquipment.guider.error'), error.response?.data || error);
+    }
+}
+
+async function toggleSafetyConnection() {
+    try {
+        if (store.safetyInfo.Connected) {
+            await apiService.safetyAction("disconnect");
+        } else {
+            await apiService.safetyAction("connect");
+        }
+    } catch (error) {
+        console.error(t('components.connectEquipment.safety.error'), error.response?.data || error);
     }
 }
 
