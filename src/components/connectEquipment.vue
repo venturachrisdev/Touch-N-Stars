@@ -2,11 +2,16 @@
     <div class="flex flex-col gap-2">
         <!-- Toggle All Connections Button -->
         <button 
-            class="px-4 py-2 rounded transition-colors"
+            class="px-4 py-2 rounded transition-colors flex items-center justify-center gap-2"
             :class="allConnected ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'"
             @click="toggleAllConnections"
+            :disabled="isLoading"
         >
-            {{ allConnected ? $t('components.connectEquipment.disconnectAll') : $t('components.connectEquipment.connectAll') }}
+            <span>{{ allConnected ? $t('components.connectEquipment.disconnectAll') : $t('components.connectEquipment.connectAll') }}</span>
+            <svg v-if="isLoading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
         </button>
 
         <template v-for="device in store.existingEquipmentList" :key="device.type">
@@ -77,7 +82,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { apiStore } from '../store/store';
 import apiService from '../services/apiService';
@@ -85,6 +90,7 @@ import ConnectionButton from './helpers/ConnectionButton.vue';
 
 const { t } = useI18n();
 const store = apiStore();
+const isLoading = ref(false);
 
 async function toggleCameraConnection() {
     try {
@@ -212,6 +218,7 @@ const allConnected = computed(() => {
 });
 
 async function toggleAllConnections() {
+    isLoading.value = true;
     try {
         if (allConnected.value) {
             for (const device of store.existingEquipmentList) {
@@ -247,6 +254,8 @@ async function toggleAllConnections() {
             ? t('components.connectEquipment.disconnectAllError')
             : t('components.connectEquipment.connectAllError'), 
         error);
+    } finally {
+        isLoading.value = false;
     }
 }
 </script>
