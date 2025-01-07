@@ -1,60 +1,69 @@
 <template>
     <div class="">
+        <template v-for="device in store.existingEquipmentList" :key="device.type">
+            <!-- Camera Control -->
+            <ConnectionButton v-if="device.apiName === 'camera'"
+                :isConnected="store.cameraInfo.Connected" 
+                :connectText="$t('components.connectEquipment.camera.connect')"
+                :disconnectText="$t('components.connectEquipment.camera.disconnect')" 
+                :onToggle="toggleCameraConnection" />
 
-        <!-- Camera Control -->
-        <ConnectionButton :isConnected="store.cameraInfo.Connected" 
-            :connectText="$t('components.connectEquipment.camera.connect')"
-            :disconnectText="$t('components.connectEquipment.camera.disconnect')" 
-            :onToggle="toggleCameraConnection" />
+            <!-- Filter Control -->
+            <ConnectionButton v-if="device.apiName === 'filter'"
+                :isConnected="store.filterInfo.Connected" 
+                :connectText="$t('components.connectEquipment.filter.connect')"
+                :disconnectText="$t('components.connectEquipment.filter.disconnect')" 
+                :onToggle="toggleFilterConnection" />
 
-        <!-- Filter Control -->
-        <ConnectionButton :isConnected="store.filterInfo.Connected" 
-            :connectText="$t('components.connectEquipment.filter.connect')"
-            :disconnectText="$t('components.connectEquipment.filter.disconnect')" 
-            :onToggle="toggleFilterConnection" />
+            <!-- Mount Control -->
+            <ConnectionButton v-if="device.apiName === 'mount'"
+                :isConnected="store.mountInfo.Connected" 
+                :connectText="$t('components.connectEquipment.mount.connect')"
+                :disconnectText="$t('components.connectEquipment.mount.disconnect')" 
+                :onToggle="toggleMountConnection" />
 
-        <!-- Mount Control -->
-        <ConnectionButton :isConnected="store.mountInfo.Connected" 
-            :connectText="$t('components.connectEquipment.mount.connect')"
-            :disconnectText="$t('components.connectEquipment.mount.disconnect')" 
-            :onToggle="toggleMountConnection" />
+            <!-- Focuser Control -->
+            <ConnectionButton v-if="device.apiName === 'focuser'"
+                :isConnected="store.focuserInfo.Connected" 
+                :connectText="$t('components.connectEquipment.focuser.connect')"
+                :disconnectText="$t('components.connectEquipment.focuser.disconnect')" 
+                :onToggle="toggleFocuserConnection" />
 
-        <!-- Focuser Control -->
-        <ConnectionButton :isConnected="store.focuserInfo.Connected" 
-            :connectText="$t('components.connectEquipment.focuser.connect')"
-            :disconnectText="$t('components.connectEquipment.focuser.disconnect')" 
-            :onToggle="toggleFocuserConnection" />
+            <!-- Rotator Control -->
+            <ConnectionButton v-if="device.apiName === 'rotator'"
+                :isConnected="store.rotatorInfo.Connected" 
+                :connectText="$t('components.connectEquipment.rotator.connect')"
+                :disconnectText="$t('components.connectEquipment.rotator.disconnect')" 
+                :onToggle="toggleRotatorConnection" />
 
-        <!-- Rotator Control -->
-        <ConnectionButton :isConnected="store.rotatorInfo.Connected" 
-            :connectText="$t('components.connectEquipment.rotator.connect')"
-            :disconnectText="$t('components.connectEquipment.rotator.disconnect')" 
-            :onToggle="toggleRotatorConnection" />
+            <!-- Guider Control -->
+            <ConnectionButton v-if="device.apiName === 'guider'"
+                :isConnected="store.guiderInfo.Connected" 
+                :connectText="$t('components.connectEquipment.guider.connect')"
+                :disconnectText="$t('components.connectEquipment.guider.disconnect')" 
+                :onToggle="toggleGuiderConnection" />
 
-        <!-- Guider Control -->
-        <ConnectionButton :isConnected="store.guiderInfo.Connected" 
-            :connectText="$t('components.connectEquipment.guider.connect')"
-            :disconnectText="$t('components.connectEquipment.guider.disconnect')" 
-            :onToggle="toggleGuiderConnection" />
+            <!-- Safety Control -->
+            <ConnectionButton v-if="device.apiName === 'safety'"
+                :isConnected="store.safetyInfo.Connected" 
+                :connectText="$t('components.connectEquipment.safety.connect')"
+                :disconnectText="$t('components.connectEquipment.safety.disconnect')" 
+                :onToggle="toggleSafetyConnection" />
 
-        <!-- Safety Control -->
-        <ConnectionButton :isConnected="store.safetyInfo.Connected" 
-            :connectText="$t('components.connectEquipment.safety.connect')"
-            :disconnectText="$t('components.connectEquipment.safety.disconnect')" 
-            :onToggle="toggleSafetyConnection" />
+            <!-- Flat Control -->
+            <ConnectionButton v-if="device.apiName === 'flatdevice'"
+                :isConnected="store.flatdeviceInfo.Connected" 
+                :connectText="$t('components.connectEquipment.flat.connect')"
+                :disconnectText="$t('components.connectEquipment.flat.disconnect')" 
+                :onToggle="toggleFlatConnection" />
 
-                    <!-- Flat Control -->
-        <ConnectionButton :isConnected="store.flatdeviceInfo.Connected" 
-            :connectText="$t('components.connectEquipment.flat.connect')"
-            :disconnectText="$t('components.connectEquipment.flat.disconnect')" 
-            :onToggle="toggleFlatConnection" />
-
-        <!-- Dome Control -->
-        <ConnectionButton :isConnected="store.domeInfo.Connected" 
-            :connectText="$t('components.connectEquipment.dome.connect')"
-            :disconnectText="$t('components.connectEquipment.dome.disconnect')" 
-            :onToggle="toggleDomeConnection" />
-
+            <!-- Dome Control -->
+            <ConnectionButton v-if="device.apiName === 'dome'"
+                :isConnected="store.domeInfo.Connected" 
+                :connectText="$t('components.connectEquipment.dome.connect')"
+                :disconnectText="$t('components.connectEquipment.dome.disconnect')" 
+                :onToggle="toggleDomeConnection" />
+        </template>
     </div>
 </template>
 
