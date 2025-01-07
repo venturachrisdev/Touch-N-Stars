@@ -25,7 +25,6 @@
 </template>
 
 <script setup>
-/* eslint-disable */
 import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import apiService from "@/services/apiService";
 import { apiStore } from '@/store/store';
@@ -62,20 +61,6 @@ function validateRA(raString) {
 function validateDEC(decString) {
   const decPattern = /^(\+|-)?(90|[0-8]?[0-9]):([0-5]?[0-9]):([0-5]?[0-9](\.\d+)?)$/;
   return decPattern.test(decString);
-}
-
-function checkValidity() {
-  const isRAValid = validateRA(localRAangleString.value);
-  const isDECValid = validateDEC(localDECangleString.value);
-
-  if (!isRAValid) {
-    alert(t('components.slewAndCenter.errors.invalidRAFormat'));
-  }
-  if (!isDECValid) {
-    alert(t('components.slewAndCenter.errors.invalidDECFormat'));
-  }
-
-  return isRAValid && isDECValid;
 }
 
 function handleBlurRA() {

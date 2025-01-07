@@ -34,13 +34,13 @@ const apiService = {
     }
   },
 
-    //-------------------------------------  Image  ---------------------------------------
+  //-------------------------------------  Image  ---------------------------------------
   // Get Image
   async getSequenceImage(index, quality, resize, scale) {
     try {
       const response = await axios.get(`${BASE_URL}/image/${index}`, {
-        params: { 
-          quality: quality , //80
+        params: {
+          quality: quality, //80
           resize: resize, //true
           scale: scale, //0.1
         },
@@ -166,9 +166,10 @@ const apiService = {
   async startCooling(temp, minutes) {
     try {
       const response = await axios.get(`${BASE_URL}/equipment/camera/cool`, {
-        params: { temperature: temp,
-                  minutes: minutes
-         },
+        params: {
+          temperature: temp,
+          minutes: minutes
+        },
       });
       return response.data;
     } catch (error) {
@@ -192,9 +193,10 @@ const apiService = {
   async startStoppWarming(cancel, minutes) { // cancel muss true oder false sein
     try {
       const response = await axios.get(`${BASE_URL}/equipment/camera/warm`, {
-        params: { cancel: cancel,
-                  minutes: minutes
-         },
+        params: {
+          cancel: cancel,
+          minutes: minutes
+        },
       });
       return response.data;
     } catch (error) {
@@ -203,18 +205,18 @@ const apiService = {
     }
   },
 
-    //  Start Stopp Tauheizung 
-    async startStoppDewheater (power) { // power muss true oder false sein
-      try {
-        const response = await axios.get(`${BASE_URL}/equipment/camera/dew-heater`, {
-          params: { power: power },
-        });
-        return response.data;
-      } catch (error) {
-        console.error("Error retrieving capture result:", error);
-        throw error;
-      }
-    },
+  //  Start Stopp Tauheizung 
+  async startStoppDewheater(power) { // power muss true oder false sein
+    try {
+      const response = await axios.get(`${BASE_URL}/equipment/camera/dew-heater`, {
+        params: { power: power },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error retrieving capture result:", error);
+      throw error;
+    }
+  },
 
   //-------------------------------------  Filterwheel ---------------------------------------
   // Focuser actions
@@ -235,7 +237,7 @@ const apiService = {
     }
   },
 
-    //-------------------------------------  Rotator ---------------------------------------
+  //-------------------------------------  Rotator ---------------------------------------
   // Focuser actions
   rotatorAction(action) {
     return this._simpleGetRequest(`${BASE_URL}/equipment/rotator/${action}`);
@@ -254,18 +256,18 @@ const apiService = {
     }
   },
 
-    // Move Rotator mechanical 
-    async moveMechanicalRotator(position) {
-      try {
-        const response = await axios.get(`${BASE_URL}/equipment/rotator/move-mechanical`, {
-          params: { position: position },
-        });
-        return response.data;
-      } catch (error) {
-        console.error("Error moving mechanical Rotator:", error);
-        throw error;
-      }
-    },
+  // Move Rotator mechanical 
+  async moveMechanicalRotator(position) {
+    try {
+      const response = await axios.get(`${BASE_URL}/equipment/rotator/move-mechanical`, {
+        params: { position: position },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error moving mechanical Rotator:", error);
+      throw error;
+    }
+  },
 
   //-------------------------------------  flatdevice ---------------------------------------
   // flatdevice actions
@@ -317,6 +319,9 @@ const apiService = {
       await axios.get(`${BASE_URL}/framing/set-coordinates`, {
         params: { RAangle, DECangle },
       });
+
+      // Pause von 4 Sekunde da es sonnst ein Fehler beim Framingassistent entsteht
+      await new Promise((resolve) => setTimeout(resolve, 4000));
 
       const params = Center ? { slew_option: "Center" } : {};
       const response = await axios.get(`${BASE_URL}/framing/slew`, { params });
@@ -417,6 +422,7 @@ const apiService = {
         throw error;
       });
   },
+
 };
 
 export default apiService;
