@@ -34,9 +34,10 @@ export const apiStore = defineStore('store', {
     imageData: null,
     isLoadingImage: false,
     captureRunning: false,
-    rotatorMechanicalPosition:0,
+    rotatorMechanicalPosition: 0,
     sequenceIsLoaded: false,
     sequenceRunning: false,
+    existingEquipmentList: [],
   }),
 
   actions: {
@@ -49,7 +50,7 @@ export const apiStore = defineStore('store', {
         [containerName]: !this.collapsedStates[containerName]
       };
     },
-    
+
     isCollapsed(containerName) {
       return !!this.collapsedStates[containerName];
     },
@@ -260,6 +261,7 @@ export const apiStore = defineStore('store', {
           console.log('Profilinformationen abgerufen:', this.profileInfo);
           this.setDefaultCameraSettings();
           this.setDefaultRotatorSettings();
+          this.getExistingEquipment(this.profileInfo);
         } else {
           console.error('Fehler in der Profil-API-Antwort:', profileInfoResponse?.Error);
         }
@@ -267,6 +269,53 @@ export const apiStore = defineStore('store', {
         console.error('Fehler beim Abrufen der Profilinformationen:', error);
       }
     },
+
+    getExistingEquipment(activeProfile) {
+      this.existingEquipmentList =[];
+      // Mapping von Schlüssel zu API-Namen
+      const apiMapping = {
+        CameraSettings: "camera",
+        DomeSettings: "dome",
+        FilterWheelSettings: "filter",
+        FocuserSettings: "focuser",
+       // SwitchSettings: "switchAction",
+        TelescopeSettings: "mount",
+        SafetyMonitorSettings: "safety",
+        FlatDeviceSettings: "flatdevice",
+        RotatorSettings: "rotator",
+        //WeatherDataSettings: "weatherAction",
+        GuiderSettings: "guider" // Guider hinzufügen
+      };
+      // Liste der Schlüssel, die potenzielle Geräte enthalten können
+      const keysToCheck = Object.keys(apiMapping);
+
+      // Iteriere durch die definierten Schlüssel
+      keysToCheck.forEach(key => {
+        if (activeProfile && activeProfile[key]) {
+          const device = activeProfile[key];
+          
+          // Sonderfall GuiderSettings (GuiderName anstelle von Id prüfen)
+          if (key === "GuiderSettings") {
+            if (device.GuiderName && device.GuiderName !== "No_Guider") {
+              this.existingEquipmentList.push({ 
+                type: key, 
+                id: device.GuiderName, 
+                apiName: apiMapping[key] 
+              });
+            }
+          } else if (device.Id && device.Id !== "No_Device") {
+            // Standardfall für Geräte mit Id
+            this.existingEquipmentList.push({ 
+              type: key, 
+              id: device.Id, 
+              apiName: apiMapping[key] 
+            });
+          }
+        }
+      });
+      console.log(this.existingEquipmentList);
+    },
+
     setDefaultCameraSettings() {
       const cStore = useCameraStore();
       cStore.coolingTemp = this.profileInfo?.CameraSettings.Temperature ?? -10;
@@ -274,11 +323,11 @@ export const apiStore = defineStore('store', {
       cStore.warmingTime = this.profileInfo?.CameraSettings.WarmingDuration ?? 10;
       cStore.gain = this.profileInfo?.CameraSettings.Gain ?? 0;
       cStore.buttonCoolerOn = this.cameraInfo?.CoolerOn ?? false;
-      console.log('Kameraeinstellungen gesetzt:', cStore.coolingTemp, cStore.coolingTime, cStore.warmingTime, cStore.gain); 
+      console.log('Kameraeinstellungen gesetzt:', cStore.coolingTemp, cStore.coolingTime, cStore.warmingTime, cStore.gain);
     },
     setDefaultRotatorSettings() {
       this.rotatorMechanicalPosition = this.rotatorInfo?.MechanicalPosition ?? 0;
-      console.log('Rotatoreinstellung gesetzt:', this.rotatorMechanicalPosition); 
+      console.log('Rotatoreinstellung gesetzt:', this.rotatorMechanicalPosition);
     },
   },
 });
