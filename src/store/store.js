@@ -259,8 +259,6 @@ export const apiStore = defineStore('store', {
         if (profileInfoResponse && profileInfoResponse.Response) {
           this.profileInfo = profileInfoResponse.Response;
           console.log('Profilinformationen abgerufen:', this.profileInfo);
-          this.setDefaultCameraSettings();
-          this.setDefaultRotatorSettings();
           this.getExistingEquipment(this.profileInfo);
         } else {
           console.error('Fehler in der Profil-API-Antwort:', profileInfoResponse?.Error);
@@ -278,12 +276,12 @@ export const apiStore = defineStore('store', {
         DomeSettings: "dome",
         FilterWheelSettings: "filter",
         FocuserSettings: "focuser",
-       // SwitchSettings: "switchAction",
+        SwitchSettings: "switch",
         TelescopeSettings: "mount",
         SafetyMonitorSettings: "safety",
         FlatDeviceSettings: "flatdevice",
         RotatorSettings: "rotator",
-        //WeatherDataSettings: "weatherAction",
+        WeatherDataSettings: "weather",
         GuiderSettings: "guider" 
       };
       // Liste der Schlüssel, die potenzielle Geräte enthalten können

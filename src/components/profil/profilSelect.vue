@@ -33,6 +33,8 @@ async function fetchProfiles() {
 
       // Update the store with active profil
       store.fetchProfilInfos();
+      store.setDefaultCameraSettings();
+      store.setDefaultRotatorSettings();
     }
   } catch (error) {
     console.error('Fehler beim Laden der Profile:', error);

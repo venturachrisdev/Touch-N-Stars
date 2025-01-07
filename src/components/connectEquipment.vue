@@ -18,7 +18,7 @@
 
         <div class="flex flex-col gap-2">
             <template v-for="device in store.existingEquipmentList" :key="device.type">
-                <div class="mt-4">
+                <div class="mt-2">
                     <!-- Camera Control -->
                     <ConnectionButton v-if="device.apiName === 'camera'"
                         :isConnected="store.cameraInfo.Connected" 
@@ -88,7 +88,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { apiStore } from '../store/store';
 import apiService from '../services/apiService';
@@ -264,4 +264,9 @@ async function toggleAllConnections() {
         isLoading.value = false;
     }
 }
+
+onMounted(async () => {
+  store.fetchProfilInfos();
+})
+
 </script>
