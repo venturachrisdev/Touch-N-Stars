@@ -308,6 +308,18 @@ const apiService = {
     }
   },
 
+  //-------------------------------------  Switch ----------------------------------------
+
+  switchAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/switch/${action}`);
+  },
+
+  //-------------------------------------  Weather ----------------------------------------
+
+  weatherAction(action) {
+    return this._simpleGetRequest(`${BASE_URL}/equipment/weather/${action}`);
+  },
+
   //-------------------------------------  Framing ---------------------------------------
   // Framing actions
   framingAction(action) {

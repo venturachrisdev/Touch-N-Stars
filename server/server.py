@@ -224,6 +224,82 @@ def fetch_safety_monitor_status():
         
         time.sleep(1)  # Abruf alle 1 s
 
+def fetch_switch_status():
+    """Periodisch Switch-Daten abrufen und speichern."""
+    print("--------Switch-Daten-------------------")
+    while True:
+        try:
+            response = requests.get(f"{BASE_API_URL}/equipment/switch/info")
+            if response.status_code == 200:
+                try:
+                    data = response.json()
+                    if not isinstance(data, dict):
+                        print("Ungültiges Response-Format: Response ist kein Dictionary")
+                        time.sleep(5)
+                        continue
+
+                    # Prüfen, ob die Verbindung aktiv ist
+                    if not data.get("Success", False): 
+                        time.sleep(5)
+                        continue 
+                    
+                    response_data = data.get("Response", {})
+                    if not isinstance(response_data, dict):
+                        print("Ungültiges Response-Format: Response ist kein Dictionary")
+                        time.sleep(5)
+                        continue
+
+                    if not response_data.get("Connected", False):
+                        time.sleep(5)
+                        continue
+
+                except ValueError as e:
+                    print(f"Ungültiges JSON-Format: {e}")
+            else:
+                print(f"Fehlerhafte API-Antwort: {response.status_code}")
+        except Exception as e:
+            print(f"Fehler beim Abrufen der Switch-Daten: {e}")
+        
+        time.sleep(1)  # Abruf alle 1 s
+
+def fetch_weather_status():
+    """Periodisch Wetter-Daten abrufen und speichern."""
+    print("--------Wetter-Daten-------------------")
+    while True:
+        try:
+            response = requests.get(f"{BASE_API_URL}/equipment/weather/info")
+            if response.status_code == 200:
+                try:
+                    data = response.json()
+                    if not isinstance(data, dict):
+                        print("Ungültiges Response-Format: Response ist kein Dictionary")
+                        time.sleep(5)
+                        continue
+
+                    # Prüfen, ob die Verbindung aktiv ist
+                    if not data.get("Success", False): 
+                        time.sleep(5)
+                        continue 
+                    
+                    response_data = data.get("Response", {})
+                    if not isinstance(response_data, dict):
+                        print("Ungültiges Response-Format: Response ist kein Dictionary")
+                        time.sleep(5)
+                        continue
+
+                    if not response_data.get("Connected", False):
+                        time.sleep(5)
+                        continue
+
+                except ValueError as e:
+                    print(f"Ungültiges JSON-Format: {e}")
+            else:
+                print(f"Fehlerhafte API-Antwort: {response.status_code}")
+        except Exception as e:
+            print(f"Fehler beim Abrufen der Weather-Daten: {e}")
+        
+        time.sleep(1)  # Abruf alle 1 s
+
 def hms_to_degrees(hms_string):
     """
     Konvertiert eine Zeitangabe im Format HH:MM:SS in Grad.
@@ -288,7 +364,7 @@ def monitor_last_af():
                             
                         # Handle "No AF available" error case
                         if data.get("Error") == "No AF available":
-                            print("Keine AF-Daten verfügbar")
+                           # print("Keine AF-Daten verfügbar")
                             time.sleep(1)
                             continue
                             
@@ -619,4 +695,6 @@ if __name__ == '__main__':
     threading.Thread(target=monitor_last_af, daemon=True).start()
     threading.Thread(target=monitor_logs_for_events, daemon=True).start()
     threading.Thread(target=fetch_safety_monitor_status, daemon=True).start()
+    threading.Thread(target=fetch_switch_status, daemon=True).start()
+    threading.Thread(target=fetch_weather_status, daemon=True).start()
     app.run(host='0.0.0.0', port=5000)
