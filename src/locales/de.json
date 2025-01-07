@@ -28,6 +28,10 @@
         "disconnect": "Kamera trennen",
         "error": "Fehler bei der Steuerung der Kamera:"
       },
+      "connectAll": "Alles verbinden",
+      "disconnectAll": "Alles trennen",
+      "connectAllError": "Error connecting all devices",
+      "disconnectAllError": "Error disconnecting all devices",
       "filter": {
         "connect": "Filterrad verbinden",
         "disconnect": "Filterrad trennen",

@@ -28,6 +28,10 @@
         "disconnect": "Disconnect camera",
         "error": "Error controlling camera:"
       },
+      "connectAll": "Connect All",
+      "disconnectAll": "Disconnect All",
+      "connectAllError": "Error connecting all devices",
+      "disconnectAllError": "Error disconnecting all devices",
       "filter": {
         "connect": "Connect filter wheel",
         "disconnect": "Disconnect filter wheel",
