@@ -284,7 +284,7 @@ export const apiStore = defineStore('store', {
         FlatDeviceSettings: "flatdevice",
         RotatorSettings: "rotator",
         //WeatherDataSettings: "weatherAction",
-        GuiderSettings: "guider" // Guider hinzufügen
+        GuiderSettings: "guider" 
       };
       // Liste der Schlüssel, die potenzielle Geräte enthalten können
       const keysToCheck = Object.keys(apiMapping);
