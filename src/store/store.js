@@ -338,10 +338,11 @@ export const apiStore = defineStore('store', {
 
     setDefaultCameraSettings() {
       const cStore = useCameraStore();
-      cStore.coolingTemp = this.profileInfo?.CameraSettings.Temperature ?? -10;
-      cStore.coolingTime = this.profileInfo?.CameraSettings.CoolingDuration ?? 10;
-      cStore.warmingTime = this.profileInfo?.CameraSettings.WarmingDuration ?? 10;
-      cStore.gain = this.profileInfo?.CameraSettings.Gain ?? 0;
+      const cameraSettings = this.profileInfo?.CameraSettings || {};
+      cStore.coolingTemp = cameraSettings.Temperature ?? -10;
+      cStore.coolingTime = cameraSettings.CoolingDuration ?? 10;
+      cStore.warmingTime = cameraSettings.WarmingDuration ?? 10;
+      cStore.gain = cameraSettings.Gain ?? 0;
       cStore.buttonCoolerOn = this.cameraInfo?.CoolerOn ?? false;
       console.log('Kameraeinstellungen gesetzt:', cStore.coolingTemp, cStore.coolingTime, cStore.warmingTime, cStore.gain);
     },
