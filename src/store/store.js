@@ -24,6 +24,8 @@ export const apiStore = defineStore('store', {
       Connected: false,
       IsSafe: false
     },
+    switchInfo: [],
+    weatherInfo: [],
     LogsInfo: [],
     RADistanceRaw: [],
     DECDistanceRaw: [],
@@ -78,6 +80,8 @@ export const apiStore = defineStore('store', {
           domeResponse,
           guiderChartResponse,
           safetyResponse,
+          weatherResponse,
+          switchResponse,
           logsResponse,
         ] = await Promise.all([
           apiService.imageHistoryAll(),
@@ -93,6 +97,8 @@ export const apiStore = defineStore('store', {
           apiService.domeAction('info'),
           apiService.fetchGuiderChartData(),
           apiService.safetyAction('info'),
+          apiService.switchAction('info'),
+          apiService.weatherAction('info'),
           apiService.getLastLogs('100'),
         ]);
 
@@ -110,6 +116,8 @@ export const apiStore = defineStore('store', {
           domeResponse,
           guiderChartResponse,
           safetyResponse,
+          weatherResponse,
+          switchResponse,
           logsResponse,
         });
       } catch (error) {
@@ -131,6 +139,8 @@ export const apiStore = defineStore('store', {
       domeResponse,
       guiderChartResponse,
       safetyResponse,
+      weatherResponse,
+      switchResponse,
       logsResponse,
     }) {
       if (imageHistoryResponse.Success) {
@@ -221,6 +231,18 @@ export const apiStore = defineStore('store', {
         this.processGuiderChartData(guiderChartResponse.data);
       } else {
         console.error('Fehler in der Guider-Chart-API-Antwort:', guiderChartResponse);
+      }
+
+      if (weatherResponse.Success) {
+        this.weatherInfo = weatherResponse.Response;
+      } else {
+        console.error('Fehler in der Weather-API-Antwort:', weatherResponse.Error);
+      }
+
+      if (switchResponse.Success) {
+        this.switchInfo = switchResponse.Response;
+      } else {
+        console.error('Fehler in der Switch-API-Antwort:', switchResponse.Error);
       }
     },
 
@@ -316,10 +338,11 @@ export const apiStore = defineStore('store', {
 
     setDefaultCameraSettings() {
       const cStore = useCameraStore();
-      cStore.coolingTemp = this.profileInfo?.CameraSettings.Temperature ?? -10;
-      cStore.coolingTime = this.profileInfo?.CameraSettings.CoolingDuration ?? 10;
-      cStore.warmingTime = this.profileInfo?.CameraSettings.WarmingDuration ?? 10;
-      cStore.gain = this.profileInfo?.CameraSettings.Gain ?? 0;
+      const cameraSettings = this.profileInfo?.CameraSettings || {};
+      cStore.coolingTemp = cameraSettings.Temperature ?? -10;
+      cStore.coolingTime = cameraSettings.CoolingDuration ?? 10;
+      cStore.warmingTime = cameraSettings.WarmingDuration ?? 10;
+      cStore.gain = cameraSettings.Gain ?? 0;
       cStore.buttonCoolerOn = this.cameraInfo?.CoolerOn ?? false;
       console.log('Kameraeinstellungen gesetzt:', cStore.coolingTemp, cStore.coolingTime, cStore.warmingTime, cStore.gain);
     },

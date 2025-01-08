@@ -66,9 +66,9 @@
         "stop": "Stop"
       },
       "safety":{
-        "connect": "Connect Safety Monitor",
-        "disconnect": "Disconnect Safety Monitor",
-        "error": "Error controlling Safety Monitor"
+        "connect": "Connect safety monitor",
+        "disconnect": "Disconnect safety monitor",
+        "error": "Error controlling safety monitor"
       },
       "flat": {
         "connect": "Connect flatdevice",
@@ -79,6 +79,16 @@
         "connect": "Connect dome",
         "disconnect": "Disconnect dome",
         "error": "Error controlling dome:"
+      },
+      "switch": {
+        "connect": "Connect switch",
+        "disconnect": "Disconnect switch",
+        "error": "Error controlling switch"
+      },
+      "weather": {
+        "connect": "Connect weather",
+        "disconnect": "Disconnect weather",
+        "error": "Error controlling weather"
       }
     },
     "lastLogs": {

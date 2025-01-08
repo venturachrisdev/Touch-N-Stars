@@ -81,6 +81,20 @@
                         :connectText="$t('components.connectEquipment.dome.connect')"
                         :disconnectText="$t('components.connectEquipment.dome.disconnect')" 
                         :onToggle="toggleDomeConnection" />
+                    
+                    <!-- Weather Control -->
+                    <ConnectionButton v-if="device.apiName === 'weather'"
+                        :isConnected="store.weatherInfo.Connected" 
+                        :connectText="$t('components.connectEquipment.weather.connect')"
+                        :disconnectText="$t('components.connectEquipment.weather.disconnect')" 
+                        :onToggle="toggleWeatherConnection" />
+
+                    <!-- Switch Control -->
+                    <ConnectionButton v-if="device.apiName === 'switch'"
+                        :isConnected="store.switchInfo.Connected" 
+                        :connectText="$t('components.connectEquipment.switch.connect')"
+                        :disconnectText="$t('components.connectEquipment.switch.disconnect')" 
+                        :onToggle="toggleSwitchConnection" />
                 </div>
             </template>
         </div>
@@ -90,8 +104,8 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { apiStore } from '../store/store';
-import apiService from '../services/apiService';
+import { apiStore } from '@/store/store';
+import apiService from '@/services/apiService';
 import ConnectionButton from './helpers/ConnectionButton.vue';
 
 const { t } = useI18n();
@@ -206,6 +220,30 @@ async function toggleDomeConnection() {
     }
 }
 
+async function toggleWeatherConnection() {
+    try {
+        if (store.weatherInfo.Connected) {
+            await apiService.weatherAction("disconnect");
+        } else {
+            await apiService.weatherAction("connect");
+        }
+    } catch (error) {
+        console.error(t('components.connectEquipment.weather.error'), error.response?.data || error);
+    }
+}
+
+async function toggleSwitchConnection() {
+    try {
+        if (store.weatherInfo.Connected) {
+            await apiService.switchAction("disconnect");
+        } else {
+            await apiService.switchAction("connect");
+        }
+    } catch (error) {
+        console.error(t('components.connectEquipment.switch.error'), error.response?.data || error);
+    }
+}
+
 const allConnected = computed(() => {
     return store.existingEquipmentList.every(device => {
         switch(device.apiName) {
@@ -218,6 +256,8 @@ const allConnected = computed(() => {
             case 'safety': return store.safetyInfo.Connected;
             case 'flatdevice': return store.flatdeviceInfo.Connected;
             case 'dome': return store.domeInfo.Connected;
+            case 'weather': return store.weatherInfo.Connected;
+            case 'switch': return store.switchInfo.Connected;
             default: return false;
         }
     });
@@ -238,6 +278,8 @@ async function toggleAllConnections() {
                     case 'safety': await apiService.safetyAction("disconnect"); break;
                     case 'flatdevice': await apiService.flatdeviceAction("disconnect"); break;
                     case 'dome': await apiService.domeAction("disconnect"); break;
+                    case 'weather': await apiService.weatherAction("disconnect"); break;
+                    case 'switch': await apiService.switchAction("disconnect"); break;
                 }
             }
         } else {
@@ -252,6 +294,9 @@ async function toggleAllConnections() {
                     case 'safety': await apiService.safetyAction("connect"); break;
                     case 'flatdevice': await apiService.flatdeviceAction("connect"); break;
                     case 'dome': await apiService.domeAction("connect"); break;
+                    case 'weather': await apiService.weatherAction("connect"); break;
+                    case 'switch': await apiService.switchAction("connect"); break;
+
                 }
             }
         }
