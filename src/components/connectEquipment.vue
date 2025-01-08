@@ -234,7 +234,7 @@ async function toggleWeatherConnection() {
 
 async function toggleSwitchConnection() {
     try {
-        if (store.weatherInfo.Connected) {
+        if (store.switchInfo.Connected) {
             await apiService.switchAction("disconnect");
         } else {
             await apiService.switchAction("connect");
