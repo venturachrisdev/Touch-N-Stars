@@ -50,7 +50,7 @@ jobs:
     - name: Build executable
       run: |
         cd server
-        pyinstaller --name "TouchNStars" --onefile --add-data "static;static" server.py
+        pyinstaller --name "TouchNStars" --add-data "static;static" server.py
         
     - name: Prepare release package
       shell: pwsh
