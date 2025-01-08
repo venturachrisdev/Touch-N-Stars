@@ -50,7 +50,7 @@ jobs:
     - name: Build executable
       run: |
         cd server
-        pyinstaller --name "TouchNStars" --add-data "static;static" server.py
+        pyinstaller --name "TouchNStars" --onefile --add-data "static;static" server.py
         
     - name: Prepare release package
       shell: pwsh
@@ -62,7 +62,7 @@ jobs:
         New-Item -ItemType Directory -Force -Path $releaseDir
         
         # Copy files
-        Copy-Item "server/dist/TouchNStars/TouchNStars.exe" -Destination "$releaseDir/"
+        Copy-Item "server/dist/TouchNStars.exe" -Destination "$releaseDir/"
         Copy-Item "server/katalog" -Destination "$releaseDir/" -Recurse
         
         # Create zip file
