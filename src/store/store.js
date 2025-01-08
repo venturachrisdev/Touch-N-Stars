@@ -99,6 +99,7 @@ export const apiStore = defineStore('store', {
           apiService.safetyAction('info'),
           apiService.weatherAction('info'),
           apiService.switchAction('info'),
+          
           apiService.getLastLogs('100'),
         ]);
 
