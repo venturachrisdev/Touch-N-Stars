@@ -56,13 +56,13 @@ const apiService = {
   //-------------------------------------  sequence ---------------------------------------
   // sequence actions
   sequenceAction(action) {
-    if (action === "reset") {
-      return this._simpleGetRequest(`${BASE_URL}/sequence/reset`)
+    if (action === "start") {
+      return this._simpleGetRequest(`${BASE_URL}/sequence/start?skipValidation=true`)
         .then(response => {
           // Return success response for reset
           return {
             ...response,
-            Response: 'Sequence reset',
+            Response: 'Sequence start',
             Success: true
           };
         });
