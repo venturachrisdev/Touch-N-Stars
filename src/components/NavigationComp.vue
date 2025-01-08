@@ -29,7 +29,7 @@
       </router-link>
 
       <div v-if="store.domeInfo.Connected">
-      <router-link v to="/dome" class="nav-button" active-class="active-nav-button" 
+      <router-link to="/dome" class="nav-button" active-class="active-nav-button" 
         :title="$t('components.navigation.dome')">
         <svg fill="#FFFFFF" height="24" width="24" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
