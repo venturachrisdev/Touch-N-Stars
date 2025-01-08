@@ -97,8 +97,8 @@ export const apiStore = defineStore('store', {
           apiService.domeAction('info'),
           apiService.fetchGuiderChartData(),
           apiService.safetyAction('info'),
-          apiService.switchAction('info'),
           apiService.weatherAction('info'),
+          apiService.switchAction('info'),
           apiService.getLastLogs('100'),
         ]);
 
