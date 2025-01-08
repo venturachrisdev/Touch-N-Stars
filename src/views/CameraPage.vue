@@ -22,7 +22,7 @@
           </div>
 
           <infoCamera v-model="store.cameraInfo.Connected" :show-all-info="true"
-            class="grid grid-cols-2 landscape:grid-cols-3 gap-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
+            class=" gap-1 p-2 bg-gray-800/50 rounded-lg border border-gray-700/50" />
 
           <!-- Settings Section -->
           <div class="relative flex items-center py-4">
@@ -61,7 +61,7 @@
       </div>
 
       <!-- Capture Controls and Image Display -->
-      <div class="flex flex-col landscape:flex-row gap-6">
+      <div class="flex flex-col landscape:flex-row gap-1">
         <!-- Left Panel - Controls -->
         <div class="flex flex-col landscape:w-1/6 space-y-4 min-h-[200px] landscape:min-h-0">
           <!-- Loop Checkbox -->

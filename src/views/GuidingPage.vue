@@ -2,8 +2,8 @@
   <div class="container flex items-center justify-center">
     <div class="container max-w-md">
       <h5 class="text-xl text-center font-bold text-white mb-4">{{ $t('components.guider.title') }}</h5>
-      <div v-if="!store.guiderInfo.Connected" class="text-red-500">
-        <p>{{ $t('components.guider.connect') }}</p>
+      <div v-if="!store.guiderInfo.Connected" class="p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+        <p class="text-red-400 font-medium text-center">{{ $t('components.guider.connect') }}</p>
       </div>
       <div v-else>
         <!-- Wenn verbunden dann hier der Inhalt -->

@@ -1,9 +1,10 @@
 <template>
-
-  <div v-if="!store.cameraInfo.Connected" class="text-red-500">
-    <p>{{ $t('components.camera.connect') }}</p>
+  <div v-if="!store.cameraInfo.Connected" class="flex justify-center items-center pb-2">
+    <div class=" w-full p-4 bg-red-500/10 border border-red-500/30 rounded-lg ">
+      <p class="text-red-400 text-center font-medium">{{ $t('components.camera.connect') }}</p>
+    </div>
   </div>
-  <div v-else-if="showAllInfo" class="gap-2">
+  <div v-else-if="showAllInfo" class="gap-2 grid grid-cols-2 landscape:grid-cols-3">
     <StatusString :isEnabled="store.cameraInfo.Name" :Name="$t('components.camera.name')" :Value="store.cameraInfo.Name" />
     <StatusString :isEnabled="true" :Name="$t('components.camera.gain')" :Value="store.cameraInfo.Gain" />
     <StatusString :isEnabled="store.cameraInfo.Offset" :Name="$t('components.camera.offset')" :Value="store.cameraInfo.Offset" />

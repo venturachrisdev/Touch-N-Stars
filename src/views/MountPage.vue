@@ -7,8 +7,8 @@
   <div class="container pt-16 flex items-center justify-center">
     <div class="container max-w-md landscape:max-w-xl">
       <h5 class="text-xl text-center font-bold text-white mb-4">{{ $t('components.mount.title') }}</h5>
-      <infoMount v-model="store.mountInfo.Connected" class="grid grid-cols-2 landscape:grid-cols-3" />
-      <infoCamera :show-only-exposing="showTppa" class="grid grid-cols-2 landscape:grid-cols-3 mt-2" />
+      <infoMount v-model="store.mountInfo.Connected" class="gap-1 p-2 bg-gray-800/50 rounded-lg border border-gray-700/50" />
+      <infoCamera :show-only-exposing="showTppa" class="gap-1 p-2 bg-gray-800/50 rounded-lg border border-gray-700/50" />
       <div v-if="store.mountInfo.Connected">
         <div class="mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg">
           <div class="container pl-5 pb-5 pr-5">
