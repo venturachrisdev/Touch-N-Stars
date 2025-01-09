@@ -2,6 +2,14 @@
   <div class="dark min-h-screen bg-gray-900 text-white">
     <div v-if="!store.isBackendReachable">
       <div class="flex flex-col w-full min-h-screen items-center justify-center text-2xl text-red-700 text-center">
+        <div class="flex flex-col items-center mb-8">
+          <button @click="showSettings = true" class="p-2 text-gray-400 hover:text-white transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </button>
+        </div>
         <p>{{ t('app.unreachable') }}</p>
         <p>{{ t('app.connecting') }}</p>
         <!--Spinner-->
@@ -17,66 +25,86 @@
           </svg>
           <span class="sr-only">{{ $t('components.loading') }}</span>
         </div>
-
       </div>
-
     </div>
     <div v-else>
       <!-- Navigation -->
       <nav>
         <div class="z-20">
           <NavigationComp />
+          <router-link to="/settings" class="fixed top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </router-link>
         </div>
       </nav>
-      <!-- Hauptinhalt -->
+      <!-- Main content -->
       <div class="container mx-auto p-0.5 transition-all">
         <router-view />
       </div>
       <!-- Footer -->
       <div>
         <router-link to="/logs" class="fixed bottom-0 w-full">
-        <LastMessage class="fixed bottom-0 w-full" />
-      </router-link>
+          <LastMessage class="fixed bottom-0 w-full" />
+        </router-link>
+      </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div v-if="showSettings" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div class="bg-gray-900 rounded-lg p-4 sm:p-6 w-full sm:max-w-2xl h-full sm:h-auto sm:max-h-[90vh] overflow-y-auto mx-2 sm:mx-0 scrollbar-hide">
+        <SettingsPage />
+        <button 
+          @click="showSettings = false"
+          class="fixed sm:absolute top-2 right-2 sm:top-4 sm:right-4 p-2 text-gray-400 hover:text-white bg-gray-900 rounded-full"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { onMounted, onBeforeUnmount } from 'vue';
 import { apiStore } from '@/store/store';
 import { useHead } from '@vueuse/head';
 import { useI18n } from 'vue-i18n';
+import NavigationComp from '@/components/NavigationComp.vue';
+import LastMessage from '@/components/LastMessage.vue';
+import SettingsPage from '@/views/SettingsPage.vue';
+import { useSettingsStore } from "@/store/settingsStore";
 
 const { t } = useI18n();
-import NavigationComp from './components/NavigationComp.vue';
-import LastMessage from './components/LastMessage.vue';
+const store = apiStore();
+const showSettings = ref(false);
+/* eslint-disable */
+const settingsStore = useSettingsStore();
 
 useHead({
   title: "TouchNStars",
 });
 
-const store = apiStore();
-
 function handleVisibilityChange() {
   if (document.hidden) {
-    //console.log("Seite ausgeblendet");
     store.stopFetchingInfo();
   } else {
-    //console.log("Seite sichtbar");
     store.startFetchingInfo();
   }
 }
 
 onMounted(async () => {
-  // Beobachte Sichtbarkeitsänderungen
   document.addEventListener("visibilitychange", handleVisibilityChange);
-  // Starte Datenabruf des Stores
   store.startFetchingInfo();
 });
 
 onBeforeUnmount(() => {
-  store.stopFetchingInfo(); // Beende den Store-Datenabruf
+  store.stopFetchingInfo();
   document.removeEventListener("visibilitychange", handleVisibilityChange);
 });
 </script>

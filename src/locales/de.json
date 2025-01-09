@@ -71,7 +71,7 @@
         "start": "Starten",
         "stop": "Stoppen"
       },
-      "safety":{
+      "safety": {
         "connect": "Safety Monitor verbinden",
         "disconnect": "Safety Monitor trennen",
         "error": "Fehler bei der Steuerng des Safety Monitors"
@@ -113,7 +113,8 @@
       "mount": "Montierung",
       "guider": "Guider",
       "dome": "Kuppel",
-      "sequence": "Sequenz"
+      "sequence": "Sequenz",
+      "settings": "Einstellungen"
     },
     "language": {
       "en": "Englisch",
@@ -187,15 +188,15 @@
         "notSlewing": "Schwenkt nicht"
       }
     },
-      "guider": {
-        "connect": "Guider verbinden",
-        "disconnect": "Guider trennen",
-        "error": "Fehler bei der Steuerung des Guiders:",
-        "start": "Starten",
-        "stop": "Stoppen",
-        "rms_error": "RMS-Fehler in Bogensekunden",
-        "title": "Guider"
-      },
+    "guider": {
+      "connect": "Guider verbinden",
+      "disconnect": "Guider trennen",
+      "error": "Fehler bei der Steuerung des Guiders:",
+      "start": "Starten",
+      "stop": "Stoppen",
+      "rms_error": "RMS-Fehler in Bogensekunden",
+      "title": "Guider"
+    },
     "focuser": {
       "title": "Fokussierer",
       "new_position": "Neue Position:",
@@ -227,7 +228,7 @@
       "unpark": "Ausgeparkt",
       "shutter_close": "Dach geschlossen",
       "shutter_open": "Dach offen",
-      "control" :{
+      "control": {
         "open": "Dach öffnen",
         "close": "Dach schließen",
         "stop": "Stopp",
@@ -262,7 +263,7 @@
       "dew_heater": "Taupunktregler",
       "dew_heater_on": "Taupunktregler ein",
       "dew_heater_off": "Taupunktregler aus",
-      "camera_cooling": "Kamerakühlung",  
+      "camera_cooling": "Kamerakühlung",
       "target_temperature": "Solltemperatur",
       "warm_up_time": "Aufwärmzeit",
       "cooling_time": "Abkühlzeit"

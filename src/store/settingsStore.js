@@ -4,18 +4,20 @@ export const useSettingsStore = defineStore('settings', {
   state: () => ({
     coordinates: {
       latitude: null,
-      longitude: null
+      longitude: null,
+      altitude: null,
     },
     connection: {
-      ip: '',
-      port: ''
+      ip: '',  // Default backend IP
+      port: '' // Default backend port
     }
   }),
   actions: {
     setCoordinates(coords) {
       this.coordinates = {
         latitude: coords.latitude,
-        longitude: coords.longitude
+        longitude: coords.longitude,
+        altitude: coords.altitude
       };
     },
     setConnection(connection) {
