@@ -30,6 +30,15 @@
                 placeholder="Longitude"
               />
             </div>
+            <div class="flex-1">
+              <label class="block text-sm font-medium text-gray-400 mb-1">Altitude</label>
+              <input
+                v-model="altitude"
+                type="text"
+                class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+                placeholder="Altitude"
+              />
+            </div>
             <button
               @click="getCurrentLocation"
               class="mt-6 p-2 bg-gray-600 hover:bg-gray-500 rounded-md transition-colors"
@@ -108,6 +117,7 @@ const settingsStore = useSettingsStore();
 const currentLanguage = ref(locale.value);
 const latitude = ref('');
 const longitude = ref('');
+const altitude = ref('');
 const ip = ref('');
 const port = ref('');
 const gpsError = ref(null);
@@ -131,6 +141,7 @@ onMounted(() => {
   if (storedCoords) {
     latitude.value = storedCoords.latitude;
     longitude.value = storedCoords.longitude;
+    altitude.value = storedCoords.altitude || 0;
   }
   
   const storedConnection = settingsStore.connection;
@@ -159,9 +170,13 @@ function getCurrentLocation() {
     (position) => {
       latitude.value = position.coords.latitude.toFixed(6);
       longitude.value = position.coords.longitude.toFixed(6);
+      altitude.value = position.coords.altitude !== null 
+      ? position.coords.altitude.toFixed(3) 
+      : 0;
       settingsStore.setCoordinates({
         latitude: latitude.value,
-        longitude: longitude.value
+        longitude: longitude.value,
+        altitude: altitude.value,
       });
     },
     (error) => {

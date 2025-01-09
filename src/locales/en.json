@@ -71,7 +71,7 @@
         "start": "Start",
         "stop": "Stop"
       },
-      "safety":{
+      "safety": {
         "connect": "Connect safety monitor",
         "disconnect": "Disconnect safety monitor",
         "error": "Error controlling safety monitor"
@@ -101,7 +101,7 @@
       "loading": "Loading data...",
       "error": "Error loading data:",
       "timestamp": "Timestamp",
-      "level": "Level", 
+      "level": "Level",
       "message": "Message",
       "member": "Member",
       "line": "Line"
@@ -113,7 +113,8 @@
       "mount": "Mount",
       "guider": "Guider",
       "dome": "Dome",
-      "sequence": "Sequence"
+      "sequence": "Sequence",
+      "settings": "Settings"
     },
     "language": {
       "en": "English",
@@ -187,15 +188,15 @@
         "notSlewing": "Not slewing"
       }
     },
-      "guider": {
-        "connect": "Connect guider",
-        "disconnect": "Disconnect guider",
-        "error": "Error controlling guider:",
-        "start": "Start",
-        "stop": "Stop",
-        "rms_error": "RMS Error in Arcseconds",
-        "title": "Guider"
-      },
+    "guider": {
+      "connect": "Connect guider",
+      "disconnect": "Disconnect guider",
+      "error": "Error controlling guider:",
+      "start": "Start",
+      "stop": "Stop",
+      "rms_error": "RMS Error in Arcseconds",
+      "title": "Guider"
+    },
     "focuser": {
       "title": "Focuser",
       "new_position": "New position:",
@@ -227,7 +228,7 @@
       "unpark": "unpark",
       "shutter_close": "shutter close",
       "shutter_open": "shutter open",
-      "control" :{
+      "control": {
         "open": "Open shutter",
         "close": "Close shutter",
         "stop": "Stop shutter movement",
@@ -262,7 +263,7 @@
       "dew_heater": "Dewheater",
       "dew_heater_on": "Dewheater On",
       "dew_heater_off": "Dewheater Off",
-      "camera_cooling": "Camera cooling",  
+      "camera_cooling": "Camera cooling",
       "target_temperature": "Target temperature",
       "warm_up_time": "Warm-up time",
       "cooling_time": "Cooling time"
