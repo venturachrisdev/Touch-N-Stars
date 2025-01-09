@@ -37,7 +37,10 @@
                 <input id="offset" v-model.number="cameraStore.offset" type="number"
                     class="w-28 text-black px-3 h-8 border border-gray-300 rounded-lg  focus:outline-none focus:ring-2 focus:ring-cyan-700"
                     placeholder="0" 
-                    @blur="setOffset"/>
+                    @blur="setOffset"
+                    :min="store.cameraInfo.OffsetMin"
+                    :max="store.cameraInfo.OffsetMax"
+                    />
             </div>
         </div>
     </div>
@@ -54,6 +57,14 @@ const cameraStore = useCameraStore();
 
 async function setOffset() {
     console.log(cameraStore.offset)
+    if(store.cameraInfo.OffsetMin > cameraStore.offset) {
+        cameraStore.offset = store.cameraInfo.OffsetMin;
+        console.log('Offset zu klein min: ', store.cameraInfo.OffsetMin )
+    }
+    if(store.cameraInfo.OffsetMax < cameraStore.offset) {
+        cameraStore.offset = store.cameraInfo.OffsetMax;
+        console.log('Offset zu groß, Max: ' , store.cameraInfo.OffsetMax)
+    }
     try{
         console.log("aldfj");
        const data = await apiService.profileChangeValue("CameraSettings-Offset",cameraStore.offset);
