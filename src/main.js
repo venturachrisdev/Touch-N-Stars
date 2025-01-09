@@ -7,8 +7,18 @@ import './assets/tailwind.css'; // Importiert Tailwind CSS
 import { createHead } from '@unhead/vue';
 import i18n from './i18n';
 
+// Tooltip directive
+const tooltipDirective = {
+  mounted(el, binding) {
+    el.setAttribute('title', binding.value);
+    el.style.cursor = 'pointer';
+  }
+};
+
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 const head = createHead();
 
-createApp(App).use(pinia).use(head).use(i18n).use(router).mount('#app');
+const app = createApp(App);
+app.directive('tooltip', tooltipDirective);
+app.use(pinia).use(head).use(i18n).use(router).mount('#app');
