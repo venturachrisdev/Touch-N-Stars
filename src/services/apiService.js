@@ -26,16 +26,13 @@ const getBaseUrl = () => {
   };
 };
 
-let BASE_URL, API_URL, TARGETPIC_URL;
-
 const getUrls = () => {
-  if (!BASE_URL) {
-    const urls = getBaseUrl();
-    BASE_URL = urls.base;
-    API_URL = urls.api;
-    TARGETPIC_URL = urls.targetpic;
-  }
-  return { BASE_URL, API_URL, TARGETPIC_URL };
+  const urls = getBaseUrl();
+  return {
+    BASE_URL: urls.base,
+    API_URL: urls.api, 
+    TARGETPIC_URL: urls.targetpic
+  };
 };
 
 const apiService = {

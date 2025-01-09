@@ -9,7 +9,7 @@ export const useSettingsStore = defineStore('settings', {
     },
     connection: {
       ip: '',  // Default backend IP
-      port: '5000' // Default backend port
+      port: '' // Default backend port
     }
   }),
   actions: {
