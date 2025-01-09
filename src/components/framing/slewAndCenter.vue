@@ -3,8 +3,12 @@
     <div class="container max-w-md">
       <h5 class="text-xl font-bold text-white mb-4">{{ $t('components.slewAndCenter.title') }}</h5>
 
-
-      <div>
+      <div v-if="store.profileInfo.FramingAssistantSettings.LastSelectedImageSource !== 5" class="flex justify-center items-center pb-2">
+        <div class=" w-full p-4 bg-red-500/10 border border-red-500/30 rounded-lg ">
+          <p class="text-red-400 text-center font-medium">{{ $t('components.slewAndCenter.LastSelectedImageSource_wrong') }}</p>
+        </div>
+      </div>
+      <div v-else>
       <div  class="flex flex-row justify-center items-center space-x-4">
         <p>{{ $t('components.slewAndCenter.ra') }}</p>
         <input type="text" v-model="localRAangleString" @blur="handleBlurRA" @keyup.enter="handleBlurRA"
