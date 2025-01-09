@@ -16,6 +16,10 @@
     "connecting": "Versuche Verbindung herzustellen"
   },
   "components": {
+    "settings": {
+      "title": "Einstellungen",
+      "language": "Sprache"
+    },
     "framing": {
       "search": {
         "title": "Suche",
