@@ -62,9 +62,9 @@
           </h3>
           <div class="space-y-2">
             <div>
-              <label class="block text-sm font-medium text-gray-400 mb-1">IP Address</label>
+              <label class="block text-sm font-medium text-gray-400 mb-1">IP</label>
               <input
-                v-model="ip"
+                v-model="tempIp"
                 type="text"
                 class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
                 placeholder="192.168.x.x"
@@ -73,12 +73,18 @@
             <div>
               <label class="block text-sm font-medium text-gray-400 mb-1">Port</label>
               <input
-                v-model="port"
+                v-model="tempPort"
                 type="text"
                 class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-                placeholder="8080"
+                placeholder="5000"
               />
             </div>
+            <button
+              @click="saveConnection"
+              class="w-full mt-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-md transition-colors"
+            >
+            {{ $t('components.settings.save') }}
+            </button>
           </div>
         </div>
 
@@ -108,7 +114,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted, watch } from 'vue';
+import { ref, watchEffect, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '@/store/settingsStore';
 
@@ -121,14 +127,28 @@ const altitude = ref('');
 const ip = ref('');
 const port = ref('');
 const gpsError = ref(null);
+const tempIp = ref('');
+const tempPort = ref('');
 
-// Watch for changes to IP and port
-watch([ip, port], ([newIp, newPort]) => {
-  settingsStore.setConnection({
-    ip: newIp,
-    port: newPort
-  });
+// Initialize temp values on mount
+onMounted(() => {
+  const storedConnection = settingsStore.connection;
+  if (storedConnection) {
+    ip.value = storedConnection.ip;
+    port.value = storedConnection.port;
+    tempIp.value = storedConnection.ip;
+    tempPort.value = storedConnection.port;
+  }
 });
+
+function saveConnection() {
+  settingsStore.setConnection({
+    ip: tempIp.value,
+    port: tempPort.value
+  });
+  ip.value = tempIp.value;
+  port.value = tempPort.value;
+}
 
 const languages = [
   { code: 'en', name: 'English' },
