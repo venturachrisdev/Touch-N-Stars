@@ -325,6 +325,20 @@ const apiService = {
   framingAction(action) {
     return this._simpleGetRequest(`${BASE_URL}/framing/${action}`);
   },
+
+  // Set Source 
+  async setFramingImageSource(source) { //Values are NASA, SKYSERVER, STSCI, ESO, HIPS2FITS, SKYATLAS, FILE, or CACHE.
+    try {
+      const response = await axios.get(`${BASE_URL}/framing/set-source`, {
+        params: { source },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error controlling setFramingImageSource:", error);
+      throw error;
+    }
+  },
+
   // Slew and center
   async slewAndCenter(RAangle, DECangle, Center) {
     try {
