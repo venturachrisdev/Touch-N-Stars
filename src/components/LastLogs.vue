@@ -1,15 +1,7 @@
 <template>
   <div class="p-4">
-    <!-- Loading indicator -->
-    <div v-if="isLoading" class="text-gray-500">{{ $t('components.logs.loading') }}</div>
-
-    <!-- Error message -->
-    <div v-else-if="error" class="text-red-500">
-      {{ $t('components.logs.error') }} {{ error.message }}
-    </div>
-
     <!-- Tabelle anzeigen, wenn Daten verfügbar sind -->
-    <div v-else class="w-full overflow-x-auto">
+    <div class="w-full overflow-x-auto">
       <table class="w-full table-fixed border-collapse border border-gray-800 text-gray-300 text-sm">
         <thead>
           <tr class="bg-gray-800">

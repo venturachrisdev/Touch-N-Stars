@@ -18,7 +18,7 @@ const props = defineProps({
     default: 'Name:',
   },
   Value: {
-    type: String,
+    type: [String, Number],
     default: '1234',
   },
 })

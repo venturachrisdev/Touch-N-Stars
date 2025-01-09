@@ -117,7 +117,7 @@ async function stoppAutofocus() {
 
 onMounted(
   () => {
-    position.value = store.focuserInfo.Position || 0;
+    position.value = store.focuserInfo.Position || 100;
   },
 );
 
