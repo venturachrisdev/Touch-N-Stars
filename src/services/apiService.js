@@ -123,6 +123,7 @@ const apiService = {
   //   change-value
   async profileChangeValue(settingpath,newValue) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/profile/change-value`, {
         params: { 
           settingpath, 
