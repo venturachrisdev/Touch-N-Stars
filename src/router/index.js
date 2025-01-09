@@ -6,10 +6,10 @@ import FocusPage from '../views/FocusPage.vue';
 import MountPage from '../views/MountPage.vue';
 import GuidingPage from '../views/GuidingPage.vue';
 import TargetPic from '../components/testTest.vue';
-import LastLogs from '@/components/LastLogs.vue';
-import SequencePage from '@/views/SequencePage.vue';
-import DomePage from '@/views/DomePage.vue';
-
+import LastLogs from '../components/LastLogs.vue';
+import SequencePage from '../views/SequencePage.vue';
+import DomePage from '../views/DomePage.vue';
+import SettingsPage from '../views/SettingsPage.vue';
 
 const routes = [
   { path: '/', component: StartPage },
@@ -22,6 +22,7 @@ const routes = [
   { path: '/logs', component: LastLogs },
   { path: '/sequence', component: SequencePage },
   { path: '/dome', component: DomePage },
+  { path: '/settings', component: SettingsPage }
 ];
 
 const router = createRouter({
