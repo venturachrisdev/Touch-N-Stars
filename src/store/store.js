@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia';
-import apiService from '@/services/apiService';
-
-import { useCameraStore } from '@/store/cameraStore';
-
+import apiService from '../services/apiService';
+import { useCameraStore } from './cameraStore';
 
 export const apiStore = defineStore('store', {
   state: () => ({
@@ -40,6 +38,8 @@ export const apiStore = defineStore('store', {
     sequenceIsLoaded: false,
     sequenceRunning: false,
     existingEquipmentList: [],
+    coordinates: null,
+    currentLanguage: 'en',
   }),
 
   actions: {
@@ -146,7 +146,6 @@ export const apiStore = defineStore('store', {
     }) {
       if (imageHistoryResponse.Success) {
         this.imageHistoryInfo = imageHistoryResponse.Response;
-        //console.log('Image History abgerufen:', this.imageHistoryInfo);
       } else {
         this.sequenceIsLoaded = false;
         console.error('Fehler in der Sequence-API-Antwort:', sequenceResponse.Error);
@@ -155,10 +154,8 @@ export const apiStore = defineStore('store', {
       if (sequenceResponse.Success) {
         this.sequenceInfo = sequenceResponse.Response;
         this.sequenceIsLoaded = true;
-        //console.log('Sequenzinformationen abgerufen:', this.sequenceInfo);
       } else {
         this.sequenceIsLoaded = false;
-        //console.error('Fehler in der Sequence-API-Antwort:', sequenceResponse.Error);
       }
 
       if (cameraResponse.Success) {
@@ -175,7 +172,6 @@ export const apiStore = defineStore('store', {
 
       if (filterResponse.Success) {
         this.filterInfo = filterResponse.Response;
-        //console.log('Filterinformationen abgerufen:', this.filterInfo);
       } else {
         console.error('Fehler in der Filter-API-Antwort:', filterResponse.Error);
       }
@@ -293,7 +289,6 @@ export const apiStore = defineStore('store', {
 
     getExistingEquipment(activeProfile) {
       this.existingEquipmentList =[];
-      // Mapping von Schlüssel zu API-Namen
       const apiMapping = {
         CameraSettings: "camera",
         DomeSettings: "dome",
@@ -307,15 +302,12 @@ export const apiStore = defineStore('store', {
         WeatherDataSettings: "weather",
         GuiderSettings: "guider" 
       };
-      // Liste der Schlüssel, die potenzielle Geräte enthalten können
       const keysToCheck = Object.keys(apiMapping);
 
-      // Iteriere durch die definierten Schlüssel
       keysToCheck.forEach(key => {
         if (activeProfile && activeProfile[key]) {
           const device = activeProfile[key];
           
-          // Sonderfall GuiderSettings (GuiderName anstelle von Id prüfen)
           if (key === "GuiderSettings") {
             if (device.GuiderName && device.GuiderName !== "No_Guider") {
               this.existingEquipmentList.push({ 
@@ -325,7 +317,6 @@ export const apiStore = defineStore('store', {
               });
             }
           } else if (device.Id && device.Id !== "No_Device") {
-            // Standardfall für Geräte mit Id
             this.existingEquipmentList.push({ 
               type: key, 
               id: device.Id, 

@@ -6,25 +6,92 @@
       </h2>
       
       <div class="space-y-4">
+        <!-- GPS Coordinates -->
+        <div class="bg-gray-700 p-3 rounded-lg">
+          <h3 class="text-lg font-medium mb-2 text-gray-300">
+            {{ $t('components.settings.coordinates') }}
+          </h3>
+          <div class="flex items-center gap-2">
+            <div class="flex-1">
+              <label class="block text-sm font-medium text-gray-400 mb-1">Latitude</label>
+              <input
+                v-model="latitude"
+                type="text"
+                class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+                placeholder="Latitude"
+              />
+            </div>
+            <div class="flex-1">
+              <label class="block text-sm font-medium text-gray-400 mb-1">Longitude</label>
+              <input
+                v-model="longitude"
+                type="text"
+                class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+                placeholder="Longitude"
+              />
+            </div>
+            <button
+              @click="getCurrentLocation"
+              class="mt-6 p-2 bg-gray-600 hover:bg-gray-500 rounded-md transition-colors"
+              title="Get current location"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </button>
+          </div>
+          <div v-if="gpsError" class="mt-2 text-sm text-red-400">
+            {{ gpsError }}
+          </div>
+        </div>
+
+        <!-- Connection Settings -->
+        <div class="bg-gray-700 p-3 rounded-lg">
+          <h3 class="text-lg font-medium mb-2 text-gray-300">
+            {{ $t('components.settings.connection') }}
+          </h3>
+          <div class="space-y-2">
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-1">IP Address</label>
+              <input
+                v-model="ip"
+                type="text"
+                class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+                placeholder="192.168.x.x"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-1">Port</label>
+              <input
+                v-model="port"
+                type="text"
+                class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+                placeholder="8080"
+              />
+            </div>
+          </div>
+        </div>
+
         <!-- Language Selection -->
         <div class="bg-gray-700 p-3 rounded-lg">
           <h3 class="text-lg font-medium mb-2 text-gray-300">
             {{ $t('components.settings.language') }}
           </h3>
-          <div class="space-y-2">
-            <button 
+          <select
+            v-model="currentLanguage"
+            @change="changeLanguage($event.target.value)"
+            class="w-full px-4 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-colors"
+          >
+            <option 
               v-for="lang in languages" 
               :key="lang.code" 
-              @click="changeLanguage(lang.code)"
-              class="w-full px-4 py-2 text-left rounded-md transition-colors"
-              :class="{
-                'bg-cyan-700 text-white': lang.code === currentLanguage,
-                'bg-gray-600 text-gray-300 hover:bg-gray-500': lang.code !== currentLanguage
-              }"
+              :value="lang.code"
+              class="bg-gray-700"
             >
               {{ lang.name }}
-            </button>
-          </div>
+            </option>
+          </select>
         </div>
       </div>
     </div>
@@ -32,16 +99,32 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue';
+import { ref, watchEffect, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useSettingsStore } from '@/store/settingsStore';
 
 const { locale } = useI18n();
+const settingsStore = useSettingsStore();
 const currentLanguage = ref(locale.value);
+const latitude = ref('');
+const longitude = ref('');
+const ip = ref('');
+const port = ref('');
+const gpsError = ref(null);
 
 const languages = [
   { code: 'en', name: 'English' },
   { code: 'de', name: 'Deutsch' }
 ];
+
+// Load stored coordinates on mount
+onMounted(() => {
+  const storedCoords = settingsStore.coordinates;
+  if (storedCoords) {
+    latitude.value = storedCoords.latitude;
+    longitude.value = storedCoords.longitude;
+  }
+});
 
 watchEffect(() => {
   currentLanguage.value = locale.value;
@@ -49,5 +132,27 @@ watchEffect(() => {
 
 function changeLanguage(lang) {
   locale.value = lang;
+}
+
+function getCurrentLocation() {
+  if (!navigator.geolocation) {
+    gpsError.value = 'Geolocation is not supported by your browser';
+    return;
+  }
+
+  gpsError.value = null;
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      latitude.value = position.coords.latitude.toFixed(6);
+      longitude.value = position.coords.longitude.toFixed(6);
+      settingsStore.setCoordinates({
+        latitude: latitude.value,
+        longitude: longitude.value
+      });
+    },
+    (error) => {
+      gpsError.value = error.message;
+    }
+  );
 }
 </script>

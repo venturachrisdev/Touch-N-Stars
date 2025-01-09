@@ -18,7 +18,8 @@
   "components": {
     "settings": {
       "title": "Einstellungen",
-      "language": "Sprache"
+      "language": "Sprache",
+      "coordinates": "GPS Koordianten"
     },
     "framing": {
       "search": {

@@ -18,6 +18,7 @@
     "i18n": "^0.15.1",
     "panzoom": "^9.4.3",
     "pinia": "^2.3.0",
+    "pinia-plugin-persistedstate": "^4.2.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
     "vue": "^3.2.13",
