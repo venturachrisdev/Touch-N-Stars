@@ -68,7 +68,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
     isAbort.value = false
     remainingExposureTime.value = exposureTime
     progress.value = 0
-    console.log(gain);
+    //console.log(gain);
 
     try {
       // Starte Aufnahme via API

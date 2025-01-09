@@ -40,6 +40,7 @@ import SubNav from '@/components/SubNav.vue';
 import { useI18n } from 'vue-i18n';
 
 const currentTab = ref('showMount'); // Standardwert
+const showTppa = ref(false);
 const { t } = useI18n()
 
 const store = apiStore();
