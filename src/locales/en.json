@@ -16,6 +16,12 @@
     "connecting": "Attempting to establish connection"
   },
   "components": {
+    "settings": {
+      "title": "Settings",
+      "language": "Language",
+      "coordinates": "GPS coordinates",
+      "connection": "N.I.N.A connection details"
+    },
     "framing": {
       "search": {
         "title": "Search",

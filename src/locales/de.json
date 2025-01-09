@@ -16,6 +16,12 @@
     "connecting": "Versuche Verbindung herzustellen"
   },
   "components": {
+    "settings": {
+      "title": "Einstellungen",
+      "language": "Sprache",
+      "coordinates": "GPS Koordianten",
+      "connection": "N.I.N.A Verbindungsdetails"
+    },
     "framing": {
       "search": {
         "title": "Suche",
