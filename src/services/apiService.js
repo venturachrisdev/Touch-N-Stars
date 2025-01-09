@@ -1,17 +1,48 @@
 import axios from "axios";
+import { getActivePinia } from 'pinia';
 
-const backendProtokol = "http";
-const backendPort = 5000;
+let settingsStore;
 
-const BASE_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}/v2/api`;
-const API_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}/api/`;
-const TARGETPIC_URL = `${backendProtokol}://${window.location.hostname}:${backendPort}/api/targetpic`;
+const initializeStore = () => {
+  if (!settingsStore) {
+    const pinia = getActivePinia();
+    if (!pinia) {
+      throw new Error('Pinia store not initialized');
+    }
+    settingsStore = pinia._s.get('settings');
+  }
+};
 
+const getBaseUrl = () => {
+  initializeStore();
+  const protocol = settingsStore.backendProtocol || "http";
+  const host = settingsStore.connection.ip || window.location.hostname;
+  const port = settingsStore.connection.port || 5000;
+  
+  return {
+    base: `${protocol}://${host}:${port}/v2/api`,
+    api: `${protocol}://${host}:${port}/api/`,
+    targetpic: `${protocol}://${host}:${port}/api/targetpic`
+  };
+};
+
+let BASE_URL, API_URL, TARGETPIC_URL;
+
+const getUrls = () => {
+  if (!BASE_URL) {
+    const urls = getBaseUrl();
+    BASE_URL = urls.base;
+    API_URL = urls.api;
+    TARGETPIC_URL = urls.targetpic;
+  }
+  return { BASE_URL, API_URL, TARGETPIC_URL };
+};
 
 const apiService = {
   // Backend reachability check
   async isBackendReachable() {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/version`);
       return response.status === 200;
     } catch (error) {
@@ -23,10 +54,10 @@ const apiService = {
   //-------------------------------------  Image History ---------------------------------------
   async imageHistoryAll() {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/image-history`, {
         params: { all: true, },
       });
-      //console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error read Image History:", error);
@@ -35,17 +66,16 @@ const apiService = {
   },
 
   //-------------------------------------  Image  ---------------------------------------
-  // Get Image
   async getSequenceImage(index, quality, resize, scale) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/image/${index}`, {
         params: {
-          quality: quality, //80
-          resize: resize, //true
-          scale: scale, //0.1
+          quality: quality,
+          resize: resize,
+          scale: scale,
         },
       });
-      //console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error read Image :", error);
@@ -54,38 +84,31 @@ const apiService = {
   },
 
   //-------------------------------------  sequence ---------------------------------------
-  // sequence actions
   sequenceAction(action) {
+    const { BASE_URL } = getUrls();
     if (action === "start") {
       return this._simpleGetRequest(`${BASE_URL}/sequence/start?skipValidation=true`)
-        .then(response => {
-          // Return success response for reset
-          return {
-            ...response,
-            Response: 'Sequence start',
-            Success: true
-          };
-        });
+        .then(response => ({
+          ...response,
+          Response: 'Sequence start',
+          Success: true
+        }));
     }
-    // Handle stop and other actions normally
     return this._simpleGetRequest(`${BASE_URL}/sequence/${action}`);
   },
 
   //-------------------------------------  Mount ---------------------------------------
-  // Mount actions
   mountAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/mount/${action}`);
   },
 
-  // Mount Tracking Mode
-  //0=Siderial, 1=Lunar, 2=Solar, 3=King, 4=Stopped)
-  //http://192.168.2.128:1888/v2/api/equipment/mount/tracking?mode=0
   async setTrackingMode(TrackingMode) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/mount/tracking`, {
         params: { mode: TrackingMode, },
       });
-      //console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error switch profil:", error);
@@ -94,18 +117,17 @@ const apiService = {
   },
 
   //-------------------------------------  profile ---------------------------------------
-  // profile actions
   profileAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/profile/${action}`);
   },
 
-  // Profil Switch
   async profileSwitch(profileid) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/profile/switch`, {
         params: { profileid: profileid, },
       });
-      //console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error switch profil:", error);
@@ -114,13 +136,12 @@ const apiService = {
   },
 
   //-------------------------------------  application ---------------------------------------
-  // application actions
   async applicatioTabSwitch(tab) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/application/switch-tab`, {
         params: { tab: tab, },
       });
-      //console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error open application:", error);
@@ -129,14 +150,14 @@ const apiService = {
   },
 
   //-------------------------------------  Camera ---------------------------------------
-  // Camera actions
   cameraAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/camera/${action}`);
   },
 
-  // Start capture
   async startCapture(duration, gain) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
         params: {
           duration: duration,
@@ -150,9 +171,9 @@ const apiService = {
     }
   },
 
-  // Get capture result
   async getCaptureResult() {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
         params: { getResult: true, quality: 80 },
       });
@@ -162,9 +183,10 @@ const apiService = {
       throw error;
     }
   },
-  // Set Temp / Start Cooling 
+
   async startCooling(temp, minutes) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/camera/cool`, {
         params: {
           temperature: temp,
@@ -177,9 +199,10 @@ const apiService = {
       throw error;
     }
   },
-  // Stopp Cooling 
+
   async stoppCooling() {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/camera/cool`, {
         params: { cancel: true },
       });
@@ -189,9 +212,10 @@ const apiService = {
       throw error;
     }
   },
-  //  Start Stopp Warming 
-  async startStoppWarming(cancel, minutes) { // cancel muss true oder false sein
+
+  async startStoppWarming(cancel, minutes) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/camera/warm`, {
         params: {
           cancel: cancel,
@@ -205,9 +229,9 @@ const apiService = {
     }
   },
 
-  //  Start Stopp Tauheizung 
-  async startStoppDewheater(power) { // power muss true oder false sein
+  async startStoppDewheater(power) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/camera/dew-heater`, {
         params: { power: power },
       });
@@ -219,14 +243,14 @@ const apiService = {
   },
 
   //-------------------------------------  Filterwheel ---------------------------------------
-  // Focuser actions
   filterAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/filterwheel/${action}`);
   },
 
-  // Change Filter 
   async changeFilter(filterNr) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/filterwheel/change-filter`, {
         params: { filterId: filterNr },
       });
@@ -238,14 +262,14 @@ const apiService = {
   },
 
   //-------------------------------------  Rotator ---------------------------------------
-  // Focuser actions
   rotatorAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/rotator/${action}`);
   },
 
-  // Move Rotator 
   async moveRotator(position) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/rotator/move`, {
         params: { position: position },
       });
@@ -256,9 +280,9 @@ const apiService = {
     }
   },
 
-  // Move Rotator mechanical 
   async moveMechanicalRotator(position) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/rotator/move-mechanical`, {
         params: { position: position },
       });
@@ -270,34 +294,36 @@ const apiService = {
   },
 
   //-------------------------------------  flatdevice ---------------------------------------
-  // flatdevice actions
   flatdeviceAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/flatdevice/${action}`);
   },
 
   //-------------------------------------  dome ---------------------------------------
-  // Dome actions
   domeAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/dome/${action}`);
   },
 
   //-------------------------------------  focuser ---------------------------------------
-  // Focuser actions
   focusAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/focuser/${action}`);
   },
 
   focuserAfAction(action) {
+    const { API_URL } = getUrls();
     return this._simpleGetRequest(`${API_URL}autofocus?${action}`);
   },
 
   focuserLastAf() {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/focuser/last-af`);
   },
 
-  // Move focuser
   async moveFocuser(position) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/focuser/move`, {
         params: { position },
       });
@@ -309,26 +335,26 @@ const apiService = {
   },
 
   //-------------------------------------  Switch ----------------------------------------
-
   switchAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/switch/${action}`);
   },
 
   //-------------------------------------  Weather ----------------------------------------
-
   weatherAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/weather/${action}`);
   },
 
   //-------------------------------------  Framing ---------------------------------------
-  // Framing actions
   framingAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/framing/${action}`);
   },
 
-  // Set Source 
-  async setFramingImageSource(source) { //Values are NASA, SKYSERVER, STSCI, ESO, HIPS2FITS, SKYATLAS, FILE, or CACHE.
+  async setFramingImageSource(source) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/framing/set-source`, {
         params: { source },
       });
@@ -339,14 +365,13 @@ const apiService = {
     }
   },
 
-  // Slew and center
   async slewAndCenter(RAangle, DECangle, Center) {
     try {
+      const { BASE_URL } = getUrls();
       await axios.get(`${BASE_URL}/framing/set-coordinates`, {
         params: { RAangle, DECangle },
       });
 
-      // Pause von 4 Sekunde da es sonnst ein Fehler beim Framingassistent entsteht
       await new Promise((resolve) => setTimeout(resolve, 4000));
 
       const params = Center ? { slew_option: "Center" } : {};
@@ -358,17 +383,19 @@ const apiService = {
     }
   },
 
-  // NGC search
   async searchNGC(query, limit = 10) {
+    const { API_URL } = getUrls();
     return this._getWithParams(`${API_URL}ngc/search`, { query, limit });
   },
 
   async getNgcCache() {
+    const { API_URL } = getUrls();
     return this._simpleGetRequest(`${API_URL}ngc/cache`);
   },
 
   async updateNgcCache(data) {
     try {
+      const { API_URL } = getUrls();
       const response = await axios.post(`${API_URL}ngc/cache`, { data });
       return response.data;
     } catch (error) {
@@ -377,9 +404,9 @@ const apiService = {
     }
   },
 
-  // Load target picture
   async searchTargetPic(width, height, fov, ra, dec) {
     try {
+      const { TARGETPIC_URL } = getUrls();
       const response = await axios.get(TARGETPIC_URL, {
         params: { width, height, fov, ra, dec, hips: "CDS/P/DSS2/color", projection: "STG", format: "jpg" },
         responseType: "blob",
@@ -392,13 +419,14 @@ const apiService = {
   },
 
   //-------------------------------------  guider ---------------------------------------
-  // Guider actions
   guiderAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/guider/${action}`);
   },
-  // Fetch guider chart data
+
   async fetchGuiderChartData() {
     try {
+      const { API_URL } = getUrls();
       const response = await axios.get(`${API_URL}guider-data`);
       return { success: true, data: response.data };
     } catch (error) {
@@ -408,14 +436,15 @@ const apiService = {
   },
 
   //-------------------------------------  safety ---------------------------------------
-  // Safety Monitor actions
   safetyAction(action) {
+    const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/safetymonitor/${action}`);
   },
 
   //-------------------------------------  Logs ---------------------------------------
   async getLastLogs(count, level) {
     try {
+      const { API_URL } = getUrls();
       const response = await axios.get(`${API_URL}logs`, {
         params: { count, level },
       });
@@ -426,9 +455,7 @@ const apiService = {
     }
   },
 
-
   //-------------------------------------  Helper ---------------------------------------
-  // Helper methods
   _simpleGetRequest(url) {
     return axios
       .get(url)
@@ -448,7 +475,6 @@ const apiService = {
         throw error;
       });
   },
-
 };
 
 export default apiService;

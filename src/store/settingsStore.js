@@ -8,8 +8,8 @@ export const useSettingsStore = defineStore('settings', {
       altitude: null,
     },
     connection: {
-      ip: '',
-      port: ''
+      ip: '',  // Default backend IP
+      port: '5000' // Default backend port
     }
   }),
   actions: {
