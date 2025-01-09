@@ -75,13 +75,16 @@ import { onMounted, onBeforeUnmount } from 'vue';
 import { apiStore } from '@/store/store';
 import { useHead } from '@vueuse/head';
 import { useI18n } from 'vue-i18n';
-import NavigationComp from './components/NavigationComp.vue';
-import LastMessage from './components/LastMessage.vue';
-import SettingsPage from './views/SettingsPage.vue';
+import NavigationComp from '@/components/NavigationComp.vue';
+import LastMessage from '@/components/LastMessage.vue';
+import SettingsPage from '@/views/SettingsPage.vue';
+import { useSettingsStore } from "@/store/settingsStore";
 
 const { t } = useI18n();
 const store = apiStore();
 const showSettings = ref(false);
+/* eslint-disable */
+const settingsStore = useSettingsStore();
 
 useHead({
   title: "TouchNStars",
