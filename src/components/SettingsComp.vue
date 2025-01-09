@@ -99,7 +99,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted } from 'vue';
+import { ref, watchEffect, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '@/store/settingsStore';
 
@@ -112,17 +112,31 @@ const ip = ref('');
 const port = ref('');
 const gpsError = ref(null);
 
+// Watch for changes to IP and port
+watch([ip, port], ([newIp, newPort]) => {
+  settingsStore.setConnection({
+    ip: newIp,
+    port: newPort
+  });
+});
+
 const languages = [
   { code: 'en', name: 'English' },
   { code: 'de', name: 'Deutsch' }
 ];
 
-// Load stored coordinates on mount
+// Load stored settings on mount
 onMounted(() => {
   const storedCoords = settingsStore.coordinates;
   if (storedCoords) {
     latitude.value = storedCoords.latitude;
     longitude.value = storedCoords.longitude;
+  }
+  
+  const storedConnection = settingsStore.connection;
+  if (storedConnection) {
+    ip.value = storedConnection.ip;
+    port.value = storedConnection.port;
   }
 });
 
