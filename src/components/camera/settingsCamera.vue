@@ -66,7 +66,6 @@ async function setOffset() {
         console.log('Offset zu groß, Max: ' , store.cameraInfo.OffsetMax)
     }
     try{
-        console.log("aldfj");
        const data = await apiService.profileChangeValue("CameraSettings-Offset",cameraStore.offset);
        console.log(data);
     }catch(error){
