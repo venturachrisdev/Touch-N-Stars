@@ -19,7 +19,8 @@
     "settings": {
       "title": "Einstellungen",
       "language": "Sprache",
-      "coordinates": "GPS Koordianten"
+      "coordinates": "GPS Koordianten",
+      "connection": "N.I.N.A Verbindungsdetails"
     },
     "framing": {
       "search": {

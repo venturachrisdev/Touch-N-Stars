@@ -99,7 +99,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted, watch } from 'vue';
+import { ref, watchEffect, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '@/store/settingsStore';
 

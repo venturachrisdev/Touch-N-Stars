@@ -19,7 +19,8 @@
     "settings": {
       "title": "Settings",
       "language": "Language",
-      "coordinates": "GPS coordinates"
+      "coordinates": "GPS coordinates",
+      "connection": "N.I.N.A connection details"
     },
     "framing": {
       "search": {

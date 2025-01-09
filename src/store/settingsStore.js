@@ -17,6 +17,12 @@ export const useSettingsStore = defineStore('settings', {
         latitude: coords.latitude,
         longitude: coords.longitude
       };
+    },
+    setConnection(connection) {
+      this.connection = {
+        ip: connection.ip,
+        port: connection.port
+      };
     }
   },
   persist: true
