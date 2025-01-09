@@ -124,6 +124,7 @@ export const apiStore = defineStore('store', {
       } catch (error) {
         console.error('Fehler beim Abrufen der Informationen:', error);
       }
+      await this.fetchProfilInfos();
     },
 
     handleApiResponses({
@@ -245,6 +246,7 @@ export const apiStore = defineStore('store', {
       } else {
         console.error('Fehler in der Switch-API-Antwort:', switchResponse.Error);
       }
+      
     },
 
     processGuiderChartData(data) {
@@ -281,7 +283,7 @@ export const apiStore = defineStore('store', {
 
         if (profileInfoResponse && profileInfoResponse.Response) {
           this.profileInfo = profileInfoResponse.Response;
-          console.log('Profilinformationen abgerufen:', this.profileInfo);
+          //console.log('Profilinformationen abgerufen:', this.profileInfo);
           this.getExistingEquipment(this.profileInfo);
         } else {
           console.error('Fehler in der Profil-API-Antwort:', profileInfoResponse?.Error);
@@ -334,7 +336,7 @@ export const apiStore = defineStore('store', {
           }
         }
       });
-      console.log(this.existingEquipmentList);
+      //console.log(this.existingEquipmentList);
     },
 
     setDefaultCameraSettings() {

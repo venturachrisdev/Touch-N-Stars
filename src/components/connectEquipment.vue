@@ -102,7 +102,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { apiStore } from '@/store/store';
 import apiService from '@/services/apiService';
@@ -310,8 +310,6 @@ async function toggleAllConnections() {
     }
 }
 
-onMounted(async () => {
-  store.fetchProfilInfos();
-})
+
 
 </script>

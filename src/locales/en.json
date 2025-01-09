@@ -288,6 +288,7 @@
     "loading": "Loading...",
     "slewAndCenter": {
       "title": "Slew and Center",
+      "LastSelectedImageSource_wrong": "Please select offline sky map as image source in NINA / Framing",
       "ra": "RA:",
       "dec": "Dec:",
       "ra_placeholder": "RA 03:47:28.2",
