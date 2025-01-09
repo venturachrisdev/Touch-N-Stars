@@ -7,7 +7,7 @@
   <div v-else-if="showAllInfo" class="gap-2 grid grid-cols-2 landscape:grid-cols-3">
     <StatusString :isEnabled="store.cameraInfo.Name !== ''" :Name="$t('components.camera.name')" :Value="store.cameraInfo.Name" />
     <StatusString :isEnabled="store.cameraInfo.Gain !== ''" :Name="$t('components.camera.gain')" :Value="store.cameraInfo.Gain" />
-    <StatusString :isEnabled="store.cameraInfo.Offset !== ''" :Name="$t('components.camera.offset')" :Value="store.cameraInfo.Offset" />
+    <StatusString :isEnabled="store.cameraInfo.CanSetOffset" :Name="$t('components.camera.offset')" :Value="store.cameraInfo.Offset" />
     <StatusString :isEnabled="isTemperatureEnabled" :Name="$t('components.camera.temperature')" :Value="formattedTemperature" />
     <StatusBool class="col-start-1" :isEnabled="store.cameraInfo.IsExposing" :enabledText="$t('components.camera.capture_running')"
       :disabledText="$t('components.camera.standby')" />

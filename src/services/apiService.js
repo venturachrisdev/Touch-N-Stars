@@ -119,6 +119,25 @@ const apiService = {
     return this._simpleGetRequest(`${BASE_URL}/profile/${action}`);
   },
 
+
+  //   change-value
+  async profileChangeValue(settingpath,newValue) {
+    try {
+      const response = await axios.get(`${BASE_URL}/profile/change-value`, {
+        params: { 
+          settingpath, 
+          newValue, 
+        },
+      });
+      //console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error switch profil:", error);
+      throw error;
+    }
+  },
+
+  // Profil Switch
   async profileSwitch(profileid) {
     try {
       const { BASE_URL } = getUrls();
