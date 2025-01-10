@@ -73,9 +73,11 @@ import NavigationComp from '@/components/NavigationComp.vue';
 import LastMessage from '@/components/LastMessage.vue';
 import SettingsPage from '@/views/SettingsPage.vue';
 import { useSettingsStore } from "@/store/settingsStore";
+import { useLogStore } from './store/logStore';
 
 const { t } = useI18n();
 const store = apiStore();
+const logStore = useLogStore();
 const showSettings = ref(false);
 /* eslint-disable */
 const settingsStore = useSettingsStore();
@@ -95,10 +97,12 @@ function handleVisibilityChange() {
 onMounted(async () => {
   document.addEventListener("visibilitychange", handleVisibilityChange);
   store.startFetchingInfo();
+  logStore.startFetchingLog();
 });
 
 onBeforeUnmount(() => {
   store.stopFetchingInfo();
+  logStore.stopFetchingLog();
   document.removeEventListener("visibilitychange", handleVisibilityChange);
 });
 </script>

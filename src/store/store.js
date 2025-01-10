@@ -24,7 +24,7 @@ export const apiStore = defineStore('store', {
     },
     switchInfo: [],
     weatherInfo: [],
-    LogsInfo: [],
+    //LogsInfo: [],
     RADistanceRaw: [],
     DECDistanceRaw: [],
     isBackendReachable: false,
@@ -82,7 +82,7 @@ export const apiStore = defineStore('store', {
           safetyResponse,
           weatherResponse,
           switchResponse,
-          logsResponse,
+          //logsResponse,
         ] = await Promise.all([
           apiService.imageHistoryAll(),
           apiService.sequenceAction('json'),
@@ -99,8 +99,7 @@ export const apiStore = defineStore('store', {
           apiService.safetyAction('info'),
           apiService.weatherAction('info'),
           apiService.switchAction('info'),
-          
-          apiService.getLastLogs('100'),
+          //apiService.getLastLogs('100'),
         ]);
 
         this.handleApiResponses({
@@ -119,7 +118,7 @@ export const apiStore = defineStore('store', {
           safetyResponse,
           weatherResponse,
           switchResponse,
-          logsResponse,
+          //logsResponse,
         });
       } catch (error) {
         console.error('Fehler beim Abrufen der Informationen:', error);
@@ -143,7 +142,7 @@ export const apiStore = defineStore('store', {
       safetyResponse,
       weatherResponse,
       switchResponse,
-      logsResponse,
+      //logsResponse,
     }) {
       if (imageHistoryResponse.Success) {
         this.imageHistoryInfo = imageHistoryResponse.Response;
@@ -195,11 +194,11 @@ export const apiStore = defineStore('store', {
         console.error('Fehler in der Focuser-AF-API-Antwort:', focuserAfResponse.Error);
       }
 
-      if (logsResponse) {
+     /* if (logsResponse) {
         this.LogsInfo = logsResponse;
       } else {
         console.error('Fehler in der Logs-API-Antwort:', logsResponse.Error);
-      }
+      }*/
 
       if (safetyResponse.Success) {
         this.safetyInfo = safetyResponse.Response;

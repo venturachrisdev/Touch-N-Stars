@@ -54,9 +54,11 @@
 
 <script setup>
 import { apiStore } from '@/store/store';
+import { useLogStore } from "@/store/logStore";
 import { ref, computed, onMounted, watch } from 'vue';
 
 const store = apiStore();
+const logStore = useLogStore();
 const isLoading = ref(true);
 
 // Function to format timestamp
@@ -77,12 +79,12 @@ function formatTimestamp(timestamp) {
 
 // Computed property for the first log entry
 const firstLog = computed(() => {
-  return store.LogsInfo.logs.slice(0, 1);
+  return logStore.LogsInfo.logs.slice(0, 1);
 });
 
 // Watch when logs are loaded
 onMounted(() => {
-  const unwatch = store.$subscribe((mutation, state) => {
+  const unwatch = logStore.$subscribe((mutation, state) => {
     if (state.LogsInfo.logs.length > 0) {
       isLoading.value = false;
       unwatch(); // Stop watching once the data is loaded
@@ -91,7 +93,7 @@ onMounted(() => {
 });
 
 watch(
-  () => store.LogsInfo,
+  () => logStore.LogsInfo,
   (newVal, oldVal) => {
     if (!oldVal || newVal.length > oldVal.length) {
       isLoading.value = false;
