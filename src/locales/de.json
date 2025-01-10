@@ -20,7 +20,8 @@
       "title": "Einstellungen",
       "language": "Sprache",
       "coordinates": "GPS Koordianten",
-      "connection": "N.I.N.A Verbindungsdetails"
+      "connection": "N.I.N.A Verbindungsdetails",
+      "save": "Speichern"
     },
     "framing": {
       "search": {

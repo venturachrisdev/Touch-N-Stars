@@ -10,6 +10,13 @@ const initializeStore = () => {
       throw new Error('Pinia store not initialized');
     }
     settingsStore = pinia._s.get('settings');
+    
+    // Watch for connection changes
+    settingsStore.$onAction(({ name }) => {
+      if (name === 'setConnection') {
+        // Connection changed - URLs will be regenerated on next request
+      }
+    });
   }
 };
 
@@ -30,7 +37,7 @@ const getUrls = () => {
   const urls = getBaseUrl();
   return {
     BASE_URL: urls.base,
-    API_URL: urls.api, 
+    API_URL: urls.api,
     TARGETPIC_URL: urls.targetpic
   };
 };
@@ -123,6 +130,7 @@ const apiService = {
   //   change-value
   async profileChangeValue(settingpath,newValue) {
     try {
+      const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/profile/change-value`, {
         params: { 
           settingpath, 
