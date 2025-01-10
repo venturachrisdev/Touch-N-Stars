@@ -92,7 +92,7 @@ function handleVisibilityChange() {
     logStore.stopFetchingLog();
   } else {
     store.startFetchingInfo();
-    store.startFetchingLog();
+    logStore.startFetchingLog();
   }
 }
 
