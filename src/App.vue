@@ -89,7 +89,9 @@ useHead({
 function handleVisibilityChange() {
   if (document.hidden) {
     store.stopFetchingInfo();
+    logStore.stopFetchingLog();
   } else {
+    store.startFetchingInfo();
     store.startFetchingInfo();
   }
 }
