@@ -264,6 +264,7 @@ watch(
       chartInstance.data.datasets[1].data = "";  // Y-Achse (im ersten Dataset)
       chartInstance.data.datasets[2].data = ""; 
       chartInstance.data.datasets[3].data = ""; 
+      chartInstance.data.datasets[4].data = ""; 
       chartInstance.update();
     }
   },

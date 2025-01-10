@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import apiService from '../services/apiService';
+import apiService from '@/services/apiService';
 import { apiStore } from '@/store/store';
 
 export const useLogStore = defineStore('LogStore', {
@@ -56,7 +56,7 @@ export const useLogStore = defineStore('LogStore', {
               return logTime >= this.startAfTime && logTime > this.lastHfrLogTime;
             })
             // Aufsteigend nach Timestamp sortieren, um den *frühesten* zu kriegen
-            .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())[0];
+            .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())[1];
 
           let foundPosition = null;
           let foundPositionTime = 0;
@@ -101,10 +101,13 @@ export const useLogStore = defineStore('LogStore', {
               pos: foundPosition,
               hfr: foundHfr,
             });
+            // Nach dem Push sortieren wir das Array aufsteigend nach pos
+            this.focuserData.sort((a, b) => a.pos - b.pos);
             console.log(
               `Neuer Datensatz: pos = ${foundPosition}, hfr = ${foundHfr}`
             );
           }
+          
 
           // -------------------------------------------------------
           // 4) lastHfrLogTime hochsetzen

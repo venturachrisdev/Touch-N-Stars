@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import apiService from '../services/apiService';
-import { useCameraStore } from './cameraStore';
+import apiService from '@/services/apiService';
+import { useCameraStore } from '@/store/cameraStore';
 
 export const apiStore = defineStore('store', {
   state: () => ({

@@ -73,7 +73,7 @@ import NavigationComp from '@/components/NavigationComp.vue';
 import LastMessage from '@/components/LastMessage.vue';
 import SettingsPage from '@/views/SettingsPage.vue';
 import { useSettingsStore } from "@/store/settingsStore";
-import { useLogStore } from './store/logStore';
+import { useLogStore } from '@/store/logStore';
 
 const { t } = useI18n();
 const store = apiStore();
