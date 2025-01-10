@@ -47,9 +47,8 @@
         </div>
         <div v-show="store.showAfGraph" class="mt-6">
           <!--Spinner-->
-          <div v-if="false" role="status"
+          <div v-if="!store.autofocus_running && !delayShowGraph" role="status"
             class="flex flex-col items-center h-screen mt-4 text-center">
-            <p>{{ $t('components.focuser.autofocus_running') }}</p>
             <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
               viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path

@@ -6,6 +6,8 @@ export const useLogStore = defineStore('LogStore', {
   state: () => ({
     intervalId: null,
     LogsInfo: [],
+    canSetPos: true,
+    foundPos : 0,
 
     // Hier speichern wir kombinierte Objekte, z.B. { pos: 2100, hfr: 1.25 }
     focuserData: [],
@@ -29,13 +31,14 @@ export const useLogStore = defineStore('LogStore', {
         // Logs vom Backend holen (z.B. die letzten 100)
         const logs = await apiService.getLastLogs('100');
         this.LogsInfo = logs;
-        console.log('Alle Logs:', this.LogsInfo);
+        //console.log('Alle Logs:', this.LogsInfo);
 
         // Prüfen, ob der Autofokus läuft
         if (store.focuserAfInfo && store.focuserAfInfo.autofocus_running) {
           // Falls noch keine Startzeit gespeichert ist -> jetzt setzen
           if (!this.startAfTime) {
             this.startAfTime = Date.now();
+
             console.log('Autofokus gestartet um (ms): ', this.startAfTime);
           }
 
@@ -48,28 +51,24 @@ export const useLogStore = defineStore('LogStore', {
           // -------------------------------------------------------
           // 1) Ersten neuen Position-Log suchen ("Moving Focuser to position XYZ")
           // -------------------------------------------------------
-          const firstNewPositionEntry = logs.logs
-            .filter(log => {
-              if (!log.message.includes('Moving Focuser to position')) return false;
-              const logTime = new Date(log.timestamp).getTime();
-              // Muss NACH startAfTime und NACH lastHfrLogTime liegen
-              return logTime >= this.startAfTime && logTime > this.lastHfrLogTime;
-            })
-            // Aufsteigend nach Timestamp sortieren, um den *frühesten* zu kriegen
-            .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())[1];
+          
+          const firstPositionEntry = logs.logs
+            .find(log => log.message.includes('Moving Focuser to position'));
 
+           
           let foundPosition = null;
           let foundPositionTime = 0;
-          if (firstNewPositionEntry) {
+          //console.log(this.canSetPos)
+          if (firstPositionEntry && this.canSetPos) {
             // Positionswert herausparsen, z.B. "2100"
-            const match = firstNewPositionEntry.message.match(/Moving Focuser to position\s+(\d+)/);
+            const match = firstPositionEntry.message.match(/Moving Focuser to position\s+(\d+)/);
             if (match) {
               foundPosition = parseInt(match[1], 10);
-              foundPositionTime = new Date(firstNewPositionEntry.timestamp).getTime();
-              console.log('Neue Position gefunden:', foundPosition, 'Zeit:', foundPositionTime);
+              this.canSetPos = false;
+              this.foundPos = foundPosition;
+              //console.log('Erste Position gefunden:', foundPosition);
             }
           }
-
           // -------------------------------------------------------
           // 2) Ersten neuen HFR-Log suchen ("Average HFR: X.Y")
           // -------------------------------------------------------
@@ -88,27 +87,27 @@ export const useLogStore = defineStore('LogStore', {
             if (match) {
               foundHfr = parseFloat(match[1]);
               foundHfrTime = new Date(firstNewHfrEntry.timestamp).getTime();
-              console.log('Neuer HFR-Wert gefunden:', foundHfr, 'Zeit:', foundHfrTime);
+              //console.log('Neuer HFR-Wert gefunden:', foundHfr, 'Zeit:', foundHfrTime);
+              // Wenn Pos und HFR gefunden dann darf Pos wieder erfasst werden
+              this.canSetPos = true;
             }
           }
 
           // -------------------------------------------------------
-          // 3) Wenn wir BEIDE Werte (Position & HFR) haben,
-          //    legen wir einen kombinierten Datensatz an.
+          // 3) Wenn BEIDE Werte (Position & HFR) ,
+          //    lege einen kombinierten Datensatz an.
           // -------------------------------------------------------
-          if (foundPosition !== null && foundHfr !== null) {
+          if (this.foundPos !== null && foundHfr !== null) {
             this.focuserData.push({
-              pos: foundPosition,
+              pos: this.foundPos,
               hfr: foundHfr,
             });
-            // Nach dem Push sortieren wir das Array aufsteigend nach pos
+            // Nach dem Push sortieren aufsteigend nach pos
             this.focuserData.sort((a, b) => a.pos - b.pos);
             console.log(
-              `Neuer Datensatz: pos = ${foundPosition}, hfr = ${foundHfr}`
+              `Neuer Datensatz: pos = ${this.foundPos}, hfr = ${foundHfr}`
             );
           }
-          
-
           // -------------------------------------------------------
           // 4) lastHfrLogTime hochsetzen
           // -------------------------------------------------------
@@ -132,7 +131,7 @@ export const useLogStore = defineStore('LogStore', {
           this.lastHfrLogTime = 0;
         }
 
-        console.log('Aktuelle Kombinationen (pos, hfr):', this.focuserData);
+        //console.log('Aktuelle Kombinationen (pos, hfr):', this.focuserData);
       } catch (error) {
         console.error('Fehler beim Abrufen der Informationen:', error);
       }
