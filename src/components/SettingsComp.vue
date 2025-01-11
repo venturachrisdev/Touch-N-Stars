@@ -4,55 +4,50 @@
       <h2 class="text-xl font-semibold mb-4 text-white">
         {{ $t('components.settings.title') }}
       </h2>
-      
+
       <div class="space-y-4">
         <!-- GPS Coordinates -->
-        <div class="bg-gray-700 p-3 rounded-lg">
+        <div v-if="store.isBackendReachable" class="bg-gray-700 p-3 rounded-lg">
           <h3 class="text-lg font-medium mb-2 text-gray-300">
             {{ $t('components.settings.coordinates') }}
           </h3>
           <div class="flex items-center gap-2">
             <div class="flex-1">
               <label class="block text-sm font-medium text-gray-400 mb-1">Latitude</label>
-              <input
-                v-model="latitude"
-                type="text"
+              <input v-model="latitude" type="text"
                 class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-                placeholder="Latitude"
-              />
+                placeholder="Latitude" />
             </div>
             <div class="flex-1">
               <label class="block text-sm font-medium text-gray-400 mb-1">Longitude</label>
-              <input
-                v-model="longitude"
-                type="text"
+              <input v-model="longitude" type="text"
                 class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-                placeholder="Longitude"
-              />
+                placeholder="Longitude" />
             </div>
             <div class="flex-1">
               <label class="block text-sm font-medium text-gray-400 mb-1">Altitude</label>
-              <input
-                v-model="altitude"
-                type="text"
+              <input v-model="altitude" type="text"
                 class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-                placeholder="Altitude"
-              />
+                placeholder="Altitude" />
             </div>
-            <button
-              @click="getCurrentLocation"
-              class="mt-6 p-2 bg-gray-600 hover:bg-gray-500 rounded-md transition-colors"
-              title="Get current location"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            <button v-if="canFindCoordinates" @click="getCurrentLocation"
+              class="mt-6 p-2 bg-gray-600 hover:bg-gray-500 rounded-md transition-colors" title="Get current location">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-300" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </button>
           </div>
           <div v-if="gpsError" class="mt-2 text-sm text-red-400">
             {{ gpsError }}
           </div>
+          <button @click="saveCoordinates"
+            class="w-full mt-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-md transition-colors">
+            {{ $t('components.settings.save') }}
+          </button>
         </div>
 
         <!-- Connection Settings -->
@@ -63,27 +58,19 @@
           <div class="space-y-2">
             <div>
               <label class="block text-sm font-medium text-gray-400 mb-1">IP</label>
-              <input
-                v-model="tempIp"
-                type="text"
+              <input v-model="tempIp" type="text"
                 class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-                placeholder="192.168.x.x"
-              />
+                placeholder="192.168.x.x" />
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-400 mb-1">Port</label>
-              <input
-                v-model="tempPort"
-                type="text"
+              <input v-model="tempPort" type="text"
                 class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-                placeholder="5000"
-              />
+                placeholder="5000" />
             </div>
-            <button
-              @click="saveConnection"
-              class="w-full mt-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-md transition-colors"
-            >
-            {{ $t('components.settings.save') }}
+            <button @click="saveConnection"
+              class="w-full mt-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-md transition-colors">
+              {{ $t('components.settings.save') }}
             </button>
           </div>
         </div>
@@ -93,17 +80,9 @@
           <h3 class="text-lg font-medium mb-2 text-gray-300">
             {{ $t('components.settings.language') }}
           </h3>
-          <select
-            v-model="currentLanguage"
-            @change="changeLanguage($event.target.value)"
-            class="w-full px-4 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-colors"
-          >
-            <option 
-              v-for="lang in languages" 
-              :key="lang.code" 
-              :value="lang.code"
-              class="bg-gray-700"
-            >
+          <select v-model="currentLanguage" @change="changeLanguage($event.target.value)"
+            class="w-full px-4 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-colors">
+            <option v-for="lang in languages" :key="lang.code" :value="lang.code" class="bg-gray-700">
               {{ lang.name }}
             </option>
           </select>
@@ -114,12 +93,15 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted } from 'vue';
+import { ref, watchEffect, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '@/store/settingsStore';
+import { apiStore } from '@/store/store';
+import apiService from '@/services/apiService';
 
 const { locale } = useI18n();
 const settingsStore = useSettingsStore();
+const store = apiStore();
 const currentLanguage = ref(locale.value);
 const latitude = ref('');
 const longitude = ref('');
@@ -129,6 +111,7 @@ const port = ref('');
 const gpsError = ref(null);
 const tempIp = ref('');
 const tempPort = ref('');
+const canFindCoordinates = ref(false);
 
 // Initialize temp values on mount
 onMounted(() => {
@@ -163,7 +146,7 @@ onMounted(() => {
     longitude.value = storedCoords.longitude;
     altitude.value = storedCoords.altitude || 0;
   }
-  
+
   const storedConnection = settingsStore.connection;
   if (storedConnection) {
     ip.value = storedConnection.ip;
@@ -174,6 +157,29 @@ onMounted(() => {
 watchEffect(() => {
   currentLanguage.value = locale.value;
 });
+
+//Beim verbinden der seite Koordinaten von NINA laden
+watch(
+  () => store.isBackendReachable,
+  async (newValue) => {
+    if (newValue) {
+      try {
+        await store.fetchProfilInfos();
+        latitude.value = store.profileInfo.AstrometrySettings.Latitude;
+        longitude.value = store.profileInfo.AstrometrySettings.Longitude;
+        altitude.value = store.profileInfo.AstrometrySettings.Elevation;
+        settingsStore.setCoordinates({
+        latitude: latitude.value,
+        longitude: longitude.value,
+        altitude: altitude.value,
+      });
+      } catch (error) {
+        console.log("Fehler beim Laden der Koordinaten")
+      }
+
+    }
+  }
+)
 
 function changeLanguage(lang) {
   locale.value = lang;
@@ -190,9 +196,9 @@ function getCurrentLocation() {
     (position) => {
       latitude.value = position.coords.latitude.toFixed(6);
       longitude.value = position.coords.longitude.toFixed(6);
-      altitude.value = position.coords.altitude !== null 
-      ? position.coords.altitude.toFixed(3) 
-      : 0;
+      altitude.value = position.coords.altitude !== null
+        ? position.coords.altitude.toFixed(3)
+        : 0;
       settingsStore.setCoordinates({
         latitude: latitude.value,
         longitude: longitude.value,
@@ -204,4 +210,24 @@ function getCurrentLocation() {
     }
   );
 }
+
+async function saveCoordinates() {
+  try {
+    await apiService.profileChangeValue("AstrometrySettings-Latitude", latitude.value);
+    await apiService.profileChangeValue("AstrometrySettings-Longitude", longitude.value);
+    await apiService.profileChangeValue("AstrometrySettings-Elevation", altitude.value);
+
+    settingsStore.setCoordinates({
+      latitude: latitude.value,
+      longitude: longitude.value,
+      altitude: altitude.value,
+    });
+
+    console.log("Coordinates saved successfully.");
+  } catch (error) {
+    console.error("An error occurred while saving coordinates:", error);
+  }
+}
+
+
 </script>

@@ -126,7 +126,6 @@ const apiService = {
     return this._simpleGetRequest(`${BASE_URL}/profile/${action}`);
   },
 
-
   //   change-value
   async profileChangeValue(settingpath,newValue) {
     try {
