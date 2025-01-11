@@ -14,6 +14,7 @@ import { ref, onMounted, onUnmounted, watch } from "vue";
 import { Chart, registerables } from "chart.js";
 import apiService from "@/services/apiService";
 import { useLogStore } from "@/store/logStore";
+import { apiStore } from "@/store/store";
 
 // Registriere alle Chart.js Komponenten
 Chart.register(...registerables);
@@ -21,6 +22,7 @@ Chart.register(...registerables);
 const chartCanvas = ref(null);
 const timestamp = ref(""); // Timestamp für die Anzeige
 const logStore = useLogStore();
+const store = apiStore();
 let chartInstance = null;
 
 // Funktion, um die Größe des Charts beim Fenster-Resize anzupassen
@@ -70,6 +72,12 @@ async function fetchLastAf() {
   try {
     const response = await apiService.focusAction("last-af");
     const apiData = response.Response;
+    const dateLastAf = new Date(apiData.Timestamp);
+    const dateProfilLastUsed = new Date(store.profileInfo.LastUsed);
+
+    console.log(dateLastAf , ' : ' , dateProfilLastUsed)
+
+    if (dateLastAf < dateProfilLastUsed) {return  }
     const measurePoints = apiData.MeasurePoints || [];
 
     // Neue Daten extrahieren
