@@ -8,6 +8,7 @@ export const useLogStore = defineStore('LogStore', {
     LogsInfo: [],
     canSetPos: true,
     foundPos : 0,
+    foundPosTime : new Date(),
 
     // Hier speichern wir kombinierte Objekte, z.B. { pos: 2100, hfr: 1.25 }
     focuserData: [],
@@ -57,15 +58,18 @@ export const useLogStore = defineStore('LogStore', {
 
            
           let foundPosition = null;
-          let foundPositionTime = 0;
+          let  foundPositionTime = 0;
           //console.log(this.canSetPos)
           if (firstPositionEntry && this.canSetPos) {
             // Positionswert herausparsen, z.B. "2100"
             const match = firstPositionEntry.message.match(/Moving Focuser to position\s+(\d+)/);
             if (match) {
               foundPosition = parseInt(match[1], 10);
+              foundPositionTime = new Date(firstPositionEntry.timestamp).getTime() ;
+              //console.log(foundPositionTime);
               this.canSetPos = false;
               this.foundPos = foundPosition;
+              this.foundPosTime = foundPositionTime;
               //console.log('Erste Position gefunden:', foundPosition);
             }
           }
@@ -76,6 +80,7 @@ export const useLogStore = defineStore('LogStore', {
             .filter(log => {
               if (!log.message.includes('Average HFR:')) return false;
               const logTime = new Date(log.timestamp).getTime();
+              
               return logTime >= this.startAfTime && logTime > this.lastHfrLogTime;
             })
             .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())[0];
@@ -87,6 +92,7 @@ export const useLogStore = defineStore('LogStore', {
             if (match) {
               foundHfr = parseFloat(match[1]);
               foundHfrTime = new Date(firstNewHfrEntry.timestamp).getTime();
+             // console.log('hfr: ',firstNewHfrEntry.timestamp)
               //console.log('Neuer HFR-Wert gefunden:', foundHfr, 'Zeit:', foundHfrTime);
               // Wenn Pos und HFR gefunden dann darf Pos wieder erfasst werden
               this.canSetPos = true;
@@ -97,7 +103,8 @@ export const useLogStore = defineStore('LogStore', {
           // 3) Wenn BEIDE Werte (Position & HFR) ,
           //    lege einen kombinierten Datensatz an.
           // -------------------------------------------------------
-          if (this.foundPos !== null && foundHfr !== null) {
+          //console.log('Hfr: ', foundHfrTime, 'zu' , this.foundPosTime)
+          if (this.foundPos !== null && foundHfr !== null && (foundHfrTime - 1000) > this.foundPosTime  ) {
             this.focuserData.push({
               pos: this.foundPos,
               hfr: foundHfr,
@@ -117,7 +124,7 @@ export const useLogStore = defineStore('LogStore', {
           const maxNewTime = Math.max(
             this.lastHfrLogTime,
             foundPositionTime,
-            foundHfrTime
+            foundHfrTime 
           );
 
           if (maxNewTime > this.lastHfrLogTime) {
