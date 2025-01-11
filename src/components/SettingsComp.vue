@@ -7,7 +7,7 @@
 
       <div class="space-y-4">
         <!-- GPS Coordinates -->
-        <div v-if="store.isBackendReachable" class="bg-gray-700 p-3 rounded-lg">
+        <div v-if="shouldShowGpsSection" class="bg-gray-700 p-3 rounded-lg">
           <h3 class="text-lg font-medium mb-2 text-gray-300">
             {{ $t('components.settings.coordinates') }}
           </h3>
@@ -93,11 +93,10 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, watch, onMounted } from 'vue';
+import { ref, watchEffect, watch, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '@/store/settingsStore';
 import { apiStore } from '@/store/store';
-import apiService from '@/services/apiService';
 
 const { locale } = useI18n();
 const settingsStore = useSettingsStore();
@@ -111,7 +110,11 @@ const port = ref('');
 const gpsError = ref(null);
 const tempIp = ref('');
 const tempPort = ref('');
-const canFindCoordinates = ref(false);
+const canFindCoordinates = ref(window.__TAURI__?.platform === 'android');
+
+const shouldShowGpsSection = computed(() => {
+  return store.isBackendReachable && window.__TAURI__?.platform === 'android';
+});
 
 // Initialize temp values on mount
 onMounted(() => {
@@ -176,7 +179,6 @@ watch(
       } catch (error) {
         console.log("Fehler beim Laden der Koordinaten")
       }
-
     }
   }
 )
@@ -185,49 +187,37 @@ function changeLanguage(lang) {
   locale.value = lang;
 }
 
-function getCurrentLocation() {
-  if (!navigator.geolocation) {
-    gpsError.value = 'Geolocation is not supported by your browser';
+async function getCurrentLocation() {
+  if (!window.__TAURI__) {
+    gpsError.value = 'GPS only available in Tauri Android builds';
     return;
   }
 
-  gpsError.value = null;
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      latitude.value = position.coords.latitude.toFixed(6);
-      longitude.value = position.coords.longitude.toFixed(6);
-      altitude.value = position.coords.altitude !== null
-        ? position.coords.altitude.toFixed(3)
-        : 0;
-      settingsStore.setCoordinates({
-        latitude: latitude.value,
-        longitude: longitude.value,
-        altitude: altitude.value,
-      });
-    },
-    (error) => {
-      gpsError.value = error.message;
-    }
-  );
-}
-
-async function saveCoordinates() {
   try {
-    await apiService.profileChangeValue("AstrometrySettings-Latitude", latitude.value);
-    await apiService.profileChangeValue("AstrometrySettings-Longitude", longitude.value);
-    await apiService.profileChangeValue("AstrometrySettings-Elevation", altitude.value);
-
+    // Dynamically import Tauri API only when needed
+    const tauri = await import('@tauri-apps/api');
+    const { invoke } = tauri;
+    
+    // Check if GPS functionality is available
+    if (!invoke) {
+      throw new Error('Tauri invoke API not available');
+    }
+    
+    const { latitude: lat, longitude: lon, altitude: alt } = await invoke('get_gps_location');
+    
+    latitude.value = lat.toFixed(6);
+    longitude.value = lon.toFixed(6);
+    altitude.value = alt?.toFixed(3) || 0;
+    
     settingsStore.setCoordinates({
       latitude: latitude.value,
       longitude: longitude.value,
       altitude: altitude.value,
     });
-
-    console.log("Coordinates saved successfully.");
+    
+    gpsError.value = null;
   } catch (error) {
-    console.error("An error occurred while saving coordinates:", error);
+    gpsError.value = error.message || 'Failed to get GPS location';
   }
 }
-
-
 </script>
