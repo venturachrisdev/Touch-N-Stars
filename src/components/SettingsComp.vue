@@ -7,7 +7,7 @@
 
       <div class="space-y-4">
         <!-- GPS Coordinates -->
-        <div v-if="store.isBackendReachable" class="bg-gray-700 p-3 rounded-lg">
+        <div class="bg-gray-700 p-3 rounded-lg">
           <h3 class="text-lg font-medium mb-2 text-gray-300">
             {{ $t('components.settings.coordinates') }}
           </h3>
@@ -30,7 +30,7 @@
                 class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
                 placeholder="Altitude" />
             </div>
-            <button v-if="canFindCoordinates" @click="getCurrentLocation"
+            <button @click="getCurrentLocation"
               class="mt-6 p-2 bg-gray-600 hover:bg-gray-500 rounded-md transition-colors" title="Get current location">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-300" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -97,7 +97,6 @@ import { ref, watchEffect, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '@/store/settingsStore';
 import { apiStore } from '@/store/store';
-import apiService from '@/services/apiService';
 
 const { locale } = useI18n();
 const settingsStore = useSettingsStore();
@@ -111,7 +110,6 @@ const port = ref('');
 const gpsError = ref(null);
 const tempIp = ref('');
 const tempPort = ref('');
-const canFindCoordinates = ref(false);
 
 // Initialize temp values on mount
 onMounted(() => {
@@ -176,7 +174,6 @@ watch(
       } catch (error) {
         console.log("Fehler beim Laden der Koordinaten")
       }
-
     }
   }
 )
@@ -185,49 +182,57 @@ function changeLanguage(lang) {
   locale.value = lang;
 }
 
-function getCurrentLocation() {
-  if (!navigator.geolocation) {
-    gpsError.value = 'Geolocation is not supported by your browser';
+async function getCurrentLocation() {
+  if (!window.__TAURI__) {
+    gpsError.value = 'GPS only available in Tauri Android builds';
     return;
   }
 
-  gpsError.value = null;
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      latitude.value = position.coords.latitude.toFixed(6);
-      longitude.value = position.coords.longitude.toFixed(6);
-      altitude.value = position.coords.altitude !== null
-        ? position.coords.altitude.toFixed(3)
-        : 0;
+  try {
+    const { checkPermissions, requestPermissions, getCurrentPosition } = await import('@tauri-apps/plugin-geolocation');
+    
+    // Check and request permissions if needed
+    let permissions = await checkPermissions();
+    if (permissions.location === 'prompt' || permissions.location === 'prompt-with-rationale') {
+      permissions = await requestPermissions(['location']);
+    }
+
+    if (permissions.location === 'granted') {
+      const pos = await getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      });
+      
+      latitude.value = pos.coords.latitude.toFixed(6);
+      longitude.value = pos.coords.longitude.toFixed(6);
+      altitude.value = pos.coords.altitude?.toFixed(3) || 0;
+      
       settingsStore.setCoordinates({
         latitude: latitude.value,
         longitude: longitude.value,
         altitude: altitude.value,
       });
-    },
-    (error) => {
-      gpsError.value = error.message;
+      
+      // Update backend coordinates if connected
+      if (store.isBackendReachable) {
+        try {
+          await store.updateCoordinates({
+            latitude: latitude.value,
+            longitude: longitude.value,
+            altitude: altitude.value
+          });
+        } catch (error) {
+          console.error('Failed to update backend coordinates:', error);
+        }
+      }
+      
+      gpsError.value = null;
+    } else {
+      gpsError.value = 'Location permission not granted';
     }
-  );
-}
-
-async function saveCoordinates() {
-  try {
-    await apiService.profileChangeValue("AstrometrySettings-Latitude", latitude.value);
-    await apiService.profileChangeValue("AstrometrySettings-Longitude", longitude.value);
-    await apiService.profileChangeValue("AstrometrySettings-Elevation", altitude.value);
-
-    settingsStore.setCoordinates({
-      latitude: latitude.value,
-      longitude: longitude.value,
-      altitude: altitude.value,
-    });
-
-    console.log("Coordinates saved successfully.");
   } catch (error) {
-    console.error("An error occurred while saving coordinates:", error);
+    gpsError.value = error.message || 'Failed to get GPS location';
   }
 }
-
-
 </script>
