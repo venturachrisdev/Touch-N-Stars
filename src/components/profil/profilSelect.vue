@@ -35,6 +35,7 @@ async function fetchProfiles() {
       store.fetchProfilInfos();
       store.setDefaultCameraSettings();
       store.setDefaultRotatorSettings();
+      store.setDefaultCoordinates();
     }
   } catch (error) {
     console.error('Fehler beim Laden der Profile:', error);

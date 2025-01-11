@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import apiService from '@/services/apiService';
 import { useCameraStore } from '@/store/cameraStore';
+import { useSettingsStore } from '@/store/settingsStore';
+
 
 export const apiStore = defineStore('store', {
   state: () => ({
@@ -343,6 +345,12 @@ export const apiStore = defineStore('store', {
     setDefaultRotatorSettings() {
       this.rotatorMechanicalPosition = this.rotatorInfo?.MechanicalPosition ?? 0;
       console.log('Rotatoreinstellung gesetzt:', this.rotatorMechanicalPosition);
+    },
+    setDefaultCoordinates() {
+      const cStore = useSettingsStore();
+      cStore.coordinates.longitude = this.profileInfo.AstrometrySettings.Longitude;
+      cStore.coordinates.latitude = this.profileInfo.AstrometrySettings.Latitude;
+      cStore.coordinates.altitude = this.profileInfo.AstrometrySettings.Elevation;
     },
   },
 });
