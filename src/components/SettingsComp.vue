@@ -7,7 +7,7 @@
 
       <div class="space-y-4">
         <!-- GPS Coordinates -->
-        <div v-if="shouldShowGpsSection" class="bg-gray-700 p-3 rounded-lg">
+        <div class="bg-gray-700 p-3 rounded-lg">
           <h3 class="text-lg font-medium mb-2 text-gray-300">
             {{ $t('components.settings.coordinates') }}
           </h3>
@@ -30,7 +30,7 @@
                 class="w-full px-3 py-2 bg-gray-600 text-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
                 placeholder="Altitude" />
             </div>
-            <button v-if="canFindCoordinates" @click="getCurrentLocation"
+            <button @click="getCurrentLocation"
               class="mt-6 p-2 bg-gray-600 hover:bg-gray-500 rounded-md transition-colors" title="Get current location">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-300" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, watch, onMounted, computed } from 'vue';
+import { ref, watchEffect, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '@/store/settingsStore';
 import { apiStore } from '@/store/store';
@@ -110,11 +110,6 @@ const port = ref('');
 const gpsError = ref(null);
 const tempIp = ref('');
 const tempPort = ref('');
-const canFindCoordinates = ref(window.__TAURI__?.platform === 'android');
-
-const shouldShowGpsSection = computed(() => {
-  return store.isBackendReachable && window.__TAURI__?.platform === 'android';
-});
 
 // Initialize temp values on mount
 onMounted(() => {
@@ -194,28 +189,48 @@ async function getCurrentLocation() {
   }
 
   try {
-    // Dynamically import Tauri API only when needed
-    const tauri = await import('@tauri-apps/api');
-    const { invoke } = tauri;
+    const { checkPermissions, requestPermissions, getCurrentPosition } = await import('@tauri-apps/plugin-geolocation');
     
-    // Check if GPS functionality is available
-    if (!invoke) {
-      throw new Error('Tauri invoke API not available');
+    // Check and request permissions if needed
+    let permissions = await checkPermissions();
+    if (permissions.location === 'prompt' || permissions.location === 'prompt-with-rationale') {
+      permissions = await requestPermissions(['location']);
     }
-    
-    const { latitude: lat, longitude: lon, altitude: alt } = await invoke('get_gps_location');
-    
-    latitude.value = lat.toFixed(6);
-    longitude.value = lon.toFixed(6);
-    altitude.value = alt?.toFixed(3) || 0;
-    
-    settingsStore.setCoordinates({
-      latitude: latitude.value,
-      longitude: longitude.value,
-      altitude: altitude.value,
-    });
-    
-    gpsError.value = null;
+
+    if (permissions.location === 'granted') {
+      const pos = await getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      });
+      
+      latitude.value = pos.coords.latitude.toFixed(6);
+      longitude.value = pos.coords.longitude.toFixed(6);
+      altitude.value = pos.coords.altitude?.toFixed(3) || 0;
+      
+      settingsStore.setCoordinates({
+        latitude: latitude.value,
+        longitude: longitude.value,
+        altitude: altitude.value,
+      });
+      
+      // Update backend coordinates if connected
+      if (store.isBackendReachable) {
+        try {
+          await store.updateCoordinates({
+            latitude: latitude.value,
+            longitude: longitude.value,
+            altitude: altitude.value
+          });
+        } catch (error) {
+          console.error('Failed to update backend coordinates:', error);
+        }
+      }
+      
+      gpsError.value = null;
+    } else {
+      gpsError.value = 'Location permission not granted';
+    }
   } catch (error) {
     gpsError.value = error.message || 'Failed to get GPS location';
   }
