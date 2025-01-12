@@ -95,7 +95,7 @@ const { t } = useI18n();
 const store = apiStore();
 const logStore = useLogStore();
 const showSettings = ref(false);
-const showLogsModal = ref(true)
+const showLogsModal = ref(false)
 /* eslint-disable */
 const settingsStore = useSettingsStore();
 
