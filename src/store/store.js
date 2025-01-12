@@ -156,8 +156,15 @@ export const apiStore = defineStore('store', {
       if (sequenceResponse.Success) {
         this.sequenceInfo = sequenceResponse.Response;
         this.sequenceIsLoaded = true;
+        // Check if sequence is running
+        // Check if any sequence is running by searching for RUNNING status
+        const isRunning = sequenceResponse.Response?.some(sequence => 
+          sequence.Items?.some(item => item.Status === 'RUNNING')
+        );
+        this.sequenceRunning = isRunning || false;
       } else {
         this.sequenceIsLoaded = false;
+        this.sequenceRunning = false;
       }
 
       if (cameraResponse.Success) {
