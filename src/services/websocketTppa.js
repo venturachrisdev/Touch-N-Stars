@@ -1,12 +1,8 @@
 // services/websocketTppa.js
+import { useSettingsStore } from '../store/settingsStore';
 
-//IP von NINA ermitteln
 const backendProtokol = "ws";
-const backendPort = 1888;
 const backendPfad ="/v2/tppa";
-const backendUrl = `${backendProtokol}://${window.location.hostname}:${backendPort}${backendPfad}`;
-
-console.log(backendUrl);
 
 
 class WebSocketService {
@@ -14,6 +10,7 @@ class WebSocketService {
     this.socket = null;
     this.statusCallback = null;
     this.messageCallback = null;
+    this.backendUrl = null;
   }
 
   setStatusCallback(callback) {
@@ -25,7 +22,13 @@ class WebSocketService {
   }
 
   connect() {
-    this.socket = new WebSocket(backendUrl);
+    // Initialize URL with settings from store when connecting
+    const settingsStore = useSettingsStore();
+    const backendPort = settingsStore.connection.port || 1888;
+    const backendHost = settingsStore.connection.ip || window.location.hostname;
+    this.backendUrl = `${backendProtokol}://${backendHost}:${backendPort}${backendPfad}`;
+    
+    this.socket = new WebSocket(this.backendUrl);
 
     this.socket.onopen = () => {
       console.log("WebSocket verbunden.");
