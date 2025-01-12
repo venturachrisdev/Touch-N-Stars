@@ -104,7 +104,8 @@ export const useLogStore = defineStore('LogStore', {
           //    lege einen kombinierten Datensatz an.
           // -------------------------------------------------------
           //console.log('Hfr: ', foundHfrTime, 'zu' , this.foundPosTime)
-          if (this.foundPos !== null && foundHfr !== null && (foundHfrTime - 1000) > this.foundPosTime  ) {
+          //Damit das Initialisieren von Hocus Focus nicht falsch erkannt wird müssen ein paar sek abgezogen werden
+          if (this.foundPos !== null && foundHfr !== null && (foundHfrTime - 4000) > this.foundPosTime  ) {
             this.focuserData.push({
               pos: this.foundPos,
               hfr: foundHfr,
