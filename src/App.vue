@@ -40,9 +40,9 @@
       </div>
       <!-- Footer -->
       <div>
-        <router-link to="/logs" class="fixed bottom-0 w-full">
+        <button @click="showLogsModal = true" class="fixed bottom-0 w-full">
           <LastMessage class="fixed bottom-0 w-full" />
-        </router-link>
+        </button>
       </div>
     </div>
 
@@ -52,6 +52,21 @@
         <SettingsPage />
         <button 
           @click="showSettings = false"
+          class="fixed sm:absolute top-2 right-2 sm:top-4 sm:right-4 p-2 text-gray-400 hover:text-white bg-gray-900 rounded-full"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Logs Modal -->
+    <div v-if="showLogsModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div class="bg-gray-900 rounded-lg p-4 sm:p-6 w-full sm:max-w-4xl h-full sm:h-auto sm:max-h-[90vh] overflow-y-auto mx-2 sm:mx-0 scrollbar-hide">
+        <LastLogs />
+        <button 
+          @click="showLogsModal = false"
           class="fixed sm:absolute top-2 right-2 sm:top-4 sm:right-4 p-2 text-gray-400 hover:text-white bg-gray-900 rounded-full"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -72,6 +87,7 @@ import { useI18n } from 'vue-i18n';
 import NavigationComp from '@/components/NavigationComp.vue';
 import LastMessage from '@/components/LastMessage.vue';
 import SettingsPage from '@/views/SettingsPage.vue';
+import LastLogs from '@/components/LastLogs.vue';
 import { useSettingsStore } from "@/store/settingsStore";
 import { useLogStore } from '@/store/logStore';
 
@@ -79,6 +95,7 @@ const { t } = useI18n();
 const store = apiStore();
 const logStore = useLogStore();
 const showSettings = ref(false);
+const showLogsModal = ref(true)
 /* eslint-disable */
 const settingsStore = useSettingsStore();
 
