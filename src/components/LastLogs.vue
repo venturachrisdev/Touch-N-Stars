@@ -8,8 +8,6 @@
             <th class="border border-gray-300 px-4 py-2 text-left w-1/10">{{ $t('components.lastLogs.timestamp') }}</th>
             <th class="border border-gray-300 px-4 py-2 text-left w-1/10">{{ $t('components.lastLogs.level') }}</th>
             <th class="border border-gray-300 px-4 py-2 text-left w-2/5">{{ $t('components.lastLogs.message') }}</th>
-            <th class="border border-gray-300 px-4 py-2 text-left hidden landscape:table-cell w-1/10">{{ $t('components.lastLogs.member') }}</th>
-            <th class="border border-gray-300 px-4 py-2 text-left hidden landscape:table-cell w-1/10">{{ $t('components.lastLogs.line') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -23,8 +21,6 @@
               {{ entry.level }}
             </td>
             <td class="border border-gray-300 px-4 py-2">{{ entry.message }}</td>
-            <td class="border border-gray-300 px-4 py-2 hidden landscape:table-cell">{{ entry.member }}</td>
-            <td class="border border-gray-300 px-4 py-2 hidden landscape:table-cell">{{ entry.line }}</td>
           </tr>
         </tbody>
       </table>
