@@ -21,7 +21,16 @@
       "language": "Sprache",
       "coordinates": "GPS Koordianten",
       "connection": "N.I.N.A Verbindungsdetails",
-      "save": "Speichern"
+      "save": "Speichern",
+      "add": "Hinzufügen",
+      "update": "Aktualisieren",
+      "instance": {
+        "name": "Instanzname",
+        "ip": "IP-Adresse",
+        "port": "Port",
+        "edit": "Instanz bearbeiten",
+        "delete": "Instanz löschen"
+      }
     },
     "framing": {
       "search": {

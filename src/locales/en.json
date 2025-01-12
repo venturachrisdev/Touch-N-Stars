@@ -21,7 +21,16 @@
       "language": "Language",
       "coordinates": "GPS coordinates",
       "connection": "N.I.N.A connection details",
-      "save": "Save"
+      "save": "Save",
+      "add": "Add",
+      "update": "Update",
+      "instance": {
+        "name": "Instance Name",
+        "ip": "IP Address",
+        "port": "Port",
+        "edit": "Edit instance",
+        "delete": "Delete instance"
+      }
     },
     "framing": {
       "search": {
