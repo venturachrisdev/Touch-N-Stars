@@ -7,10 +7,13 @@ export const useSettingsStore = defineStore('settings', {
       longitude: null,
       altitude: null,
     },
+    // Support both single connection (legacy) and multiple instances
     connection: {
-      ip: '',  // Default backend IP
-      port: '' // Default backend port
-    }
+      ip: '',  // Legacy single connection IP
+      port: '', // Legacy single connection port
+      instances: [] // Array of {id, name, ip, port}
+    },
+    selectedInstanceId: null
   }),
   actions: {
     setCoordinates(coords) {
@@ -20,11 +23,46 @@ export const useSettingsStore = defineStore('settings', {
         altitude: coords.altitude
       };
     },
+    
+    // Legacy single connection support
     setConnection(connection) {
-      this.connection = {
-        ip: connection.ip,
-        port: connection.port
-      };
+      this.connection.ip = connection.ip;
+      this.connection.port = connection.port;
+    },
+    
+    // New methods for managing multiple instances
+    addInstance(instance) {
+      this.connection.instances.push({
+        id: Date.now().toString(),
+        name: instance.name || 'Instance',
+        ip: instance.ip,
+        port: instance.port
+      });
+    },
+    
+    updateInstance(id, updatedInstance) {
+      const index = this.connection.instances.findIndex(i => i.id === id);
+      if (index !== -1) {
+        this.connection.instances[index] = {
+          ...this.connection.instances[index],
+          ...updatedInstance
+        };
+      }
+    },
+    
+    removeInstance(id) {
+      this.connection.instances = this.connection.instances.filter(i => i.id !== id);
+      if (this.selectedInstanceId === id) {
+        this.selectedInstanceId = null;
+      }
+    },
+    
+    getInstance(id) {
+      return this.connection.instances.find(i => i.id === id);
+    },
+    
+    setSelectedInstanceId(id) {
+      this.selectedInstanceId = id;
     }
   },
   persist: true
