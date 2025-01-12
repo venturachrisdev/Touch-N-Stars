@@ -25,9 +25,10 @@ const getBaseUrl = () => {
   const protocol = settingsStore.backendProtocol || "http";
   const host = settingsStore.connection.ip || window.location.hostname;
   const port = settingsStore.connection.port || 5000;
+  const apiPort =  1888;
   
   return {
-    base: `${protocol}://${host}:${port}/v2/api`,
+    base: `${protocol}://${host}:${apiPort}/v2/api`,
     api: `${protocol}://${host}:${port}/api/`,
     targetpic: `${protocol}://${host}:${port}/api/targetpic`
   };
@@ -336,7 +337,7 @@ const apiService = {
 
   focuserAfAction(action) {
     const { API_URL } = getUrls();
-    return this._simpleGetRequest(`${API_URL}autofocus?${action}`);
+    return this._simpleGetRequest(`${API_URL}autofocus/${action}`);
   },
 
   focuserLastAf() {

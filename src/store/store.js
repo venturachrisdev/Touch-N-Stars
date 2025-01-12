@@ -196,12 +196,6 @@ export const apiStore = defineStore('store', {
         console.error('Fehler in der Focuser-AF-API-Antwort:', focuserAfResponse.Error);
       }
 
-     /* if (logsResponse) {
-        this.LogsInfo = logsResponse;
-      } else {
-        console.error('Fehler in der Logs-API-Antwort:', logsResponse.Error);
-      }*/
-
       if (safetyResponse.Success) {
         this.safetyInfo = safetyResponse.Response;
       } else {
@@ -247,14 +241,19 @@ export const apiStore = defineStore('store', {
     },
 
     processGuiderChartData(data) {
-      if (!Array.isArray(data.RADistanceRaw) || !Array.isArray(data.DECDistanceRaw)) {
-        console.error('Ungültige Datenstruktur:', data);
-        return;
+      if (!Array.isArray(data?.RADistanceRaw)) {
+        console.warn('Invalid RADistanceRaw, initializing as an empty array.');
+        data.RADistanceRaw = [];
       }
-
+      if (!Array.isArray(data?.DECDistanceRaw)) {
+        console.warn('Invalid DECDistanceRaw, initializing as an empty array.');
+        data.DECDistanceRaw = [];
+      }
+    
       this.RADistanceRaw = data.RADistanceRaw.map(value => (typeof value === 'number' ? value : 0));
       this.DECDistanceRaw = data.DECDistanceRaw.map(value => (typeof value === 'number' ? value : 0));
     },
+    
 
     startFetchingInfo() {
       if (!this.intervalId) {
