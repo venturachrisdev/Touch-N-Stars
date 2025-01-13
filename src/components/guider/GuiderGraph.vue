@@ -5,8 +5,8 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount } from "vue";
-import Chart from "chart.js/auto";
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import Chart from 'chart.js/auto';
 import { apiStore } from '@/store/store';
 const store = apiStore();
 
@@ -14,24 +14,24 @@ const rmsGraph = ref(null);
 let chart = null; // Nicht reaktiv
 
 const initGraph = () => {
-  const ctx = rmsGraph.value.getContext("2d");
+  const ctx = rmsGraph.value.getContext('2d');
   chart = new Chart(ctx, {
-    type: "line",
+    type: 'line',
     data: {
-      labels: Array(50).fill(""),
+      labels: Array(50).fill(''),
       datasets: [
         {
           label: 'RA "',
-          borderColor: "rgba(70, 130, 180, 1)",
-          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          borderColor: 'rgba(70, 130, 180, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
           tension: 0.5,
           pointRadius: 0,
           data: [0],
         },
         {
           label: 'Dec "',
-          borderColor: "rgba(220, 20, 60, 1)",
-          backgroundColor: "rgba(153, 102, 255, 0.2)",
+          borderColor: 'rgba(220, 20, 60, 1)',
+          backgroundColor: 'rgba(153, 102, 255, 0.2)',
           tension: 0.5,
           pointRadius: 0,
           data: [0],
@@ -47,14 +47,14 @@ const initGraph = () => {
       scales: {
         x: {
           grid: {
-            color: "rgba(248, 248, 255, 0.1)",
+            color: 'rgba(248, 248, 255, 0.1)',
           },
         },
         y: {
           suggestedMin: -3,
           suggestedMax: 3,
           grid: {
-            color: "rgba(248, 248, 255, 0.1)",
+            color: 'rgba(248, 248, 255, 0.1)',
           },
         },
       },

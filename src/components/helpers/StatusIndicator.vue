@@ -1,5 +1,5 @@
 <template>
-  <div class="status-indicator" :class="{'safe': isSafe, 'unsafe': !isSafe}">
+  <div class="status-indicator" :class="{ safe: isSafe, unsafe: !isSafe }">
     <span class="status-icon">●</span>
     <span class="status-text">{{ statusText }}</span>
   </div>
@@ -11,7 +11,7 @@ import { apiStore } from '@/store/store';
 
 const store = apiStore();
 const isSafe = computed(() => store.safetyInfo.IsSafe);
-const statusText = computed(() => isSafe.value ? 'Safe' : 'Unsafe');
+const statusText = computed(() => (isSafe.value ? 'Safe' : 'Unsafe'));
 </script>
 
 <style scoped>
@@ -42,7 +42,7 @@ const statusText = computed(() => isSafe.value ? 'Safe' : 'Unsafe');
   .status-text {
     display: none;
   }
-  
+
   .status-indicator {
     padding: 0.5rem;
   }

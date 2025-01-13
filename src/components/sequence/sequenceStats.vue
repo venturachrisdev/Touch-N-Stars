@@ -1,6 +1,9 @@
 <template>
   <div class="flex justify-center">
-    <div v-if="store.imageHistoryInfo && store.imageHistoryInfo.length > 0" class="max-w-md landscape:max-w-2xl ">
+    <div
+      v-if="store.imageHistoryInfo && store.imageHistoryInfo.length > 0"
+      class="max-w-md landscape:max-w-2xl"
+    >
       <LastSequenceImg />
       <SequenzGraph class="pt-4" />
     </div>
@@ -13,10 +16,9 @@
 <script setup>
 import LastSequenceImg from './LastSequenceImg.vue';
 import SequenzGraph from './SequenzGraph.vue';
-import { apiStore } from "@/store/store";
+import { apiStore } from '@/store/store';
 
 const store = apiStore();
-
 </script>
 
 <style>

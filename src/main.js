@@ -1,6 +1,6 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import './assets/tailwind.css'; // Importiert Tailwind CSS
@@ -12,7 +12,7 @@ const tooltipDirective = {
   mounted(el, binding) {
     el.setAttribute('title', binding.value);
     el.style.cursor = 'pointer';
-  }
+  },
 };
 
 const pinia = createPinia();

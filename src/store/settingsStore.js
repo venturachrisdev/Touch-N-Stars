@@ -9,61 +9,61 @@ export const useSettingsStore = defineStore('settings', {
     },
     // Support both single connection (legacy) and multiple instances
     connection: {
-      ip: '',  // Legacy single connection IP
+      ip: '', // Legacy single connection IP
       port: '', // Legacy single connection port
-      instances: [] // Array of {id, name, ip, port}
+      instances: [], // Array of {id, name, ip, port}
     },
-    selectedInstanceId: null
+    selectedInstanceId: null,
   }),
   actions: {
     setCoordinates(coords) {
       this.coordinates = {
         latitude: coords.latitude,
         longitude: coords.longitude,
-        altitude: coords.altitude
+        altitude: coords.altitude,
       };
     },
-    
+
     // Legacy single connection support
     setConnection(connection) {
       this.connection.ip = connection.ip;
       this.connection.port = connection.port;
     },
-    
+
     // New methods for managing multiple instances
     addInstance(instance) {
       this.connection.instances.push({
         id: Date.now().toString(),
         name: instance.name || 'Instance',
         ip: instance.ip,
-        port: instance.port
+        port: instance.port,
       });
     },
-    
+
     updateInstance(id, updatedInstance) {
-      const index = this.connection.instances.findIndex(i => i.id === id);
+      const index = this.connection.instances.findIndex((i) => i.id === id);
       if (index !== -1) {
         this.connection.instances[index] = {
           ...this.connection.instances[index],
-          ...updatedInstance
+          ...updatedInstance,
         };
       }
     },
-    
+
     removeInstance(id) {
-      this.connection.instances = this.connection.instances.filter(i => i.id !== id);
+      this.connection.instances = this.connection.instances.filter((i) => i.id !== id);
       if (this.selectedInstanceId === id) {
         this.selectedInstanceId = null;
       }
     },
-    
+
     getInstance(id) {
-      return this.connection.instances.find(i => i.id === id);
+      return this.connection.instances.find((i) => i.id === id);
     },
-    
+
     setSelectedInstanceId(id) {
       this.selectedInstanceId = id;
-    }
+    },
   },
-  persist: true
+  persist: true,
 });

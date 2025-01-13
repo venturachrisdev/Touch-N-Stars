@@ -1,7 +1,12 @@
 <template>
   <div class="w-64 flex items-center">
     <label class="mr-2" for="profileDropdown">Profil: </label>
-    <select id="profileDropdown" class="default-inputfield" v-model="selectedProfileId" @change="updateProfile">
+    <select
+      id="profileDropdown"
+      class="default-inputfield"
+      v-model="selectedProfileId"
+      @change="updateProfile"
+    >
       <option v-for="profile in profiles" :key="profile.Id" :value="profile.Id">
         {{ profile.Name }}
       </option>
@@ -26,7 +31,7 @@ async function fetchProfiles() {
       profiles.value = response.Response;
 
       // Find the active profile and set it as selected
-      const activeProfile = profiles.value.find(profile => profile.IsActive);
+      const activeProfile = profiles.value.find((profile) => profile.IsActive);
       if (activeProfile) {
         selectedProfileId.value = activeProfile.Id;
       }

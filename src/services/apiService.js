@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import { getActivePinia } from 'pinia';
 
 let settingsStore;
@@ -10,7 +10,7 @@ const initializeStore = () => {
       throw new Error('Pinia store not initialized');
     }
     settingsStore = pinia._s.get('settings');
-    
+
     // Watch for connection changes
     settingsStore.$onAction(({ name }) => {
       if (name === 'setConnection') {
@@ -22,15 +22,15 @@ const initializeStore = () => {
 
 const getBaseUrl = () => {
   initializeStore();
-  const protocol = settingsStore.backendProtocol || "http";
+  const protocol = settingsStore.backendProtocol || 'http';
   const host = settingsStore.connection.ip || window.location.hostname;
   const port = settingsStore.connection.port || 5000;
-  const apiPort =  1888;
-  
+  const apiPort = 1888;
+
   return {
     base: `${protocol}://${host}:${apiPort}/v2/api`,
     api: `${protocol}://${host}:${port}/api/`,
-    targetpic: `${protocol}://${host}:${port}/api/targetpic`
+    targetpic: `${protocol}://${host}:${port}/api/targetpic`,
   };
 };
 
@@ -39,7 +39,7 @@ const getUrls = () => {
   return {
     BASE_URL: urls.base,
     API_URL: urls.api,
-    TARGETPIC_URL: urls.targetpic
+    TARGETPIC_URL: urls.targetpic,
   };
 };
 
@@ -51,7 +51,7 @@ const apiService = {
       const response = await axios.get(`${BASE_URL}/version`);
       return response.status === 200;
     } catch (error) {
-      console.error("Error reaching backend:", error.message);
+      console.error('Error reaching backend:', error.message);
       return false;
     }
   },
@@ -61,11 +61,11 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/image-history`, {
-        params: { all: true, },
+        params: { all: true },
       });
       return response.data;
     } catch (error) {
-      console.error("Error read Image History:", error);
+      console.error('Error read Image History:', error);
       throw error;
     }
   },
@@ -83,7 +83,7 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error read Image :", error);
+      console.error('Error read Image :', error);
       throw error;
     }
   },
@@ -91,13 +91,14 @@ const apiService = {
   //-------------------------------------  sequence ---------------------------------------
   sequenceAction(action) {
     const { BASE_URL } = getUrls();
-    if (action === "start") {
-      return this._simpleGetRequest(`${BASE_URL}/sequence/start?skipValidation=true`)
-        .then(response => ({
+    if (action === 'start') {
+      return this._simpleGetRequest(`${BASE_URL}/sequence/start?skipValidation=true`).then(
+        (response) => ({
           ...response,
           Response: 'Sequence start',
-          Success: true
-        }));
+          Success: true,
+        })
+      );
     }
     return this._simpleGetRequest(`${BASE_URL}/sequence/${action}`);
   },
@@ -112,11 +113,11 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/mount/tracking`, {
-        params: { mode: TrackingMode, },
+        params: { mode: TrackingMode },
       });
       return response.data;
     } catch (error) {
-      console.error("Error switch profil:", error);
+      console.error('Error switch profil:', error);
       throw error;
     }
   },
@@ -128,19 +129,19 @@ const apiService = {
   },
 
   //   change-value
-  async profileChangeValue(settingpath,newValue) {
+  async profileChangeValue(settingpath, newValue) {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/profile/change-value`, {
-        params: { 
-          settingpath, 
-          newValue, 
+        params: {
+          settingpath,
+          newValue,
         },
       });
       //console.log(response.data);
       return response.data;
     } catch (error) {
-      console.error("Error switch profil:", error);
+      console.error('Error switch profil:', error);
       throw error;
     }
   },
@@ -150,11 +151,11 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/profile/switch`, {
-        params: { profileid: profileid, },
+        params: { profileid: profileid },
       });
       return response.data;
     } catch (error) {
-      console.error("Error switch profil:", error);
+      console.error('Error switch profil:', error);
       throw error;
     }
   },
@@ -164,11 +165,11 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/application/switch-tab`, {
-        params: { tab: tab, },
+        params: { tab: tab },
       });
       return response.data;
     } catch (error) {
-      console.error("Error open application:", error);
+      console.error('Error open application:', error);
       throw error;
     }
   },
@@ -185,12 +186,12 @@ const apiService = {
       const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
         params: {
           duration: duration,
-          gain: gain
+          gain: gain,
         },
       });
       return response.data;
     } catch (error) {
-      console.error("Error starting capture:", error);
+      console.error('Error starting capture:', error);
       throw error;
     }
   },
@@ -203,7 +204,7 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error retrieving capture result:", error);
+      console.error('Error retrieving capture result:', error);
       throw error;
     }
   },
@@ -214,12 +215,12 @@ const apiService = {
       const response = await axios.get(`${BASE_URL}/equipment/camera/cool`, {
         params: {
           temperature: temp,
-          minutes: minutes
+          minutes: minutes,
         },
       });
       return response.data;
     } catch (error) {
-      console.error("Error retrieving capture result:", error);
+      console.error('Error retrieving capture result:', error);
       throw error;
     }
   },
@@ -232,7 +233,7 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error retrieving capture result:", error);
+      console.error('Error retrieving capture result:', error);
       throw error;
     }
   },
@@ -243,12 +244,12 @@ const apiService = {
       const response = await axios.get(`${BASE_URL}/equipment/camera/warm`, {
         params: {
           cancel: cancel,
-          minutes: minutes
+          minutes: minutes,
         },
       });
       return response.data;
     } catch (error) {
-      console.error("Error retrieving capture result:", error);
+      console.error('Error retrieving capture result:', error);
       throw error;
     }
   },
@@ -261,7 +262,7 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error retrieving capture result:", error);
+      console.error('Error retrieving capture result:', error);
       throw error;
     }
   },
@@ -280,7 +281,7 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error changing filter:", error);
+      console.error('Error changing filter:', error);
       throw error;
     }
   },
@@ -299,7 +300,7 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error moving Rotator:", error);
+      console.error('Error moving Rotator:', error);
       throw error;
     }
   },
@@ -312,7 +313,7 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error moving mechanical Rotator:", error);
+      console.error('Error moving mechanical Rotator:', error);
       throw error;
     }
   },
@@ -353,7 +354,7 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error moving focuser:", error);
+      console.error('Error moving focuser:', error);
       throw error;
     }
   },
@@ -384,7 +385,7 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error controlling setFramingImageSource:", error);
+      console.error('Error controlling setFramingImageSource:', error);
       throw error;
     }
   },
@@ -398,11 +399,11 @@ const apiService = {
 
       await new Promise((resolve) => setTimeout(resolve, 4000));
 
-      const params = Center ? { slew_option: "Center" } : {};
+      const params = Center ? { slew_option: 'Center' } : {};
       const response = await axios.get(`${BASE_URL}/framing/slew`, { params });
       return response.data;
     } catch (error) {
-      console.error("Error controlling mount:", error);
+      console.error('Error controlling mount:', error);
       throw error;
     }
   },
@@ -423,7 +424,7 @@ const apiService = {
       const response = await axios.post(`${API_URL}ngc/cache`, { data });
       return response.data;
     } catch (error) {
-      console.error("Error updating NGC cache:", error);
+      console.error('Error updating NGC cache:', error);
       throw error;
     }
   },
@@ -432,12 +433,21 @@ const apiService = {
     try {
       const { TARGETPIC_URL } = getUrls();
       const response = await axios.get(TARGETPIC_URL, {
-        params: { width, height, fov, ra, dec, hips: "CDS/P/DSS2/color", projection: "STG", format: "jpg" },
-        responseType: "blob",
+        params: {
+          width,
+          height,
+          fov,
+          ra,
+          dec,
+          hips: 'CDS/P/DSS2/color',
+          projection: 'STG',
+          format: 'jpg',
+        },
+        responseType: 'blob',
       });
       return URL.createObjectURL(response.data);
     } catch (error) {
-      console.error("Error retrieving target picture:", error);
+      console.error('Error retrieving target picture:', error);
       throw error;
     }
   },
@@ -454,8 +464,8 @@ const apiService = {
       const response = await axios.get(`${API_URL}guider-data`);
       return { success: true, data: response.data };
     } catch (error) {
-      console.error("Error fetching guider data:", error);
-      return { success: false, message: "Error fetching guider data" };
+      console.error('Error fetching guider data:', error);
+      return { success: false, message: 'Error fetching guider data' };
     }
   },
 
@@ -474,7 +484,7 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error retrieving logs result:", error);
+      console.error('Error retrieving logs result:', error);
       throw error;
     }
   },

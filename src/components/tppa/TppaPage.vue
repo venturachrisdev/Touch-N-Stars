@@ -9,7 +9,7 @@
           {{ $t('components.tppa.title') }}
         </h5>
         <div v-if="!store.cameraInfo.Connected">
-          <p class=" text-red-800">{{ $t('components.tppa.camera_mount_required') }}</p>
+          <p class="text-red-800">{{ $t('components.tppa.camera_mount_required') }}</p>
         </div>
         <div v-else class="flex space-x-4">
           <button class="default-button-cyan" @click="startAlignment">
@@ -25,7 +25,9 @@
           </div>
           <div v-else class="space-y-4">
             <div class="flex space-x-4">
-              <p class="w-52"><strong>{{ $t('components.tppa.altitude_error') }}</strong></p>
+              <p class="w-52">
+                <strong>{{ $t('components.tppa.altitude_error') }}</strong>
+              </p>
               <p>{{ showAltitudeError }}</p>
               <div v-if="showAltitudeError">
                 <div v-if="altitudeCorDirectionTop" class="flex flex-row space-x-2">
@@ -39,11 +41,13 @@
               </div>
             </div>
             <div class="flex space-x-4">
-              <p class="w-52"><strong>{{ $t('components.tppa.azimuth_error') }}</strong></p>
+              <p class="w-52">
+                <strong>{{ $t('components.tppa.azimuth_error') }}</strong>
+              </p>
               <p>{{ showAzimuthError }}</p>
               <div v-if="showAzimuthError">
                 <div v-if="azimuthCorDirectionLeft" class="flex flex-row space-x-2">
-                  <ArrowLeftIcon class="size-6 text-blue-500 " />
+                  <ArrowLeftIcon class="size-6 text-blue-500" />
                   <p>{{ $t('components.tppa.west') }}</p>
                 </div>
                 <div v-else class="flex flex-row space-x-2">
@@ -53,15 +57,18 @@
               </div>
             </div>
             <div class="flex space-x-4">
-              <p class="w-52"><strong>{{ $t('components.tppa.total_error') }}</strong></p>
+              <p class="w-52">
+                <strong>{{ $t('components.tppa.total_error') }}</strong>
+              </p>
               <p>{{ showTotalError }}</p>
             </div>
             <div v-if="tppaStore.currentMessage" class="mt-20">
-              <p style="white-space: pre-wrap;">
+              <p style="white-space: pre-wrap">
                 {{ formatMessage(tppaStore.currentMessage.message) }}
               </p>
               <p class="text-xs">
-                <strong>{{ $t('components.tppa.last_update') }}:</strong> {{ tppaStore.currentMessage.time }}
+                <strong>{{ $t('components.tppa.last_update') }}:</strong>
+                {{ tppaStore.currentMessage.time }}
               </p>
             </div>
           </div>
@@ -69,15 +76,14 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n()
-import websocketService from "@/services/websocketTppa";
+const { t } = useI18n();
+import websocketService from '@/services/websocketTppa';
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -92,9 +98,9 @@ const tppaStore = useTppaStore();
 const store = apiStore();
 const startStop = ref(false);
 const isConnected = ref(false);
-const showAzimuthError = ref("");
-const showAltitudeError = ref("");
-const showTotalError = ref("");
+const showAzimuthError = ref('');
+const showAltitudeError = ref('');
+const showTotalError = ref('');
 const azimuthCorDirectionLeft = ref(false);
 const altitudeCorDirectionTop = ref(false);
 
@@ -117,11 +123,11 @@ function decimalToDMS(value) {
     degrees++;
   }
 
-  const degreesStr = degrees.toString().padStart(2, "0");
-  const minutesStr = minutes.toString().padStart(2, "0");
-  const secondsStr = seconds.toString().padStart(2, "0");
+  const degreesStr = degrees.toString().padStart(2, '0');
+  const minutesStr = minutes.toString().padStart(2, '0');
+  const secondsStr = seconds.toString().padStart(2, '0');
 
-  const sign = isNegative ? "-" : "";
+  const sign = isNegative ? '-' : '';
   return `${sign}${degreesStr}° ${minutesStr}' ${secondsStr}''`;
 }
 
@@ -132,21 +138,17 @@ function getCurrentTime() {
 
 function formatMessage(message) {
   if (message.Response) {
-    if (typeof message.Response === "string") {
-      if (message.Response === "started procedure") {
-        console.log("Start TPPA");
+    if (typeof message.Response === 'string') {
+      if (message.Response === 'started procedure') {
+        console.log('Start TPPA');
         return message.Response;
       }
       startStop.value = true;
       return message.Response;
-    } else if (typeof message.Response === "object") {
+    } else if (typeof message.Response === 'object') {
       startStop.value = false;
       const { AzimuthError, AltitudeError, TotalError } = message.Response;
-      if (
-        AzimuthError !== undefined &&
-        AltitudeError !== undefined &&
-        TotalError !== undefined
-      ) {
+      if (AzimuthError !== undefined && AltitudeError !== undefined && TotalError !== undefined) {
         const azimuthErrorDMS = decimalToDMS(AzimuthError);
         const altitudeErrorDMS = decimalToDMS(AltitudeError);
         const totalErrorDMS = decimalToDMS(TotalError);
@@ -170,18 +172,18 @@ function formatMessage(message) {
 
 async function startAlignment() {
   await unparkMount();
-  websocketService.sendMessage("start-alignment");
+  websocketService.sendMessage('start-alignment');
 }
 
 function stopAlignment() {
   console.log("Sende 'stop-alignment' an den Server");
-  websocketService.sendMessage("stop-alignment");
+  websocketService.sendMessage('stop-alignment');
 }
 
 async function unparkMount() {
   if (store.mountInfo.AtPark) {
     try {
-      await apiService.mountAction("unpark");
+      await apiService.mountAction('unpark');
       await wait(2000);
       console.log(t('components.mount.control.unpark'));
     } catch (error) {
@@ -191,18 +193,18 @@ async function unparkMount() {
 }
 
 async function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 onMounted(() => {
   websocketService.setStatusCallback((status) => {
-    console.log("Status aktualisiert:", status);
-    isConnected.value = (status === "Verbunden");
+    console.log('Status aktualisiert:', status);
+    isConnected.value = status === 'Verbunden';
     tppaStore.isConnected = isConnected.value;
   });
 
   websocketService.setMessageCallback((message) => {
-    console.log("Neue Nachricht erhalten:", message);
+    console.log('Neue Nachricht erhalten:', message);
     tppaStore.currentMessage = {
       message: message,
       time: getCurrentTime(),

@@ -1,14 +1,14 @@
 <template>
   <div class="top-0 h-16 bg-gray-800 shadow-md">
     <div class="flex inset-x-0 mx-auto max-w-md h-16 items-center justify-around">
-
       <!-- Buttons mit Sub-Navigation -->
       <div class="relative">
-        <router-link 
-          to="/equipment" class="nav-button" 
+        <router-link
+          to="/equipment"
+          class="nav-button"
           active-class="active-nav-button"
-          :title="$t('components.navigation.equipment')" 
-          >
+          :title="$t('components.navigation.equipment')"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
             <g fill="none" stroke="black" stroke-width="2">
               <!-- Schraubenschlüssel -->
@@ -21,13 +21,13 @@
 
       <!-- Buttons mit Sub-Navigation -->
       <div class="relative">
-        <router-link 
-          to="/equipment" 
-          class="nav-button" 
+        <router-link
+          to="/equipment"
+          class="nav-button"
           active-class="active-nav-button"
-          :title="$t('components.navigation.equipment')" 
+          :title="$t('components.navigation.equipment')"
           @click="toggleSubNav('equipment')"
-          >
+        >
           <LinkIcon class="icon" />
         </router-link>
         <div v-if="activeSubNav === 'equipment'" class="subnav">
@@ -38,8 +38,13 @@
       </div>
 
       <div class="relative">
-        <router-link to="/camera" class="nav-button" active-class="active-nav-button"
-          :title="$t('components.navigation.camera')" @click="toggleSubNav('camera')">
+        <router-link
+          to="/camera"
+          class="nav-button"
+          active-class="active-nav-button"
+          :title="$t('components.navigation.camera')"
+          @click="toggleSubNav('camera')"
+        >
           <CameraIcon class="icon" />
         </router-link>
         <div v-if="activeSubNav === 'camera'" class="subnav">
@@ -83,7 +88,9 @@ function closeSubNav() {
   align-items: center;
   justify-content: center;
   margin: 4px;
-  transition: border-radius 0.2s ease, background-color 0.2s ease;
+  transition:
+    border-radius 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .active-nav-button {

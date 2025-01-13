@@ -22,7 +22,7 @@ const routes = [
   { path: '/logs', component: LastLogs },
   { path: '/sequence', component: SequencePage },
   { path: '/dome', component: DomePage },
-  { path: '/settings', component: SettingsPage }
+  { path: '/settings', component: SettingsPage },
 ];
 
 const router = createRouter({

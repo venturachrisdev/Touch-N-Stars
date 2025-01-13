@@ -10,17 +10,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from "vue";
-import { Chart, registerables } from "chart.js";
-import apiService from "@/services/apiService";
-import { useLogStore } from "@/store/logStore";
-import { apiStore } from "@/store/store";
+import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { Chart, registerables } from 'chart.js';
+import apiService from '@/services/apiService';
+import { useLogStore } from '@/store/logStore';
+import { apiStore } from '@/store/store';
 
 // Registriere alle Chart.js Komponenten
 Chart.register(...registerables);
 
 const chartCanvas = ref(null);
-const timestamp = ref(""); // Timestamp für die Anzeige
+const timestamp = ref(''); // Timestamp für die Anzeige
 const logStore = useLogStore();
 const store = apiStore();
 let chartInstance = null;
@@ -37,15 +37,16 @@ function parseQuadraticFormula(formula) {
   // Normalisiere die Formel, um "+ -" zu "-"
   const normalizedFormula = formula.replace(/\+\s*-/g, '- ').replace(/-\s*-/g, '+ ');
 
-  console.log("Normalisierte Quadratische Formel:", normalizedFormula); // Debugging
+  console.log('Normalisierte Quadratische Formel:', normalizedFormula); // Debugging
 
   // Neuer Regex für Exponentialnotation
-  const regex = /y\s*=\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\*\s*x\^2\s*([+-]?\s*\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\*\s*x\s*([+-]?\s*\d*\.?\d+(?:[eE][+-]?\d+)?)/i;
+  const regex =
+    /y\s*=\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\*\s*x\^2\s*([+-]?\s*\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\*\s*x\s*([+-]?\s*\d*\.?\d+(?:[eE][+-]?\d+)?)/i;
   const match = normalizedFormula.match(regex);
   if (match) {
     const a = parseFloat(match[1]);
-    const b = parseFloat(match[2].replace(/\s+/g, ""));
-    const c = parseFloat(match[3].replace(/\s+/g, ""));
+    const b = parseFloat(match[2].replace(/\s+/g, ''));
+    const c = parseFloat(match[3].replace(/\s+/g, ''));
     return { a, b, c };
   }
   return null;
@@ -53,10 +54,11 @@ function parseQuadraticFormula(formula) {
 
 // Funktion zum Parsen der Hyperbolischen Fitting-Formel
 function parseHyperbolicFormula(formula) {
-  console.log("Hyperbolic Fitting Formel:", formula); // Debugging
+  console.log('Hyperbolic Fitting Formel:', formula); // Debugging
 
   // Neuer Regex für Exponentialnotation und Hyperbolische Funktion
-  const regex = /y\s*=\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\*\s*cosh\s*\(\s*asinh\s*\(\s*\(\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*-\s*x\s*\)\s*\/\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\)\s*\)/i;
+  const regex =
+    /y\s*=\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\*\s*cosh\s*\(\s*asinh\s*\(\s*\(\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*-\s*x\s*\)\s*\/\s*([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)\s*\)\s*\)/i;
   const match = formula.match(regex);
   if (match) {
     const A = parseFloat(match[1]);
@@ -70,14 +72,16 @@ function parseHyperbolicFormula(formula) {
 // Daten von der API abrufen und Chart aktualisieren
 async function fetchLastAf() {
   try {
-    const response = await apiService.focusAction("last-af");
+    const response = await apiService.focusAction('last-af');
     const apiData = response.Response;
     const dateLastAf = new Date(apiData.Timestamp);
     const dateProfilLastUsed = new Date(store.profileInfo.LastUsed);
 
-    console.log(dateLastAf , ' : ' , dateProfilLastUsed)
+    console.log(dateLastAf, ' : ', dateProfilLastUsed);
 
-    if (dateLastAf < dateProfilLastUsed) {return  }
+    if (dateLastAf < dateProfilLastUsed) {
+      return;
+    }
     const measurePoints = apiData.MeasurePoints || [];
 
     // Neue Daten extrahieren
@@ -105,7 +109,7 @@ async function fetchLastAf() {
     if (fittings.Quadratic) {
       const quadraticParams = parseQuadraticFormula(fittings.Quadratic);
       if (!quadraticParams) {
-        console.warn("Quadratic Fitting-Formel konnte nicht geparst werden.");
+        console.warn('Quadratic Fitting-Formel konnte nicht geparst werden.');
       } else {
         // Falls parse erfolgreich, Trendline berechnen
         const quadraticFunction = (x) =>
@@ -113,7 +117,7 @@ async function fetchLastAf() {
         quadraticTrendline = positions.map((x) => quadraticFunction(x));
       }
     } else {
-      console.warn("Keine Quadratic-Formel vorhanden. (fittings.Quadratic leer)");
+      console.warn('Keine Quadratic-Formel vorhanden. (fittings.Quadratic leer)');
     }
 
     // Hyperbolisch parsen
@@ -121,16 +125,15 @@ async function fetchLastAf() {
     if (fittings.Hyperbolic) {
       const hyperbolicParams = parseHyperbolicFormula(fittings.Hyperbolic);
       if (!hyperbolicParams) {
-        console.warn("Hyperbolic Fitting-Formel konnte nicht geparst werden.");
+        console.warn('Hyperbolic Fitting-Formel konnte nicht geparst werden.');
       } else {
         // Falls parse erfolgreich, Trendline berechnen
         const hyperbolicFunction = (x) =>
-          hyperbolicParams.A *
-          Math.cosh(Math.asinh((hyperbolicParams.B - x) / hyperbolicParams.C));
+          hyperbolicParams.A * Math.cosh(Math.asinh((hyperbolicParams.B - x) / hyperbolicParams.C));
         hyperbolicTrendline = positions.map((x) => hyperbolicFunction(x));
       }
     } else {
-      console.warn("Keine Hyperbolic-Formel vorhanden. (fittings.Hyperbolic leer)");
+      console.warn('Keine Hyperbolic-Formel vorhanden. (fittings.Hyperbolic leer)');
     }
 
     // Chart aktualisieren, falls vorhanden
@@ -143,71 +146,73 @@ async function fetchLastAf() {
       // 2 = Hyperbolic Trendline
       chartInstance.data.datasets[2].data = hyperbolicTrendline;
       // 3 = Quadratic Min (nur setzen, falls es Werte gibt)
-      chartInstance.data.datasets[3].data = quadraticMinimum?.position !== undefined
-        ? [{ x: quadraticMinimum.position, y: quadraticMinimum.value }]
-        : [];
+      chartInstance.data.datasets[3].data =
+        quadraticMinimum?.position !== undefined
+          ? [{ x: quadraticMinimum.position, y: quadraticMinimum.value }]
+          : [];
       // 4 = Hyperbolic Min (nur setzen, falls es Werte gibt)
-      chartInstance.data.datasets[4].data = hyperbolicMinimum?.position !== undefined
-        ? [{ x: hyperbolicMinimum.position, y: hyperbolicMinimum.value }]
-        : [];
+      chartInstance.data.datasets[4].data =
+        hyperbolicMinimum?.position !== undefined
+          ? [{ x: hyperbolicMinimum.position, y: hyperbolicMinimum.value }]
+          : [];
 
       chartInstance.update();
     }
   } catch (error) {
-    console.error("Fehler beim Abrufen der Daten:", error);
+    console.error('Fehler beim Abrufen der Daten:', error);
   }
 }
 
 onMounted(() => {
-  const ctx = chartCanvas.value.getContext("2d");
-  console.log("Grafik laden");
+  const ctx = chartCanvas.value.getContext('2d');
+  console.log('Grafik laden');
 
-  // Initialer Chart 
+  // Initialer Chart
   chartInstance = new Chart(ctx, {
-    type: "line",
+    type: 'line',
     data: {
       labels: [], // Initial leer
       datasets: [
         {
-          label: "Measure Points",
+          label: 'Measure Points',
           data: [],
-          borderColor: "blue",
+          borderColor: 'blue',
           borderWidth: 2,
           fill: false,
           pointRadius: 5,
         },
         {
-          label: "Quadratic Trendline",
+          label: 'Quadratic Trendline',
           data: [],
-          borderColor: "red",
+          borderColor: 'red',
           borderWidth: 2,
           fill: false,
           tension: 0.4,
         },
         {
-          label: "Hyperbolic Trendline",
+          label: 'Hyperbolic Trendline',
           data: [],
-          borderColor: "green",
+          borderColor: 'green',
           borderWidth: 2,
           fill: false,
           tension: 0.4,
         },
         {
-          label: "Quadratic Min",
+          label: 'Quadratic Min',
           data: [], // Dynamisch aktualisiert
-          borderColor: "red",
-          backgroundColor: "red",
+          borderColor: 'red',
+          backgroundColor: 'red',
           pointRadius: 6,
-          pointStyle: "circle",
+          pointStyle: 'circle',
           showLine: false,
         },
         {
-          label: "Hyperbolic Min",
+          label: 'Hyperbolic Min',
           data: [], // Dynamisch aktualisiert
-          borderColor: "green",
-          backgroundColor: "green",
+          borderColor: 'green',
+          backgroundColor: 'green',
           pointRadius: 6,
-          pointStyle: "circle",
+          pointStyle: 'circle',
           showLine: false,
         },
       ],
@@ -218,30 +223,30 @@ onMounted(() => {
       plugins: {
         legend: {
           display: true,
-          position: "top",
+          position: 'top',
         },
         tooltip: {
-          mode: "index",
+          mode: 'index',
           intersect: false,
         },
       },
       interaction: {
-        mode: "nearest",
-        axis: "x",
+        mode: 'nearest',
+        axis: 'x',
         intersect: false,
       },
       scales: {
         x: {
-          type: "linear",
+          type: 'linear',
           title: {
             display: true,
-            text: "Position",
+            text: 'Position',
           },
         },
         y: {
           title: {
             display: true,
-            text: "Value",
+            text: 'Value',
           },
         },
       },
@@ -252,27 +257,27 @@ onMounted(() => {
   fetchLastAf();
 
   // Event Listener hinzufügen
-  window.addEventListener("resize", resizeChart);
+  window.addEventListener('resize', resizeChart);
 });
 
 watch(
-  () => logStore.focuserData,  // beobachten
+  () => logStore.focuserData, // beobachten
   (newVal) => {
     // newVal ist ein Array [{ pos, hfr }, { pos, hfr }, ...]
     if (newVal.length > 0) {
       // Positions (X-Werte)
-      const positions = newVal.map(item => item.pos);
+      const positions = newVal.map((item) => item.pos);
       // HFR (Y-Werte)
-      const hfrValues = newVal.map(item => item.hfr);
+      const hfrValues = newVal.map((item) => item.hfr);
 
       // Falls der Chart existiert, aktualisieren wir ihn
       if (chartInstance) {
-        chartInstance.data.labels = positions;            // X-Achse
-        chartInstance.data.datasets[0].data = hfrValues;  // Y-Achse (im ersten Dataset)
-        chartInstance.data.datasets[1].data = "";  // Y-Achse (im ersten Dataset)
-        chartInstance.data.datasets[2].data = "";
-        chartInstance.data.datasets[3].data = "";
-        chartInstance.data.datasets[4].data = "";
+        chartInstance.data.labels = positions; // X-Achse
+        chartInstance.data.datasets[0].data = hfrValues; // Y-Achse (im ersten Dataset)
+        chartInstance.data.datasets[1].data = ''; // Y-Achse (im ersten Dataset)
+        chartInstance.data.datasets[2].data = '';
+        chartInstance.data.datasets[3].data = '';
+        chartInstance.data.datasets[4].data = '';
         chartInstance.update();
       }
     }
@@ -280,10 +285,9 @@ watch(
   { deep: true }
 );
 
-
 onUnmounted(() => {
   // Event Listener entfernen
-  window.removeEventListener("resize", resizeChart);
+  window.removeEventListener('resize', resizeChart);
 
   if (chartInstance) {
     chartInstance.destroy();
