@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "testbuild": "vue-cli-service build --dest %LOCALAPPDATA%/NINA/Plugins/3.0.0/TouchNStars/app",
     "tauri": "tauri"
   },
   "dependencies": {
