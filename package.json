@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "testbuild": "vue-cli-service build --dest %LOCALAPPDATA%/NINA/Plugins/3.0.0/TouchNStars/app",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "format": "prettier --write \"src/**/*.{js,vue}\""
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
@@ -36,7 +37,10 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3"
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-vue": "^8.0.3",
+    "prettier": "^3.4.2"
   }
 }

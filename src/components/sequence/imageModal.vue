@@ -1,22 +1,27 @@
 <template>
   <!-- Nur anzeigen, wenn showModal true ist -->
-  <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center ">
+  <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center">
     <!-- Halbtransparenter Overlay-Hintergrund -->
     <div class="absolute inset-0 bg-black bg-opacity-70" @click="closeModal"></div>
-    
+
     <!-- Inhalt der Modal -->
-    <div class="relative max-w-4xl w-full max-h-full p-4 bg-gray-900 rounded-xl   z-60 flex items-center justify-center">
-      <button 
+    <div
+      class="relative max-w-4xl w-full max-h-full p-4 bg-gray-900 rounded-xl z-60 flex items-center justify-center"
+    >
+      <button
         class="absolute top-4 right-4 text-white hover:text-gray-300 text-2xl font-extrabold z-70"
         @click="closeModal"
         aria-label="Schließen"
       >
         ✕
       </button>
-      <div ref="imageContainer" class="overflow-hidden relative w-full h-full flex items-center justify-center shadow-md shadow-cyan-900 border border-cyan-700 rounded-md">
-        <img 
+      <div
+        ref="imageContainer"
+        class="overflow-hidden relative w-full h-full flex items-center justify-center shadow-md shadow-cyan-900 border border-cyan-700 rounded-md"
+      >
+        <img
           v-if="imageData"
-          :src="imageData" 
+          :src="imageData"
           ref="image"
           @load="onImageLoad"
           class="max-w-full max-h-full object-contain cursor-move"
@@ -64,7 +69,7 @@ let panzoomInstance = null;
 const initializePanzoom = () => {
   if (image.value) {
     panzoomInstance = Panzoom(image.value, {
-      maxZoom: 10, 
+      maxZoom: 10,
       minZoom: 1,
       bounds: true,
       boundsPadding: 0.1,
@@ -147,7 +152,7 @@ onBeforeUnmount(() => {
 }
 
 /* Schließen-Button spezifische Stile */
-button[aria-label="Schließen"] {
+button[aria-label='Schließen'] {
   z-index: 70; /* Höher als der Container */
 }
 </style>

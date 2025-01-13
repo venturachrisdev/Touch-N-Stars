@@ -3,38 +3,53 @@
     <div class="container max-w-md">
       <h5 class="text-xl font-bold text-white mb-4">{{ $t('components.slewAndCenter.title') }}</h5>
 
-      <div v-if="store.profileInfo.FramingAssistantSettings.LastSelectedImageSource !== 5" class="flex justify-center items-center pb-2">
-        <div class=" w-full p-4 bg-red-500/10 border border-red-500/30 rounded-lg ">
-          <p class="text-red-400 text-center font-medium">{{ $t('components.slewAndCenter.LastSelectedImageSource_wrong') }}</p>
+      <div
+        v-if="store.profileInfo.FramingAssistantSettings.LastSelectedImageSource !== 5"
+        class="flex justify-center items-center pb-2"
+      >
+        <div class="w-full p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+          <p class="text-red-400 text-center font-medium">
+            {{ $t('components.slewAndCenter.LastSelectedImageSource_wrong') }}
+          </p>
         </div>
       </div>
       <div v-else>
-      <div  class="flex flex-row justify-center items-center space-x-4">
-        <p>{{ $t('components.slewAndCenter.ra') }}</p>
-        <input type="text" v-model="localRAangleString" @blur="handleBlurRA" @keyup.enter="handleBlurRA"
-          class="text-black w-full p-2 border border-gray-300 rounded"
-          :placeholder="$t('components.slewAndCenter.ra_placeholder')" />
-        <p>{{ $t('components.slewAndCenter.dec') }}</p>
-        <input type="text" v-model="localDECangleString" @blur="handleBlurDEC" @keyup.enter="handleBlurDEC"
-          class="text-black w-full p-2 border border-gray-300 rounded"
-          :placeholder="$t('components.slewAndCenter.dec_placeholder')" />
-      </div>
-      <div class="mt-4 grid sm:grid-cols-2 space-y-2 sm:space-x-2 sm:space-y-0">
-        <button @click="slew" class="default-button-cyan">
-          {{ $t('components.slewAndCenter.slew') }}
-        </button>
-        <button @click="slewAndCenter" class="default-button-cyan">
-          {{ $t('components.slewAndCenter.slew_and_center') }}
-        </button>
+        <div class="flex flex-row justify-center items-center space-x-4">
+          <p>{{ $t('components.slewAndCenter.ra') }}</p>
+          <input
+            type="text"
+            v-model="localRAangleString"
+            @blur="handleBlurRA"
+            @keyup.enter="handleBlurRA"
+            class="text-black w-full p-2 border border-gray-300 rounded"
+            :placeholder="$t('components.slewAndCenter.ra_placeholder')"
+          />
+          <p>{{ $t('components.slewAndCenter.dec') }}</p>
+          <input
+            type="text"
+            v-model="localDECangleString"
+            @blur="handleBlurDEC"
+            @keyup.enter="handleBlurDEC"
+            class="text-black w-full p-2 border border-gray-300 rounded"
+            :placeholder="$t('components.slewAndCenter.dec_placeholder')"
+          />
+        </div>
+        <div class="mt-4 grid sm:grid-cols-2 space-y-2 sm:space-x-2 sm:space-y-0">
+          <button @click="slew" class="default-button-cyan">
+            {{ $t('components.slewAndCenter.slew') }}
+          </button>
+          <button @click="slewAndCenter" class="default-button-cyan">
+            {{ $t('components.slewAndCenter.slew_and_center') }}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
 <script setup>
 import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
-import apiService from "@/services/apiService";
+import apiService from '@/services/apiService';
 import { apiStore } from '@/store/store';
 import { useI18n } from 'vue-i18n';
 
@@ -43,10 +58,10 @@ const store = apiStore();
 
 const props = defineProps({
   RAangleString: String,
-  DECangleString: String
+  DECangleString: String,
 });
 
-const emit = defineEmits(["update:RAangleString", "update:DECangleString"]);
+const emit = defineEmits(['update:RAangleString', 'update:DECangleString']);
 
 const localRAangleString = ref(props.RAangleString);
 const localDECangleString = ref(props.DECangleString);
@@ -54,12 +69,18 @@ const RAangle = ref(null);
 const DECangle = ref(null);
 const Info = ref(null);
 
-watch(() => props.RAangleString, (newValue) => {
-  localRAangleString.value = newValue;
-});
-watch(() => props.DECangleString, (newValue) => {
-  localDECangleString.value = newValue;
-});
+watch(
+  () => props.RAangleString,
+  (newValue) => {
+    localRAangleString.value = newValue;
+  }
+);
+watch(
+  () => props.DECangleString,
+  (newValue) => {
+    localDECangleString.value = newValue;
+  }
+);
 
 function validateRA(raString) {
   const raPattern = /^([01]?[0-9]|2[0-3]):([0-5]?[0-9]):([0-5]?[0-9](\.\d+)?)$/;
@@ -88,21 +109,21 @@ function handleBlurDEC() {
 }
 
 function updateRA() {
-  emit("update:RAangleString", localRAangleString.value);
+  emit('update:RAangleString', localRAangleString.value);
 }
 
 function updateDec() {
-  emit("update:DECangleString", localDECangleString.value);
+  emit('update:DECangleString', localDECangleString.value);
 }
 
 async function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function unparkMount() {
   if (store.mountInfo.AtPark) {
     try {
-      await apiService.mountAction("unpark");
+      await apiService.mountAction('unpark');
       await wait(2000);
       console.log(t('components.mount.control.unpark'));
     } catch (error) {
@@ -131,12 +152,12 @@ async function slewAndCenter() {
   } catch (error) {
     console.error(t('components.slewAndCenter.errors.apiUnreachable'), error);
   }
-  emit("update:RAangleString", localRAangleString.value);
-  emit("update:DECangleString", localDECangleString.value);
+  emit('update:RAangleString', localRAangleString.value);
+  emit('update:DECangleString', localDECangleString.value);
 }
 
 function hmsToDegrees(hmsString) {
-  const parts = hmsString.split(":");
+  const parts = hmsString.split(':');
   const hours = parseInt(parts[0], 10);
   const minutes = parseInt(parts[1], 10);
   const seconds = parseFloat(parts[2]);
@@ -144,9 +165,9 @@ function hmsToDegrees(hmsString) {
 }
 
 function dmsToDegrees(dmsString) {
-  const sign = dmsString.startsWith("-") ? -1 : 1;
-  const stripped = dmsString.replace("-", "");
-  const parts = stripped.split(":");
+  const sign = dmsString.startsWith('-') ? -1 : 1;
+  const stripped = dmsString.replace('-', '');
+  const parts = stripped.split(':');
 
   if (parts.length !== 3) {
     throw new Error(t('components.slewAndCenter.errors.invalidFormat'));
@@ -161,7 +182,7 @@ function dmsToDegrees(dmsString) {
 
 async function fetchInfo() {
   try {
-    const response = await apiService.framingAction("info");
+    const response = await apiService.framingAction('info');
     if (response.Success) {
       Info.value = response.Response;
     } else {
@@ -188,8 +209,8 @@ function stopFetchingInfo() {
 
 onMounted(async () => {
   startFetchingInfo();
-  await apiService.applicatioTabSwitch("framing");
-  await apiService.setFramingImageSource("SKYATLAS")
+  await apiService.applicatioTabSwitch('framing');
+  await apiService.setFramingImageSource('SKYATLAS');
 });
 
 onBeforeUnmount(() => {

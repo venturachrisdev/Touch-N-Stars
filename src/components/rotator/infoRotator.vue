@@ -3,10 +3,16 @@
     <p>{{ $t('components.connectEquipment.rotator.notConnected') }}</p>
   </div>
   <div v-else class="gap-2">
-    <StatusString :isEnabled="store.rotatorInfo.MechanicalPosition !== null" Name="Aktuelle Position:" :Value="store.rotatorInfo.MechanicalPosition" />
-    <StatusBool :isEnabled="store.rotatorInfo.IsMoving" 
+    <StatusString
+      :isEnabled="store.rotatorInfo.MechanicalPosition !== null"
+      Name="Aktuelle Position:"
+      :Value="store.rotatorInfo.MechanicalPosition"
+    />
+    <StatusBool
+      :isEnabled="store.rotatorInfo.IsMoving"
       :enabledText="$t('components.connectEquipment.rotator.moving')"
-      :disabledText="$t('components.connectEquipment.rotator.stopped')" />
+      :disabledText="$t('components.connectEquipment.rotator.stopped')"
+    />
   </div>
 </template>
 
@@ -16,5 +22,4 @@ import StatusBool from '@/components/helpers/StatusBool.vue';
 import StatusString from '@/components/helpers/StatusString.vue';
 import { apiStore } from '@/store/store';
 const store = apiStore();
-
 </script>

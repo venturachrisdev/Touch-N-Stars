@@ -7,13 +7,13 @@ export const useLogStore = defineStore('LogStore', {
     intervalId: null,
     LogsInfo: [],
     canSetPos: true,
-    foundPos : 0,
-    foundPosTime : new Date(),
+    foundPos: 0,
+    foundPosTime: new Date(),
 
     // Hier speichern wir kombinierte Objekte, z.B. { pos: 2100, hfr: 1.25 }
     focuserData: [],
 
-    startAfTime: "",
+    startAfTime: '',
     // Wir merken uns den höchsten Timestamp, den wir schon verarbeitet haben,
     // damit wir keine doppelten Einträge bekommen.
     lastHfrLogTime: 0,
@@ -52,20 +52,20 @@ export const useLogStore = defineStore('LogStore', {
           // -------------------------------------------------------
           // 1) Ersten neuen Position-Log suchen ("Moving Focuser to position XYZ")
           // -------------------------------------------------------
-          
-          const firstPositionEntry = logs.logs
-            .find(log => log.message.includes('Moving Focuser to position'));
 
-           
+          const firstPositionEntry = logs.logs.find((log) =>
+            log.message.includes('Moving Focuser to position')
+          );
+
           let foundPosition = null;
-          let  foundPositionTime = 0;
+          let foundPositionTime = 0;
           //console.log(this.canSetPos)
           if (firstPositionEntry && this.canSetPos) {
             // Positionswert herausparsen, z.B. "2100"
             const match = firstPositionEntry.message.match(/Moving Focuser to position\s+(\d+)/);
             if (match) {
               foundPosition = parseInt(match[1], 10);
-              foundPositionTime = new Date(firstPositionEntry.timestamp).getTime() ;
+              foundPositionTime = new Date(firstPositionEntry.timestamp).getTime();
               //console.log(foundPositionTime);
               this.canSetPos = false;
               this.foundPos = foundPosition;
@@ -77,10 +77,10 @@ export const useLogStore = defineStore('LogStore', {
           // 2) Ersten neuen HFR-Log suchen ("Average HFR: X.Y")
           // -------------------------------------------------------
           const firstNewHfrEntry = logs.logs
-            .filter(log => {
+            .filter((log) => {
               if (!log.message.includes('Average HFR:')) return false;
               const logTime = new Date(log.timestamp).getTime();
-              
+
               return logTime >= this.startAfTime && logTime > this.lastHfrLogTime;
             })
             .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())[0];
@@ -92,7 +92,7 @@ export const useLogStore = defineStore('LogStore', {
             if (match) {
               foundHfr = parseFloat(match[1]);
               foundHfrTime = new Date(firstNewHfrEntry.timestamp).getTime();
-             // console.log('hfr: ',firstNewHfrEntry.timestamp)
+              // console.log('hfr: ',firstNewHfrEntry.timestamp)
               //console.log('Neuer HFR-Wert gefunden:', foundHfr, 'Zeit:', foundHfrTime);
               // Wenn Pos und HFR gefunden dann darf Pos wieder erfasst werden
               this.canSetPos = true;
@@ -105,16 +105,18 @@ export const useLogStore = defineStore('LogStore', {
           // -------------------------------------------------------
           //console.log('Hfr: ', foundHfrTime, 'zu' , this.foundPosTime)
           //Damit das Initialisieren von Hocus Focus nicht falsch erkannt wird müssen ein paar sek abgezogen werden
-          if (this.foundPos !== null && foundHfr !== null && (foundHfrTime - 4000) > this.foundPosTime  ) {
+          if (
+            this.foundPos !== null &&
+            foundHfr !== null &&
+            foundHfrTime - 4000 > this.foundPosTime
+          ) {
             this.focuserData.push({
               pos: this.foundPos,
               hfr: foundHfr,
             });
             // Nach dem Push sortieren aufsteigend nach pos
             this.focuserData.sort((a, b) => a.pos - b.pos);
-            console.log(
-              `Neuer Datensatz: pos = ${this.foundPos}, hfr = ${foundHfr}`
-            );
+            console.log(`Neuer Datensatz: pos = ${this.foundPos}, hfr = ${foundHfr}`);
           }
           // -------------------------------------------------------
           // 4) lastHfrLogTime hochsetzen
@@ -122,20 +124,15 @@ export const useLogStore = defineStore('LogStore', {
           // Maximalen Zeitstempel der gefundenen Logs errechnen
           // (damit wir denselben Eintrag beim nächsten Mal
           // nicht erneut verarbeiten)
-          const maxNewTime = Math.max(
-            this.lastHfrLogTime,
-            foundPositionTime,
-            foundHfrTime 
-          );
+          const maxNewTime = Math.max(this.lastHfrLogTime, foundPositionTime, foundHfrTime);
 
           if (maxNewTime > this.lastHfrLogTime) {
             this.lastHfrLogTime = maxNewTime;
           }
-
         } else {
           // Autofokus läuft nicht -> alles zurücksetzen
           this.focuserData = [];
-          this.startAfTime = "";
+          this.startAfTime = '';
           this.lastHfrLogTime = 0;
         }
 

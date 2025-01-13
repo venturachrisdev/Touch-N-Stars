@@ -5,11 +5,8 @@ export const useTppaStore = defineStore('tppaStore', {
     lastMessage: null,
     status: 'nicht verbunden',
     isConnected: false,
-    currentMessage : null,
+    currentMessage: null,
   }),
 
-  actions: {
-
-  },
-
+  actions: {},
 });

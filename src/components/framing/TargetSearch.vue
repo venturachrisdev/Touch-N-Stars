@@ -11,7 +11,10 @@
           :placeholder="$t('components.framing.search.placeholder')"
         />
         <!-- Überprüfe, ob suggestions ein Array ist und Elemente hat -->
-        <ul v-if="Array.isArray(suggestions) && suggestions.length > 0" class="bg-white border border-gray-300 rounded mt-1 z-10">
+        <ul
+          v-if="Array.isArray(suggestions) && suggestions.length > 0"
+          class="bg-white border border-gray-300 rounded mt-1 z-10"
+        >
           <li
             v-for="(item, index) in suggestions"
             :key="index"
@@ -26,9 +29,14 @@
       </div>
 
       <!-- Ausgewählter Eintrag -->
-      <div v-if="selectedItem" class="grid grid-cols-2 mt-4 p-4 border border-gray-700 rounded shadow">
+      <div
+        v-if="selectedItem"
+        class="grid grid-cols-2 mt-4 p-4 border border-gray-700 rounded shadow"
+      >
         <div class="text-xs">
-          <p v-if="selectedItem['Common names']"><strong>Name:</strong> {{ selectedItem['Common names'] }}</p>
+          <p v-if="selectedItem['Common names']">
+            <strong>Name:</strong> {{ selectedItem['Common names'] }}
+          </p>
           <p><strong>NGC:</strong> {{ selectedItem.Name }}</p>
           <p v-if="selectedItem.M"><strong>M:</strong> M{{ selectedItem.M }}</p>
         </div>
@@ -52,8 +60,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import apiService from "@/services/apiService";
+import { ref, onMounted } from 'vue';
+import apiService from '@/services/apiService';
 import slewAndCenter from '@/components/framing/slewAndCenter.vue';
 import TargetPic from '@/components/framing/TargetPic.vue';
 
@@ -61,8 +69,8 @@ const searchQuery = ref('');
 // suggestions wird als Array initialisiert
 const suggestions = ref([]);
 const selectedItem = ref(null);
-const RAangleString = ref("");
-const DECangleString = ref("");
+const RAangleString = ref('');
+const DECangleString = ref('');
 
 async function loadNgcCache() {
   try {
@@ -71,12 +79,12 @@ async function loadNgcCache() {
       selectedItem.value = data.data.item;
       RAangleString.value = data.data.item.RA;
       DECangleString.value = data.data.item.Dec;
-      console.log("Cache erfolgreich geladen:", data.data.item);
+      console.log('Cache erfolgreich geladen:', data.data.item);
     } else {
-      console.warn("Kein Cache verfügbar oder ungültiges Format.");
+      console.warn('Kein Cache verfügbar oder ungültiges Format.');
     }
   } catch (error) {
-    console.error("Fehler beim Laden des Caches:", error);
+    console.error('Fehler beim Laden des Caches:', error);
   }
 }
 
@@ -109,7 +117,7 @@ function selectSuggestion(item) {
   try {
     apiService.updateNgcCache({ item });
   } catch (error) {
-    console.error("Fehler beim Aktualisieren des Caches:", error);
+    console.error('Fehler beim Aktualisieren des Caches:', error);
   }
 }
 
