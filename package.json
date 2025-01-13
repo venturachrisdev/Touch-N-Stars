@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "localtest": "vue-cli-service build --dest C:/Users/Astro/AppData/Local/NINA/Plugins/3.0.0/TouchNStars/app",
     "lint": "vue-cli-service lint",
     "tauri": "tauri"
   },

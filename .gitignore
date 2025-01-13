@@ -27,3 +27,4 @@ pnpm-debug.log*
 *.sw?
 *.spec
 node_modules
+copyDistToPlugin.bat
