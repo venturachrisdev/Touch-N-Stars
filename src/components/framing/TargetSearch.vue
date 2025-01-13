@@ -11,7 +11,10 @@
           :placeholder="$t('components.framing.search.placeholder')"
         />
         <!-- Überprüfe, ob suggestions ein Array ist und Elemente hat -->
-        <ul v-if="Array.isArray(suggestions) && suggestions.length > 0" class="bg-white border border-gray-300 rounded mt-1 z-10">
+        <ul
+          v-if="Array.isArray(suggestions) && suggestions.length > 0"
+          class="bg-white border border-gray-300 rounded mt-1 z-10"
+        >
           <li
             v-for="(item, index) in suggestions"
             :key="index"
@@ -26,9 +29,14 @@
       </div>
 
       <!-- Ausgewählter Eintrag -->
-      <div v-if="selectedItem" class="grid grid-cols-2 mt-4 p-4 border border-gray-700 rounded shadow">
+      <div
+        v-if="selectedItem"
+        class="grid grid-cols-2 mt-4 p-4 border border-gray-700 rounded shadow"
+      >
         <div class="text-xs">
-          <p v-if="selectedItem['Common names']"><strong>Name:</strong> {{ selectedItem['Common names'] }}</p>
+          <p v-if="selectedItem['Common names']">
+            <strong>Name:</strong> {{ selectedItem['Common names'] }}
+          </p>
           <p><strong>NGC:</strong> {{ selectedItem.Name }}</p>
           <p v-if="selectedItem.M"><strong>M:</strong> M{{ selectedItem.M }}</p>
         </div>

@@ -3,7 +3,6 @@ import apiService from '@/services/apiService';
 import { useCameraStore } from '@/store/cameraStore';
 import { useSettingsStore } from '@/store/settingsStore';
 
-
 export const apiStore = defineStore('store', {
   state: () => ({
     intervalId: null,
@@ -22,7 +21,7 @@ export const apiStore = defineStore('store', {
     domeInfo: [],
     safetyInfo: {
       Connected: false,
-      IsSafe: false
+      IsSafe: false,
     },
     switchInfo: [],
     weatherInfo: [],
@@ -51,7 +50,7 @@ export const apiStore = defineStore('store', {
     toggleCollapsedState(containerName) {
       this.collapsedStates = {
         ...this.collapsedStates,
-        [containerName]: !this.collapsedStates[containerName]
+        [containerName]: !this.collapsedStates[containerName],
       };
     },
 
@@ -158,8 +157,8 @@ export const apiStore = defineStore('store', {
         this.sequenceIsLoaded = true;
         // Check if sequence is running
         // Check if any sequence is running by searching for RUNNING status
-        const isRunning = sequenceResponse.Response?.some(sequence => 
-          sequence.Items?.some(item => item.Status === 'RUNNING')
+        const isRunning = sequenceResponse.Response?.some((sequence) =>
+          sequence.Items?.some((item) => item.Status === 'RUNNING')
         );
         this.sequenceRunning = isRunning || false;
       } else {
@@ -244,7 +243,6 @@ export const apiStore = defineStore('store', {
       } else {
         console.error('Fehler in der Switch-API-Antwort:', switchResponse.Error);
       }
-      
     },
 
     processGuiderChartData(data) {
@@ -256,11 +254,14 @@ export const apiStore = defineStore('store', {
         console.warn('Invalid DECDistanceRaw, initializing as an empty array.');
         data.DECDistanceRaw = [];
       }
-    
-      this.RADistanceRaw = data.RADistanceRaw.map(value => (typeof value === 'number' ? value : 0));
-      this.DECDistanceRaw = data.DECDistanceRaw.map(value => (typeof value === 'number' ? value : 0));
+
+      this.RADistanceRaw = data.RADistanceRaw.map((value) =>
+        typeof value === 'number' ? value : 0
+      );
+      this.DECDistanceRaw = data.DECDistanceRaw.map((value) =>
+        typeof value === 'number' ? value : 0
+      );
     },
-    
 
     startFetchingInfo() {
       if (!this.intervalId) {
@@ -282,7 +283,7 @@ export const apiStore = defineStore('store', {
           return;
         }
 
-        const profileInfoResponse = await apiService.profileAction("show?active=true");
+        const profileInfoResponse = await apiService.profileAction('show?active=true');
 
         if (profileInfoResponse && profileInfoResponse.Response) {
           this.profileInfo = profileInfoResponse.Response;
@@ -297,39 +298,39 @@ export const apiStore = defineStore('store', {
     },
 
     getExistingEquipment(activeProfile) {
-      this.existingEquipmentList =[];
+      this.existingEquipmentList = [];
       const apiMapping = {
-        CameraSettings: "camera",
-        DomeSettings: "dome",
-        FilterWheelSettings: "filter",
-        FocuserSettings: "focuser",
-        SwitchSettings: "switch",
-        TelescopeSettings: "mount",
-        SafetyMonitorSettings: "safety",
-        FlatDeviceSettings: "flatdevice",
-        RotatorSettings: "rotator",
-        WeatherDataSettings: "weather",
-        GuiderSettings: "guider" 
+        CameraSettings: 'camera',
+        DomeSettings: 'dome',
+        FilterWheelSettings: 'filter',
+        FocuserSettings: 'focuser',
+        SwitchSettings: 'switch',
+        TelescopeSettings: 'mount',
+        SafetyMonitorSettings: 'safety',
+        FlatDeviceSettings: 'flatdevice',
+        RotatorSettings: 'rotator',
+        WeatherDataSettings: 'weather',
+        GuiderSettings: 'guider',
       };
       const keysToCheck = Object.keys(apiMapping);
 
-      keysToCheck.forEach(key => {
+      keysToCheck.forEach((key) => {
         if (activeProfile && activeProfile[key]) {
           const device = activeProfile[key];
-          
-          if (key === "GuiderSettings") {
-            if (device.GuiderName && device.GuiderName !== "No_Guider") {
-              this.existingEquipmentList.push({ 
-                type: key, 
-                id: device.GuiderName, 
-                apiName: apiMapping[key] 
+
+          if (key === 'GuiderSettings') {
+            if (device.GuiderName && device.GuiderName !== 'No_Guider') {
+              this.existingEquipmentList.push({
+                type: key,
+                id: device.GuiderName,
+                apiName: apiMapping[key],
               });
             }
-          } else if (device.Id && device.Id !== "No_Device") {
-            this.existingEquipmentList.push({ 
-              type: key, 
-              id: device.Id, 
-              apiName: apiMapping[key] 
+          } else if (device.Id && device.Id !== 'No_Device') {
+            this.existingEquipmentList.push({
+              type: key,
+              id: device.Id,
+              apiName: apiMapping[key],
             });
           }
         }
@@ -345,8 +346,15 @@ export const apiStore = defineStore('store', {
       cStore.warmingTime = cameraSettings.WarmingDuration ?? 10;
       cStore.gain = cameraSettings.Gain ?? 0;
       cStore.buttonCoolerOn = this.cameraInfo?.CoolerOn ?? false;
-      cStore.offset =cameraSettings.Offset ?? 0;
-      console.log('Kameraeinstellungen gesetzt:', cStore.coolingTemp, cStore.coolingTime, cStore.warmingTime, cStore.gain,  cStore.offset);
+      cStore.offset = cameraSettings.Offset ?? 0;
+      console.log(
+        'Kameraeinstellungen gesetzt:',
+        cStore.coolingTemp,
+        cStore.coolingTime,
+        cStore.warmingTime,
+        cStore.gain,
+        cStore.offset
+      );
     },
     setDefaultRotatorSettings() {
       this.rotatorMechanicalPosition = this.rotatorInfo?.MechanicalPosition ?? 0;

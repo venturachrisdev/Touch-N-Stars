@@ -1,13 +1,29 @@
 <template>
   <div v-if="!store.focuserInfo.Connected" class="text-red-500">
-    <p>{{$t('components.focuser.please_connect_focuser')}}</p>
+    <p>{{ $t('components.focuser.please_connect_focuser') }}</p>
   </div>
   <div v-else class="gap-2">
-      <StatusString :isEnabled="store.focuserInfo.Position !== ''" :Name="$t('components.focuser.current_position')" :Value="store.focuserInfo.Position" />
-      <StatusString :isEnabled="isTemperatureEnabled" :Name="$t('components.focuser.temperature')" :Value="formattedTemperature" />
-      <StatusBool :isEnabled="store.focuserInfo.IsMoving" :enabledText="$t('components.focuser.moving')" :disabledText="$t('components.focuser.stopped')" />
-      <StatusBool :isEnabled="store.focuserAfInfo.autofocus_running" :enabledText="$t('components.focuser.autofocus_active')" :disabledText="$t('components.focuser.autofocus')" />    
-    <infoCamera :show-only-exposing="store.focuserAfInfo.autofocus_running"  />
+    <StatusString
+      :isEnabled="store.focuserInfo.Position !== ''"
+      :Name="$t('components.focuser.current_position')"
+      :Value="store.focuserInfo.Position"
+    />
+    <StatusString
+      :isEnabled="isTemperatureEnabled"
+      :Name="$t('components.focuser.temperature')"
+      :Value="formattedTemperature"
+    />
+    <StatusBool
+      :isEnabled="store.focuserInfo.IsMoving"
+      :enabledText="$t('components.focuser.moving')"
+      :disabledText="$t('components.focuser.stopped')"
+    />
+    <StatusBool
+      :isEnabled="store.focuserAfInfo.autofocus_running"
+      :enabledText="$t('components.focuser.autofocus_active')"
+      :disabledText="$t('components.focuser.autofocus')"
+    />
+    <infoCamera :show-only-exposing="store.focuserAfInfo.autofocus_running" />
   </div>
 </template>
 
