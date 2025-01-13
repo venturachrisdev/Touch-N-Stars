@@ -46,6 +46,7 @@
     try {
       const ra = hmsToDegrees(props.RAangleString);
       const dec = dmsToDegrees(props.DECangleString);
+      console.log('RA: ',ra, 'DEC: ',dec );
   
       console.log("Bild wird abgerufen");
       if (targetPic.value) {

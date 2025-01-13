@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import apiService from "@/services/apiService";
 import slewAndCenter from '@/components/framing/slewAndCenter.vue';
 import TargetPic from '@/components/framing/TargetPic.vue';
@@ -64,22 +64,6 @@ const selectedItem = ref(null);
 const RAangleString = ref("");
 const DECangleString = ref("");
 
-async function loadNgcCache() {
-  try {
-    const data = await apiService.getNgcCache();
-    if (data && data.data && data.data.item) {
-      selectedItem.value = data.data.item;
-      RAangleString.value = data.data.item.RA;
-      DECangleString.value = data.data.item.Dec;
-      console.log("Cache erfolgreich geladen:", data.data.item);
-    } else {
-      console.warn("Kein Cache verfügbar oder ungültiges Format.");
-    }
-  } catch (error) {
-    console.error("Fehler beim Laden des Caches:", error);
-  }
-}
-
 async function fetchSuggestions() {
   if (searchQuery.value.trim() === '') {
     suggestions.value = [];
@@ -90,6 +74,7 @@ async function fetchSuggestions() {
     // Sicherstellen, dass data ein Array ist
     if (Array.isArray(data)) {
       suggestions.value = data;
+      console.log('Suche: ', data)
     } else {
       console.warn("Die API hat kein Array zurückgegeben, 'suggestions' wird geleert.");
       suggestions.value = [];
@@ -104,18 +89,64 @@ function selectSuggestion(item) {
   searchQuery.value = item.Name || '';
   suggestions.value = [];
   selectedItem.value = item;
-  RAangleString.value = item.RA;
-  DECangleString.value = item.Dec;
-  try {
-    apiService.updateNgcCache({ item });
-  } catch (error) {
-    console.error("Fehler beim Aktualisieren des Caches:", error);
-  }
+  RAangleString.value = degreesToHMS(item.RA);
+  DECangleString.value = degreesToDMS(item.Dec);
 }
 
-onMounted(async () => {
-  await loadNgcCache();
-});
+function degreesToHMS(deg) {
+  // Schritt 1: Grad in Stunden umrechnen
+  const totalHours = deg / 15;
+
+  // Ganze Stunden ermitteln
+  const h = Math.floor(totalHours);
+
+  // Schritt 2: Minuten
+  const remainingHours = totalHours - h;
+  const totalMinutes = remainingHours * 60;
+  const m = Math.floor(totalMinutes);
+
+  // Schritt 3: Sekunden
+  const remainingMinutes = totalMinutes - m;
+  const s = remainingMinutes * 60;
+
+  // Formatierung (z. B. auf eine Nachkommastelle)
+  const hStr = String(h).padStart(1, '0');      // Stunden dürfen ruhig einstellig bleiben
+  const mStr = String(m).padStart(2, '0');      // Minuten zweistellig
+  const sStr = s.toFixed(1).padStart(4, '0');   // Sekunden mit einer Nachkommastelle
+  
+  return `${hStr}:${mStr}:${sStr}`;
+}
+function degreesToDMS(deg) {
+  console.log('degreesToDMS ', deg);
+  // 1) Vorzeichen merken und Absolutwert nehmen
+  const sign = deg < 0 ? '-' : '+';
+  deg = Math.abs(deg);
+
+  // 2) Ganze Grad
+  const d = Math.floor(deg);
+
+  // 3) Minuten
+  const remainingDeg = deg - d;
+  const totalMinutes = remainingDeg * 60;
+  const m = Math.floor(totalMinutes);
+
+  // 4) Sekunden
+  const remainingMinutes = totalMinutes - m;
+  const s = remainingMinutes * 60;
+
+  // 5) Formatierung
+  //    a) Grad: max. zwei Ziffern, da DEC zwischen -90° und +90° liegt
+  //    b) Minuten/Sekunden: jeweils zweistellig
+  const dStr = String(d).padStart(2, '0');
+  const mStr = String(m).padStart(2, '0');
+  // Auf eine Nachkommastelle runden, z. B. 0.1"
+  const sStr = s.toFixed(1).padStart(4, '0');
+
+  // 6) Zusammenbauen: ±DD:MM:SS.s
+  return `${sign}${dStr}:${mStr}:${sStr}`;
+}
+
+
 </script>
 
 <style scoped></style>
