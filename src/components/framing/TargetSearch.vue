@@ -60,8 +60,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import apiService from "@/services/apiService";
+import { ref } from 'vue';
+import apiService from '@/services/apiService';
 import slewAndCenter from '@/components/framing/slewAndCenter.vue';
 import TargetPic from '@/components/framing/TargetPic.vue';
 
@@ -69,8 +69,8 @@ const searchQuery = ref('');
 // suggestions wird als Array initialisiert
 const suggestions = ref([]);
 const selectedItem = ref(null);
-const RAangleString = ref("");
-const DECangleString = ref("");
+const RAangleString = ref('');
+const DECangleString = ref('');
 
 async function fetchSuggestions() {
   if (searchQuery.value.trim() === '') {
@@ -82,7 +82,7 @@ async function fetchSuggestions() {
     // Sicherstellen, dass data ein Array ist
     if (Array.isArray(data)) {
       suggestions.value = data;
-      console.log('Suche: ', data)
+      console.log('Suche: ', data);
     } else {
       console.warn("Die API hat kein Array zurückgegeben, 'suggestions' wird geleert.");
       suggestions.value = [];
@@ -118,10 +118,10 @@ function degreesToHMS(deg) {
   const s = remainingMinutes * 60;
 
   // Formatierung (z. B. auf eine Nachkommastelle)
-  const hStr = String(h).padStart(1, '0');      // Stunden dürfen ruhig einstellig bleiben
-  const mStr = String(m).padStart(2, '0');      // Minuten zweistellig
-  const sStr = s.toFixed(1).padStart(4, '0');   // Sekunden mit einer Nachkommastelle
-  
+  const hStr = String(h).padStart(1, '0'); // Stunden dürfen ruhig einstellig bleiben
+  const mStr = String(m).padStart(2, '0'); // Minuten zweistellig
+  const sStr = s.toFixed(1).padStart(4, '0'); // Sekunden mit einer Nachkommastelle
+
   return `${hStr}:${mStr}:${sStr}`;
 }
 function degreesToDMS(deg) {
@@ -153,8 +153,6 @@ function degreesToDMS(deg) {
   // 6) Zusammenbauen: ±DD:MM:SS.s
   return `${sign}${dStr}:${mStr}:${sStr}`;
 }
-
-
 </script>
 
 <style scoped></style>

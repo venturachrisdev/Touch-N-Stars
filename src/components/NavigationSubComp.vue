@@ -88,9 +88,7 @@ function closeSubNav() {
   align-items: center;
   justify-content: center;
   margin: 4px;
-  transition:
-    border-radius 0.2s ease,
-    background-color 0.2s ease;
+  transition: border-radius 0.2s ease, background-color 0.2s ease;
 }
 
 .active-nav-button {

@@ -71,7 +71,9 @@
           <h2 class="font-bold text-xl text-gray-100">{{ container.Name }}</h2>
         </div>
         <span
-          :class="`${statusColor(container.Status)} font-medium px-3 py-1 rounded-full bg-opacity-20`"
+          :class="`${statusColor(
+            container.Status
+          )} font-medium px-3 py-1 rounded-full bg-opacity-20`"
         >
           {{ container.Status }}
         </span>
