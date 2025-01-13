@@ -31,7 +31,7 @@ export const useLogStore = defineStore('LogStore', {
 
         // Logs vom Backend holen (z.B. die letzten 100)
         const logs = await apiService.getLastLogs('100');
-        this.LogsInfo = logs;
+        this.LogsInfo.logs = logs;
         //console.log('Alle Logs:', this.LogsInfo);
 
         // Prüfen, ob der Autofokus läuft
