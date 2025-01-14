@@ -5,7 +5,9 @@ import { apiStore } from '@/store/store';
 export const useLogStore = defineStore('LogStore', {
   state: () => ({
     intervalId: null,
-    LogsInfo: [],
+    LogsInfo: {
+      logs: [], // Initialisiere logs als leeres Array
+    },
     canSetPos: true,
     foundPos: 0,
     foundPosTime: new Date(),
