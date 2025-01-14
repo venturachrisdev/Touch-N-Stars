@@ -25,7 +25,6 @@ export const apiStore = defineStore('store', {
     },
     switchInfo: [],
     weatherInfo: [],
-    //LogsInfo: [],
     RADistanceRaw: [],
     DECDistanceRaw: [],
     isBackendReachable: false,
@@ -61,9 +60,11 @@ export const apiStore = defineStore('store', {
     async fetchAllInfos() {
       try {
         this.isBackendReachable = await apiService.isBackendReachable();
+        console.log('Backend erreichbar');
 
         if (!this.isBackendReachable) {
           console.warn('Backend ist nicht erreichbar');
+          this.clearAllStates();
           return;
         }
 
@@ -83,7 +84,6 @@ export const apiStore = defineStore('store', {
           safetyResponse,
           weatherResponse,
           switchResponse,
-          //logsResponse,
         ] = await Promise.all([
           apiService.imageHistoryAll(),
           apiService.sequenceAction('json'),
@@ -100,7 +100,6 @@ export const apiStore = defineStore('store', {
           apiService.safetyAction('info'),
           apiService.weatherAction('info'),
           apiService.switchAction('info'),
-          //apiService.getLastLogs('100'),
         ]);
 
         this.handleApiResponses({
@@ -127,6 +126,44 @@ export const apiStore = defineStore('store', {
       await this.fetchProfilInfos();
     },
 
+    clearAllStates() {
+      this.intervalId = null;
+      this.intervalIdGraph = null;
+      this.profileInfo = [];
+      this.sequenceInfo = [];
+      this.collapsedStates = {};
+      this.cameraInfo = { IsExposing: false };
+      this.mountInfo = [];
+      this.filterInfo = [];
+      this.focuserInfo = [];
+      this.rotatorInfo = [];
+      this.focuserAfInfo = [];
+      this.guiderInfo = [];
+      this.flatdeviceInfo = [];
+      this.domeInfo = [];
+      this.safetyInfo = {
+        Connected: false,
+        IsSafe: false,
+      };
+      this.switchInfo = [];
+      this.weatherInfo = [];
+      this.RADistanceRaw = [];
+      this.DECDistanceRaw = [];
+      this.isBackendReachable = false;
+      this.filterName = 'unbekannt';
+      this.filterNr = null;
+      this.showAfGraph = true;
+      this.imageData = null;
+      this.isLoadingImage = false;
+      this.captureRunning = false;
+      this.rotatorMechanicalPosition = 0;
+      this.sequenceIsLoaded = false;
+      this.sequenceRunning = false;
+      this.existingEquipmentList = [];
+      this.coordinates = null;
+      this.currentLanguage = 'en';
+    },
+
     handleApiResponses({
       imageHistoryResponse,
       sequenceResponse,
@@ -143,7 +180,6 @@ export const apiStore = defineStore('store', {
       safetyResponse,
       weatherResponse,
       switchResponse,
-      //logsResponse,
     }) {
       if (imageHistoryResponse.Success) {
         this.imageHistoryInfo = imageHistoryResponse.Response;

@@ -1,6 +1,14 @@
 <template>
   <div>
-    <div v-if="isLoading">{{ $t('components.loading') }}</div>
+    <div
+      v-if="!store.isBackendReachable"
+      class="p-4 bg-red-500/10 border border-red-500/30 rounded-lg"
+    >
+      <div class="flex-1 truncate text-red-600 text-3xl">
+        {{ $t('app.unreachable') }}
+      </div>
+    </div>
+    <div v-else-if="isLoading">{{ $t('components.loading') }}</div>
     <div v-else>
       <div
         v-for="(entry, index) in firstLog"
@@ -118,6 +126,9 @@ const firstLog = computed(() => {
 // Watch when logs are loaded
 onMounted(() => {
   const unwatch = logStore.$subscribe((mutation, state) => {
+    if (!store.isBackendReachable) {
+      isLoading.value = false;
+    }
     if (state.LogsInfo.logs.length > 0) {
       isLoading.value = false;
       unwatch(); // Stop watching once the data is loaded
