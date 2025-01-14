@@ -91,8 +91,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { apiStore } from '@/store/store';
 import { useHead } from '@vueuse/head';
 import NavigationComp from '@/components/NavigationComp.vue';
@@ -101,6 +100,7 @@ import SettingsPage from '@/views/SettingsPage.vue';
 import LastLogs from '@/components/LastLogs.vue';
 import { useSettingsStore } from '@/store/settingsStore';
 import { useLogStore } from '@/store/logStore';
+import { useI18n } from 'vue-i18n';
 
 const store = apiStore();
 const logStore = useLogStore();
@@ -122,10 +122,15 @@ function handleVisibilityChange() {
   }
 }
 
+const { locale } = useI18n();
+
 onMounted(async () => {
   document.addEventListener('visibilitychange', handleVisibilityChange);
   store.startFetchingInfo();
   logStore.startFetchingLog();
+
+  // Initialize language from settings store
+  locale.value = settingsStore.getLanguage();
 });
 
 onBeforeUnmount(() => {

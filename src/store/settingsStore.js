@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useSettingsStore = defineStore('settings', {
   state: () => ({
+    language: 'en',
     coordinates: {
       latitude: null,
       longitude: null,
@@ -71,6 +72,22 @@ export const useSettingsStore = defineStore('settings', {
     setSelectedInstanceId(id) {
       this.selectedInstanceId = id;
     },
+
+    setLanguage(lang) {
+      this.language = lang;
+    },
+
+    getLanguage() {
+      return this.language;
+    },
   },
-  persist: true,
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: 'settings-store',
+        storage: localStorage,
+      },
+    ],
+  },
 });

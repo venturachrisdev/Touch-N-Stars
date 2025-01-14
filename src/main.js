@@ -21,4 +21,11 @@ const head = createHead();
 
 const app = createApp(App);
 app.directive('tooltip', tooltipDirective);
+
+// Initialize i18n with store before mounting
+const settingsStore = pinia.state.value.settings;
+if (settingsStore && settingsStore.language) {
+  i18n.global.locale.value = settingsStore.language;
+}
+
 app.use(pinia).use(head).use(i18n).use(router).mount('#app');
