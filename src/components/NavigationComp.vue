@@ -153,14 +153,14 @@
           <ListBulletIcon class="icon" />
         </router-link>
       </div>
-      <router-link
-        to="/settings"
+      <button
+        @click="store.showSettings = true"
         class="nav-button"
         active-class="active-nav-button"
         :title="$t('components.navigation.settings')"
       >
         <Cog6ToothIcon class="icon" />
-      </router-link>
+      </button>
     </div>
   </div>
 </template>

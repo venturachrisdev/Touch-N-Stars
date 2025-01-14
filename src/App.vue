@@ -9,7 +9,7 @@
       </nav>
       <!-- Main content -->
       <div
-        v-if="!store.isBackendReachable"
+        v-if="!store.isBackendReachable && !store.showSettings"
         class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
       >
         <div class="animate-spin rounded-full h-20 w-20 border-t-8 border-red-600"></div>
@@ -28,7 +28,7 @@
 
     <!-- Settings Modal -->
     <div
-      v-if="showSettings"
+      v-if="store.showSettings"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
     >
       <div
@@ -36,7 +36,7 @@
       >
         <SettingsPage />
         <button
-          @click="showSettings = false"
+          @click="store.showSettings = false"
           class="fixed sm:absolute top-2 right-2 sm:top-4 sm:right-4 p-2 text-gray-400 hover:text-white bg-gray-900 rounded-full"
         >
           <svg
@@ -104,7 +104,6 @@ import { useLogStore } from '@/store/logStore';
 
 const store = apiStore();
 const logStore = useLogStore();
-const showSettings = ref(false);
 const showLogsModal = ref(false);
 /* eslint-disable */
 const settingsStore = useSettingsStore();
