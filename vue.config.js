@@ -6,6 +6,7 @@ module.exports = defineConfig({
   devServer: {
    
   },
+  lintOnSave: process.env.NODE_ENV !== 'production' ? 'warning' : false,
   configureWebpack: {
     plugins: [
       new webpack.DefinePlugin({
@@ -14,5 +15,3 @@ module.exports = defineConfig({
     ]
   }
 });
-
-
