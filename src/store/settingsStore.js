@@ -72,11 +72,11 @@ export const useSettingsStore = defineStore('settings', {
     setSelectedInstanceId(id) {
       this.selectedInstanceId = id;
     },
-    
+
     setLanguage(lang) {
       this.language = lang;
     },
-    
+
     getLanguage() {
       return this.language;
     },

@@ -23,16 +23,16 @@ export { i18n as default, initializeI18n };
 let settingsStore;
 function initializeI18n(store) {
   settingsStore = store;
-  
+
   // Initialize language from store or default to 'en'
   const storedLanguage = settingsStore.language;
   i18n.global.locale.value = storedLanguage || 'en';
-  
+
   // Update store with current language
   if (!storedLanguage) {
     settingsStore.setLanguage(i18n.global.locale.value);
   }
-  
+
   // Add language change handler
   i18n.global.onLanguageChanged = (locale) => {
     settingsStore.setLanguage(locale);

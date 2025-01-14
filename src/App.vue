@@ -128,7 +128,7 @@ onMounted(async () => {
   document.addEventListener('visibilitychange', handleVisibilityChange);
   store.startFetchingInfo();
   logStore.startFetchingLog();
-  
+
   // Initialize language from settings store
   locale.value = settingsStore.getLanguage();
 });

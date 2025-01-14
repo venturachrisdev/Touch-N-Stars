@@ -101,7 +101,8 @@
                     @click="selectInstance(instance)"
                     :class="[
                       'p-1 transition-colors',
-                      selectedInstance === instance.id || settingsStore.isLastCreatedInstance(instance.id)
+                      selectedInstance === instance.id ||
+                      settingsStore.isLastCreatedInstance(instance.id)
                         ? 'text-green-500'
                         : 'text-gray-300 hover:text-green-500',
                     ]"
@@ -266,7 +267,7 @@ const languages = [
 onMounted(() => {
   // Set initial language from store
   locale.value = settingsStore.getLanguage();
-  
+
   const storedCoords = settingsStore.coordinates;
   if (storedCoords) {
     latitude.value = storedCoords.latitude;
