@@ -61,10 +61,9 @@ export const apiStore = defineStore('store', {
     async fetchAllInfos() {
       try {
         this.isBackendReachable = await apiService.isBackendReachable();
-        console.log('Backend erreichbar');
-
+        //console.log('Backend erreichbar');
         if (!this.isBackendReachable) {
-          console.warn('Backend ist nicht erreichbar');
+          //console.warn('Backend ist nicht erreichbar');
           this.clearAllStates();
           return;
         }
