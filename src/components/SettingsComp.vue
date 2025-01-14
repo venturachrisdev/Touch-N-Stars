@@ -235,7 +235,7 @@ import apiService from '@/services/apiService';
 const { locale } = useI18n();
 const settingsStore = useSettingsStore();
 const store = apiStore();
-const currentLanguage = ref(locale.value);
+const currentLanguage = ref(settingsStore.getLanguage());
 const latitude = ref('');
 const longitude = ref('');
 const altitude = ref('');
@@ -264,6 +264,9 @@ const languages = [
 
 // Load stored settings on mount
 onMounted(() => {
+  // Set initial language from store
+  locale.value = settingsStore.getLanguage();
+  
   const storedCoords = settingsStore.coordinates;
   if (storedCoords) {
     latitude.value = storedCoords.latitude;
@@ -300,6 +303,7 @@ watch(
 
 function changeLanguage(lang) {
   locale.value = lang;
+  settingsStore.setLanguage(lang);
 }
 
 // Instance management methods
