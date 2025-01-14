@@ -80,7 +80,8 @@
         </div>
 
         <!-- Timestamp -->
-        <div class="min-w-[180px] text-gray-400">
+        <!-- Das Datum ist nicht wichtig und kann deshalb verschwinden wenn der Bildschirm zu schmal ist -->
+        <div class="max-w-[20%] truncate text-gray-400">
           {{ formatTimestamp(entry.timestamp) }}
         </div>
 
