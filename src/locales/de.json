@@ -30,6 +30,9 @@
         "port": "Port",
         "edit": "Instanz bearbeiten",
         "delete": "Instanz löschen"
+      },
+      "errors": {
+        "emptyFields": "Bitte füllen Sie alle Felder aus"
       }
     },
     "framing": {

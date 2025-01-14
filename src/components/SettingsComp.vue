@@ -101,7 +101,7 @@
                     @click="selectInstance(instance)"
                     :class="[
                       'p-1 transition-colors',
-                      selectedInstance === instance.id
+                      selectedInstance === instance.id || settingsStore.isLastCreatedInstance(instance.id)
                         ? 'text-green-500'
                         : 'text-gray-300 hover:text-green-500',
                     ]"
@@ -186,6 +186,9 @@
                 placeholder="5000"
               />
             </div>
+            <div v-if="emptyFieldsError" class="mt-2 text-sm text-red-400">
+              {{ $t('components.settings.errors.emptyFields') }}
+            </div>
             <button
               @click="saveInstance"
               class="w-full mt-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-md transition-colors"
@@ -247,6 +250,7 @@ const selectedInstance = ref(settingsStore.selectedInstanceId);
 watch(selectedInstance, (newId) => {
   settingsStore.setSelectedInstanceId(newId);
 });
+const emptyFieldsError = ref(false);
 const tempInstance = ref({
   name: '',
   ip: '',
@@ -299,25 +303,33 @@ function changeLanguage(lang) {
 }
 
 // Instance management methods
+const instanceError = ref(null);
+
 function saveInstance() {
+  // Clear errors before validation
+  emptyFieldsError.value = false;
+  instanceError.value = null;
+
+  // Validate fields
   if (!tempInstance.value.name || !tempInstance.value.ip || !tempInstance.value.port) {
+    emptyFieldsError.value = true;
     return;
   }
 
+  // Save instance
   if (editingInstance.value) {
-    // Update existing instance
     settingsStore.updateInstance(editingInstance.value, tempInstance.value);
   } else {
-    // Add new instance
     settingsStore.addInstance({
       id: Date.now().toString(),
       ...tempInstance.value,
     });
   }
 
-  // Reset form
-  tempInstance.value = { name: '', ip: '', port: '' };
+  // Clear form after successful save
   editingInstance.value = null;
+  emptyFieldsError.value = false;
+  tempInstance.value = { name: '', ip: '', port: '' };
 }
 
 function editInstance(id) {
