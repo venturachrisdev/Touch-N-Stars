@@ -7,7 +7,8 @@
 
       <div class="space-y-4">
         <!-- GPS Coordinates -->
-        <div class="bg-gray-700 p-3 rounded-lg">
+        <!-- nur anzeigen wenn das Backend erreibar ist -->
+        <div v-if="store.isBackendReachable" class="bg-gray-700 p-3 rounded-lg">
           <h3 class="text-lg font-medium mb-2 text-gray-300">
             {{ $t('components.settings.coordinates') }}
           </h3>
@@ -226,6 +227,7 @@ import { ref, watchEffect, watch, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '@/store/settingsStore';
 import { apiStore } from '@/store/store';
+import apiService from '@/services/apiService';
 
 const { locale } = useI18n();
 const settingsStore = useSettingsStore();
@@ -367,31 +369,38 @@ async function getCurrentLocation() {
       longitude.value = pos.coords.longitude.toFixed(6);
       altitude.value = pos.coords.altitude?.toFixed(3) || 0;
 
-      settingsStore.setCoordinates({
-        latitude: latitude.value,
-        longitude: longitude.value,
-        altitude: altitude.value,
-      });
-
-      // Update backend coordinates if connected
-      if (store.isBackendReachable) {
-        try {
-          await store.updateCoordinates({
-            latitude: latitude.value,
-            longitude: longitude.value,
-            altitude: altitude.value,
-          });
-        } catch (error) {
-          console.error('Failed to update backend coordinates:', error);
-        }
-      }
-
       gpsError.value = null;
     } else {
       gpsError.value = 'Location permission not granted';
     }
   } catch (error) {
     gpsError.value = error.message || 'Failed to get GPS location';
+  }
+}
+
+async function saveCoordinates() {
+  // Update backend coordinates if connected
+  if (store.isBackendReachable) {
+    try {
+      await apiService.profileChangeValue('AstrometrySettings-Latitude', latitude.value);
+      await apiService.profileChangeValue('AstrometrySettings-Longitude', longitude.value);
+      await apiService.profileChangeValue('AstrometrySettings-Elevation', altitude.value);
+      //Sync zum Mount aktivieren 2=von NINA zu Mount
+      await apiService.profileChangeValue('TelescopeSettings-TelescopeLocationSyncDirection', 2);
+      //Damit die Koordinaten übernommen werden muss die Montierung einmal neu verbunden werdne
+      if (store.mountInfo.Connected) {
+        await apiService.mountAction('disconnect');
+        await apiService.mountAction('connect');
+      }
+      settingsStore.setCoordinates({
+        latitude: latitude.value,
+        longitude: longitude.value,
+        altitude: altitude.value,
+      });
+      console.log('Koordinaten gespeichert');
+    } catch (error) {
+      console.error('Failed to update backend coordinates:', error);
+    }
   }
 }
 </script>
