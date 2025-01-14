@@ -40,6 +40,7 @@ export const apiStore = defineStore('store', {
     existingEquipmentList: [],
     coordinates: null,
     currentLanguage: 'en',
+    showSettings: false,
   }),
 
   actions: {
