@@ -1,14 +1,16 @@
 <template>
   <div class="top-0 h-16 bg-gray-800 shadow-md">
     <div class="flex mx-auto max-w-md h-16 items-center justify-center">
-      <router-link
-        to="/equipment"
-        class="nav-button"
-        active-class="active-nav-button"
-        :title="$t('components.navigation.equipment')"
-      >
-        <LinkIcon class="icon" />
-      </router-link>
+      <div v-if="store.isBackendReachable">
+        <router-link
+          to="/equipment"
+          class="nav-button"
+          active-class="active-nav-button"
+          :title="$t('components.navigation.equipment')"
+        >
+          <LinkIcon class="icon" />
+        </router-link>
+      </div>
       <div v-if="store.cameraInfo.Connected">
         <router-link
           to="/camera"
