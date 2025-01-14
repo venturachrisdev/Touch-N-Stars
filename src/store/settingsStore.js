@@ -14,6 +14,7 @@ export const useSettingsStore = defineStore('settings', {
       instances: [], // Array of {id, name, ip, port}
     },
     selectedInstanceId: null,
+    lastCreatedInstanceId: null,
   }),
   actions: {
     setCoordinates(coords) {
@@ -32,12 +33,18 @@ export const useSettingsStore = defineStore('settings', {
 
     // New methods for managing multiple instances
     addInstance(instance) {
-      this.connection.instances.push({
+      const newInstance = {
         id: Date.now().toString(),
         name: instance.name || 'Instance',
         ip: instance.ip,
         port: instance.port,
-      });
+      };
+      this.connection.instances.push(newInstance);
+      this.lastCreatedInstanceId = newInstance.id;
+    },
+
+    isLastCreatedInstance(id) {
+      return this.lastCreatedInstanceId === id;
     },
 
     updateInstance(id, updatedInstance) {
