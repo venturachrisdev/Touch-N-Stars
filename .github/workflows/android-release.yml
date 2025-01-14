@@ -51,7 +51,7 @@ jobs:
         cat << EOF > src-tauri/gen/android/app/key.properties
         password=${{ secrets.KEYSTORE_PASSWORD }}
         keyAlias=${{ secrets.KEY_ALIAS }}
-        storeFile=Touch-N-Stars.jks
+        storeFile=/home/runner/work/Touch-N-Stars/Touch-N-Stars/src-tauri/gen/android/app/Touch-N-Stars.jks
         EOF
 
     - name: Build Android APK
