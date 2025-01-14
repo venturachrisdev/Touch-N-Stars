@@ -1,0 +1,51 @@
+name: Android Release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Setup Android Signing
+      run: |
+        mkdir -p src-tauri/gen/android
+        echo ${{ secrets.KEYSTORE_FILE }} | base64 --decode > src-tauri/gen/android/Touch-N-Stars.jks
+        cat << EOF > src-tauri/gen/android/key.properties
+        password=${{ secrets.KEYSTORE_PASSWORD }}
+        keyAlias=${{ secrets.KEY_ALIAS }}
+        storeFile=src-tauri/gen/android/Touch-N-Stars.jks
+        EOF
+
+    - name: Build Android APK
+      run: npm run tauri android build -- --apk
+
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-release
+        path: src-tauri/gen/android/app/build/outputs/apk/release/*.apk
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v1.0.${{ github.run_number }}
+        name: Release v1.0.${{ github.run_number }}
+        files: src-tauri/gen/android/app/build/outputs/apk/release/*.apk
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
