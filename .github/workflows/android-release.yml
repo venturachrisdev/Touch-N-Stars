@@ -46,12 +46,12 @@ jobs:
 
     - name: Setup Android Signing
       run: |
-        mkdir -p src-tauri/gen/android
-        echo ${{ secrets.KEYSTORE_FILE }} | base64 --decode > src-tauri/gen/android/Touch-N-Stars.jks
-        cat << EOF > src-tauri/gen/android/key.properties
+        mkdir -p src-tauri/gen/android/app
+        echo ${{ secrets.KEYSTORE_FILE }} | base64 --decode > src-tauri/gen/android/app/Touch-N-Stars.jks
+        cat << EOF > src-tauri/gen/android/app/key.properties
         password=${{ secrets.KEYSTORE_PASSWORD }}
         keyAlias=${{ secrets.KEY_ALIAS }}
-        storeFile=src-tauri/gen/android/Touch-N-Stars.jks
+        storeFile=Touch-N-Stars.jks
         EOF
 
     - name: Build Android APK
