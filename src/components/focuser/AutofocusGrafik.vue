@@ -21,7 +21,6 @@ Chart.register(...registerables);
 
 const chartCanvas = ref(null);
 const timestamp = ref(''); // Timestamp für die Anzeige
-const logStore = useLogStore();
 const store = apiStore();
 let chartInstance = null;
 
@@ -259,31 +258,6 @@ onMounted(() => {
   // Event Listener hinzufügen
   window.addEventListener('resize', resizeChart);
 });
-
-watch(
-  () => logStore.focuserData, // beobachten
-  (newVal) => {
-    // newVal ist ein Array [{ pos, hfr }, { pos, hfr }, ...]
-    if (newVal.length > 0) {
-      // Positions (X-Werte)
-      const positions = newVal.map((item) => item.pos);
-      // HFR (Y-Werte)
-      const hfrValues = newVal.map((item) => item.hfr);
-
-      // Falls der Chart existiert, aktualisieren wir ihn
-      if (chartInstance) {
-        chartInstance.data.labels = positions; // X-Achse
-        chartInstance.data.datasets[0].data = hfrValues; // Y-Achse (im ersten Dataset)
-        chartInstance.data.datasets[1].data = ''; // Y-Achse (im ersten Dataset)
-        chartInstance.data.datasets[2].data = '';
-        chartInstance.data.datasets[3].data = '';
-        chartInstance.data.datasets[4].data = '';
-        chartInstance.update();
-      }
-    }
-  },
-  { deep: true }
-);
 
 onUnmounted(() => {
   // Event Listener entfernen
