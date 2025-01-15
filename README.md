@@ -24,7 +24,7 @@ Die Anwendung soll die Steuerung und Anpassung bereits konfigurierter Profile er
 - 
 ### 📱 **Android App**
 - Für Android-Nutzer haben wir eine App erstellt.
-- Die A[PK-Datei](https://github.com/Touch-N-Stars/Touch-N-Stars/releases) muss einfach auf dem Smartphone oder Tablet installiert werden.
+- Die [APK-Datei](https://github.com/Touch-N-Stars/Touch-N-Stars/releases) muss einfach auf dem Smartphone oder Tablet installiert werden.
 
 ### 🧪 **Was bietet die akutelle Version?**  
 - **Mobile Bedienbarkeit**: Greife einfach über dein Smartphone oder Tablet auf NINA zu.  
