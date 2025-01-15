@@ -15,9 +15,13 @@ The application aims to make controlling and adjusting already configured profil
 - I assume no liability
   
 ### 🔧 **Installation**
-- The zip file must be extracted on the computer where NINA is installed and TouchNStars.exe must be started.
+- The [Plugin](https://github.com/Touch-N-Stars/N.I.N.A-Plugin-for-Touch-N-Stars) must be installed in NINA
 - You may need to allow the application through the Windows firewall.
 - Afterwards, Touch'N'Stars can be accessed via http://"NINA-PC-IP":5000.
+
+### 📱 **Android App**
+- We have created an app for Android users.
+- The [APK file](https://github.com/Touch-N-Stars/Touch-N-Stars/releases) simply needs to be installed on the smartphone or tablet.
 
 ### 🧪 **What does the Alpha Version offer?**  
 - **Mobile Operation**: Easily access NINA through your smartphone or tablet.  
