@@ -46,11 +46,7 @@
           </p>
         </div>
         <div>
-          <TargetPic
-            class="border border-gray-500 rounded-md"
-            v-model:RAangleString="framingStore.RAangleString"
-            v-model:DECangleString="framingStore.DECangleString"
-          />
+          <TargetPic class="border border-gray-500 rounded-md" />
         </div>
       </div>
 
