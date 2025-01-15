@@ -38,8 +38,8 @@ function loadImage() {
 }
 
 // Beobachte Änderungen an RAangleString und DECangleString
-watch(() => framingStore.RAangleString, loadImage);
-watch(() => framingStore.DECangleString, loadImage);
+watch(() => framingStore.RAangleStringDeg, loadImage);
+watch(() => framingStore.DECangleStringDeg, loadImage);
 
 // Lade das Bild beim Mounten der Komponente
 onMounted(() => {

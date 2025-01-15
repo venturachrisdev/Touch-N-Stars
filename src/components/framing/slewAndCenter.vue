@@ -51,10 +51,12 @@
 import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import apiService from '@/services/apiService';
 import { apiStore } from '@/store/store';
+import { useFramingStore } from '@/store/framingStore';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 const store = apiStore();
+const framingStore = useFramingStore();
 
 const props = defineProps({
   RAangleString: String,
@@ -102,6 +104,7 @@ function handleBlurRA() {
 
 function handleBlurDEC() {
   if (validateDEC(localDECangleString.value)) {
+    console.log('Lokal DEC', localDECangleString.value);
     updateDec();
   } else {
     alert(t('components.slewAndCenter.errors.invalidDECInput'));
@@ -109,11 +112,11 @@ function handleBlurDEC() {
 }
 
 function updateRA() {
-  emit('update:RAangleString', localRAangleString.value);
+  framingStore.RAangleStringDeg = hmsToDegrees(localRAangleString.value);
 }
 
 function updateDec() {
-  emit('update:DECangleString', localDECangleString.value);
+  framingStore.DECangleStringDeg = dmsToDegrees(localDECangleString.value);
 }
 
 async function wait(ms) {
