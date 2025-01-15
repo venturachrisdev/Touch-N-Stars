@@ -5,21 +5,24 @@
       <div class="text-black mx-auto">
         <input
           type="text"
-          v-model="searchQuery"
-          @input="fetchSuggestions"
+          v-model="framingStore.searchQuery"
+          @input="fetchTargetSearch"
           class="w-full p-2 border border-gray-300 rounded"
           :placeholder="$t('components.framing.search.placeholder')"
         />
-        <!-- Überprüfe, ob suggestions ein Array ist und Elemente hat -->
+        <!-- Überprüfe, ob targetSearchResult ein Array ist und Elemente hat -->
         <ul
-          v-if="Array.isArray(suggestions) && suggestions.length > 0"
+          v-if="
+            Array.isArray(framingStore.targetSearchResult) &&
+            framingStore.targetSearchResult.length > 0
+          "
           class="bg-white border border-gray-300 rounded mt-1 z-10"
         >
           <li
-            v-for="(item, index) in suggestions"
+            v-for="(item, index) in framingStore.targetSearchResult"
             :key="index"
             class="p-2 hover:bg-gray-200 cursor-pointer"
-            @click="selectSuggestion(item)"
+            @click="selectTarget(item)"
           >
             {{ item.Name }}
             <span v-if="item['Common names']"> ({{ item['Common names'] }})</span>
@@ -30,29 +33,31 @@
 
       <!-- Ausgewählter Eintrag -->
       <div
-        v-if="selectedItem"
+        v-if="framingStore.selectedItem"
         class="grid grid-cols-2 mt-4 p-4 border border-gray-700 rounded shadow"
       >
         <div class="text-xs">
-          <p v-if="selectedItem['Common names']">
-            <strong>Name:</strong> {{ selectedItem['Common names'] }}
+          <p v-if="framingStore.selectedItem['Common names']">
+            <strong>Name:</strong> {{ framingStore.selectedItem['Common names'] }}
           </p>
-          <p><strong>NGC:</strong> {{ selectedItem.Name }}</p>
-          <p v-if="selectedItem.M"><strong>M:</strong> M{{ selectedItem.M }}</p>
+          <p><strong>NGC:</strong> {{ framingStore.selectedItem.Name }}</p>
+          <p v-if="framingStore.selectedItem.M">
+            <strong>M:</strong> M{{ framingStore.selectedItem.M }}
+          </p>
         </div>
         <div>
           <TargetPic
             class="border border-gray-500 rounded-md"
-            v-model:RAangleString="RAangleString"
-            v-model:DECangleString="DECangleString"
+            v-model:RAangleString="framingStore.RAangleString"
+            v-model:DECangleString="framingStore.DECangleString"
           />
         </div>
       </div>
 
       <div class="mt-4">
         <slewAndCenter
-          v-model:RAangleString="RAangleString"
-          v-model:DECangleString="DECangleString"
+          v-model:RAangleString="framingStore.RAangleString"
+          v-model:DECangleString="framingStore.DECangleString"
         />
       </div>
     </div>
@@ -64,41 +69,40 @@ import { ref } from 'vue';
 import apiService from '@/services/apiService';
 import slewAndCenter from '@/components/framing/slewAndCenter.vue';
 import TargetPic from '@/components/framing/TargetPic.vue';
+import { useFramingStore } from '@/store/framingStore';
 
-const searchQuery = ref('');
-// suggestions wird als Array initialisiert
-const suggestions = ref([]);
-const selectedItem = ref(null);
-const RAangleString = ref('');
-const DECangleString = ref('');
+const framingStore = useFramingStore();
 
-async function fetchSuggestions() {
-  if (searchQuery.value.trim() === '') {
-    suggestions.value = [];
+async function fetchTargetSearch() {
+  if (framingStore.searchQuery.trim() === '') {
+    framingStore.targetSearchResult = [];
     return;
   }
   try {
-    const data = await apiService.searchNGC(searchQuery.value, 10);
-    // Sicherstellen, dass data ein Array ist
+    const data = await apiService.searchNGC(framingStore.searchQuery, 10);
     if (Array.isArray(data)) {
-      suggestions.value = data;
+      framingStore.targetSearchResult = data;
       console.log('Suche: ', data);
     } else {
-      console.warn("Die API hat kein Array zurückgegeben, 'suggestions' wird geleert.");
-      suggestions.value = [];
+      console.warn("Die API hat kein Array zurückgegeben, 'targetSearchResult' wird geleert.");
+      framingStore.targetSearchResult = [];
     }
   } catch (error) {
     console.error('Fehler beim Laden der Vorschläge:', error);
-    suggestions.value = [];
+    framingStore.targetSearchResult = [];
   }
 }
 
-function selectSuggestion(item) {
-  searchQuery.value = item.Name || '';
-  suggestions.value = [];
-  selectedItem.value = item;
-  RAangleString.value = degreesToHMS(item.RA);
-  DECangleString.value = degreesToDMS(item.Dec);
+function selectTarget(item) {
+  framingStore.searchQuery = item.Name || '';
+  framingStore.targetSearchResult = [];
+  framingStore.selectedItem = item;
+  framingStore.RAangleStringDeg = item.RA;
+  framingStore.DECangleStringDeg = item.Dec;
+  framingStore.RAangleString = degreesToHMS(item.RA);
+  framingStore.DECangleString = degreesToDMS(item.Dec);
+
+  console.log('item', framingStore.selectedItem);
 }
 
 function degreesToHMS(deg) {
