@@ -1,6 +1,6 @@
 [package]
 name = "Touch-N-Stars"
-version = "1.0.6"
+version = "1.0.7"
 description = "Nina control app"
 authors = ["Christian Wöhrle"]
 license = ""
