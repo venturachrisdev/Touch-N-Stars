@@ -23,9 +23,11 @@ class WebSocketService {
   connect() {
     // Initialize URL with settings from store when connecting
     const settingsStore = useSettingsStore();
-    const backendPort = settingsStore.connection.port || 1888;
+    const backendPort = 1888;
     const backendHost = settingsStore.connection.ip || window.location.hostname;
     this.backendUrl = `${backendProtokol}://${backendHost}:${backendPort}${backendPfad}`;
+
+    console.log('ws url: ', this.backendUrl);
 
     this.socket = new WebSocket(this.backendUrl);
 
