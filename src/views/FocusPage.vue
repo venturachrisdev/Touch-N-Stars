@@ -81,7 +81,7 @@
         <div v-show="store.showAfGraph" class="mt-6">
           <!--Spinner-->
           <div
-            v-if="!store.autofocus_running && !delayShowGraph"
+            v-if="store.focuserAfInfo.autofocus_running || !delayShowGraph"
             role="status"
             class="flex flex-col items-center h-screen mt-4 text-center"
           >
