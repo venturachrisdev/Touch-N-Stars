@@ -25,12 +25,29 @@
             }}</span>
             <div class="flex-grow border-t border-gray-700"></div>
           </div>
-
-          <infoCamera
-            v-model="store.cameraInfo.Connected"
-            :show-all-info="true"
-            class="gap-1 p-2 bg-gray-800/50 rounded-lg border border-gray-700/50"
-          />
+          <div class="container flex items-center justify-center space-x-1">
+            <div class="container space-y-1 max-w-md landscape:max-w-xl">
+              <div class="w-full p-2 bg-gray-800/50 rounded-lg border border-gray-700/50">
+                <label for="infoCamera" class="text-xs mb-1 text-gray-400">
+                  {{ $t('components.camera.title') }}
+                </label>
+                <infoCamera
+                  v-model="store.cameraInfo.Connected"
+                  :show-all-info="true"
+                  class="grid grid-cols-2 landscape:grid-cols-3"
+                />
+              </div>
+              <div class="w-full p-2 bg-gray-800/50 rounded-lg border border-gray-700/50">
+                <label for="infoRotator" class="text-xs mb-1 text-gray-400">
+                  {{ $t('components.connectEquipment.rotator.label') }}
+                </label>
+                <infoRotator
+                  v-if="store.rotatorInfo.Connected"
+                  class="grid grid-cols-2 landscape:grid-cols-3"
+                />
+              </div>
+            </div>
+          </div>
 
           <!-- Settings Section -->
           <div class="relative flex items-center py-4">
@@ -42,18 +59,20 @@
           </div>
 
           <div class="space-y-1">
-            <settingsCameraCooler class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
+            <settingsCameraCooler
+              v-if="store.cameraInfo.CanSetTemperature"
+              class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
+            />
             <div class="grid grid-flow-row-dense grid-cols-1 landscape:grid-cols-2 gap-6">
               <changeFilter
                 v-if="store.filterInfo.Connected"
                 class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
               />
-              <controlRotator
-                v-if="store.rotatorInfo.Connected"
-                class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
-              />
             </div>
-
+            <controlRotator
+              v-if="store.rotatorInfo.Connected"
+              class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
+            />
             <settingsCamera class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
           </div>
         </div>
@@ -217,6 +236,7 @@ import settingsCamera from '@/components/camera/settingsCamera.vue';
 import settingsCameraCooler from '@/components/camera/settingsCameraCooler.vue';
 import changeFilter from '@/components/filterwheel/changeFilter.vue';
 import controlRotator from '@/components/rotator/controlRotator.vue';
+import infoRotator from '@/components/rotator/infoRotator.vue';
 
 // Initialisiere Stores
 const store = apiStore();
