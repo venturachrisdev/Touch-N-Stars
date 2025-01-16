@@ -462,6 +462,7 @@ const apiService = {
           hips: 'CDS/P/DSS2/color',
           projection: 'STG',
           format: 'jpg',
+          useCache: false,
         },
         responseType: 'blob',
       });
