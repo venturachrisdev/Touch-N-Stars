@@ -1,5 +1,5 @@
 <template>
-  <button @click="setSequenceTarget" class="default-button-cyan">
+  <button @click="setSequenceTarget" class="default-button-cyan w-full">
     {{ $t('components.framing.setSequnceTarget') }}
   </button>
 </template>

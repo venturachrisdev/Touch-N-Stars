@@ -32,10 +32,7 @@
               <TppaPage />
             </div>
             <div v-if="currentTab === 'showSlew'" class="mt-5">
-              <TargetSearch />
-              <div class="mt-2">
-                <setSequenceTarget />
-              </div>
+              <TargetSearch class="w-full mt-2" />
             </div>
           </div>
         </div>
@@ -48,7 +45,6 @@
 import { ref } from 'vue';
 import TppaPage from '@/components/tppa/TppaPage.vue';
 import TargetSearch from '@/components/framing/TargetSearch.vue';
-import setSequenceTarget from '@/components/framing/setSequenceTarget.vue';
 import infoMount from '@/components/mount/infoMount.vue';
 import infoCamera from '@/components/camera/infoCamera.vue';
 import controlMount from '@/components/mount/controlMount.vue';

@@ -42,6 +42,7 @@
             {{ $t('components.slewAndCenter.slew_and_center') }}
           </button>
         </div>
+        <setSequenceTarget class="w-full mt-2" />
       </div>
     </div>
   </div>
@@ -53,6 +54,7 @@ import apiService from '@/services/apiService';
 import { apiStore } from '@/store/store';
 import { useFramingStore } from '@/store/framingStore';
 import { useI18n } from 'vue-i18n';
+import setSequenceTarget from '@/components/framing/setSequenceTarget.vue';
 
 const { t } = useI18n();
 const store = apiStore();
