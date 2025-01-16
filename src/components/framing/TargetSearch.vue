@@ -93,8 +93,8 @@ function selectTarget(item) {
   framingStore.searchQuery = item.Name || '';
   framingStore.targetSearchResult = [];
   framingStore.selectedItem = item;
-  framingStore.RAangleStringDeg = item.RA;
-  framingStore.DECangleStringDeg = item.Dec;
+  framingStore.RAangle = item.RA;
+  framingStore.DECangle = item.Dec;
   framingStore.RAangleString = degreesToHMS(item.RA);
   framingStore.DECangleString = degreesToDMS(item.Dec);
 

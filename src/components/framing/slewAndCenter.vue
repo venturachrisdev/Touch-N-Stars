@@ -112,11 +112,11 @@ function handleBlurDEC() {
 }
 
 function updateRA() {
-  framingStore.RAangleStringDeg = hmsToDegrees(localRAangleString.value);
+  framingStore.RAangle = hmsToDegrees(localRAangleString.value);
 }
 
 function updateDec() {
-  framingStore.DECangleStringDeg = dmsToDegrees(localDECangleString.value);
+  framingStore.DECangle = dmsToDegrees(localDECangleString.value);
 }
 
 async function wait(ms) {

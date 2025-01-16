@@ -21,8 +21,8 @@ const targetPic = ref(null);
 
 async function getTargetPic() {
   try {
-    const ra = framingStore.RAangleStringDeg;
-    const dec = framingStore.DECangleStringDeg;
+    const ra = framingStore.RAangle;
+    const dec = framingStore.DECangle;
     console.log('Bild wird abgerufen', 'RA: ', ra, 'DEC: ', dec);
     if (targetPic.value) {
       URL.revokeObjectURL(targetPic.value);
@@ -38,8 +38,8 @@ function loadImage() {
 }
 
 // Beobachte Änderungen an RAangleString und DECangleString
-watch(() => framingStore.RAangleStringDeg, loadImage);
-watch(() => framingStore.DECangleStringDeg, loadImage);
+watch(() => framingStore.RAangle, loadImage);
+watch(() => framingStore.DECangle, loadImage);
 
 // Lade das Bild beim Mounten der Komponente
 onMounted(() => {
