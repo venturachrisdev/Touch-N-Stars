@@ -433,23 +433,7 @@ const apiService = {
     return this._getWithParams(`${API_URL}ngc/search`, { query, limit });
   },
 
-  async getNgcCache() {
-    const { API_URL } = getUrls();
-    return this._simpleGetRequest(`${API_URL}ngc/cache`);
-  },
-
-  async updateNgcCache(data) {
-    try {
-      const { API_URL } = getUrls();
-      const response = await axios.post(`${API_URL}ngc/cache`, { data });
-      return response.data;
-    } catch (error) {
-      console.error('Error updating NGC cache:', error);
-      throw error;
-    }
-  },
-
-  async searchTargetPic(width, height, fov, ra, dec) {
+  async searchTargetPic(width, height, fov, ra, dec, useCache) {
     try {
       const { TARGETPIC_URL } = getUrls();
       const response = await axios.get(TARGETPIC_URL, {
@@ -459,10 +443,7 @@ const apiService = {
           fov,
           ra,
           dec,
-          hips: 'CDS/P/DSS2/color',
-          projection: 'STG',
-          format: 'jpg',
-          useCache: false,
+          useCache,
         },
         responseType: 'blob',
       });
