@@ -36,6 +36,7 @@
       }
     },
     "framing": {
+      "setSequnceTarget": "set to sequence target",
       "search": {
         "title": "Search",
         "placeholder": "Enter a search term..."

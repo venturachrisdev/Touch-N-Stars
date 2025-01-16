@@ -36,6 +36,7 @@
       }
     },
     "framing": {
+      "setSequnceTarget": "als Sequenzziel setzen",
       "search": {
         "title": "Suche",
         "placeholder": "Suchbegriff eingeben..."
