@@ -103,6 +103,26 @@ const apiService = {
     return this._simpleGetRequest(`${BASE_URL}/sequence/${action}`);
   },
 
+  //sequence/set-target?name=Orion Nebula&ra=83.822083&dec=-5.391111&rotation=5&index=0
+  async sequnceSetTarget(name, ra, dec, rotation, index){
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/sequence/set-target?`, {
+        params: {
+          name ,
+          ra ,
+          dec ,
+          rotation,
+          index
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error read Image :', error);
+      throw error;
+    }
+  },
+  
   //-------------------------------------  Mount ---------------------------------------
   mountAction(action) {
     const { BASE_URL } = getUrls();
