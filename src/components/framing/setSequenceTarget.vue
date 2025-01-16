@@ -15,18 +15,22 @@ const store = apiStore();
 const framingStore = useFramingStore();
 
 async function setSequenceTarget() {
-  name = framingStore.selectedItem.Name;
-  ra = framingStore.RAangle;
-  dec = framingStore.DECangle;
-  rotation = 0;
-  index = 0;
+  console.log('Setting sequence target');
+
+  const name = framingStore.selectedItem.Name;
+  const ra = framingStore.RAangle;
+  const dec = framingStore.DECangle;
+  const rotation = 0;
+  const index = 0;
+
+  console.log('Name:', name, 'RA:', ra, 'Dec:', dec);
 
   if (store.sequenceIsLoaded) {
     try {
-      await apiService.setSequenceTarget(name, ra, dec, rotation, index); //name, ra, dec, rotation, index)
-      console.log('Sequenz Ziel aktuallisiert');
+      await apiService.sequnceTargetSet(name, ra, dec, rotation, index);
+      console.log('Sequence target updated successfully.');
     } catch (error) {
-      console.log('Fehler beim setzen des Sequnzziel');
+      console.error('Error setting sequence target:', error);
     }
   }
 }
