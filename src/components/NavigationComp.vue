@@ -15,7 +15,7 @@
             <LinkIcon class="icon" />
           </router-link>
         </div>
-        <div v-if="store.cameraInfo.Connected">
+        <div v-if="store.cameraInfo.Connected && !store.sequenceRunning">
           <router-link
             to="/camera"
             class="nav-button"
