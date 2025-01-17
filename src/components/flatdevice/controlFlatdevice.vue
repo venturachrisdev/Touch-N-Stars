@@ -47,16 +47,14 @@
 
 <script setup>
 import apiService from '@/services/apiService';
-import { useI18n } from 'vue-i18n';
 import { apiStore } from '@/store/store';
 import { useFlatStore } from '@/store/flatdeviceStore';
 import toggleButton from '@/components/helpers/toggleButton.vue';
 
-const { t } = useI18n();
 const store = apiStore();
 const flatStore = useFlatStore();
 
-async function flatdeviceSetLight(toggle) {
+async function flatdeviceSetLight() {
   try {
     if (store.flatdeviceInfo.LightOn) {
       await apiService.flatdeviceSetLight(false);
@@ -71,7 +69,7 @@ async function flatdeviceSetLight(toggle) {
   }
 }
 
-async function flatdeviceSetCover(toggle) {
+async function flatdeviceSetCover() {
   try {
     if (store.flatdeviceInfo.CoverState === 2) {
       await apiService.flatdeviceSetCover(false);
