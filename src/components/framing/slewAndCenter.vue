@@ -42,7 +42,7 @@
             {{ $t('components.slewAndCenter.slew_and_center') }}
           </button>
         </div>
-        <setSequenceTarget v-if="false" class="w-full mt-2" />
+        <setSequenceTarget v-if="true" class="w-full mt-2 bg" />
       </div>
     </div>
   </div>
