@@ -68,7 +68,7 @@
         <span>{{ Filter }}</span>
       </div>
     </div>
-    <ImageModal :showModal="showModal" :imageData="imageDataModal" @close="closeModal" />
+    <ImageModal :showModal="showModal" :imageData="imageDataModal" :isLoading="isLoadingModal" @close="closeModal" />
   </div>
 </template>
 
@@ -79,6 +79,7 @@ import apiService from '@/services/apiService';
 import ImageModal from './imageModal.vue';
 
 let isLoadingImg = ref(true);
+let isLoadingModal = ref(false);
 
 const store = apiStore();
 const imageData = ref(null);
@@ -95,6 +96,7 @@ const ExposureTime = ref(null);
 const dateValue = ref(null);
 const showModal = ref(false);
 const lastImgIndex = ref(null);
+
 
 // Computed Property für das Formatieren des Datums
 const formattedDate = computed(() => {
@@ -114,6 +116,8 @@ const formattedDate = computed(() => {
 // Modal öffnen / schließen
 function openModal() {
   showModal.value = true;
+  getlastModalImage(lastImgIndex.value, 90, true, 0.8);
+  isLoadingModal.value = true;
 }
 function closeModal() {
   showModal.value = false;
@@ -129,10 +133,19 @@ async function getlastImage(index, quality, resize, scale) {
       lastImgIndex.value = index;
       isLoadingImg.value = false;
     }
-    const resultModal = await apiService.getSequenceImage(index, 100, false, 1);
+  } catch (error) {
+    console.error('Fehler beim Abrufen des Bildes:', error.message);
+  }
+}
+
+async function getlastModalImage(index, quality, resize, scale) {
+  console.log('Modal Bild, Index: ', index);
+  try {
+    const resultModal = await apiService.getSequenceImage(index, quality, false, scale);
     const imageModal = resultModal?.Response;
     if (imageModal) {
       imageDataModal.value = `data:image/jpeg;base64,${imageModal}`;
+      isLoadingModal.value = false;
     }
   } catch (error) {
     console.error('Fehler beim Abrufen des Bildes:', error.message);
@@ -162,7 +175,10 @@ watch(
   (newVal, oldVal) => {
     if (!oldVal || newVal.length > oldVal.length) {
       const latestIndex = newVal.length - 1;
-      getlastImage(latestIndex, 80, true, 0.6);
+      getlastImage(latestIndex, 75, true, 0.5);
+      if(showModal.value){
+        getlastModalImage(latestIndex, 90, true, 0.8);
+      }
     }
   },
   { immediate: false }
