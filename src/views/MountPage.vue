@@ -32,7 +32,7 @@
               <TppaPage />
             </div>
             <div v-if="currentTab === 'showSlew'" class="mt-5">
-              <TargetSearch />
+              <TargetSearch class="w-full mt-2" />
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@
   <div class="container flex items-center justify-center">
     <div class="container max-w-md">
       <h5 class="text-xl font-bold mb-4">{{ $t('components.framing.search.title') }}</h5>
+
       <div class="text-black mx-auto">
         <input
           type="text"
@@ -29,6 +30,14 @@
             <span v-if="item['M']"> (M {{ item['M'] }})</span>
           </li>
         </ul>
+      </div>
+      <div class="flex min-w-36 items-center border border-gray-500 p-1 mt-2 rounded-lg">
+        <label for="DewHeater" class="text-sm mb-1 text-gray-400"
+          >{{ $t('components.framing.useNinaCache') }}
+        </label>
+        <div class="flex ml-auto items-center space-x-2">
+          <controlUseNinaCache class="p-2" />
+        </div>
       </div>
 
       <!-- Ausgewählter Eintrag -->
@@ -64,6 +73,7 @@
 import apiService from '@/services/apiService';
 import slewAndCenter from '@/components/framing/slewAndCenter.vue';
 import TargetPic from '@/components/framing/TargetPic.vue';
+import controlUseNinaCache from '@/components/framing/controlUseNinaCache.vue';
 import { useFramingStore } from '@/store/framingStore';
 
 const framingStore = useFramingStore();
@@ -92,8 +102,8 @@ function selectTarget(item) {
   framingStore.searchQuery = item.Name || '';
   framingStore.targetSearchResult = [];
   framingStore.selectedItem = item;
-  framingStore.RAangleStringDeg = item.RA;
-  framingStore.DECangleStringDeg = item.Dec;
+  framingStore.RAangle = item.RA;
+  framingStore.DECangle = item.Dec;
   framingStore.RAangleString = degreesToHMS(item.RA);
   framingStore.DECangleString = degreesToDMS(item.Dec);
 
