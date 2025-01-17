@@ -345,7 +345,10 @@
       "light_state": "Status Licht:",
       "brightness": "Helligkeit:",
       "toggle_light": "Licht:",
-      "toggle_cover": "Abdeckung:",
+      "cover":{
+        "close": "Abdeckung schließen",
+        "open": "Abdeckung öffnen"
+      },
       "title":"Flatpanel"
     }
   }
