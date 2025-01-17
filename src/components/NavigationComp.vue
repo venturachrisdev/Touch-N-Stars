@@ -35,7 +35,7 @@
             <EyeIcon class="icon" />
           </router-link>
         </div>
-        <div v-if="store.mountInfo.Connected">
+        <div v-if="store.mountInfo.Connected && !store.sequenceRunning">
           <router-link
             to="/mount"
             class="nav-button"
