@@ -94,7 +94,12 @@
       "flat": {
         "connect": "Flatdevice verbinden",
         "disconnect": "Flatdevice trennen",
-        "error": "Fehler bei der Steuerung des Flatdevice:"
+        "error": "Fehler bei der Steuerung des Flatdevice:",
+        "please_connect_flatDevice": "Bitte das Flatpanel verbinden",
+        "device_name": "Name",
+        "cover_state": "Abdeckung",
+        "light_state": "Licht",
+        "brightness": "Helligkeit"
       },
       "dome": {
         "connect": "Kuppel verbinden",
@@ -332,6 +337,16 @@
       "filter": "Filter:",
       "unknown": "Unbekannt",
       "nofilteravailable": "Kein Filter verfügbar"
+    },
+    "flat":{
+      "please_connect_flatDevice": "Bitte das Flatpanel verbinden",
+      "device_name": "Name:",
+      "cover_state": "Status Abdeckung:",
+      "light_state": "Status Licht:",
+      "brightness": "Helligkeit:",
+      "toggle_light": "Licht",
+      "toggle_cover": "Abdeckung",
+      "title":"Flatpanel"
     }
   }
 }

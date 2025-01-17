@@ -70,7 +70,6 @@
 </template>
 
 <script setup>
-//import { ref } from 'vue';
 import { apiStore } from '@/store/store';
 import { useCameraStore } from '@/store/cameraStore';
 import apiService from '@/services/apiService';
@@ -78,8 +77,6 @@ import toggleButton from '@/components/helpers/toggleButton.vue';
 
 const store = apiStore();
 const cameraStore = useCameraStore();
-
-//let TemperatureSetPoint = ref(store.cameraInfo?.TemperatureSetPoint || 0);
 
 function toggleDewHeater() {
   if (store.cameraInfo.DewHeaterOn) {

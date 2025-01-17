@@ -1,12 +1,11 @@
 <template>
   <div>
-    <infoDome />
-
-    <controlDome />
+    <InfoFlatdevice />
+    <controlFlatdevice />
   </div>
 </template>
 
 <script setup>
-import infoDome from './dome/infoDome.vue';
-import controlDome from './dome/controlDome.vue';
+import InfoFlatdevice from './flatdevice/InfoFlatdevice.vue';
+import controlFlatdevice from './flatdevice/controlFlatdevice.vue';
 </script>

@@ -77,7 +77,6 @@
 </template>
 
 <script setup>
-//import { ref } from 'vue';
 import { apiStore } from '@/store/store';
 import { useCameraStore } from '@/store/cameraStore';
 import apiService from '@/services/apiService';
