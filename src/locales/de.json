@@ -337,6 +337,16 @@
       "filter": "Filter:",
       "unknown": "Unbekannt",
       "nofilteravailable": "Kein Filter verfügbar"
+    },
+    "flat":{
+      "please_connect_flatDevice": "Bitte das Flatpanel verbinden",
+      "device_name": "Name:",
+      "cover_state": "Status Abdeckung:",
+      "light_state": "Status Licht:",
+      "brightness": "Helligkeit:",
+      "toggle_light": "Licht",
+      "toggle_cover": "Abdeckung",
+      "title":"Flatpanel"
     }
   }
 }

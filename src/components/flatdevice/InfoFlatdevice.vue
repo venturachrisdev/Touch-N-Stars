@@ -1,6 +1,6 @@
 <template>
   <div v-if="!store.flatdeviceInfo.Connected" class="text-red-500">
-    <p>{{ $t('components.flatDevice.please_connect_flatDevice') }}</p>
+    <p>{{ $t('components.flat.please_connect_flatDevice') }}</p>
   </div>
   <div v-else class="gap-2">
     <StatusString
