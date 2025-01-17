@@ -1,90 +1,94 @@
 <template>
-  <div class="top-0 bg-gray-800 shadow-md">
-    <div class="flex mx-auto flex-wrap min-h-16 items-center justify-center">
-      <div v-if="store.isBackendReachable">
-        <router-link
-          to="/equipment"
-          class="nav-button"
-          active-class="active-nav-button"
-          :title="$t('components.navigation.equipment')"
-        >
-          <LinkIcon class="icon" />
-        </router-link>
-      </div>
-      <div v-if="store.cameraInfo.Connected">
-        <router-link
-          to="/camera"
-          class="nav-button"
-          active-class="active-nav-button"
-          :title="$t('components.navigation.camera')"
-        >
-          <CameraIcon class="icon" />
-        </router-link>
-      </div>
-      <div v-if="store.focuserInfo.Connected">
-        <router-link
-          to="/autofocus"
-          class="nav-button"
-          active-class="active-nav-button"
-          :title="$t('components.navigation.autofocus')"
-        >
-          <EyeIcon class="icon" />
-        </router-link>
-      </div>
-      <div v-if="store.mountInfo.Connected">
-        <router-link
-          to="/mount"
-          class="nav-button"
-          active-class="active-nav-button"
-          :title="$t('components.navigation.mount')"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="icon"
+  <div class="top-0 bg-gray-800 shadow-md overflow-hidden">
+    <div
+      class="flex mx-auto min-h-16 items-center overflow-x-auto overflow-y-hidden scrollbar-hide lg:justify-center lg:container lg:px-4 lg:overflow-visible"
+      style="scroll-snap-type: x mandatory"
+    >
+      <div class="flex space-x-2 px-2 lg:px-0" style="scroll-snap-align: start">
+        <div v-if="store.isBackendReachable">
+          <router-link
+            to="/equipment"
+            class="nav-button"
+            active-class="active-nav-button"
+            :title="$t('components.navigation.equipment')"
           >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M6 21l6 -5l6 5" />
-            <path d="M12 13v8" />
-            <path
-              d="M3.294 13.678l.166 .281c.52 .88 1.624 1.265 2.605 .91l14.242 -5.165a1.023 1.023 0 0 0 .565 -1.456l-2.62 -4.705a1.087 1.087 0 0 0 -1.447 -.42l-.056 .032l-12.694 7.618c-1.02 .613 -1.357 1.897 -.76 2.905z"
-            />
-            <path d="M14 5l3 5.5" />
-          </svg>
-        </router-link>
-      </div>
-      <div v-if="store.domeInfo.Connected">
-        <router-link
-          to="/dome"
-          class="nav-button"
-          active-class="active-nav-button"
-          :title="$t('components.navigation.dome')"
-        >
-          <svg
-            fill="#FFFFFF"
-            height="24"
-            width="24"
-            version="1.1"
-            id="Layer_1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 512 512"
-            xml:space="preserve"
+            <LinkIcon class="icon" />
+          </router-link>
+        </div>
+        <div v-if="store.cameraInfo.Connected">
+          <router-link
+            to="/camera"
+            class="nav-button"
+            active-class="active-nav-button"
+            :title="$t('components.navigation.camera')"
           >
-            <path
-              d="M256,114.383c-22.526,0-40.851,18.325-40.851,40.851s18.325,40.851,40.851,40.851s40.851-18.325,40.851-40.851
+            <CameraIcon class="icon" />
+          </router-link>
+        </div>
+        <div v-if="store.focuserInfo.Connected">
+          <router-link
+            to="/autofocus"
+            class="nav-button"
+            active-class="active-nav-button"
+            :title="$t('components.navigation.autofocus')"
+          >
+            <EyeIcon class="icon" />
+          </router-link>
+        </div>
+        <div v-if="store.mountInfo.Connected">
+          <router-link
+            to="/mount"
+            class="nav-button"
+            active-class="active-nav-button"
+            :title="$t('components.navigation.mount')"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M6 21l6 -5l6 5" />
+              <path d="M12 13v8" />
+              <path
+                d="M3.294 13.678l.166 .281c.52 .88 1.624 1.265 2.605 .91l14.242 -5.165a1.023 1.023 0 0 0 .565 -1.456l-2.62 -4.705a1.087 1.087 0 0 0 -1.447 -.42l-.056 .032l-12.694 7.618c-1.02 .613 -1.357 1.897 -.76 2.905z"
+              />
+              <path d="M14 5l3 5.5" />
+            </svg>
+          </router-link>
+        </div>
+        <div v-if="store.domeInfo.Connected">
+          <router-link
+            to="/dome"
+            class="nav-button"
+            active-class="active-nav-button"
+            :title="$t('components.navigation.dome')"
+          >
+            <svg
+              fill="#FFFFFF"
+              height="24"
+              width="24"
+              version="1.1"
+              id="Layer_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              viewBox="0 0 512 512"
+              xml:space="preserve"
+            >
+              <path
+                d="M256,114.383c-22.526,0-40.851,18.325-40.851,40.851s18.325,40.851,40.851,40.851s40.851-18.325,40.851-40.851
 			S278.526,114.383,256,114.383z M256,179.745c-13.516,0-24.511-10.995-24.511-24.511c0-13.516,10.995-24.511,24.511-24.511
 			s24.511,10.995,24.511,24.511C280.511,168.75,269.516,179.745,256,179.745z"
-            />
-            <path
-              d="M495.66,283.234h-2.723v-38.128h2.723c4.512,0,8.17-3.658,8.17-8.17c0-4.512-3.658-8.17-8.17-8.17h-2.878
+              />
+              <path
+                d="M495.66,283.234h-2.723v-38.128h2.723c4.512,0,8.17-3.658,8.17-8.17c0-4.512-3.658-8.17-8.17-8.17h-2.878
 			c-2.027-60.223-26.424-116.55-69.243-159.369c-26.822-26.822-58.948-46.412-94.006-57.812V8.45c0-4.512-3.658-8.17-8.17-8.17
 			c-3.999,0-7.322,2.876-8.026,6.671C294.802,2.366,275.583,0,256,0c-19.714,0-39.059,2.393-57.707,7.038
 			c-1.154-3.113-4.141-5.337-7.655-5.337c-4.512,0-8.17,3.658-8.17,8.17v1.714c-35.06,11.399-67.184,30.989-94.008,57.812
@@ -102,83 +106,84 @@
 			c0,4.512,3.658,8.17,8.17,8.17s8.17-3.658,8.17-8.17v-13.617h49.021v13.617c0,4.512,3.658,8.17,8.17,8.17s8.17-3.658,8.17-8.17
 			v-13.617h49.021v13.617c0,4.512,3.658,8.17,8.17,8.17s8.17-3.658,8.17-8.17v-13.617h49.021v13.617c0,4.512,3.658,8.17,8.17,8.17
 			c4.512,0,8.17-3.658,8.17-8.17v-13.617h49.021V283.234z"
-            />
-            <path
-              d="M354.043,359.489c-4.512,0-8.17,3.658-8.17,8.17v43.574c0,4.512,3.658,8.17,8.17,8.17s8.17-3.658,8.17-8.17V367.66 
+              />
+              <path
+                d="M354.043,359.489c-4.512,0-8.17,3.658-8.17,8.17v43.574c0,4.512,3.658,8.17,8.17,8.17s8.17-3.658,8.17-8.17V367.66 
           C362.213,363.147,358.555,359.489,354.043,359.489z"
-            />
-            <path
-              d="M157.957,359.489c-4.512,0-8.17,3.658-8.17,8.17v43.574c0,4.512,3.658,8.17,8.17,8.17s8.17-3.658,8.17-8.17V367.66
+              />
+              <path
+                d="M157.957,359.489c-4.512,0-8.17,3.658-8.17,8.17v43.574c0,4.512,3.658,8.17,8.17,8.17s8.17-3.658,8.17-8.17V367.66
 			C166.128,363.147,162.47,359.489,157.957,359.489z"
-            />
-          </svg>
-        </router-link>
-      </div>
-      <div v-if="store.flatdeviceInfo.Connected">
-        <router-link to="/flat" class="nav-button" active-class="active-nav-button">
-          <svg
-            width="400px"
-            height="400px"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+              />
+            </svg>
+          </router-link>
+        </div>
+        <div v-if="store.flatdeviceInfo.Connected">
+          <router-link to="/flat" class="nav-button" active-class="active-nav-button">
+            <svg
+              width="400px"
+              height="400px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M10.0512 15.75L9.51642 14.2768L9.18821 14.0137C8.15637 13.1865 7.5 11.9204 7.5 10.5C7.5 8.01472 9.51472 6 12 6C14.4853 6 16.5 8.01472 16.5 10.5C16.5 11.9204 15.8436 13.1865 14.8118 14.0137L14.4836 14.2768L13.9488 15.75H10.0512ZM9 17.25H15L15.75 15.184C17.1217 14.0844 18 12.3948 18 10.5C18 7.18629 15.3137 4.5 12 4.5C8.68629 4.5 6 7.18629 6 10.5C6 12.3948 6.87831 14.0844 8.25 15.184L9 17.25ZM14.25 19.5V18H9.75V19.5H14.25Z"
+                fill="#FFFFFF"
+              />
+            </svg>
+          </router-link>
+        </div>
+        <div v-if="store.guiderInfo.Connected">
+          <router-link
+            to="/guider"
+            class="nav-button"
+            active-class="active-nav-button"
+            :title="$t('components.navigation.guider')"
           >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M10.0512 15.75L9.51642 14.2768L9.18821 14.0137C8.15637 13.1865 7.5 11.9204 7.5 10.5C7.5 8.01472 9.51472 6 12 6C14.4853 6 16.5 8.01472 16.5 10.5C16.5 11.9204 15.8436 13.1865 14.8118 14.0137L14.4836 14.2768L13.9488 15.75H10.0512ZM9 17.25H15L15.75 15.184C17.1217 14.0844 18 12.3948 18 10.5C18 7.18629 15.3137 4.5 12 4.5C8.68629 4.5 6 7.18629 6 10.5C6 12.3948 6.87831 14.0844 8.25 15.184L9 17.25ZM14.25 19.5V18H9.75V19.5H14.25Z"
-              fill="#FFFFFF"
-            />
-          </svg>
-        </router-link>
-      </div>
-      <div v-if="store.guiderInfo.Connected">
-        <router-link
-          to="/guider"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-viewfinder"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+              <path d="M12 3l0 4" />
+              <path d="M12 21l0 -3" />
+              <path d="M3 12l4 0" />
+              <path d="M21 12l-3 0" />
+              <path d="M12 12l0 .01" />
+            </svg>
+          </router-link>
+        </div>
+        <div v-if="store.sequenceIsLoaded">
+          <router-link
+            to="/sequence"
+            class="nav-button"
+            active-class="active-nav-button"
+            :title="$t('components.navigation.sequence')"
+          >
+            <ListBulletIcon class="icon" />
+          </router-link>
+        </div>
+        <button
+          @click="store.showSettings = true"
           class="nav-button"
           active-class="active-nav-button"
-          :title="$t('components.navigation.guider')"
+          :title="$t('components.navigation.settings')"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="icon icon-tabler icons-tabler-outline icon-tabler-viewfinder"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-            <path d="M12 3l0 4" />
-            <path d="M12 21l0 -3" />
-            <path d="M3 12l4 0" />
-            <path d="M21 12l-3 0" />
-            <path d="M12 12l0 .01" />
-          </svg>
-        </router-link>
+          <Cog6ToothIcon class="icon" />
+        </button>
       </div>
-      <div v-if="store.sequenceIsLoaded">
-        <router-link
-          to="/sequence"
-          class="nav-button"
-          active-class="active-nav-button"
-          :title="$t('components.navigation.sequence')"
-        >
-          <ListBulletIcon class="icon" />
-        </router-link>
-      </div>
-      <button
-        @click="store.showSettings = true"
-        class="nav-button"
-        active-class="active-nav-button"
-        :title="$t('components.navigation.settings')"
-      >
-        <Cog6ToothIcon class="icon" />
-      </button>
     </div>
   </div>
 </template>
@@ -198,14 +203,29 @@ const store = apiStore();
 
 <style scoped>
 .nav-button {
-  @apply w-12 h-12 border border-cyan-500/20 bg-gray-700 text-white rounded-full hover:bg-gray-600;
+  @apply w-10 h-10 lg:w-12 lg:h-12 border border-cyan-500/20 bg-gray-700 text-white rounded-full hover:bg-gray-600;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 4px;
-  transition:
-    border-radius 0.2s ease,
-    background-color 0.2s ease;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1023px) {
+  .nav-button {
+    margin: 8px 4px;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .top-0 {
+    z-index: 50;
+  }
+
+  .flex {
+    padding: 8px 0;
+  }
 }
 
 .active-nav-button {
