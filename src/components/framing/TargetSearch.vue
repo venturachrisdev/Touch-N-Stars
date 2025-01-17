@@ -61,7 +61,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import apiService from '@/services/apiService';
 import slewAndCenter from '@/components/framing/slewAndCenter.vue';
 import TargetPic from '@/components/framing/TargetPic.vue';

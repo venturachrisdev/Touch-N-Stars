@@ -99,7 +99,7 @@
         @keydown.esc="showResetConfirmation = false"
       >
         <transition name="scale">
-          <div class="bg-gray-800 rounded-lg p-6 max-w-md w-full">
+          <div v-if="showResetConfirmation" class="bg-gray-800 rounded-lg p-6 max-w-md w-full">
             <h3 class="text-xl font-semibold mb-4">
               {{ $t('components.sequence.resetConfirmationTitle') }}
             </h3>
