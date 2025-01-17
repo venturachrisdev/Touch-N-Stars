@@ -339,11 +339,55 @@ const apiService = {
   },
 
   //-------------------------------------  flatdevice ---------------------------------------
+
   flatdeviceAction(action) {
     const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/flatdevice/${action}`);
   },
 
+    /*set-light?true
+    set-cover?closed=true
+    set-brightness?brightness=42
+   */
+
+  async flatdeviceSetLight(on) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/equipment/flatdevice/set-light`, {
+        params: { on: on }, //true or false
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error set-light:', error);
+      throw error;
+    }
+  },
+
+  async flatdeviceSetCover(closed) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/equipment/flatdevice/set-cover`, {
+        params: { closed: closed }, //true or false
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error set-cover:', error);
+      throw error;
+    }
+  },
+
+  async flatdeviceSetBrightness(brightness) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/equipment/flatdevice/set-brightness`, {
+        params: { brightness: brightness }, //z.B. 42
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error set brightness:', error);
+      throw error;
+    }
+  },
   //-------------------------------------  dome ---------------------------------------
   domeAction(action) {
     const { BASE_URL } = getUrls();
