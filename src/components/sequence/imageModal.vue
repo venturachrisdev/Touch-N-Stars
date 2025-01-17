@@ -3,9 +3,16 @@
   <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center">
     <!-- Halbtransparenter Overlay-Hintergrund -->
     <div class="absolute inset-0 bg-black bg-opacity-70" @click="closeModal"></div>
-
+    <div v-if="isLoading">
+      <!--Spinner-->
+      <div class="flex items-center justify-center">
+        <div
+          class="w-12 h-12 border-4 border-blue-500 border-t-transparent border-solid rounded-full animate-spin"
+        ></div>
+      </div>
+    </div>
     <!-- Inhalt der Modal -->
-    <div
+    <div v-else
       class="relative max-w-4xl w-full max-h-full p-4 bg-gray-900 rounded-xl z-60 flex items-center justify-center"
     >
       <button
@@ -46,6 +53,10 @@ const props = defineProps({
   imageData: {
     type: String,
     default: null,
+  },
+  isLoading: {
+    type: Boolean,
+    default: true,
   },
 });
 
