@@ -23,7 +23,7 @@ The application aims to make controlling and adjusting already configured profil
 - We have created an app for Android users.
 - The [APK file](https://github.com/Touch-N-Stars/Touch-N-Stars/releases) simply needs to be installed on the smartphone or tablet.
 
-### 🧪 **What does the Alpha Version offer?**  
+### 🧪 **What does the Version offer?**  
 - **Mobile Operation**: Easily access NINA through your smartphone or tablet.  
 - **User-Friendly Design**: Simple and intuitive interface specifically optimized for mobile devices.  
 - **Focus on Practical Features**: Support for essential steps in setting up your equipment.  
