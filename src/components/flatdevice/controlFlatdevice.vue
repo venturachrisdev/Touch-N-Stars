@@ -1,7 +1,7 @@
 <template>
-  <div class="flex gap-x-2">
+  <div class="flex flex-col gap-y-1 w-full">
     <div v-if="store.flatdeviceInfo.SupportsOnOff">
-      <div class="flex min-w-36 border border-gray-500 p-2 rounded-lg">
+      <div class="flex min-w-36 w-full border border-gray-500 p-2 rounded-lg">
         <label for="toggle_light" class="text-gray-400"
           >{{ $t('components.flat.toggle_light') }}
         </label>
@@ -12,7 +12,7 @@
     </div>
 
     <div v-if="store.flatdeviceInfo.SupportsOpenClose">
-      <div class="flex min-w-36 border border-gray-500 p-2 rounded-lg">
+      <div class="flex min-w-36 w-full border border-gray-500 p-2 rounded-lg">
         <label for="toggle_cover" class="text-gray-400"
           >{{ $t('components.flat.toggle_cover') }}
         </label>
@@ -27,7 +27,7 @@
 
     <div
       v-if="store.flatdeviceInfo.LightOn"
-      class="flex min-w-36 border border-gray-500 p-1 rounded-lg items-center"
+      class="flex min-w-36 w-full border border-gray-500 p-1 rounded-lg items-center"
     >
       <label for="SetBrightness" class="text mr-1 text-gray-400"
         >{{ $t('components.flat.brightness') }}

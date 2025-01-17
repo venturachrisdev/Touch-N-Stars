@@ -18,7 +18,7 @@
       <div
         class="mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5"
       >
-        <controlFlatdevice class="grid grid-cols-2 gap-1" />
+        <controlFlatdevice class="w-full" />
       </div>
     </div>
   </div>
