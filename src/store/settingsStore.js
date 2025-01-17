@@ -42,6 +42,8 @@ export const useSettingsStore = defineStore('settings', {
       };
       this.connection.instances.push(newInstance);
       this.lastCreatedInstanceId = newInstance.id;
+      // Automatically set the new instance as active
+      this.setSelectedInstanceId(newInstance.id);
     },
 
     isLastCreatedInstance(id) {
@@ -71,6 +73,16 @@ export const useSettingsStore = defineStore('settings', {
 
     setSelectedInstanceId(id) {
       this.selectedInstanceId = id;
+      const instance = this.getInstance(id);
+      if (instance) {
+        this.connection.ip = instance.ip;
+        this.connection.port = instance.port;
+      }
+    },
+
+    setActiveConnection(ip, port) {
+      this.connection.ip = ip;
+      this.connection.port = port;
     },
 
     setLanguage(lang) {
