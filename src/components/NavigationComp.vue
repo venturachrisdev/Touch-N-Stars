@@ -1,6 +1,6 @@
 <template>
-  <div class="top-0 h-16 bg-gray-800 shadow-md">
-    <div class="flex mx-auto max-w-md h-16 items-center justify-center">
+  <div class="top-0 bg-gray-800 shadow-md">
+    <div class="flex mx-auto flex-wrap min-h-16 items-center justify-center">
       <div v-if="store.isBackendReachable">
         <router-link
           to="/equipment"
@@ -117,8 +117,8 @@
       <div v-if="store.flatdeviceInfo.Connected">
         <router-link to="/flat" class="nav-button" active-class="active-nav-button">
           <svg
-            width="800px"
-            height="800px"
+            width="400px"
+            height="400px"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

@@ -11,20 +11,6 @@
       </div>
     </div>
 
-    <div v-if="store.flatdeviceInfo.SupportsOpenClose">
-      <div class="flex min-w-36 w-full border border-gray-500 p-2 rounded-lg">
-        <label for="toggle_cover" class="text-gray-400"
-          >{{ $t('components.flat.toggle_cover') }}
-        </label>
-        <div class="flex space-x-2 justify-center ml-auto">
-          <toggleButton
-            @click="flatdeviceSetCover"
-            :status-value="store.flatdeviceInfo.CoverState === 3"
-          />
-        </div>
-      </div>
-    </div>
-
     <div
       v-if="store.flatdeviceInfo.LightOn"
       class="flex min-w-36 w-full border border-gray-500 p-1 rounded-lg items-center"
@@ -41,6 +27,16 @@
         step="1"
         @blur="SetBrightness"
       />
+    </div>
+    <div v-if="store.flatdeviceInfo.SupportsOpenClose">
+      <div class="flex w-full gap-2 border border-gray-500 p-2 rounded-lg">
+        <button @click="closeCover" class="default-button-cyan">
+          {{ $t('components.flat.cover.close') }}
+        </button>
+        <button @click="openCover" class="default-button-cyan">
+          {{ $t('components.flat.cover.open') }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -69,15 +65,19 @@ async function flatdeviceSetLight() {
   }
 }
 
-async function flatdeviceSetCover() {
+async function closeCover() {
   try {
-    if (store.flatdeviceInfo.CoverState === 2) {
-      await apiService.flatdeviceSetCover(false);
-      console.log('Flat cover auf');
-    } else {
-      await apiService.flatdeviceSetCover(true);
-      console.log('Flat cover zu');
-    }
+    await apiService.flatdeviceSetCover(true);
+    console.log('Flat cover zu');
+  } catch (error) {
+    console.log('Feher beim steuern des Flatcover ');
+  }
+}
+
+async function openCover() {
+  try {
+    await apiService.flatdeviceSetCover(false);
+    console.log('Flat cover auf');
   } catch (error) {
     console.log('Feher beim steuern des Flatcover ');
   }
