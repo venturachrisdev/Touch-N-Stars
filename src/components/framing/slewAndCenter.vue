@@ -43,7 +43,7 @@
           </button>
         </div>
         <div class="w-full">
-          <setSequenceTarget v-if="true" class="mt-2 " />
+          <setSequenceTarget v-if="true" class="mt-2" />
         </div>
       </div>
     </div>
