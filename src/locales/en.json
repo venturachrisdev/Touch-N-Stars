@@ -338,7 +338,9 @@
       "device_name": "Name",
       "cover_state": "Cover State",
       "light_state": "Light State",
-      "brightness": "Brightness"
+      "brightness": "Brightness",
+      "toggle_light": "Light",
+      "toggle_cover": "Cover"
     }
   }
 }

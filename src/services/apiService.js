@@ -345,11 +345,6 @@ const apiService = {
     return this._simpleGetRequest(`${BASE_URL}/equipment/flatdevice/${action}`);
   },
 
-  /*set-light?true
-    set-cover?closed=true
-    set-brightness?brightness=42
-   */
-
   async flatdeviceSetLight(on) {
     try {
       const { BASE_URL } = getUrls();
