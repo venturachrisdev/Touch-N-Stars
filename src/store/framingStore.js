@@ -9,6 +9,7 @@ export const useFramingStore = defineStore('FramingStore', {
     DECangle: '',
     RAangleString: '',
     DECangleString: '',
+    useNinaCache: true,
   }),
   actions: {},
 });

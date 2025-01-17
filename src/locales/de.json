@@ -36,6 +36,7 @@
       }
     },
     "framing": {
+      "useNinaCache": "NINA Cachespeicher für das Zielbild verwenden",
       "setSequnceTarget": "als Sequenzziel setzen",
       "search": {
         "title": "Suche",

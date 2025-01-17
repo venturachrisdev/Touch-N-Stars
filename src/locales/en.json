@@ -35,7 +35,8 @@
         "emptyFields": "Please fill in all fields"
       }
     },
-    "framing": {
+    "framing": {  
+      "useNinaCache": "Use NINA cache for the target image",
       "setSequnceTarget": "set to sequence target",
       "search": {
         "title": "Search",

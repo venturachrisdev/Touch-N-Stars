@@ -23,7 +23,8 @@ async function getTargetPic() {
   try {
     const ra = framingStore.RAangle;
     const dec = framingStore.DECangle;
-    console.log('Bild wird abgerufen', 'RA: ', ra, 'DEC: ', dec);
+    const useCache = framingStore.useNinaCache;
+    console.log('Bild wird abgerufen', 'RA: ', ra, 'DEC: ', useCache);
     if (targetPic.value) {
       URL.revokeObjectURL(targetPic.value);
     }
