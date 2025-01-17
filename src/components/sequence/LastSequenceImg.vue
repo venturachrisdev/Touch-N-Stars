@@ -68,7 +68,12 @@
         <span>{{ Filter }}</span>
       </div>
     </div>
-    <ImageModal :showModal="showModal" :imageData="imageDataModal" :isLoading="isLoadingModal" @close="closeModal" />
+    <ImageModal
+      :showModal="showModal"
+      :imageData="imageDataModal"
+      :isLoading="isLoadingModal"
+      @close="closeModal"
+    />
   </div>
 </template>
 
@@ -96,7 +101,6 @@ const ExposureTime = ref(null);
 const dateValue = ref(null);
 const showModal = ref(false);
 const lastImgIndex = ref(null);
-
 
 // Computed Property für das Formatieren des Datums
 const formattedDate = computed(() => {
@@ -176,7 +180,7 @@ watch(
     if (!oldVal || newVal.length > oldVal.length) {
       const latestIndex = newVal.length - 1;
       getlastImage(latestIndex, 75, true, 0.5);
-      if(showModal.value){
+      if (showModal.value) {
         getlastModalImage(latestIndex, 90, true, 0.8);
       }
     }

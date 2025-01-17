@@ -12,7 +12,8 @@
       </div>
     </div>
     <!-- Inhalt der Modal -->
-    <div v-else
+    <div
+      v-else
       class="relative max-w-4xl w-full max-h-full p-4 bg-gray-900 rounded-xl z-60 flex items-center justify-center"
     >
       <button
