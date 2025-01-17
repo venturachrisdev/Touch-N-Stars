@@ -65,15 +65,19 @@ async function flatdeviceSetLight() {
   }
 }
 
-async function flatdeviceSetCover() {
+async function closeCover() {
   try {
-    if (store.flatdeviceInfo.CoverState === 2) {
-      await apiService.flatdeviceSetCover(false);
-      console.log('Flat cover auf');
-    } else {
-      await apiService.flatdeviceSetCover(true);
-      console.log('Flat cover zu');
-    }
+    await apiService.flatdeviceSetCover(true);
+    console.log('Flat cover zu');
+  } catch (error) {
+    console.log('Feher beim steuern des Flatcover ');
+  }
+}
+
+async function openCover() {
+  try {
+    await apiService.flatdeviceSetCover(false);
+    console.log('Flat cover auf');
   } catch (error) {
     console.log('Feher beim steuern des Flatcover ');
   }
