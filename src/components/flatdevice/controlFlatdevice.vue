@@ -1,11 +1,13 @@
 <template>
-  <div class="flex flex-col gap-y-1 w-full">
+  <div class="flex flex-col gap-2 w-full">
     <div v-if="store.flatdeviceInfo.SupportsOnOff">
-      <div class="flex min-w-36 w-full border border-gray-500 p-2 rounded-lg">
-        <label for="toggle_light" class="text-gray-400"
-          >{{ $t('components.flat.toggle_light') }}
+      <div
+        class="flex flex-row items-center justify-between w-full border border-gray-500 p-2 rounded-lg"
+      >
+        <label for="toggle_light" class="text-gray-400">
+          {{ $t('components.flat.toggle_light') }}
         </label>
-        <div class="flex space-x-2 justify-center ml-auto">
+        <div>
           <toggleButton @click="flatdeviceSetLight" :status-value="store.flatdeviceInfo.LightOn" />
         </div>
       </div>
@@ -13,27 +15,29 @@
 
     <div
       v-if="store.flatdeviceInfo.LightOn"
-      class="flex min-w-36 w-full border border-gray-500 p-1 rounded-lg items-center"
+      class="flex flex-row items-center justify-between w-full border border-gray-500 p-2 rounded-lg"
     >
-      <label for="SetBrightness" class="text mr-1 text-gray-400"
-        >{{ $t('components.flat.brightness') }}
+      <label for="SetBrightness" class="text-gray-400">
+        {{ $t('components.flat.brightness') }}
       </label>
       <input
         id="SetBrightness"
         v-model="flatStore.brightness"
         type="number"
-        class="w-28 text-black ml-auto px-3 h-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+        class="w-24 text-black px-3 h-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
         placeholder="1"
         step="1"
         @blur="SetBrightness"
       />
     </div>
     <div v-if="store.flatdeviceInfo.SupportsOpenClose">
-      <div class="flex w-full gap-2 border border-gray-500 p-2 rounded-lg">
-        <button @click="closeCover" class="default-button-cyan">
+      <div
+        class="grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-2 w-full border border-gray-500 p-2 rounded-lg"
+      >
+        <button @click="closeCover" class="default-button-cyan w-full">
           {{ $t('components.flat.cover.close') }}
         </button>
-        <button @click="openCover" class="default-button-cyan">
+        <button @click="openCover" class="default-button-cyan w-full">
           {{ $t('components.flat.cover.open') }}
         </button>
       </div>
