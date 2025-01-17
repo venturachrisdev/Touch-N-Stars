@@ -34,13 +34,16 @@
             :placeholder="$t('components.slewAndCenter.dec_placeholder')"
           />
         </div>
-        <div class="mt-4 grid sm:grid-cols-2 space-y-2 sm:space-x-2 sm:space-y-0">
+        <div class="mt-4 flex gap-2">
           <button @click="slew" class="default-button-cyan">
             {{ $t('components.slewAndCenter.slew') }}
           </button>
           <button @click="slewAndCenter" class="default-button-cyan">
             {{ $t('components.slewAndCenter.slew_and_center') }}
           </button>
+        </div>
+        <div class="w-full">
+          <setSequenceTarget v-if="true" class="mt-2 " />
         </div>
       </div>
     </div>
@@ -53,6 +56,7 @@ import apiService from '@/services/apiService';
 import { apiStore } from '@/store/store';
 import { useFramingStore } from '@/store/framingStore';
 import { useI18n } from 'vue-i18n';
+import setSequenceTarget from '@/components/framing/setSequenceTarget.vue';
 
 const { t } = useI18n();
 const store = apiStore();
@@ -112,11 +116,11 @@ function handleBlurDEC() {
 }
 
 function updateRA() {
-  framingStore.RAangleStringDeg = hmsToDegrees(localRAangleString.value);
+  framingStore.RAangle = hmsToDegrees(localRAangleString.value);
 }
 
 function updateDec() {
-  framingStore.DECangleStringDeg = dmsToDegrees(localDECangleString.value);
+  framingStore.DECangle = dmsToDegrees(localDECangleString.value);
 }
 
 async function wait(ms) {

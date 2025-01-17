@@ -103,6 +103,26 @@ const apiService = {
     return this._simpleGetRequest(`${BASE_URL}/sequence/${action}`);
   },
 
+  //sequence/set-target?name=Orion Nebula&ra=83.822083&dec=-5.391111&rotation=5&index=0
+  async sequnceTargetSet(name, ra, dec, rotation, index) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/sequence/set-target?`, {
+        params: {
+          name,
+          ra,
+          dec,
+          rotation,
+          index,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error read Image :', error);
+      throw error;
+    }
+  },
+
   //-------------------------------------  Mount ---------------------------------------
   mountAction(action) {
     const { BASE_URL } = getUrls();
@@ -413,23 +433,7 @@ const apiService = {
     return this._getWithParams(`${API_URL}ngc/search`, { query, limit });
   },
 
-  async getNgcCache() {
-    const { API_URL } = getUrls();
-    return this._simpleGetRequest(`${API_URL}ngc/cache`);
-  },
-
-  async updateNgcCache(data) {
-    try {
-      const { API_URL } = getUrls();
-      const response = await axios.post(`${API_URL}ngc/cache`, { data });
-      return response.data;
-    } catch (error) {
-      console.error('Error updating NGC cache:', error);
-      throw error;
-    }
-  },
-
-  async searchTargetPic(width, height, fov, ra, dec) {
+  async searchTargetPic(width, height, fov, ra, dec, useCache) {
     try {
       const { TARGETPIC_URL } = getUrls();
       const response = await axios.get(TARGETPIC_URL, {
@@ -439,9 +443,7 @@ const apiService = {
           fov,
           ra,
           dec,
-          hips: 'CDS/P/DSS2/color',
-          projection: 'STG',
-          format: 'jpg',
+          useCache,
         },
         responseType: 'blob',
       });
