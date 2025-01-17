@@ -332,6 +332,13 @@
       "filter": "Filter:",
       "unknown": "Unknown",
       "nofilteravailable": "No filter available"
+    },
+    "flat":{
+      "please_connect_flatDevice": "Please connect the flat device",
+      "device_name": "Name",
+      "cover_state": "Cover State",
+      "light_state": "Light State",
+      "brightness": "Brightness"
     }
   }
 }
