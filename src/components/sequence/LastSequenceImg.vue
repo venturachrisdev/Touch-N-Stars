@@ -127,7 +127,7 @@ async function getlastImage(index, quality, resize, scale) {
       imageData.value = `data:image/jpeg;base64,${image}`;
       setSelectedDataset(index);
       lastImgIndex.value = index;
-      isLoadingImg = false;
+      isLoadingImg.value = false;
     }
     const resultModal = await apiService.getSequenceImage(index, 100, false, 1);
     const imageModal = resultModal?.Response;
