@@ -19,7 +19,7 @@
         <div class="flex space-x-2 justify-center ml-auto">
           <toggleButton
             @click="flatdeviceSetCover"
-            :status-value="store.flatdeviceInfo.CoverState === 2"
+            :status-value="store.flatdeviceInfo.CoverState === 3"
           />
         </div>
       </div>
@@ -73,7 +73,7 @@ async function flatdeviceSetLight(toggle) {
 
 async function flatdeviceSetCover(toggle) {
   try {
-    if (store.flatdeviceInfo.LightOn) {
+    if (store.flatdeviceInfo.CoverState === 2) {
       await apiService.flatdeviceSetCover(false);
       console.log('Flat cover auf');
     } else {

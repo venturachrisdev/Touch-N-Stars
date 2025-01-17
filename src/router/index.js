@@ -10,6 +10,7 @@ import LastLogs from '../components/LastLogs.vue';
 import SequencePage from '../views/SequencePage.vue';
 import DomePage from '../views/DomePage.vue';
 import SettingsPage from '../views/SettingsPage.vue';
+import FlatdevicePage from '@/views/FlatdevicePage.vue';
 
 const routes = [
   { path: '/', component: StartPage },
@@ -23,6 +24,7 @@ const routes = [
   { path: '/sequence', component: SequencePage },
   { path: '/dome', component: DomePage },
   { path: '/settings', component: SettingsPage },
+  { path: '/flat', component: FlatdevicePage },
 ];
 
 const router = createRouter({
