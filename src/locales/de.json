@@ -1,4 +1,8 @@
 {
+  "common": {
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen"
+  },
   "general": {
     "cancel": "Abbrechen",
     "confirm": "Bestätigen",
@@ -36,6 +40,8 @@
       }
     },
     "framing": {
+      "confirmSetTargetTitle": "Zielauswahl bestätigen",
+      "confirmSetTargetMessage": "Möchten Sie dieses Ziel wirklich als Sequenzziel festlegen?",
       "useNinaCache": "NINA Cachespeicher für das Zielbild verwenden",
       "setSequnceTarget": "als Sequenzziel setzen",
       "search": {

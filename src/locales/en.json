@@ -1,4 +1,8 @@
 {
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
   "general": {
     "cancel": "Cancel",
     "confirm": "Confirm",
@@ -35,7 +39,9 @@
         "emptyFields": "Please fill in all fields"
       }
     },
-    "framing": {  
+    "framing": {
+      "confirmSetTargetTitle": "Confirm Target Selection",
+      "confirmSetTargetMessage": "Are you sure you want to set this target as the sequence target?",
       "useNinaCache": "Use NINA cache for the target image",
       "setSequnceTarget": "set to sequence target",
       "search": {
