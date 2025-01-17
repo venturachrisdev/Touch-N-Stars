@@ -34,7 +34,7 @@
             :placeholder="$t('components.slewAndCenter.dec_placeholder')"
           />
         </div>
-        <div class="mt-4 grid sm:grid-cols-2 space-y-2 sm:space-x-2 sm:space-y-0">
+        <div class="mt-4 flex gap-2">
           <button @click="slew" class="default-button-cyan">
             {{ $t('components.slewAndCenter.slew') }}
           </button>
@@ -42,7 +42,9 @@
             {{ $t('components.slewAndCenter.slew_and_center') }}
           </button>
         </div>
-        <setSequenceTarget v-if="true" class="w-full mt-2 bg" />
+        <div class="w-full">
+          <setSequenceTarget v-if="true" class="mt-2 " />
+        </div>
       </div>
     </div>
   </div>
