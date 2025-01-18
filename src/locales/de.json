@@ -220,7 +220,7 @@
       "error": "Fehler bei der Steuerung des Guiders:",
       "start": "Starten",
       "stop": "Stoppen",
-      "rms_error": "RMS-Fehler in Bogensekunden",
+      "rms_error": "RMS-Fehler",
       "title": "Guider"
     },
     "focuser": {

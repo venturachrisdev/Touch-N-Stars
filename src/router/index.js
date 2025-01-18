@@ -11,6 +11,7 @@ import SequencePage from '../views/SequencePage.vue';
 import DomePage from '../views/DomePage.vue';
 import SettingsPage from '../views/SettingsPage.vue';
 import FlatdevicePage from '@/views/FlatdevicePage.vue';
+import SequenceMonitoring from '@/views/SequenceMonitoring.vue';
 
 const routes = [
   { path: '/', component: StartPage },
@@ -25,6 +26,7 @@ const routes = [
   { path: '/dome', component: DomePage },
   { path: '/settings', component: SettingsPage },
   { path: '/flat', component: FlatdevicePage },
+  { path: '/seq-mon', component: SequenceMonitoring },
 ];
 
 const router = createRouter({

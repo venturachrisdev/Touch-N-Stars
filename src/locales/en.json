@@ -215,7 +215,7 @@
       "error": "Error controlling guider:",
       "start": "Start",
       "stop": "Stop",
-      "rms_error": "RMS Error in Arcseconds",
+      "rms_error": "RMS Error",
       "title": "Guider"
     },
     "focuser": {
