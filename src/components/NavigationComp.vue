@@ -22,10 +22,13 @@
             active-class="active-nav-button"
             :title="$t('components.navigation.camera')"
           >
-            <CameraIcon class="icon" />
+            <CameraIcon
+              class="icon"
+              :class="store.cameraInfo.IsExposing ? 'text-green-500' : 'text-white'"
+            />
           </router-link>
         </div>
-        <div v-if="store.focuserInfo.Connected">
+        <div v-if="store.focuserInfo.Connected && !store.sequenceRunning">
           <router-link
             to="/autofocus"
             class="nav-button"
@@ -52,7 +55,14 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="icon"
+              :class="[
+                'icon',
+                store.mountInfo.AtPark
+                  ? 'text-red-500'
+                  : !store.mountInfo.TrackingEnabled
+                    ? 'text-yellow-500'
+                    : 'text-green-500',
+              ]"
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path d="M6 21l6 -5l6 5" />
@@ -64,7 +74,7 @@
             </svg>
           </router-link>
         </div>
-        <div v-if="store.domeInfo.Connected">
+        <div v-if="store.domeInfo.Connected && !store.sequenceRunning">
           <router-link
             to="/dome"
             class="nav-button"
@@ -118,22 +128,12 @@
             </svg>
           </router-link>
         </div>
-        <div v-if="store.flatdeviceInfo.Connected">
+        <div v-if="store.flatdeviceInfo.Connected && !store.sequenceRunning">
           <router-link to="/flat" class="nav-button" active-class="active-nav-button">
-            <svg
-              width="400px"
-              height="400px"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M10.0512 15.75L9.51642 14.2768L9.18821 14.0137C8.15637 13.1865 7.5 11.9204 7.5 10.5C7.5 8.01472 9.51472 6 12 6C14.4853 6 16.5 8.01472 16.5 10.5C16.5 11.9204 15.8436 13.1865 14.8118 14.0137L14.4836 14.2768L13.9488 15.75H10.0512ZM9 17.25H15L15.75 15.184C17.1217 14.0844 18 12.3948 18 10.5C18 7.18629 15.3137 4.5 12 4.5C8.68629 4.5 6 7.18629 6 10.5C6 12.3948 6.87831 14.0844 8.25 15.184L9 17.25ZM14.25 19.5V18H9.75V19.5H14.25Z"
-                fill="#FFFFFF"
-              />
-            </svg>
+            <LightBulbIcon
+              class="icon"
+              :class="store.flatdeviceInfo.LightOn ? 'text-yellow-300' : 'text-white'"
+            />
           </router-link>
         </div>
         <div v-if="store.guiderInfo.Connected">
@@ -172,7 +172,10 @@
             active-class="active-nav-button"
             :title="$t('components.navigation.sequence')"
           >
-            <ListBulletIcon class="icon" />
+            <ListBulletIcon
+              class="icon"
+              :class="store.sequenceRunning ? 'text-green-500' : 'text-white'"
+            />
           </router-link>
         </div>
         <button
@@ -195,6 +198,7 @@ import {
   EyeIcon,
   ListBulletIcon,
   Cog6ToothIcon,
+  LightBulbIcon,
 } from '@heroicons/vue/24/outline';
 import { apiStore } from '@/store/store';
 
