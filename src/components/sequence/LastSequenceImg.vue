@@ -25,7 +25,7 @@
 
     <div
       v-if="!isLoadingImg"
-      class="border min-w-60 border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl p-4 portrait:mt-2 landscape:ml-4 text-sm space-y-2"
+      class="min-w-60 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl p-4 portrait:mt-2 landscape:ml-4 text-sm space-y-2"
     >
       <div v-if="formattedDate" class="flex justify-between">
         <span class="font-bold">{{ $t('components.sequence.date') }}: </span>

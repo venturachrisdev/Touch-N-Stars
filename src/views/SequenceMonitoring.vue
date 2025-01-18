@@ -1,19 +1,19 @@
 <template>
-  <div class="flex items-center justify-center">
+  <div class="flex items-center justify-center m-4">
     <div
       v-if="store.imageHistoryInfo && store.imageHistoryInfo.length > 0"
-      class="flex flex-col max-w-md landscape:max-w-2xl justify-center items-center space-y-4"
+      class="flex flex-col w-full max-w-4xl justify-center items-center space-y-4"
     >
       <div class="mt-5">
         <LastSequenceImg />
       </div>
       <div
-        class="w-full min-h-60 min-w-full bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-gray-700"
+        class="w-full min-h-60 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl"
       >
         <SequenzGraph />
       </div>
       <div
-        class="flex w-full min-h-40 bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-gray-700"
+        class="flex w-full min-h-40 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl"
       >
         <GuiderStats class="min-w-24 pt-4" />
         <GuiderGraph class="w-full" />

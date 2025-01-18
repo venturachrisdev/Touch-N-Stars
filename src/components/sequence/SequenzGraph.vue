@@ -1,6 +1,6 @@
 <template>
   <div>
-    <canvas ref="rmsGraph"></canvas>
+    <canvas class="max-h-48" ref="rmsGraph"></canvas>
   </div>
 </template>
 

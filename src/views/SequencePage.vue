@@ -35,11 +35,9 @@
 import infoSequence from '@/components/sequence/infoSequence.vue';
 import controlSequence from '@/components/sequence/controlSequence.vue';
 import { apiStore } from '@/store/store';
-import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 
 const currentTab = ref('showSequenz'); // Standardwert
 const store = apiStore();
-const { t } = useI18n();
 </script>
 <style scoped></style>
