@@ -1,10 +1,10 @@
 <template>
   <div class="flex top-0 bg-gray-800 shadow-md overflow-hidden justify-center h-20">
     <div
-      class="flex mx-auto items-center justify-start overflow-x-auto overflow-y-hidden scrollbar-hide "
+      class="flex mx-auto items-center justify-start overflow-x-auto overflow-y-hidden scrollbar-hide"
       style="scroll-snap-type: x mandatory"
     >
-      <div class="flex space-x-2 px-2 " style="scroll-snap-align: start">
+      <div class="flex space-x-2 px-2" style="scroll-snap-align: start">
         <div v-if="store.isBackendReachable">
           <router-link
             to="/equipment"
