@@ -178,7 +178,11 @@
             />
           </router-link>
         </div>
-        <div v-if="store.sequenceRunning">
+        <div
+          v-if="
+            store.sequenceRunning || (store.imageHistoryInfo && store.imageHistoryInfo.length > 0)
+          "
+        >
           <router-link
             to="/seq-mon"
             class="nav-button"
