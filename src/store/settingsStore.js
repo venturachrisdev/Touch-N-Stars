@@ -16,6 +16,12 @@ export const useSettingsStore = defineStore('settings', {
     },
     selectedInstanceId: null,
     lastCreatedInstanceId: null,
+    monitorViewSetting: {
+      showImage: true,
+      showImgStatsGraph: true,
+      showGuiderGraph: true,
+      showGuiderAfGraph: true,
+    },
   }),
   actions: {
     setCoordinates(coords) {

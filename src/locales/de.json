@@ -182,7 +182,16 @@
       "stDev": "St. Dev",
       "rmsText": "RMS",
       "sequence_control": "Sequenze Kontrolle",
-      "temperature": "Temperatur"
+      "temperature": "Temperatur",
+      "monitor": {
+        "settings" : {
+          "title" : "Ansichtseinstellungen",
+          "showImage": "Letztes Bild anzeigen",
+          "showImgStatsGraph" : "HFR-Chart anzeigen",
+          "showGuiderGraph" : "Guider-Chart anzeigen",
+          "showGuiderAfGraph" : "Autofocus-Chart anzeigen"
+        }
+      }
     },
     "mount": {
       "title": "Montierung",
