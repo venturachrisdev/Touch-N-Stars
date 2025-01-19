@@ -52,7 +52,7 @@
       v-if="store.imageHistoryInfo && store.imageHistoryInfo.length > 0"
       class="flex flex-col w-full max-w-4xl justify-center items-center space-y-4"
     >
-      <div  class="mt-5 w-full">
+      <div class="mt-5 w-full">
         <LastSequenceImg />
       </div>
       <div
