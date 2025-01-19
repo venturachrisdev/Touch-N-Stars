@@ -1,7 +1,7 @@
 <template>
-  <div class="top-0 bg-gray-800 shadow-md overflow-hidden">
+  <div class="flex top-0 bg-gray-800 shadow-md overflow-hidden justify-center max-h-20">
     <div
-      class="flex mx-auto min-h-16 items-center justify-center overflow-x-auto overflow-y-hidden scrollbar-hide lg:container lg:px-4 lg:overflow-visible"
+      class="flex mx-auto min-h-16 items-center justify-start overflow-x-auto overflow-y-hidden scrollbar-hide lg:container lg:px-4 lg:overflow-visible"
       style="scroll-snap-type: x mandatory"
     >
       <div class="flex space-x-2 px-2 lg:px-0" style="scroll-snap-align: start">
