@@ -1,6 +1,6 @@
 <template>
-  <div class="h-screen">
-    <div class="h-1/2 flex items-center justify-center">
+  <div class="flex flex-col">
+    <div>
       <canvas ref="chartCanvas" class="w-full h-full"></canvas>
     </div>
     <div class="text-center mt-4">

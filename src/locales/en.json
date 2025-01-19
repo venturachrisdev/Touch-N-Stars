@@ -177,7 +177,17 @@
       "stDev": "St. Dev.",
       "rmsText": "RMS",
       "sequence_control": "Sequence Controls",
-      "temperature": "Temperature"
+      "temperature": "Temperature",
+      "monitor": {
+        "settings" : {
+          "title" : "View settings",
+          "showImage": "Show last image",
+          "showImageStats": "Show last image stats",
+          "showImgStatsGraph" : "Show HFR-Chart",
+          "showGuiderGraph" : "Show guider-chart",
+          "showGuiderAfGraph" : "Show autofocus-chart"
+        }
+      }
     },
     "mount": {
       "title": "Mount",

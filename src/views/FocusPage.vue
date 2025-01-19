@@ -103,9 +103,9 @@
             </svg>
             <span class="sr-only">{{ $t('components.loading') }}</span>
           </div>
-          <div v-else-if="!store.focuserAfInfo.afError">
+          <div class="" v-else-if="!store.focuserAfInfo.afError">
             <p class="mb-4 text-center">{{ $t('components.focuser.last_autofocus') }}</p>
-            <AutofocusGrafik class="flex-grow" />
+            <AutofocusGrafik class="flex-grow h-screen" />
           </div>
           <div v-else class="text-center text-red-600">
             <p>{{ $t('components.focuser.autofocus_error') }}</p>
