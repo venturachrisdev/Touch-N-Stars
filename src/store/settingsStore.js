@@ -18,6 +18,7 @@ export const useSettingsStore = defineStore('settings', {
     lastCreatedInstanceId: null,
     monitorViewSetting: {
       showImage: true,
+      showImageStats: true,
       showImgStatsGraph: true,
       showGuiderGraph: true,
       showGuiderAfGraph: true,

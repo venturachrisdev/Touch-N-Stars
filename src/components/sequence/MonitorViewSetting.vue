@@ -3,7 +3,7 @@
     <div
       class="flex flex-row items-center justify-between w-full border border-gray-500 p-2 rounded-lg"
     >
-      <label for="toggle_light" class="text-gray-400">
+      <label for="showImage" class="text-gray-400">
         {{ $t('components.sequence.monitor.settings.showImage') }}
       </label>
       <div>
@@ -19,7 +19,24 @@
     <div
       class="flex flex-row items-center justify-between w-full border border-gray-500 p-2 rounded-lg"
     >
-      <label for="toggle_light" class="text-gray-400">
+      <label for="showImageStats" class="text-gray-400">
+        {{ $t('components.sequence.monitor.settings.showImageStats') }}
+      </label>
+      <div>
+        <toggleButton
+          @click="
+            settingsStore.monitorViewSetting.showImageStats =
+              !settingsStore.monitorViewSetting.showImageStats
+          "
+          :status-value="settingsStore.monitorViewSetting.showImageStats"
+        />
+      </div>
+    </div>
+
+    <div
+      class="flex flex-row items-center justify-between w-full border border-gray-500 p-2 rounded-lg"
+    >
+      <label for="showImgStatsGraph" class="text-gray-400">
         {{ $t('components.sequence.monitor.settings.showImgStatsGraph') }}
       </label>
       <div>
@@ -36,7 +53,7 @@
     <div
       class="flex flex-row items-center justify-between w-full border border-gray-500 p-2 rounded-lg"
     >
-      <label for="toggle_light" class="text-gray-400">
+      <label for="showGuiderGraph" class="text-gray-400">
         {{ $t('components.sequence.monitor.settings.showGuiderGraph') }}
       </label>
       <div>
@@ -53,7 +70,7 @@
     <div
       class="flex flex-row items-center justify-between w-full border border-gray-500 p-2 rounded-lg"
     >
-      <label for="toggle_light" class="text-gray-400">
+      <label for="showGuiderAfGraph" class="text-gray-400">
         {{ $t('components.sequence.monitor.settings.showGuiderAfGraph') }}
       </label>
       <div>

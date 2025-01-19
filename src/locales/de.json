@@ -187,6 +187,7 @@
         "settings" : {
           "title" : "Ansichtseinstellungen",
           "showImage": "Letztes Bild anzeigen",
+          "showImageStats": "Messwerte des Bildes anzeigen",
           "showImgStatsGraph" : "HFR-Chart anzeigen",
           "showGuiderGraph" : "Guider-Chart anzeigen",
           "showGuiderAfGraph" : "Autofocus-Chart anzeigen"
