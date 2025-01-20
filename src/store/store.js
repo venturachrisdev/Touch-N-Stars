@@ -41,6 +41,7 @@ export const apiStore = defineStore('store', {
     coordinates: null,
     currentLanguage: 'en',
     showSettings: false,
+    minimumApiVersion: "2.1.4.0",
   }),
 
   actions: {
@@ -61,9 +62,8 @@ export const apiStore = defineStore('store', {
     async fetchAllInfos() {
       try {
         this.isBackendReachable = await apiService.isBackendReachable();
-        //console.log('Backend erreichbar');
-        if (!this.isBackendReachable) {
-          //console.warn('Backend ist nicht erreichbar');
+        if (!this.isVersionNewerOrEqual(this.isBackendReachable.Response, this.minimumApiVersion)) {
+          console.warn('Backend ist nicht erreichbar');
           this.clearAllStates();
           return;
         }
@@ -402,6 +402,21 @@ export const apiStore = defineStore('store', {
       cStore.coordinates.longitude = this.profileInfo.AstrometrySettings.Longitude;
       cStore.coordinates.latitude = this.profileInfo.AstrometrySettings.Latitude;
       cStore.coordinates.altitude = this.profileInfo.AstrometrySettings.Elevation;
+    },
+    isVersionNewerOrEqual(currentVersion, minimumVersion) {
+      const parseVersion = (version) => version.split('.').map(Number);
+    
+      const currentParts = parseVersion(currentVersion);
+      const minimumParts = parseVersion(minimumVersion);
+    
+      for (let i = 0; i < minimumParts.length; i++) {
+        const current = currentParts[i] || 0; // Standardwert: 0, falls currentVersion kürzer ist
+        const minimum = minimumParts[i] || 0; // Standardwert: 0, falls minimumVersion kürzer ist
+    
+        if (current > minimum) return true; // Neuere Version
+        if (current < minimum) return false; // Ältere Version
+      }
+      return true; // Alle Teile gleich oder currentVersion ist neuer
     },
   },
 });

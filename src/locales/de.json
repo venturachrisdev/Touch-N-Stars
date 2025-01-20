@@ -16,7 +16,7 @@
   },
   "app": {
     "title": "Touch'N'Stars",
-    "unreachable": "NINA ist nicht erreichbar!",
+    "unreachable": "NINA ist nicht erreichbar oder die API-Verion zu alt",
     "connecting": "Versuche Verbindung herzustellen"
   },
   "components": {

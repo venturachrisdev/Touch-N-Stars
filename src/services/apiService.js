@@ -49,7 +49,8 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/version`);
-      return response.status === 200;
+      //console.log(response.data);
+      return response.data;
     } catch (error) {
       console.error('Error reaching backend:', error.message);
       return false;
