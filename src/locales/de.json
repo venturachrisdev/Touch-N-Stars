@@ -20,6 +20,10 @@
     "connecting": "Versuche Verbindung herzustellen"
   },
   "components": {
+    "tutorial": {
+      "previous": "Zurück",
+      "next": "Weiter"
+    },
     "settings": {
       "title": "Einstellungen",
       "language": "Sprache",

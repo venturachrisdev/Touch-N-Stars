@@ -20,6 +20,10 @@
     "connecting": "Attempting to establish connection"
   },
   "components": {
+    "tutorial": {
+      "previous": "Previous",
+      "next": "Next"
+    },
     "settings": {
       "title": "Settings",
       "language": "Language",
