@@ -22,7 +22,8 @@
   "components": {
     "tutorial": {
       "previous": "Previous",
-      "next": "Next"
+      "next": "Next",
+      "skip": "Skip Tutorial"
     },
     "settings": {
       "title": "Settings",

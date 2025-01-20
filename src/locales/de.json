@@ -22,7 +22,8 @@
   "components": {
     "tutorial": {
       "previous": "Zurück",
-      "next": "Weiter"
+      "next": "Weiter",
+      "skip": "Tutorial überspringen"
     },
     "settings": {
       "title": "Einstellungen",

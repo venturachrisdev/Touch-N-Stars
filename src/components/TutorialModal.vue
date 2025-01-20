@@ -28,6 +28,10 @@
             </button>
             <span v-else></span>
 
+            <button @click="closeTutorial" class="btn-skip">
+              {{ $t('components.tutorial.skip') }}
+            </button>
+
             <button v-if="currentStepIndex < steps.length - 1" @click="nextStep" class="btn-next">
               {{ $t('components.tutorial.next') }}
             </button>
@@ -163,6 +167,15 @@ button {
 .btn-next:hover,
 .btn-close:hover {
   background-color: #2563eb;
+}
+
+.btn-skip {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-skip:hover {
+  background-color: #dc2626;
 }
 
 /* Responsive Design */
