@@ -162,7 +162,7 @@
               stroke-linejoin="round"
               :class="[
                 'icon icon-tabler icons-tabler-outline icon-tabler-viewfinder',
-                store.guiderInfo.State	== 'Guiding' ? 'text-green-500' : 'text-white',
+                store.guiderInfo.State == 'Guiding' ? 'text-green-500' : 'text-white',
               ]"
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />

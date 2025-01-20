@@ -499,13 +499,14 @@ const apiService = {
       - info
       - clear-calibration
       - graph                 */
-  
+
   guiderAction(action) {
     const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/guider/${action}`);
   },
 
-  async guiderStart(calibrate) { //calibrate = true or false
+  async guiderStart(calibrate) {
+    //calibrate = true or false
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/guider/start`, {
@@ -518,7 +519,8 @@ const apiService = {
     }
   },
 
-  async fetchGuiderChartDataApi(x) { //x = 50, 100, 200 or 400
+  async fetchGuiderChartDataApi(x) {
+    //x = 50, 100, 200 or 400
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/guider/graph`, {
