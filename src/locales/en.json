@@ -20,6 +20,11 @@
     "connecting": "Attempting to establish connection"
   },
   "components": {
+    "tutorial": {
+      "previous": "Previous",
+      "next": "Next",
+      "skip": "Skip Tutorial"
+    },
     "settings": {
       "title": "Settings",
       "language": "Language",
@@ -37,7 +42,8 @@
       },
       "errors": {
         "emptyFields": "Please fill in all fields"
-      }
+      },
+      "showTutorial": "Show Tutorial"
     },
     "framing": {
       "confirmSetTargetTitle": "Confirm Target Selection",
@@ -129,7 +135,8 @@
       "guider": "Guider",
       "dome": "Dome",
       "sequence": "Sequence",
-      "settings": "Settings"
+      "settings": "Settings",
+      "vnc": "VNC"
     },
     "language": {
       "en": "English",
@@ -173,13 +180,13 @@
       "sequence_control": "Sequence Controls",
       "temperature": "Temperature",
       "monitor": {
-        "settings" : {
-          "title" : "View settings",
+        "settings": {
+          "title": "View settings",
           "showImage": "Show last image",
           "showImageStats": "Show last image stats",
-          "showImgStatsGraph" : "Show HFR-Chart",
-          "showGuiderGraph" : "Show guider-chart",
-          "showGuiderAfGraph" : "Show autofocus-chart"
+          "showImgStatsGraph": "Show HFR-Chart",
+          "showGuiderGraph": "Show guider-chart",
+          "showGuiderAfGraph": "Show autofocus-chart"
         }
       }
     },
@@ -358,11 +365,11 @@
       "light_state": "Light State:",
       "brightness": "Brightness:",
       "toggle_light": "Light:",
-      "cover":{
+      "cover": {
         "close": "close cover",
         "open": "open cover"
       },
-      "title":"Flatpanel"
+      "title": "Flatpanel"
     }
   }
 }

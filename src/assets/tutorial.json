@@ -1,0 +1,48 @@
+{
+  "steps": [
+    {
+      "id": "welcome",
+      "title": {
+        "en": "Welcome to Touch'N'Stars",
+        "de": "Willkommen bei Touch'N'Stars"
+      },
+      "content": {
+        "en": "This app helps you control your astronomy equipment and plan your observations.",
+        "de": "Diese App hilft Ihnen, Ihre Astronomie-Ausrüstung zu steuern und Ihre Beobachtungen zu planen."
+      }
+    },
+    {
+      "id": "navigation",
+      "title": {
+        "en": "Navigation",
+        "de": "Navigation"
+      },
+      "content": {
+        "en": "Swipe left/right to navigate between different equipment sections. Tap on a section to access detailed controls.",
+        "de": "Wischen Sie nach links/rechts, um zwischen den verschiedenen Gerätebereichen zu navigieren. Tippen Sie auf einen Bereich, um auf die detaillierten Steuerungen zuzugreifen."
+      }
+    },
+    {
+      "id": "equipment",
+      "title": {
+        "en": "Equipment Control",
+        "de": "Gerätesteuerung"
+      },
+      "content": {
+        "en": "Connect and control your astronomy equipment including mount, camera, focuser, and more.",
+        "de": "Verbinden und steuern Sie Ihre Astronomie-Ausrüstung, einschließlich Montierung, Kamera, Fokussierer und mehr."
+      }
+    },
+    {
+      "id": "settings",
+      "title": {
+        "en": "Settings",
+        "de": "Einstellungen"
+      },
+      "content": {
+        "en": "Access settings to configure your connection, language preferences, and more.",
+        "de": "Greifen Sie auf Einstellungen zu, um Ihre Verbindung, Spracheinstellungen und mehr zu konfigurieren."
+      }
+    }
+  ]
+}

@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import StartPage from '../views/StartPage.vue';
-import EquipmentPage from '../views/EquipmentPage.vue';
-import CameraPage from '../views/CameraPage.vue';
-import FocusPage from '../views/FocusPage.vue';
-import MountPage from '../views/MountPage.vue';
-import GuidingPage from '../views/GuidingPage.vue';
-import TargetPic from '../components/testTest.vue';
-import LastLogs from '../components/LastLogs.vue';
-import SequencePage from '../views/SequencePage.vue';
-import DomePage from '../views/DomePage.vue';
-import SettingsPage from '../views/SettingsPage.vue';
+import StartPage from '@/views/StartPage.vue';
+import EquipmentPage from '@/views/EquipmentPage.vue';
+import CameraPage from '@/views/CameraPage.vue';
+import FocusPage from '@/views/FocusPage.vue';
+import MountPage from '@/views/MountPage.vue';
+import GuidingPage from '@/views/GuidingPage.vue';
+import TargetPic from '@/components/testTest.vue';
+import LastLogs from '@/components/LastLogs.vue';
+import SequencePage from '@/views/SequencePage.vue';
+import DomePage from '@/views/DomePage.vue';
+import SettingsPage from '@/views/SettingsPage.vue';
 import FlatdevicePage from '@/views/FlatdevicePage.vue';
 import SequenceMonitoring from '@/views/SequenceMonitoring.vue';
 

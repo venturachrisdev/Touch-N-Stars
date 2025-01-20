@@ -7,7 +7,6 @@
 
       <div class="space-y-4">
         <!-- GPS Coordinates -->
-        <!-- nur anzeigen wenn das Backend erreibar ist -->
         <div v-if="store.isBackendReachable" class="bg-gray-700 p-3 rounded-lg">
           <h3 class="text-lg font-medium mb-2 text-gray-300">
             {{ $t('components.settings.coordinates') }}
@@ -221,8 +220,21 @@
             </option>
           </select>
         </div>
+
+        <!-- Tutorial Button -->
+        <div class="bg-gray-700 p-3 rounded-lg">
+          <button
+            @click="showTutorial"
+            class="w-full px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-md transition-colors"
+          >
+            {{ $t('components.settings.showTutorial') }}
+          </button>
+        </div>
       </div>
     </div>
+
+    <!-- Tutorial Modal -->
+    <TutorialModal v-if="showTutorialModal" :steps="tutorialSteps" @close="closeTutorial" />
   </div>
 </template>
 
@@ -232,6 +244,7 @@ import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '@/store/settingsStore';
 import { apiStore } from '@/store/store';
 import apiService from '@/services/apiService';
+import TutorialModal from '@/components/TutorialModal.vue';
 
 const { locale } = useI18n();
 const settingsStore = useSettingsStore();
@@ -246,6 +259,10 @@ const gpsError = ref(null);
 const instances = computed(() => settingsStore.connection.instances);
 const editingInstance = ref(null);
 const selectedInstance = ref(settingsStore.selectedInstanceId);
+
+// Tutorial
+const showTutorialModal = ref(false);
+const tutorialSteps = computed(() => settingsStore.tutorial.steps);
 
 // Sync selected instance with store
 watch(selectedInstance, (newId) => {
@@ -360,7 +377,7 @@ function removeInstance(id) {
 
 async function getCurrentLocation() {
   if (!window.__TAURI__) {
-    gpsError.value = 'GPS only available in Tauri Android builds';
+    gpsError.value = 'GPS only available in Android builds';
     return;
   }
 
@@ -419,5 +436,15 @@ async function saveCoordinates() {
       console.error('Failed to update backend coordinates:', error);
     }
   }
+}
+
+// Tutorial methods
+function showTutorial() {
+  showTutorialModal.value = true;
+}
+
+function closeTutorial() {
+  showTutorialModal.value = false;
+  settingsStore.completeTutorial();
 }
 </script>
