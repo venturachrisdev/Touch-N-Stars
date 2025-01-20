@@ -524,7 +524,7 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/guider/graph`, {
-        params: { calibrate },
+        params: { x },
       });
       console.log(response.data);
       return response.data;
