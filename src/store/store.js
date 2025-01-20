@@ -246,6 +246,7 @@ export const apiStore = defineStore('store', {
 
       if (guiderResponse.Success) {
         this.guiderInfo = guiderResponse.Response;
+        //console.log(this.guiderInfo);
       } else {
         console.error('Fehler in der Guider-API-Antwort:', guiderResponse.Error);
       }
