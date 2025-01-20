@@ -62,7 +62,7 @@
         <SequenzGraph />
       </div>
       <div
-        v-if="settingsStore.monitorViewSetting.showGuiderGraph"
+        v-if="settingsStore.monitorViewSetting.showGuiderGraph && store.guiderInfo.Connected"
         class="flex w-full min-h-40 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl"
       >
         <GuiderStats class="min-w-24 pt-4" />
@@ -70,7 +70,7 @@
       </div>
       <div
         class="flex flex-col w-full min-h-80 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl"
-        v-if="settingsStore.monitorViewSetting.showGuiderAfGraph"
+        v-if="settingsStore.monitorViewSetting.showGuiderAfGraph && store.focuserInfo.Connected"
       >
         <p class="mb-4 text-center">{{ $t('components.focuser.last_autofocus') }}</p>
         <AutofocusGrafik class="flex-grow h-screen-3/4" />

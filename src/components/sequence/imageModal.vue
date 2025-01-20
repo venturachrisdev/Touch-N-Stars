@@ -78,14 +78,10 @@ let panzoomInstance = null;
 const initializePanzoom = () => {
   if (image.value) {
     panzoomInstance = Panzoom(image.value, {
-      maxZoom: 10,
-      minZoom: 1,
+      maxZoom: 40,
+      minZoom: 0.5,
       bounds: true,
-      boundsPadding: 0.1,
-      contain: 'inside',
-      startTransform: 'scale(1)',
-      // Optional: Aktiviere Gesten, falls auf Touch-Geräten
-      touchAction: 'none',
+      boundsPadding: 0.5,
     });
   }
 };
