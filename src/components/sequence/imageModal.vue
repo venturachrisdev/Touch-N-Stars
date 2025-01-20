@@ -12,10 +12,7 @@
       </div>
     </div>
     <!-- Inhalt der Modal -->
-    <div
-      v-else
-      class="relative w-full h-full bg-gray-900 z-60 flex items-center justify-center"
-    >
+    <div v-else class="relative w-full h-full bg-gray-900 z-60 flex items-center justify-center">
       <button
         class="absolute top-4 right-4 text-white hover:text-gray-300 text-2xl font-extrabold z-70"
         @click="closeModal"

@@ -2,7 +2,7 @@
   <div>
     <div class="flex flex-col border border-gray-500 p-1 pb-2 rounded-lg">
       <label for="position" class="text-xs mb-1 text-gray-400">{{
-        $t('components.connectEquipment.rotator.label')
+        $t('components.rotator.label')
       }}</label>
       <div class="flex gap-2">
         <input
@@ -18,7 +18,7 @@
           @click="moveRotator"
           :disabled="store.rotatorInfo.IsMoving"
         >
-          <label for="rotatorMove">{{ $t('components.connectEquipment.rotator.move') }}</label>
+          <label for="rotatorMove">{{ $t('components.rotator.move') }}</label>
           <svg
             v-if="store.rotatorInfo.IsMoving"
             class="animate-spin h-5 w-5 text-white"

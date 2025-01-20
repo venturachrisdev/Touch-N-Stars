@@ -77,13 +77,7 @@
       "rotator": {
         "connect": "Rotator verbinden",
         "disconnect": "Rotator trennen",
-        "error": "Fehler bei der Steuerung des Rotators:",
-        "label": "Rotator:",
-        "move": "Bewegen",
-        "notConnected": "Bitte Rotator verbinden",
-        "currentPosition": "Aktuelle Position:",
-        "moving": "In Bewegung",
-        "stopped": "Gestoppt"
+        "error": "Fehler bei der Steuerung des Rotators:"
       },
       "guider": {
         "connect": "Guider verbinden",
@@ -100,12 +94,7 @@
       "flat": {
         "connect": "Flatdevice verbinden",
         "disconnect": "Flatdevice trennen",
-        "error": "Fehler bei der Steuerung des Flatdevice:",
-        "please_connect_flatDevice": "Bitte das Flatpanel verbinden",
-        "device_name": "Name",
-        "cover_state": "Abdeckung",
-        "light_state": "Licht",
-        "brightness": "Helligkeit"
+        "error": "Fehler bei der Steuerung des Flatdevice:"
       },
       "dome": {
         "connect": "Kuppel verbinden",
@@ -353,6 +342,14 @@
       "filter": "Filter:",
       "unknown": "Unbekannt",
       "nofilteravailable": "Kein Filter verfügbar"
+    },
+    "rotator" : {
+      "label": "Rotator:",
+      "move": "Bewegen",
+      "notConnected": "Bitte Rotator verbinden",
+      "currentPosition": "Aktuelle Position:",
+      "moving": "In Bewegung",
+      "stopped": "Gestoppt"
     },
     "flat":{
       "please_connect_flatDevice": "Bitte das Flatpanel verbinden",
