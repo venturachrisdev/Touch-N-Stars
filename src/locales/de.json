@@ -37,7 +37,8 @@
       },
       "errors": {
         "emptyFields": "Bitte füllen Sie alle Felder aus"
-      }
+      },
+      "showTutorial": "Tutorial anzeigen"
     },
     "framing": {
       "confirmSetTargetTitle": "Zielauswahl bestätigen",
@@ -133,14 +134,15 @@
       "line": "Zeile"
     },
     "navigation": {
-      "equipment": "Geräte",
+      "equipment": "Equipment",
       "camera": "Kamera",
       "autofocus": "Autofokus",
       "mount": "Montierung",
       "guider": "Guider",
-      "dome": "Kuppel",
+      "dome": "Dome",
       "sequence": "Sequenz",
-      "settings": "Einstellungen"
+      "settings": "Einstellungen",
+      "vnc": "VNC"
     },
     "language": {
       "en": "Englisch",
@@ -184,13 +186,13 @@
       "sequence_control": "Sequenze Kontrolle",
       "temperature": "Temperatur",
       "monitor": {
-        "settings" : {
-          "title" : "Ansichtseinstellungen",
+        "settings": {
+          "title": "Ansichtseinstellungen",
           "showImage": "Letztes Bild anzeigen",
           "showImageStats": "Messwerte des Bildes anzeigen",
-          "showImgStatsGraph" : "HFR-Chart anzeigen",
-          "showGuiderGraph" : "Guider-Chart anzeigen",
-          "showGuiderAfGraph" : "Autofocus-Chart anzeigen"
+          "showImgStatsGraph": "HFR-Chart anzeigen",
+          "showGuiderGraph": "Guider-Chart anzeigen",
+          "showGuiderAfGraph": "Autofocus-Chart anzeigen"
         }
       }
     },
@@ -354,18 +356,18 @@
       "unknown": "Unbekannt",
       "nofilteravailable": "Kein Filter verfügbar"
     },
-    "flat":{
+    "flat": {
       "please_connect_flatDevice": "Bitte das Flatpanel verbinden",
       "device_name": "Name:",
       "cover_state": "Status Abdeckung:",
       "light_state": "Status Licht:",
       "brightness": "Helligkeit:",
       "toggle_light": "Licht:",
-      "cover":{
+      "cover": {
         "close": "Abdeckung schließen",
         "open": "Abdeckung öffnen"
       },
-      "title":"Flatpanel"
+      "title": "Flatpanel"
     }
   }
 }

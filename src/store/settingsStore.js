@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import tutorialContent from '@/assets/tutorial.json';
 
 export const useSettingsStore = defineStore('settings', {
   state: () => ({
@@ -8,11 +9,10 @@ export const useSettingsStore = defineStore('settings', {
       longitude: null,
       altitude: null,
     },
-    // Support both single connection (legacy) and multiple instances
     connection: {
-      ip: '', // Legacy single connection IP
-      port: '', // Legacy single connection port
-      instances: [], // Array of {id, name, ip, port}
+      ip: '',
+      port: '',
+      instances: [],
     },
     selectedInstanceId: null,
     lastCreatedInstanceId: null,
@@ -22,6 +22,10 @@ export const useSettingsStore = defineStore('settings', {
       showImgStatsGraph: true,
       showGuiderGraph: true,
       showGuiderAfGraph: true,
+    },
+    tutorial: {
+      completed: false,
+      steps: tutorialContent.steps,
     },
   }),
   actions: {
@@ -33,13 +37,11 @@ export const useSettingsStore = defineStore('settings', {
       };
     },
 
-    // Legacy single connection support
     setConnection(connection) {
       this.connection.ip = connection.ip;
       this.connection.port = connection.port;
     },
 
-    // New methods for managing multiple instances
     addInstance(instance) {
       const newInstance = {
         id: Date.now().toString(),
@@ -49,7 +51,6 @@ export const useSettingsStore = defineStore('settings', {
       };
       this.connection.instances.push(newInstance);
       this.lastCreatedInstanceId = newInstance.id;
-      // Automatically set the new instance as active
       this.setSelectedInstanceId(newInstance.id);
     },
 
@@ -98,6 +99,14 @@ export const useSettingsStore = defineStore('settings', {
 
     getLanguage() {
       return this.language;
+    },
+
+    completeTutorial() {
+      this.tutorial.completed = true;
+    },
+
+    resetTutorial() {
+      this.tutorial.completed = false;
     },
   },
   persist: {

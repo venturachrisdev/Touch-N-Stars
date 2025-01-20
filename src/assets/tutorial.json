@@ -1,0 +1,34 @@
+{
+  "steps": [
+    {
+      "title": "Welcome to Touch-N-Stars",
+      "content": "This app helps you control your astronomy equipment and plan your observations.",
+      "target": "body",
+      "placement": "center"
+    },
+    {
+      "title": "Navigation",
+      "content": "Use the navigation bar to switch between different sections of the app. On mobile, swipe left/right to navigate.",
+      "target": ".navigation-bar",
+      "placement": "bottom"
+    },
+    {
+      "title": "Equipment Control",
+      "content": "Connect and control your telescope, camera, and other devices from the Equipment section.",
+      "target": ".equipment-section",
+      "placement": "right"
+    },
+    {
+      "title": "Squence Control & Monitor",
+      "content": "Control and monitor your sequence. You need to have an advanced sequence loaded in N.I.N.A",
+      "target": ".sequence-section",
+      "placement": "left"
+    },
+    {
+      "title": "Settings",
+      "content": "Configure app settings and preferences here. You can always restart this tutorial from the settings page.",
+      "target": ".settings-section",
+      "placement": "top"
+    }
+  ]
+}

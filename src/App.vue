@@ -87,11 +87,14 @@
         </button>
       </div>
     </div>
+
+    <!-- Tutorial Modal -->
+    <TutorialModal v-if="showTutorial" :steps="tutorialSteps" @close="closeTutorial" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { apiStore } from '@/store/store';
 import { useHead } from '@vueuse/head';
 import NavigationComp from '@/components/NavigationComp.vue';
@@ -101,16 +104,19 @@ import LastLogs from '@/components/LastLogs.vue';
 import { useSettingsStore } from '@/store/settingsStore';
 import { useLogStore } from '@/store/logStore';
 import { useI18n } from 'vue-i18n';
+import TutorialModal from '@/components/TutorialModal.vue';
 
 const store = apiStore();
 const logStore = useLogStore();
 const showLogsModal = ref(false);
-/* eslint-disable */
+const showTutorial = ref(false);
 const settingsStore = useSettingsStore();
 
 useHead({
   title: 'TouchNStars',
 });
+
+const tutorialSteps = computed(() => settingsStore.tutorial.steps);
 
 function handleVisibilityChange() {
   if (document.hidden) {
@@ -131,7 +137,17 @@ onMounted(async () => {
 
   // Initialize language from settings store
   locale.value = settingsStore.getLanguage();
+
+  // Show tutorial on first visit
+  if (!settingsStore.tutorial.completed) {
+    showTutorial.value = true;
+  }
 });
+
+function closeTutorial() {
+  showTutorial.value = false;
+  settingsStore.completeTutorial();
+}
 
 onBeforeUnmount(() => {
   store.stopFetchingInfo();
