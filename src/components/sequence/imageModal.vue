@@ -5,17 +5,14 @@
     <div class="absolute inset-0 bg-black bg-opacity-70" @click="closeModal"></div>
     <div v-if="isLoading">
       <!--Spinner-->
-      <div class="flex items-center justify-center">
+      <div class="flex items-center justify-center w-full h-full">
         <div
           class="w-12 h-12 border-4 border-blue-500 border-t-transparent border-solid rounded-full animate-spin"
         ></div>
       </div>
     </div>
     <!-- Inhalt der Modal -->
-    <div
-      v-else
-      class="relative max-w-4xl w-full max-h-full p-4 bg-gray-900 rounded-xl z-60 flex items-center justify-center"
-    >
+    <div v-else class="relative w-full h-full bg-gray-900 z-60 flex items-center justify-center">
       <button
         class="absolute top-4 right-4 text-white hover:text-gray-300 text-2xl font-extrabold z-70"
         @click="closeModal"
@@ -25,14 +22,14 @@
       </button>
       <div
         ref="imageContainer"
-        class="overflow-hidden relative w-full h-full flex items-center justify-center shadow-md shadow-cyan-900 border border-cyan-700 rounded-md"
+        class="w-full h-full overflow-hidden relative flex items-center justify-center shadow-md shadow-cyan-900"
       >
         <img
           v-if="imageData"
           :src="imageData"
           ref="image"
           @load="onImageLoad"
-          class="max-w-full max-h-full object-contain cursor-move"
+          class="w-full h-full object-contain cursor-move"
           alt="Vergrößertes Bild"
         />
       </div>
@@ -133,15 +130,16 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-/* Sicherstellen, dass der Modal-Container die volle Höhe nutzt */
+/* Sicherstellen, dass der Modal-Container die volle Fläche nutzt */
 .modal-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   height: 100%;
 }
 
-/* Container für das Bild */
+/* Bild-Container */
 .image-container {
   overflow: hidden;
   width: 100%;
@@ -154,17 +152,14 @@ onBeforeUnmount(() => {
 
 /* Bild selbst */
 .image-container img {
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   cursor: move;
-  /* Stellen Sie sicher, dass das Bild zentriert ist */
-  display: block;
-  margin: auto;
 }
 
 /* Schließen-Button spezifische Stile */
 button[aria-label='Schließen'] {
-  z-index: 70; /* Höher als der Container */
+  z-index: 70;
 }
 </style>

@@ -1,17 +1,16 @@
 <template>
   <div v-if="!store.rotatorInfo.Connected" class="text-red-500">
-    <p>{{ $t('components.connectEquipment.rotator.notConnected') }}</p>
+    <p>{{ $t('components.rotator.notConnected') }}</p>
   </div>
   <div v-else class="gap-2">
     <StatusString
       :isEnabled="store.rotatorInfo.MechanicalPosition !== null"
-      Name="Aktuelle Position:"
+      :Name="$t('components.rotator.currentPosition')"
       :Value="store.rotatorInfo.MechanicalPosition"
     />
     <StatusBool
       :isEnabled="store.rotatorInfo.IsMoving"
-      :enabledText="$t('components.connectEquipment.rotator.moving')"
-      :disabledText="$t('components.connectEquipment.rotator.stopped')"
+      :enabledText="$t('components.rotator.moving')"
     />
   </div>
 </template>

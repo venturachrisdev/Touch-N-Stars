@@ -39,7 +39,7 @@
               </div>
               <div class="w-full p-2 bg-gray-800/50 rounded-lg border border-gray-700/50">
                 <label for="infoRotator" class="text-xs mb-1 text-gray-400">
-                  {{ $t('components.connectEquipment.rotator.label') }}
+                  {{ $t('components.rotator.label') }}
                 </label>
                 <infoRotator
                   v-if="store.rotatorInfo.Connected"

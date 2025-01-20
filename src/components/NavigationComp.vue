@@ -132,7 +132,14 @@
           <router-link to="/flat" class="nav-button" active-class="active-nav-button">
             <LightBulbIcon
               class="icon"
-              :class="store.flatdeviceInfo.LightOn ? 'text-yellow-300' : 'text-white'"
+              :class="[
+                'icon',
+                store.flatdeviceInfo.CoverState === 2
+                  ? 'text-red-500'
+                  : store.flatdeviceInfo.LightOn
+                    ? 'text-yellow-300'
+                    : 'text-white',
+              ]"
             />
           </router-link>
         </div>
