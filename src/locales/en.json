@@ -77,13 +77,7 @@
       "rotator": {
         "connect": "Connect rotator",
         "disconnect": "Disconnect rotator",
-        "error": "Error controlling rotator:",
-        "label": "Rotator:",
-        "move": "Move",
-        "notConnected": "Please connect rotator",
-        "currentPosition": "Current position:",
-        "moving": "Moving",
-        "stopped": "Stopped"
+        "error": "Error controlling rotator:"
       },
       "guider": {
         "connect": "Connect guider",
@@ -348,6 +342,14 @@
       "filter": "Filter:",
       "unknown": "Unknown",
       "nofilteravailable": "No filter available"
+    },
+    "rotator": {
+      "label": "Rotator",
+      "move": "Move",
+      "notConnected": "Please connect rotator",
+      "currentPosition": "Current position:",
+      "moving": "Moving",
+      "stopped": "Stopped"
     },
     "flat":{
       "please_connect_flatDevice": "Please connect the flat device",
