@@ -519,21 +519,6 @@ const apiService = {
     }
   },
 
-  async fetchGuiderChartDataApi(x) {
-    //x = 50, 100, 200 or 400
-    try {
-      const { BASE_URL } = getUrls();
-      const response = await axios.get(`${BASE_URL}/equipment/guider/graph`, {
-        params: { x },
-      });
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      console.error('Error retrieving logs result:', error);
-      throw error;
-    }
-  },
-
   async fetchGuiderChartData() {
     try {
       const { API_URL } = getUrls();

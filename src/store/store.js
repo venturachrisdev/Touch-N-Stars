@@ -96,7 +96,8 @@ export const apiStore = defineStore('store', {
           apiService.guiderAction('info'),
           apiService.flatdeviceAction('info'),
           apiService.domeAction('info'),
-          apiService.fetchGuiderChartData(),
+          apiService.guiderAction('graph'),
+          //apiService.fetchGuiderChartData(),
           apiService.safetyAction('info'),
           apiService.weatherAction('info'),
           apiService.switchAction('info'),
@@ -263,8 +264,9 @@ export const apiStore = defineStore('store', {
         console.error('Fehler in der Flat-API-Antwort:', domeResponse.Error);
       }
 
-      if (guiderChartResponse.success) {
-        this.processGuiderChartData(guiderChartResponse.data);
+      if (guiderChartResponse.Success) {
+        this.processGuiderChartDataApi(guiderChartResponse.Response);
+        //console.log(guiderChartResponse.Response);
       } else {
         console.error('Fehler in der Guider-Chart-API-Antwort:', guiderChartResponse);
       }
@@ -298,6 +300,27 @@ export const apiStore = defineStore('store', {
       this.DECDistanceRaw = data.DECDistanceRaw.map((value) =>
         typeof value === 'number' ? value : 0
       );
+    },
+
+    processGuiderChartDataApi(data) {
+      // Überprüfen, ob das GuideSteps-Array vorhanden ist
+      if (!Array.isArray(data?.GuideSteps)) {
+        console.warn('Invalid GuideSteps, initializing as an empty array.');
+        this.RADistanceRaw = [];
+        this.DECDistanceRaw = [];
+        return;
+      }
+    
+      // Extrahieren der RADistanceRawDisplay und DECDistanceRawDisplay Werte
+      this.RADistanceRaw = data.GuideSteps.map((step) =>
+        typeof step.RADistanceRaw === 'number' ? step.RADistanceRawDisplay : 0
+      );
+    
+      this.DECDistanceRaw = data.GuideSteps.map((step) =>
+        typeof step.DECDistanceRaw === 'number' ? step.DECDistanceRawDisplay : 0
+      );
+      //console.log('ra: ' ,this.RADistanceRaw);
+      //console.log('dec: ' ,this.DECDistanceRaw);
     },
 
     startFetchingInfo() {
