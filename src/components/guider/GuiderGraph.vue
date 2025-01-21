@@ -18,7 +18,7 @@ const initGraph = () => {
   chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: Array(50).fill(''),
+      labels: Array(store.guiderChartInfo.HistorySize).fill(''),
       datasets: [
         {
           label: 'RA "',
@@ -84,6 +84,7 @@ watch(
   },
   { immediate: true }
 );
+
 
 onMounted(() => {
   initGraph();

@@ -17,6 +17,7 @@ export const apiStore = defineStore('store', {
     rotatorInfo: [],
     focuserAfInfo: [],
     guiderInfo: [],
+    guiderChartInfo:[],
     flatdeviceInfo: [],
     domeInfo: [],
     safetyInfo: {
@@ -266,7 +267,8 @@ export const apiStore = defineStore('store', {
 
       if (guiderChartResponse.Success) {
         this.processGuiderChartDataApi(guiderChartResponse.Response);
-        //console.log(guiderChartResponse.Response);
+        this.guiderChartInfo = guiderChartResponse.Response;
+        console.log(this.guiderChartInfo.HistorySize);
       } else {
         console.error('Fehler in der Guider-Chart-API-Antwort:', guiderChartResponse);
       }
@@ -310,12 +312,11 @@ export const apiStore = defineStore('store', {
         this.DECDistanceRaw = [];
         return;
       }
-    
       // Extrahieren der RADistanceRawDisplay und DECDistanceRawDisplay Werte
       this.RADistanceRaw = data.GuideSteps.map((step) =>
         typeof step.RADistanceRaw === 'number' ? step.RADistanceRawDisplay : 0
       );
-    
+
       this.DECDistanceRaw = data.GuideSteps.map((step) =>
         typeof step.DECDistanceRaw === 'number' ? step.DECDistanceRawDisplay : 0
       );
