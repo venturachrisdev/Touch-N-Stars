@@ -4,7 +4,7 @@
       v-if="!store.isBackendReachable"
       class="p-4 bg-red-500/10 border border-red-500/30 rounded-lg"
     >
-      <div class="flex-1 truncate text-red-600 text-3xl">
+      <div class="text-red-600 text-3xl">
         {{ $t('app.unreachable') }}
       </div>
     </div>

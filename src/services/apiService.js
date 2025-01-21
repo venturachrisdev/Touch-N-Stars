@@ -49,7 +49,8 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/version`);
-      return response.status === 200;
+      //console.log(response.data);
+      return response.data;
     } catch (error) {
       console.error('Error reaching backend:', error.message);
       return false;
@@ -494,19 +495,27 @@ const apiService = {
   },
 
   //-------------------------------------  guider ---------------------------------------
+  /* commands:
+      - info
+      - clear-calibration
+      - graph                 */
+
   guiderAction(action) {
     const { BASE_URL } = getUrls();
     return this._simpleGetRequest(`${BASE_URL}/equipment/guider/${action}`);
   },
 
-  async fetchGuiderChartData() {
+  async guiderStart(calibrate) {
+    //calibrate = true or false
     try {
-      const { API_URL } = getUrls();
-      const response = await axios.get(`${API_URL}guider-data`);
-      return { success: true, data: response.data };
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/equipment/guider/start`, {
+        params: { calibrate },
+      });
+      return response.data;
     } catch (error) {
-      console.error('Error fetching guider data:', error);
-      return { success: false, message: 'Error fetching guider data' };
+      console.error('Error retrieving logs result:', error);
+      throw error;
     }
   },
 

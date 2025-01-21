@@ -14,13 +14,15 @@
         <!-- Wenn verbunden dann hier der Inhalt -->
         <div class="flex space-x-4">
           <button
-            class="btn-primary bg-gradient-to-br w-full from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600"
+            class="btn-primary bg-gradient-to-br w-full from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            :disabled="store.guiderInfo.State == 'Guiding'"
             @click="guiderStartStop('start')"
           >
             {{ $t('components.guider.start') }}
           </button>
           <button
-            class="btn-primary bg-gradient-to-br w-full from-red-600 to-red-500 hover:from-red-700 hover:to-red-600"
+            class="btn-primary bg-gradient-to-br w-full from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            :disabled="store.guiderInfo.State !== 'Guiding'"
             @click="guiderStartStop('stop')"
           >
             {{ $t('components.guider.stop') }}

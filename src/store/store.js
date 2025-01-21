@@ -17,6 +17,7 @@ export const apiStore = defineStore('store', {
     rotatorInfo: [],
     focuserAfInfo: [],
     guiderInfo: [],
+    guiderChartInfo: [],
     flatdeviceInfo: [],
     domeInfo: [],
     safetyInfo: {
@@ -41,6 +42,7 @@ export const apiStore = defineStore('store', {
     coordinates: null,
     currentLanguage: 'en',
     showSettings: false,
+    minimumApiVersion: '2.1.4.0',
   }),
 
   actions: {
@@ -61,9 +63,8 @@ export const apiStore = defineStore('store', {
     async fetchAllInfos() {
       try {
         this.isBackendReachable = await apiService.isBackendReachable();
-        //console.log('Backend erreichbar');
-        if (!this.isBackendReachable) {
-          //console.warn('Backend ist nicht erreichbar');
+        if (!this.isVersionNewerOrEqual(this.isBackendReachable.Response, this.minimumApiVersion)) {
+          console.warn('Backend ist nicht erreichbar');
           this.clearAllStates();
           return;
         }
@@ -96,7 +97,8 @@ export const apiStore = defineStore('store', {
           apiService.guiderAction('info'),
           apiService.flatdeviceAction('info'),
           apiService.domeAction('info'),
-          apiService.fetchGuiderChartData(),
+          apiService.guiderAction('graph'),
+          //apiService.fetchGuiderChartData(),
           apiService.safetyAction('info'),
           apiService.weatherAction('info'),
           apiService.switchAction('info'),
@@ -246,6 +248,7 @@ export const apiStore = defineStore('store', {
 
       if (guiderResponse.Success) {
         this.guiderInfo = guiderResponse.Response;
+        //console.log(this.guiderInfo);
       } else {
         console.error('Fehler in der Guider-API-Antwort:', guiderResponse.Error);
       }
@@ -262,8 +265,10 @@ export const apiStore = defineStore('store', {
         console.error('Fehler in der Flat-API-Antwort:', domeResponse.Error);
       }
 
-      if (guiderChartResponse.success) {
-        this.processGuiderChartData(guiderChartResponse.data);
+      if (guiderChartResponse.Success) {
+        this.processGuiderChartDataApi(guiderChartResponse.Response);
+        this.guiderChartInfo = guiderChartResponse.Response;
+        console.log(this.guiderChartInfo.HistorySize);
       } else {
         console.error('Fehler in der Guider-Chart-API-Antwort:', guiderChartResponse);
       }
@@ -281,22 +286,24 @@ export const apiStore = defineStore('store', {
       }
     },
 
-    processGuiderChartData(data) {
-      if (!Array.isArray(data?.RADistanceRaw)) {
-        console.warn('Invalid RADistanceRaw, initializing as an empty array.');
-        data.RADistanceRaw = [];
+    processGuiderChartDataApi(data) {
+      // Überprüfen, ob das GuideSteps-Array vorhanden ist
+      if (!Array.isArray(data?.GuideSteps)) {
+        console.warn('Invalid GuideSteps, initializing as an empty array.');
+        this.RADistanceRaw = [];
+        this.DECDistanceRaw = [];
+        return;
       }
-      if (!Array.isArray(data?.DECDistanceRaw)) {
-        console.warn('Invalid DECDistanceRaw, initializing as an empty array.');
-        data.DECDistanceRaw = [];
-      }
+      // Extrahieren der RADistanceRawDisplay und DECDistanceRawDisplay Werte
+      this.RADistanceRaw = data.GuideSteps.map((step) =>
+        typeof step.RADistanceRaw === 'number' ? step.RADistanceRawDisplay : 0
+      );
 
-      this.RADistanceRaw = data.RADistanceRaw.map((value) =>
-        typeof value === 'number' ? value : 0
+      this.DECDistanceRaw = data.GuideSteps.map((step) =>
+        typeof step.DECDistanceRaw === 'number' ? step.DECDistanceRawDisplay : 0
       );
-      this.DECDistanceRaw = data.DECDistanceRaw.map((value) =>
-        typeof value === 'number' ? value : 0
-      );
+      //console.log('ra: ' ,this.RADistanceRaw);
+      //console.log('dec: ' ,this.DECDistanceRaw);
     },
 
     startFetchingInfo() {
@@ -401,6 +408,21 @@ export const apiStore = defineStore('store', {
       cStore.coordinates.longitude = this.profileInfo.AstrometrySettings.Longitude;
       cStore.coordinates.latitude = this.profileInfo.AstrometrySettings.Latitude;
       cStore.coordinates.altitude = this.profileInfo.AstrometrySettings.Elevation;
+    },
+    isVersionNewerOrEqual(currentVersion, minimumVersion) {
+      const parseVersion = (version) => version.split('.').map(Number);
+
+      const currentParts = parseVersion(currentVersion);
+      const minimumParts = parseVersion(minimumVersion);
+
+      for (let i = 0; i < minimumParts.length; i++) {
+        const current = currentParts[i] || 0; // Standardwert: 0, falls currentVersion kürzer ist
+        const minimum = minimumParts[i] || 0; // Standardwert: 0, falls minimumVersion kürzer ist
+
+        if (current > minimum) return true; // Neuere Version
+        if (current < minimum) return false; // Ältere Version
+      }
+      return true; // Alle Teile gleich oder currentVersion ist neuer
     },
   },
 });

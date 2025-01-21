@@ -18,7 +18,7 @@ const initGraph = () => {
   chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: Array(50).fill(''),
+      labels: Array(store.guiderChartInfo.HistorySize).fill(''),
       datasets: [
         {
           label: 'RA "',
@@ -45,11 +45,6 @@ const initGraph = () => {
         duration: 0,
       },
       scales: {
-        x: {
-          grid: {
-            color: 'rgba(248, 248, 255, 0.1)',
-          },
-        },
         y: {
           suggestedMin: -3,
           suggestedMax: 3,
