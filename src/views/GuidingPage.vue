@@ -20,7 +20,7 @@
           <ControlGuider />
         </div>
         <div
-          class="flex mt-5 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-2"
+          class="flex mt-5 mb-20 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-2"
         >
           <div class="min-w-24 pt-4">
             <GuiderStats />
@@ -35,22 +35,12 @@
 </template>
 
 <script setup>
-import apiService from '@/services/apiService';
 import rmsGraph from '@/components/guider/GuiderGraph.vue';
 import { apiStore } from '@/store/store';
 import ControlGuider from '@/components/guider/ControlGuider.vue';
 import GuiderStats from '@/components/guider/GuiderStats.vue';
 
 const store = apiStore();
-
-async function guiderStartStop(befehl) {
-  try {
-    await apiService.guiderAction(befehl);
-    console.log('Guider Command:', befehl);
-  } catch (error) {
-    console.error('Fehler:', error.response?.data || error);
-  }
-}
 </script>
 
 <style scoped></style>
