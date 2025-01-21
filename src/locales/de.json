@@ -88,9 +88,7 @@
       "guider": {
         "connect": "Guider verbinden",
         "disconnect": "Guider trennen",
-        "error": "Fehler bei der Steuerung des Guiders:",
-        "start": "Starten",
-        "stop": "Stoppen"
+        "error": "Fehler bei der Steuerung des Guiders:"
       },
       "safety": {
         "connect": "Safety Monitor verbinden",
@@ -221,9 +219,8 @@
       }
     },
     "guider": {
-      "connect": "Guider verbinden",
-      "disconnect": "Guider trennen",
-      "error": "Fehler bei der Steuerung des Guiders:",
+      "notConnected": "Bitte Guider verbinden",
+      "startWithCal": "Start mit Kalibrierung",
       "start": "Starten",
       "stop": "Stoppen",
       "rms_error": "RMS-Fehler",

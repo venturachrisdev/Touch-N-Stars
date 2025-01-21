@@ -88,9 +88,7 @@
       "guider": {
         "connect": "Connect guider",
         "disconnect": "Disconnect guider",
-        "error": "Error controlling guider:",
-        "start": "Start",
-        "stop": "Stop"
+        "error": "Error controlling guider:"
       },
       "safety": {
         "connect": "Connect safety monitor",
@@ -221,10 +219,9 @@
       }
     },
     "guider": {
-      "connect": "Connect guider",
-      "disconnect": "Disconnect guider",
-      "error": "Error controlling guider:",
+      "notConnected": "Please connect guider",
       "start": "Start",
+      "startWithCal": "Starting with calibration",
       "stop": "Stop",
       "rms_error": "RMS Error",
       "title": "Guider"
