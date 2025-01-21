@@ -268,7 +268,7 @@ export const apiStore = defineStore('store', {
       if (guiderChartResponse.Success) {
         this.processGuiderChartDataApi(guiderChartResponse.Response);
         this.guiderChartInfo = guiderChartResponse.Response;
-        console.log(this.guiderChartInfo.HistorySize);
+        //console.log(this.guiderChartInfo.HistorySize);
       } else {
         console.error('Fehler in der Guider-Chart-API-Antwort:', guiderChartResponse);
       }
