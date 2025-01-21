@@ -286,24 +286,6 @@ export const apiStore = defineStore('store', {
       }
     },
 
-    processGuiderChartData(data) {
-      if (!Array.isArray(data?.RADistanceRaw)) {
-        console.warn('Invalid RADistanceRaw, initializing as an empty array.');
-        data.RADistanceRaw = [];
-      }
-      if (!Array.isArray(data?.DECDistanceRaw)) {
-        console.warn('Invalid DECDistanceRaw, initializing as an empty array.');
-        data.DECDistanceRaw = [];
-      }
-
-      this.RADistanceRaw = data.RADistanceRaw.map((value) =>
-        typeof value === 'number' ? value : 0
-      );
-      this.DECDistanceRaw = data.DECDistanceRaw.map((value) =>
-        typeof value === 'number' ? value : 0
-      );
-    },
-
     processGuiderChartDataApi(data) {
       // Überprüfen, ob das GuideSteps-Array vorhanden ist
       if (!Array.isArray(data?.GuideSteps)) {

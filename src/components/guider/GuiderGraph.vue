@@ -45,11 +45,6 @@ const initGraph = () => {
         duration: 0,
       },
       scales: {
-        x: {
-          grid: {
-            color: 'rgba(248, 248, 255, 0.1)',
-          },
-        },
         y: {
           suggestedMin: -3,
           suggestedMax: 3,

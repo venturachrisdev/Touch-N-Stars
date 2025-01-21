@@ -519,17 +519,6 @@ const apiService = {
     }
   },
 
-  async fetchGuiderChartData() {
-    try {
-      const { API_URL } = getUrls();
-      const response = await axios.get(`${API_URL}guider-data`);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error('Error fetching guider data:', error);
-      return { success: false, message: 'Error fetching guider data' };
-    }
-  },
-
   //-------------------------------------  safety ---------------------------------------
   safetyAction(action) {
     const { BASE_URL } = getUrls();
