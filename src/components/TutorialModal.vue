@@ -48,6 +48,7 @@
 
 <script>
 import tutorialData from '@/assets/tutorial.json';
+import { useSettingsStore } from '@/store/settingsStore';
 
 export default {
   name: 'TutorialModal',
@@ -55,10 +56,16 @@ export default {
     return {
       steps: tutorialData.steps,
       currentStepIndex: 0,
-      showModal: true,
     };
   },
+  setup() {
+    const settingsStore = useSettingsStore();
+    return { settingsStore };
+  },
   computed: {
+    showModal() {
+      return this.settingsStore.setupCompleted && !this.settingsStore.tutorial.completed;
+    },
     currentStep() {
       return this.steps[this.currentStepIndex];
     },
@@ -77,7 +84,7 @@ export default {
     closeTutorial() {
       this.showModal = false;
       this.$emit('close');
-      localStorage.setItem('tutorialCompleted', 'true');
+      this.settingsStore.completeTutorial();
     },
   },
   mounted() {

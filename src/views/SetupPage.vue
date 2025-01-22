@@ -218,6 +218,7 @@ function saveGPS() {
 
 function completeSetup() {
   settingsStore.completeSetup();
+  localStorage.setItem('setupCompleted', 'true');
   router.push('/');
 }
 </script>
