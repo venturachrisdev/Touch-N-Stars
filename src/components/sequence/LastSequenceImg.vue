@@ -82,7 +82,7 @@ import { ref, computed, watch, onMounted } from 'vue';
 import { apiStore } from '@/store/store';
 import { useSettingsStore } from '@/store/settingsStore';
 import apiService from '@/services/apiService';
-import ImageModal from './imageModal.vue';
+import ImageModal from '@/components/helpers/imageModal.vue';
 
 let isLoadingImg = ref(true);
 let isLoadingModal = ref(false);
