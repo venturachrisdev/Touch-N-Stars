@@ -190,19 +190,45 @@ button {
   .modal-content {
     padding: 1rem;
     margin: 0.5rem;
+    max-width: 90%;
+  }
+
+  .tutorial-footer {
+    margin-top: 1rem;
+  }
+
+  .tutorial-footer .flex {
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   button {
     padding: 0.5rem 1rem;
-    min-width: 80px;
+    min-width: auto;
+    width: 100%;
+    font-size: 0.875rem;
+    white-space: normal;
+    line-height: 1.25;
   }
 
   .tutorial-header h2 {
     font-size: 1.25rem;
+    margin-bottom: 1rem;
   }
 
   .tutorial-body p {
     font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .btn-skip {
+    order: 1;
+  }
+
+  .btn-prev,
+  .btn-next,
+  .btn-close {
+    order: 2;
   }
 }
 </style>
