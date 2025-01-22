@@ -207,6 +207,7 @@
           >
             <img
               v-if="cameraStore.imageData"
+              @click="openModal"
               ref="image"
               :src="cameraStore.imageData"
               alt="Captured Image"
@@ -216,20 +217,19 @@
         </div>
       </div>
     </div>
+    <ImageModal
+      :showModal="showModal"
+      :imageData="cameraStore.imageData"
+      :isLoading="false"
+      @close="closeModal"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, watch, nextTick } from 'vue';
-import Panzoom from 'panzoom';
-
-// Dein globaler API-Store
+import { ref } from 'vue';
 import { apiStore } from '@/store/store';
-
-// Dein Pinia-Store
 import { useCameraStore } from '@/store/cameraStore';
-
-// Services & Components
 import apiService from '@/services/apiService';
 import infoCamera from '@/components/camera/infoCamera.vue';
 import settingsCamera from '@/components/camera/settingsCamera.vue';
@@ -237,60 +237,22 @@ import settingsCameraCooler from '@/components/camera/settingsCameraCooler.vue';
 import changeFilter from '@/components/filterwheel/changeFilter.vue';
 import controlRotator from '@/components/rotator/controlRotator.vue';
 import infoRotator from '@/components/rotator/infoRotator.vue';
+import ImageModal from '@/components/helpers/imageModal.vue';
 
 // Initialisiere Stores
 const store = apiStore();
 const cameraStore = useCameraStore();
-
-// Refs für Panzoom
 const imageContainer = ref(null);
 const image = ref(null);
-let panzoomInstance = null;
+const showModal = ref(false);
 
-// Sobald sich das Bild ändert, initialisieren wir Panzoom
-watch(
-  () => cameraStore.imageData,
-  async (newValue) => {
-    if (!newValue) return;
-    await nextTick();
-    if (!image.value) return;
-
-    // Panzoom-Instanz immer erst aufräumen
-    if (panzoomInstance) {
-      panzoomInstance.dispose();
-    }
-
-    // Und dann neu initialisieren
-    panzoomInstance = Panzoom(image.value, {
-      maxZoom: 30,
-      minZoom: 0.9,
-      bounds: true,
-      boundsPadding: 0.1,
-      contain: 'inside',
-      origin: 'center',
-    });
-  },
-  {
-    immediate: true,
-  }
-);
+// Modal öffnen / schließen
+function openModal() {
+  showModal.value = true;
+}
+function closeModal() {
+  showModal.value = false;
+}
 </script>
 
-<style scoped>
-.image-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-.image-container img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  user-select: none;
-  touch-action: none;
-  transform-origin: center center;
-}
-</style>
+<style scoped></style>
