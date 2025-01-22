@@ -12,26 +12,49 @@ import DomePage from '@/views/DomePage.vue';
 import SettingsPage from '@/views/SettingsPage.vue';
 import FlatdevicePage from '@/views/FlatdevicePage.vue';
 import SequenceMonitoring from '@/views/SequenceMonitoring.vue';
+import SetupPage from '@/views/SetupPage.vue';
+import { useSettingsStore } from '@/store/settingsStore';
 
 const routes = [
-  { path: '/', component: StartPage },
-  { path: '/equipment', component: EquipmentPage },
-  { path: '/camera', component: CameraPage },
-  { path: '/autofocus', component: FocusPage },
-  { path: '/mount', component: MountPage },
-  { path: '/guider', component: GuidingPage },
-  { path: '/misc', component: TargetPic },
-  { path: '/logs', component: LastLogs },
-  { path: '/sequence', component: SequencePage },
-  { path: '/dome', component: DomePage },
-  { path: '/settings', component: SettingsPage },
-  { path: '/flat', component: FlatdevicePage },
-  { path: '/seq-mon', component: SequenceMonitoring },
+  {
+    path: '/',
+    component: StartPage,
+    meta: { requiresSetup: true },
+  },
+  {
+    path: '/setup',
+    component: SetupPage,
+    meta: { requiresSetup: false },
+  },
+  { path: '/equipment', component: EquipmentPage, meta: { requiresSetup: true } },
+  { path: '/camera', component: CameraPage, meta: { requiresSetup: true } },
+  { path: '/autofocus', component: FocusPage, meta: { requiresSetup: true } },
+  { path: '/mount', component: MountPage, meta: { requiresSetup: true } },
+  { path: '/guider', component: GuidingPage, meta: { requiresSetup: true } },
+  { path: '/misc', component: TargetPic, meta: { requiresSetup: true } },
+  { path: '/logs', component: LastLogs, meta: { requiresSetup: true } },
+  { path: '/sequence', component: SequencePage, meta: { requiresSetup: true } },
+  { path: '/dome', component: DomePage, meta: { requiresSetup: true } },
+  { path: '/settings', component: SettingsPage, meta: { requiresSetup: true } },
+  { path: '/flat', component: FlatdevicePage, meta: { requiresSetup: true } },
+  { path: '/seq-mon', component: SequenceMonitoring, meta: { requiresSetup: true } },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const settingsStore = useSettingsStore();
+
+  if (to.meta.requiresSetup && !settingsStore.isSetupComplete()) {
+    next('/setup');
+  } else if (to.path === '/setup' && settingsStore.isSetupComplete()) {
+    next('/');
+  } else {
+    next();
+  }
 });
 
 export default router;

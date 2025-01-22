@@ -4,6 +4,7 @@ import tutorialContent from '@/assets/tutorial.json';
 export const useSettingsStore = defineStore('settings', {
   state: () => ({
     language: 'en',
+    setupCompleted: localStorage.getItem('setupCompleted') === 'true',
     coordinates: {
       latitude: null,
       longitude: null,
@@ -35,6 +36,20 @@ export const useSettingsStore = defineStore('settings', {
         longitude: coords.longitude,
         altitude: coords.altitude,
       };
+    },
+
+    completeSetup() {
+      this.setupCompleted = true;
+      localStorage.setItem('setupCompleted', 'true');
+    },
+
+    resetSetup() {
+      this.setupCompleted = false;
+      localStorage.removeItem('setupCompleted');
+    },
+
+    isSetupComplete() {
+      return this.setupCompleted;
     },
 
     setConnection(connection) {
