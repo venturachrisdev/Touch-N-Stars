@@ -12,7 +12,15 @@
 
         <!-- Header -->
         <div class="tutorial-header">
-          <h2 class="text-xl font-semibold mb-4">{{ currentStep.title[$i18n.locale] }}</h2>
+          <div class="flex items-center gap-4 mb-4">
+            <img
+              v-if="currentStep.icon"
+              :src="require(`@/assets/icons/${currentStep.icon}`)"
+              class="w-8 h-8"
+              :alt="currentStep.title[$i18n.locale]"
+            />
+            <h2 class="text-xl font-semibold">{{ currentStep.title[$i18n.locale] }}</h2>
+          </div>
         </div>
 
         <!-- Body -->
