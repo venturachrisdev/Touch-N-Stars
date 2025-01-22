@@ -25,7 +25,7 @@ export const useSettingsStore = defineStore('settings', {
       showGuiderAfGraph: true,
     },
     tutorial: {
-      completed: false,
+      completed: localStorage.getItem('tutorialCompleted') === 'true',
       steps: tutorialContent.steps,
     },
   }),
@@ -118,10 +118,12 @@ export const useSettingsStore = defineStore('settings', {
 
     completeTutorial() {
       this.tutorial.completed = true;
+      localStorage.setItem('tutorialCompleted', 'true');
     },
 
     resetTutorial() {
       this.tutorial.completed = false;
+      localStorage.removeItem('tutorialCompleted');
     },
   },
   persist: {
@@ -130,6 +132,16 @@ export const useSettingsStore = defineStore('settings', {
       {
         key: 'settings-store',
         storage: localStorage,
+        paths: [
+          'language',
+          'setupCompleted',
+          'coordinates',
+          'connection',
+          'selectedInstanceId',
+          'lastCreatedInstanceId',
+          'monitorViewSetting',
+          'tutorial',
+        ],
       },
     ],
   },

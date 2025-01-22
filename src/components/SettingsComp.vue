@@ -441,6 +441,7 @@ async function saveCoordinates() {
 // Tutorial methods
 function showTutorial() {
   showTutorialModal.value = true;
+  settingsStore.resetTutorial();
 }
 
 function closeTutorial() {
