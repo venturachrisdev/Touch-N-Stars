@@ -24,7 +24,8 @@
     "description": "Let's get started with a quick setup",
     "selectLanguage": "Select your language",
     "gpsConfiguration": "GPS Configuration",
-    "completeSetup": "Complete Setup"
+    "completeSetup": "Complete Setup",
+    "instanceConfiguration": "N.I.N.A connection details"
   },
   "components": {
     "tutorial": {
@@ -362,7 +363,7 @@
       "moving": "Moving",
       "stopped": "Stopped"
     },
-    "flat":{
+    "flat": {
       "please_connect_flatDevice": "Please connect the flat device",
       "device_name": "Name:",
       "cover_state": "Cover State:",

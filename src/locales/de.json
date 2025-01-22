@@ -24,7 +24,8 @@
     "description": "Lass uns mit einer kurzen Einrichtung beginnen",
     "selectLanguage": "Wählen Sie Ihre Sprache",
     "gpsConfiguration": "GPS-Konfiguration",
-    "completeSetup": "Einrichtung abschließen"
+    "completeSetup": "Einrichtung abschließen",
+    "instanceConfiguration": "N.I.N.A Verbindungsdetails"
   },
   "components": {
     "tutorial": {
@@ -362,7 +363,7 @@
       "moving": "Bewegt",
       "stopped": "Gestoppt"
     },
-    "flat":{
+    "flat": {
       "please_connect_flatDevice": "Bitte Flachfeldgerät verbinden",
       "device_name": "Name:",
       "cover_state": "Deckelstatus:",
