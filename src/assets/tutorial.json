@@ -1,47 +1,135 @@
 {
   "steps": [
     {
-      "id": "welcome",
-      "title": {
-        "en": "Welcome to Touch'N'Stars",
-        "de": "Willkommen bei Touch'N'Stars"
-      },
-      "content": {
-        "en": "This app helps you control your astronomy equipment and plan your observations.",
-        "de": "Diese App hilft Ihnen, Ihre Astronomie-Ausrüstung zu steuern und Ihre Beobachtungen zu planen."
-      }
-    },
-    {
       "id": "navigation",
+      "icon": "navigation-nav.svg",
       "title": {
         "en": "Navigation",
         "de": "Navigation"
       },
       "content": {
-        "en": "Swipe left/right to navigate between different equipment sections. Tap on a section to access detailed controls.",
-        "de": "Wischen Sie nach links/rechts, um zwischen den verschiedenen Gerätebereichen zu navigieren. Tippen Sie auf einen Bereich, um auf die detaillierten Steuerungen zuzugreifen."
+        "en": "Tap any icon to access its features. On mobile devices, swipe left or right to see more navigation options",
+        "de": "Tippe auf ein Symbol, um dessen Funktionen zu öffnen. Auf mobilen Geräten kannst du nach links oder rechts wischen, um weitere Navigationspunkte zu sehen"
       }
     },
     {
       "id": "equipment",
+      "icon": "equipment-nav.svg",
       "title": {
-        "en": "Equipment Control",
-        "de": "Gerätesteuerung"
+        "en": "Equipment",
+        "de": "Equipment"
       },
       "content": {
-        "en": "Connect and control your astronomy equipment including mount, camera, focuser, and more.",
-        "de": "Verbinden und steuern Sie Ihre Astronomie-Ausrüstung, einschließlich Montierung, Kamera, Fokussierer und mehr."
+        "en": "Connect and control your gear - mount, camera, focuser and more",
+        "de": "Verbinde und steuere deine Ausrüstung - Montierung, Kamera, Fokussierer und mehr"
       }
     },
     {
       "id": "settings",
+      "icon": "settings-nav.svg",
       "title": {
         "en": "Settings",
         "de": "Einstellungen"
       },
       "content": {
-        "en": "Access settings to configure your connection, language preferences, and more.",
-        "de": "Greifen Sie auf Einstellungen zu, um Ihre Verbindung, Spracheinstellungen und mehr zu konfigurieren."
+        "en": "Set up your connections, language and other preferences",
+        "de": "Stelle deine Verbindungen, Sprache und andere Vorlieben ein"
+      }
+    },
+    {
+      "id": "camera-nav",
+      "icon": "camera-nav.svg",
+      "title": {
+        "en": "Camera",
+        "de": "Kamera"
+      },
+      "content": {
+        "en": "Control your camera settings and check imaging status",
+        "de": "Steuere deine Kameraeinstellungen und prüfe den Aufnahmestatus"
+      }
+    },
+    {
+      "id": "autofocus-nav",
+      "icon": "autofocus-nav.svg",
+      "title": {
+        "en": "Autofocus",
+        "de": "Autofokus"
+      },
+      "content": {
+        "en": "Keep your images sharp with autofocus tools",
+        "de": "Halte deine Bilder scharf mit den Autofokus-Tools"
+      }
+    },
+    {
+      "id": "mount-nav",
+      "icon": "mount-nav.svg",
+      "title": {
+        "en": "Mount",
+        "de": "Montierung"
+      },
+      "content": {
+        "en": "Control tracking, parking and movement of your mount",
+        "de": "Steuere Nachführung, Parken und Bewegung deiner Montierung"
+      }
+    },
+    {
+      "id": "dome-nav",
+      "icon": "dome-nav.svg",
+      "title": {
+        "en": "Dome",
+        "de": "Kuppel"
+      },
+      "content": {
+        "en": "Control dome rotation and shutter",
+        "de": "Steuere Kuppeldrehung und Verschluss"
+      }
+    },
+    {
+      "id": "flat-panel-nav",
+      "icon": "flatpanel-nav.svg",
+      "title": {
+        "en": "Flatpanel",
+        "de": "Flatpanel"
+      },
+      "content": {
+        "en": "Control your flatpanel settings",
+        "de": "Steuere dein Flatpanel"
+      }
+    },
+    {
+      "id": "guider-nav",
+      "icon": "guiding-nav.svg",
+      "title": {
+        "en": "Guiding",
+        "de": "Guiding"
+      },
+      "content": {
+        "en": "Monitor and control guiding for precise tracking",
+        "de": "Überwache und steuere das Guiding für präzise Nachführung"
+      }
+    },
+    {
+      "id": "sequence-nav",
+      "icon": "sequence-nav.svg",
+      "title": {
+        "en": "Sequence",
+        "de": "Sequenz"
+      },
+      "content": {
+        "en": "Set up and control your imaging sequences",
+        "de": "Richte deine Aufnahmesequenzen ein und steuere sie"
+      }
+    },
+    {
+      "id": "sequence-monitoring-nav",
+      "icon": "sequence-monitor.svg",
+      "title": {
+        "en": "Monitoring",
+        "de": "Überwachung"
+      },
+      "content": {
+        "en": "Check your ongoing sequences and captured images",
+        "de": "Prüfe deine laufenden Sequenzen und fertigen Aufnahmen"
       }
     }
   ]

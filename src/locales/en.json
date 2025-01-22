@@ -19,6 +19,14 @@
     "unreachable": "NINA-API is unreachable or the version is too old",
     "connecting": "Attempting to establish connection"
   },
+  "setup": {
+    "welcome": "Welcome to Touch'N'Stars",
+    "description": "Let's get started with a quick setup",
+    "selectLanguage": "Select your language",
+    "gpsConfiguration": "GPS Configuration",
+    "completeSetup": "Complete Setup",
+    "instanceConfiguration": "N.I.N.A connection details"
+  },
   "components": {
     "tutorial": {
       "previous": "Previous",
@@ -355,7 +363,7 @@
       "moving": "Moving",
       "stopped": "Stopped"
     },
-    "flat":{
+    "flat": {
       "please_connect_flatDevice": "Please connect the flat device",
       "device_name": "Name:",
       "cover_state": "Cover State:",

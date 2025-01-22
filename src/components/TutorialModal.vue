@@ -12,7 +12,15 @@
 
         <!-- Header -->
         <div class="tutorial-header">
-          <h2 class="text-xl font-semibold mb-4">{{ currentStep.title[$i18n.locale] }}</h2>
+          <div class="flex items-center gap-4 mb-4">
+            <img
+              v-if="currentStep.icon"
+              :src="require(`@/assets/icons/${currentStep.icon}`)"
+              class="w-8 h-8"
+              :alt="currentStep.title[$i18n.locale]"
+            />
+            <h2 class="text-xl font-semibold">{{ currentStep.title[$i18n.locale] }}</h2>
+          </div>
         </div>
 
         <!-- Body -->
@@ -48,6 +56,7 @@
 
 <script>
 import tutorialData from '@/assets/tutorial.json';
+import { useSettingsStore } from '@/store/settingsStore';
 
 export default {
   name: 'TutorialModal',
@@ -55,10 +64,16 @@ export default {
     return {
       steps: tutorialData.steps,
       currentStepIndex: 0,
-      showModal: true,
     };
   },
+  setup() {
+    const settingsStore = useSettingsStore();
+    return { settingsStore };
+  },
   computed: {
+    showModal() {
+      return this.settingsStore.setupCompleted && !this.settingsStore.tutorial.completed;
+    },
     currentStep() {
       return this.steps[this.currentStepIndex];
     },
@@ -77,7 +92,7 @@ export default {
     closeTutorial() {
       this.showModal = false;
       this.$emit('close');
-      localStorage.setItem('tutorialCompleted', 'true');
+      this.settingsStore.completeTutorial();
     },
   },
   mounted() {
@@ -183,19 +198,45 @@ button {
   .modal-content {
     padding: 1rem;
     margin: 0.5rem;
+    max-width: 90%;
+  }
+
+  .tutorial-footer {
+    margin-top: 1rem;
+  }
+
+  .tutorial-footer .flex {
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   button {
     padding: 0.5rem 1rem;
-    min-width: 80px;
+    min-width: auto;
+    width: 100%;
+    font-size: 0.875rem;
+    white-space: normal;
+    line-height: 1.25;
   }
 
   .tutorial-header h2 {
     font-size: 1.25rem;
+    margin-bottom: 1rem;
   }
 
   .tutorial-body p {
     font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .btn-skip {
+    order: 1;
+  }
+
+  .btn-prev,
+  .btn-next,
+  .btn-close {
+    order: 2;
   }
 }
 </style>

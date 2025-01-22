@@ -9,7 +9,7 @@
       </nav>
       <!-- Main content -->
       <div
-        v-if="!store.isBackendReachable && !store.showSettings"
+        v-if="!store.isBackendReachable && !store.showSettings && settingsStore.setupCompleted"
         class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
       >
         <div class="animate-spin rounded-full h-20 w-20 border-t-8 border-red-600"></div>
@@ -19,7 +19,7 @@
         <router-view />
       </div>
       <!-- Footer -->
-      <div>
+      <div v-if="settingsStore.setupCompleted">
         <button @click="showLogsModal = true" class="fixed bottom-0 w-full">
           <LastMessage class="fixed bottom-0 w-full" />
         </button>
@@ -96,21 +96,21 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { apiStore } from '@/store/store';
+import { useSettingsStore } from '@/store/settingsStore';
 import { useHead } from '@vueuse/head';
 import NavigationComp from '@/components/NavigationComp.vue';
 import LastMessage from '@/components/LastMessage.vue';
 import SettingsPage from '@/views/SettingsPage.vue';
 import LastLogs from '@/components/LastLogs.vue';
-import { useSettingsStore } from '@/store/settingsStore';
 import { useLogStore } from '@/store/logStore';
 import { useI18n } from 'vue-i18n';
 import TutorialModal from '@/components/TutorialModal.vue';
 
 const store = apiStore();
+const settingsStore = useSettingsStore();
 const logStore = useLogStore();
 const showLogsModal = ref(false);
 const showTutorial = ref(false);
-const settingsStore = useSettingsStore();
 
 useHead({
   title: 'TouchNStars',
