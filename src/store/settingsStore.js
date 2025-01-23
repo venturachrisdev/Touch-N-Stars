@@ -24,6 +24,7 @@ export const useSettingsStore = defineStore('settings', {
       showGuiderGraph: true,
       showGuiderAfGraph: true,
     },
+    useImperialUnits: localStorage.getItem('useImperialUnits') === 'true',
     tutorial: {
       completed: localStorage.getItem('tutorialCompleted') === 'true',
       steps: tutorialContent.steps,
@@ -124,6 +125,11 @@ export const useSettingsStore = defineStore('settings', {
     resetTutorial() {
       this.tutorial.completed = false;
       localStorage.removeItem('tutorialCompleted');
+    },
+
+    toggleUnits() {
+      this.useImperialUnits = !this.useImperialUnits;
+      localStorage.setItem('useImperialUnits', this.useImperialUnits);
     },
   },
   persist: {
