@@ -3,13 +3,13 @@
   <div
     class="flex-col w-full  space-y-2 mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5"
   >
-    <strong>Messwerte</strong>
+    <strong> {{ $t('components.switch.gauges') }}</strong>
     <InfoSwitch />
   </div>
   <div
     class="flex-col w-full space-y-2 mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5"
   >
-    <strong>Schalter</strong>
+    <strong>{{ $t('components.switch.switch') }}</strong>
     <ControlSwitch />
   </div>
 </div>

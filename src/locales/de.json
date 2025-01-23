@@ -375,6 +375,10 @@
         "open": "Deckel öffnen"
       },
       "title": "Flachfeldgerät"
+    },
+    "switch": {
+      "gauges": "Messwerte",
+      "switch": "Schalter"
     }
   }
 }

@@ -375,6 +375,10 @@
         "open": "open cover"
       },
       "title": "Flatpanel"
+    },
+    "switch": {
+      "gauges": "Gauges",
+      "switch": "Switch"
     }
   }
 }
