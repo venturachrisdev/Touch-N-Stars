@@ -27,47 +27,48 @@
       v-if="!isLoadingImg && settingsStore.monitorViewSetting.showImageStats"
       class="flex flex-col w-full min-w-60 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl p-4 text-sm space-y-2"
     >
-      <div v-if="formattedDate" class="flex justify-between">
+      <div v-if="formattedDate" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.date') }}: </span>
         <span>{{ formattedDate }}</span>
       </div>
-      <div v-if="ExposureTime" class="flex justify-between">
+      <div v-if="ExposureTime" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.exposureTime') }}:</span>
         <span>{{ ExposureTime.toFixed(2) }} s</span>
       </div>
-      <div v-if="HFR" class="flex justify-between">
+      <div v-if="HFR" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.hfr') }}:</span>
         <span>{{ HFR.toFixed(2) }}</span>
       </div>
-      <div v-if="Stars" class="flex justify-between">
+      <div v-if="Stars" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.stars') }}:</span>
         <span>{{ Stars }}</span>
       </div>
-      <div v-if="Mean" class="flex justify-between">
+      <div v-if="Mean" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.mean') }}:</span>
         <span>{{ Mean.toFixed(2) }}</span>
       </div>
-      <div v-if="Median" class="flex justify-between">
+      <div v-if="Median" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.median') }}:</span>
         <span>{{ Median }}</span>
       </div>
-      <div v-if="StDev" class="flex justify-between">
+      <div v-if="StDev" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.stDev') }}:</span>
         <span>{{ StDev.toFixed(2) }}</span>
       </div>
-      <div v-if="RmsText" class="flex justify-between">
+      <div v-if="RmsText" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.rmsText') }}:</span>
         <span>{{ RmsText }}</span>
       </div>
-      <div v-if="Temperature !== 'NaN'" class="flex justify-between">
+      <div v-if="Temperature !== 'NaN'" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.temperature') }}:</span>
         <span>{{ Temperature }} °C</span>
       </div>
-      <div v-if="Filter" class="flex justify-between">
+      <div v-if="Filter" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.filter') }}:</span>
         <span>{{ Filter }}</span>
       </div>
     </div>
+
     <ImageModal
       :showModal="showModal"
       :imageData="imageDataModal"
