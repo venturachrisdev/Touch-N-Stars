@@ -23,7 +23,8 @@
         <!-- Weather info container -->
         <div
           v-if="store.weatherInfo.Connected"
-          class="flex items-center gap-1 min-w-[90px] px-2 py-1"
+          class="flex items-center gap-1 min-w-[90px] px-2 py-1 cursor-pointer hover:bg-gray-700/50 rounded-lg"
+          @click.stop.prevent="handleWeatherClick"
         >
           <span class="text-sm">{{ store.weatherInfo.Temperature.toFixed(1) }}°C</span>
           <svg
@@ -112,6 +113,12 @@
 
     <!-- About modal -->
     <AboutModal v-if="showAboutModal" :version="appVersion" @close="showAboutModal = false" />
+    <!-- Weather modal -->
+    <WeatherModal
+      v-if="showWeatherModal"
+      :weatherInfo="store.weatherInfo"
+      @close="showWeatherModal = false"
+    />
   </div>
 </template>
 
@@ -121,16 +128,23 @@ import { useLogStore } from '@/store/logStore';
 import { ref, computed, onMounted, watch } from 'vue';
 import version from '@/version';
 import AboutModal from './AboutModal.vue';
+import WeatherModal from './WeatherModal.vue';
 
 const store = apiStore();
 const logStore = useLogStore();
 const isLoading = ref(true);
 const showAboutModal = ref(false);
+const showWeatherModal = ref(false);
 const appVersion = ref(version);
 
 function handleAboutClick(event) {
   showAboutModal.value = true;
-  // Prevent any parent click handlers from interfering
+  event.stopPropagation();
+  event.preventDefault();
+}
+
+function handleWeatherClick(event) {
+  showWeatherModal.value = true;
   event.stopPropagation();
   event.preventDefault();
 }
