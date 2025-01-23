@@ -1,15 +1,9 @@
 {
   "common": {
-    "Delete": "Effacer",
-    "Confirm": "Confirmer",
     "cancel": "Annuler",
     "confirm": "Confirmer"
   },
   "general": {
-    "Delete": "Effacer",
-    "Confirm": "Confirmer",
-    "Hide": "Cacher",
-    "Show": "Montrer",
     "cancel": "Annuler",
     "confirm": "Confirmer",
     "hide": "Cacher",

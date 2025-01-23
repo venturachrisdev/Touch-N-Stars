@@ -195,7 +195,7 @@
           "showGuiderAfGraph": "Autofokus-Diagramm anzeigen"
         }
       },
-      "running": "WIRD AUSGEFÜHRT"
+    "running": "WIRD AUSGEFÜHRT"
     },
     "mount": {
       "title": "Montierung",
@@ -366,7 +366,7 @@
       "stopped": "Gestoppt"
     },
     "flat": {
-      "please_connect_flatDevice": "Bitte Flachfeldgerät verbinden",
+      "please_connect_flatDevice": "Bitte Flatpanel verbinden",
       "device_name": "Name:",
       "cover_state": "Deckelstatus:",
       "light_state": "Lichtstatus:",
@@ -376,13 +376,7 @@
         "close": "Deckel schließen",
         "open": "Deckel öffnen"
       },
-      "title": "Flachfeldgerät"
-    }
-  }
-}
-nen"
-      },
-      "title": "Flachfeldgerät"
+      "title": "Flatpanel"
     }
   }
 }
