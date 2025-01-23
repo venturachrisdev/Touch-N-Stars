@@ -389,9 +389,9 @@
       "humidity": "Luftfeuchtigkeit",
       "pressure": "Luftdruck"
     },
-  },
-  "switch": {
-    "gauges": "Messwerte",
-    "switch": "Schalter"
+    "switch": {
+      "gauges": "Messwerte",
+      "switch": "Schalter"
+    }
   }
 }
