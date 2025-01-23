@@ -28,7 +28,7 @@ async function getTargetPic() {
     if (targetPic.value) {
       URL.revokeObjectURL(targetPic.value);
     }
-    targetPic.value = await apiService.searchTargetPic(200, 200, 2, ra, dec, false);
+    targetPic.value = await apiService.searchTargetPic(200, 200, 2, ra, dec, useCache);
     console.log('Load TargestPic');
   } catch (error) {
     console.error('Fehler beim Abrufen des Bildes:', error);
