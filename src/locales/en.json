@@ -194,7 +194,8 @@
           "showGuiderGraph": "Show guider-chart",
           "showGuiderAfGraph": "Show autofocus-chart"
         }
-      }
+      },
+      "running": "RUNNING"
     },
     "mount": {
       "title": "Mount",
@@ -320,7 +321,8 @@
       "west": "West",
       "down": "Down",
       "up": "Up",
-      "not_available": "Not available"
+      "not_available": "Not available",
+      "running": "RUNNING"
     },
     "logs": {
       "loading": "Loading data...",

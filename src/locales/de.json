@@ -194,7 +194,8 @@
           "showGuiderGraph": "Guider-Diagramm anzeigen",
           "showGuiderAfGraph": "Autofokus-Diagramm anzeigen"
         }
-      }
+      },
+      "running": "WIRD AUSGEFÜHRT"
     },
     "mount": {
       "title": "Montierung",
@@ -320,7 +321,8 @@
       "west": "Westen",
       "down": "Unten",
       "up": "Oben",
-      "not_available": "Nicht verfügbar"
+      "not_available": "Nicht verfügbar",
+      "running": "WIRD AUSGEFÜHRT"
     },
     "logs": {
       "loading": "Daten werden geladen...",
