@@ -226,6 +226,7 @@ const instancePort = ref('');
 const availableLanguages = [
   { code: 'en', name: 'English' },
   { code: 'de', name: 'Deutsch' },
+  { code: 'fr', name: 'Français' },
 ];
 
 function saveLanguage() {
