@@ -278,6 +278,7 @@ const tempInstance = ref({
 const languages = [
   { code: 'en', name: 'English' },
   { code: 'de', name: 'Deutsch' },
+  { code: 'fr', name: 'Français' },
 ];
 
 // Load stored settings on mount

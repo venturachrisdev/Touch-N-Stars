@@ -6,7 +6,28 @@ export const useTppaStore = defineStore('tppaStore', {
     status: 'nicht verbunden',
     isConnected: false,
     currentMessage: null,
+    isRunning: false,
+    initialized: false,
   }),
 
-  actions: {},
+  actions: {
+    setRunning(isRunning) {
+      this.isRunning = isRunning;
+      // Persist state to localStorage
+      localStorage.setItem('tppaStore', JSON.stringify(this.$state));
+    },
+    initialize() {
+      if (!this.initialized) {
+        const savedState = localStorage.getItem('tppaStore');
+        if (savedState) {
+          this.$state = JSON.parse(savedState);
+        }
+        this.initialized = true;
+      }
+    },
+  },
+
+  getters: {
+    isTppaRunning: (state) => state.isRunning,
+  },
 });
