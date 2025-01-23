@@ -9,7 +9,18 @@
       @click.stop
     >
       <div class="flex justify-between items-center mb-8 pb-6 border-b border-gray-700/50">
-        <h2 class="text-2xl font-bold text-gray-100 tracking-tight">Weather Information</h2>
+        <div>
+          <h2 class="text-2xl font-bold text-gray-100 tracking-tight">Weather Information</h2>
+          <p class="text-sm text-gray-400 mt-1">{{ weatherInfo.DisplayName }}</p>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button
+            @click="toggleUnits"
+            class="text-sm font-medium text-gray-300 hover:text-gray-100 transition-colors"
+          >
+            {{ settingsStore.useImperialUnits ? 'Metric' : 'Imperial' }}
+          </button>
+        </div>
         <button
           @click="$emit('close')"
           class="p-2 hover:bg-gray-700/50 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -43,19 +54,21 @@
           <h3 class="font-semibold text-gray-100 mb-3 flex items-center space-x-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
             >
               <path
-                fill-rule="evenodd"
-                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clip-rule="evenodd"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
               />
             </svg>
             <span>Temperature</span>
           </h3>
-          <p class="text-gray-300 pl-7">{{ weatherInfo.Temperature.toFixed(1) }}°C</p>
+          <p class="text-gray-300 pl-7">{{ temperature }} {{ temperatureUnit }}</p>
         </div>
 
         <!-- Cloud Cover -->
@@ -98,7 +111,7 @@
             <span>Wind</span>
           </h3>
           <p class="text-gray-300 pl-7">
-            {{ weatherInfo.WindSpeed }} m/s at {{ weatherInfo.WindDirection }}°
+            {{ windSpeed }} {{ windSpeedUnit }} ({{ windDirection }})
           </p>
         </div>
 
@@ -151,7 +164,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import { useSettingsStore } from '@/store/settingsStore';
 
 const { weatherInfo } = defineProps({
   weatherInfo: {
@@ -159,6 +173,55 @@ const { weatherInfo } = defineProps({
     required: true,
   },
 });
+
+const settingsStore = useSettingsStore();
+
+const temperature = computed(() => {
+  return settingsStore.useImperialUnits
+    ? ((weatherInfo.Temperature * 9) / 5 + 32).toFixed(1)
+    : weatherInfo.Temperature.toFixed(1);
+});
+
+const temperatureUnit = computed(() => {
+  return settingsStore.useImperialUnits ? '°F' : '°C';
+});
+
+const windSpeed = computed(() => {
+  return settingsStore.useImperialUnits
+    ? (weatherInfo.WindSpeed * 2.23694).toFixed(1)
+    : weatherInfo.WindSpeed.toFixed(1);
+});
+
+const windDirection = computed(() => {
+  const directions = [
+    'N',
+    'NNE',
+    'NE',
+    'ENE',
+    'E',
+    'ESE',
+    'SE',
+    'SSE',
+    'S',
+    'SSW',
+    'SW',
+    'WSW',
+    'W',
+    'WNW',
+    'NW',
+    'NNW',
+  ];
+  const index = Math.round((weatherInfo.WindDirection % 360) / 22.5);
+  return directions[index % 16];
+});
+
+const windSpeedUnit = computed(() => {
+  return settingsStore.useImperialUnits ? 'mph' : 'km/h';
+});
+
+function toggleUnits() {
+  settingsStore.toggleUnits();
+}
 
 const emit = defineEmits(['close']);
 

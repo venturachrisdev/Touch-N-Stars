@@ -25,7 +25,7 @@
       "content": {
         "en": "Connect and control your gear - mount, camera, focuser and more",
         "de": "Verbinde und steuere deine Ausrüstung - Montierung, Kamera, Fokussierer und mehr",
-        "fr": "Connectez et contrôlez votre équipement - monture, appareil photo, mise au point et plus"
+        "fr": "Connectez et contrôlez votre équipement - monture, caméra, mise au point et autres accessoires"
       }
     },
     {
@@ -48,12 +48,12 @@
       "title": {
         "en": "Camera",
         "de": "Kamera",
-        "fr": "Appareil photo"
+        "fr": "Caméra"
       },
       "content": {
         "en": "Control your camera settings and check imaging status",
         "de": "Steuere deine Kameraeinstellungen und prüfe den Aufnahmestatus",
-        "fr": "Contrôlez les paramètres de votre appareil photo et vérifiez l'état de l'imagerie"
+        "fr": "Contrôlez les paramètres de votre caméra et vérifiez l'état de l'acquisition"
       }
     },
     {
@@ -81,7 +81,7 @@
       "content": {
         "en": "Control tracking, parking and movement of your mount",
         "de": "Steuere Nachführung, Parken und Bewegung deiner Montierung",
-        "fr": "Contrôlez le suivi, le stationnement et le mouvement de votre monture"
+        "fr": "Contrôlez le suivi, le parcage et le mouvement de votre monture"
       }
     },
     {
@@ -90,7 +90,7 @@
       "title": {
         "en": "Dome",
         "de": "Kuppel",
-        "fr": "Coupole"
+        "fr": "Dôme"
       },
       "content": {
         "en": "Control dome rotation and shutter",
@@ -104,12 +104,12 @@
       "title": {
         "en": "Flatpanel",
         "de": "Flatpanel",
-        "fr": "Panneau plat"
+        "fr": "Panneau à Flats"
       },
       "content": {
         "en": "Control your flatpanel settings",
         "de": "Steuere dein Flatpanel",
-        "fr": "Contrôlez les paramètres de votre panneau plat"
+        "fr": "Contrôlez les paramètres de votre panneau à Flats"
       }
     },
     {
@@ -137,7 +137,7 @@
       "content": {
         "en": "Set up and control your imaging sequences",
         "de": "Richte deine Aufnahmesequenzen ein und steuere sie",
-        "fr": "Configurez et contrôlez vos séquences d'imagerie"
+        "fr": "Configurez et contrôlez vos séquences d'acquisition"
       }
     },
     {
