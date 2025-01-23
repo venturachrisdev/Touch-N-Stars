@@ -10,7 +10,9 @@
     >
       <div class="flex justify-between items-center mb-8 pb-6 border-b border-gray-700/50">
         <div>
-          <h2 class="text-2xl font-bold text-gray-100 tracking-tight">Weather Information</h2>
+          <h2 class="text-2xl font-bold text-gray-100 tracking-tight">
+            {{ $t('components.weatherModal.weatherInformation') }}
+          </h2>
           <p class="text-sm text-gray-400 mt-1">{{ weatherInfo.DisplayName }}</p>
         </div>
         <div class="flex items-center space-x-4">
@@ -18,7 +20,11 @@
             @click="toggleUnits"
             class="text-sm font-medium text-gray-300 hover:text-gray-100 transition-colors"
           >
-            {{ settingsStore.useImperialUnits ? 'Metric' : 'Imperial' }}
+            {{
+              settingsStore.useImperialUnits
+                ? $t('components.weatherModal.metric')
+                : $t('components.weatherModal.imperial')
+            }}
           </button>
         </div>
         <button
@@ -66,7 +72,7 @@
                 d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
               />
             </svg>
-            <span>Temperature</span>
+            <span>{{ $t('components.weatherModal.temperature') }}</span>
           </h3>
           <p class="text-gray-300 pl-7">{{ temperature }} {{ temperatureUnit }}</p>
         </div>
@@ -86,7 +92,7 @@
                 d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z"
               />
             </svg>
-            <span>Cloud Cover</span>
+            <span>{{ $t('components.weatherModal.cloudCover') }}</span>
           </h3>
           <p class="text-gray-300 pl-7">{{ weatherInfo.CloudCover }}%</p>
         </div>
@@ -108,7 +114,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-            <span>Wind</span>
+            <span>{{ $t('components.weatherModal.wind') }}</span>
           </h3>
           <p class="text-gray-300 pl-7">
             {{ windSpeed }} {{ windSpeedUnit }} ({{ windDirection }})
@@ -132,7 +138,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-            <span>Humidity</span>
+            <span>{{ $t('components.weatherModal.humidity') }}</span>
           </h3>
           <p class="text-gray-300 pl-7">{{ weatherInfo.Humidity }}%</p>
         </div>
@@ -154,7 +160,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-            <span>Pressure</span>
+            <span>{{ $t('components.weatherModal.pressure') }}</span>
           </h3>
           <p class="text-gray-300 pl-7">{{ weatherInfo.Pressure }} hPa</p>
         </div>

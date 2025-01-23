@@ -378,6 +378,16 @@
         "open": "Deckel öffnen"
       },
       "title": "Flatpanel"
+    },
+    "weatherModal": {
+      "weatherInformation": "Wetterinformationen",
+      "metric": "Metrisch",
+      "imperial": "Imperial",
+      "temperature": "Temperatur",
+      "cloudCover": "Wolkenbedeckung",
+      "wind": "Wind",
+      "humidity": "Luftfeuchtigkeit",
+      "pressure": "Luftdruck"
     }
   }
 }
