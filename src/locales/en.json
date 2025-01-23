@@ -378,6 +378,16 @@
         "open": "open cover"
       },
       "title": "Flatpanel"
+    },
+    "weatherModal": {
+      "weatherInformation": "Weather Information",
+      "metric": "Metric",
+      "imperial": "Imperial",
+      "temperature": "Temperature",
+      "cloudCover": "Cloud Cover",
+      "wind": "Wind",
+      "humidity": "Humidity",
+      "pressure": "Pressure"
     }
   }
 }

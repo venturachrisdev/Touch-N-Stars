@@ -378,6 +378,16 @@
         "open": "Ouvrir le couvercle"
       },
       "title": "Panneau à flats"
+    },
+    "weatherModal": {
+      "weatherInformation": "Informations météorologiques",
+      "metric": "Métrique",
+      "imperial": "Impérial",
+      "temperature": "Température",
+      "cloudCover": "Couverture nuageuse",
+      "wind": "Vent",
+      "humidity": "Humidité",
+      "pressure": "Pression"
     }
   }
 }
