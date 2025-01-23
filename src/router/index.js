@@ -13,6 +13,7 @@ import SettingsPage from '@/views/SettingsPage.vue';
 import FlatdevicePage from '@/views/FlatdevicePage.vue';
 import SequenceMonitoring from '@/views/SequenceMonitoring.vue';
 import SetupPage from '@/views/SetupPage.vue';
+import SwitchPage from '@/views/SwitchPage.vue';
 import { useSettingsStore } from '@/store/settingsStore';
 
 const routes = [
@@ -38,6 +39,7 @@ const routes = [
   { path: '/settings', component: SettingsPage, meta: { requiresSetup: true } },
   { path: '/flat', component: FlatdevicePage, meta: { requiresSetup: true } },
   { path: '/seq-mon', component: SequenceMonitoring, meta: { requiresSetup: true } },
+  { path: '/switch', component: SwitchPage, meta: { requiresSetup: true } },
 ];
 
 const router = createRouter({

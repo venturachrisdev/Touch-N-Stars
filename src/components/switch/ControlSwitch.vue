@@ -1,5 +1,5 @@
 <template>
-  <div v-for="WritableSwitche in store.switchInfo.WritableSwitches">
+  <div v-for="(WritableSwitche, index) in store.switchInfo.WritableSwitches" :key="index">
     <div v-if="WritableSwitche.Maximum === 1.0">
       <div
         class="flex flex-row items-center justify-between w-full border border-gray-500 p-2 rounded-lg"
@@ -15,7 +15,7 @@
       </div>
     </div>
   </div>
-  <div v-for="WritableSwitche in store.switchInfo.WritableSwitches">
+  <div v-for="(WritableSwitche, index) in store.switchInfo.WritableSwitches" :key="index">
     <div v-if="WritableSwitche.Maximum > 1.0">
       <div
         class="flex flex-row items-center justify-between w-full border border-gray-500 p-2 rounded-lg"

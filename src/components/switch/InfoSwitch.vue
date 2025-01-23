@@ -1,5 +1,5 @@
 <template>
-  <div v-for="ReadonlySwitche in store.switchInfo.ReadonlySwitches">
+  <div v-for="(ReadonlySwitche, index) in store.switchInfo.ReadonlySwitches" :key="index">
     <div
       class="flex flex-row items-center justify-between w-full border border-gray-500 p-2 pl-5 pr-5 rounded-full"
     >
