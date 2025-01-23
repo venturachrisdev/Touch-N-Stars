@@ -388,6 +388,10 @@
       "wind": "Wind",
       "humidity": "Luftfeuchtigkeit",
       "pressure": "Luftdruck"
+    },
+    "switch": {
+      "gauges": "Messwerte",
+      "switch": "Schalter"
     }
   }
 }

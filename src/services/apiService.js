@@ -425,6 +425,22 @@ const apiService = {
     return this._simpleGetRequest(`${BASE_URL}/equipment/switch/${action}`);
   },
 
+  async setSwitch(id, value) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/equipment/switch/set`, {
+        params: {
+          index: id,
+          value: value,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error setSwitch:', error);
+      throw error;
+    }
+  },
+
   //-------------------------------------  Weather ----------------------------------------
   weatherAction(action) {
     const { BASE_URL } = getUrls();

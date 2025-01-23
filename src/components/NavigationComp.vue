@@ -143,6 +143,11 @@
             />
           </router-link>
         </div>
+        <div v-if="store.switchInfo.Connected">
+          <router-link to="/switch" class="nav-button" active-class="active-nav-button">
+            <AdjustmentsVerticalIcon class="icon" />
+          </router-link>
+        </div>
         <div v-if="store.guiderInfo.Connected">
           <router-link
             to="/guider"
@@ -241,6 +246,7 @@ import {
   ListBulletIcon,
   Cog6ToothIcon,
   LightBulbIcon,
+  AdjustmentsVerticalIcon,
 } from '@heroicons/vue/24/outline';
 import { apiStore } from '@/store/store';
 

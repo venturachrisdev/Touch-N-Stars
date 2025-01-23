@@ -37,14 +37,14 @@
                   class="grid grid-cols-2 landscape:grid-cols-3"
                 />
               </div>
-              <div class="w-full p-2 bg-gray-800/50 rounded-lg border border-gray-700/50">
+              <div
+                v-if="store.rotatorInfo.Connected"
+                class="w-full p-2 bg-gray-800/50 rounded-lg border border-gray-700/50"
+              >
                 <label for="infoRotator" class="text-xs mb-1 text-gray-400">
                   {{ $t('components.rotator.label') }}
                 </label>
-                <infoRotator
-                  v-if="store.rotatorInfo.Connected"
-                  class="grid grid-cols-2 landscape:grid-cols-3"
-                />
+                <infoRotator class="grid grid-cols-2 landscape:grid-cols-3" />
               </div>
             </div>
           </div>
