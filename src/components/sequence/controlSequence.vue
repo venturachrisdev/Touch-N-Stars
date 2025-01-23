@@ -44,7 +44,11 @@
               clip-rule="evenodd"
             />
           </svg>
-          {{ store.sequenceRunning ? 'RUNNING' : $t('components.sequence.startSequence') }}
+          {{
+            store.sequenceRunning
+              ? $t('components.sequence.running')
+              : $t('components.sequence.startSequence')
+          }}
         </button>
 
         <button

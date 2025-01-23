@@ -12,18 +12,27 @@
           <p class="text-red-800">{{ $t('components.tppa.camera_mount_required') }}</p>
         </div>
         <div v-else class="flex space-x-4">
-          <button class="default-button-cyan" @click="startAlignment">
-            {{ $t('components.tppa.start_alignment') }}
+          <button
+            class="default-button-cyan"
+            @click="startAlignment"
+            :disabled="tppaStore.isTppaRunning"
+          >
+            <span
+              v-if="tppaStore.isTppaRunning"
+              class="inline-block w-5 h-5 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"
+            ></span>
+            {{
+              tppaStore.isTppaRunning
+                ? $t('components.tppa.running')
+                : $t('components.tppa.start_alignment')
+            }}
           </button>
           <button class="default-button-cyan" @click="stopAlignment">
             {{ $t('components.tppa.stop_alignment') }}
           </button>
         </div>
         <div v-if="tppaStore.currentMessage" class="mt-10">
-          <div v-if="startStop">
-            <p>{{ formatMessage(tppaStore.currentMessage.message) }}</p>
-          </div>
-          <div v-else class="space-y-4">
+          <div class="space-y-4">
             <div class="flex space-x-4">
               <p class="w-52">
                 <strong>{{ $t('components.tppa.altitude_error') }}</strong>
@@ -143,7 +152,7 @@ function formatMessage(message) {
         console.log('Start TPPA');
         return message.Response;
       }
-      startStop.value = true;
+      startStop.value = false;
       return message.Response;
     } else if (typeof message.Response === 'object') {
       startStop.value = false;
@@ -175,9 +184,18 @@ async function startAlignment() {
   websocketService.sendMessage('start-alignment');
 }
 
+function resetErrors() {
+  showAzimuthError.value = '';
+  showAltitudeError.value = '';
+  showTotalError.value = '';
+  azimuthCorDirectionLeft.value = false;
+  altitudeCorDirectionTop.value = false;
+}
+
 function stopAlignment() {
   console.log("Sende 'stop-alignment' an den Server");
   websocketService.sendMessage('stop-alignment');
+  resetErrors();
 }
 
 async function unparkMount() {
@@ -197,6 +215,8 @@ async function wait(ms) {
 }
 
 onMounted(() => {
+  tppaStore.initialize();
+
   websocketService.setStatusCallback((status) => {
     console.log('Status aktualisiert:', status);
     isConnected.value = status === 'Verbunden';
@@ -205,10 +225,26 @@ onMounted(() => {
 
   websocketService.setMessageCallback((message) => {
     console.log('Neue Nachricht erhalten:', message);
-    tppaStore.currentMessage = {
+    const newMessage = {
       message: message,
       time: getCurrentTime(),
     };
+
+    // Create new object to force reactivity
+    tppaStore.currentMessage = JSON.parse(JSON.stringify(newMessage));
+
+    // Update running state based on message
+    if (message.Response === 'started procedure') {
+      tppaStore.setRunning(true);
+      startStop.value = true;
+    } else if (message.Response === 'stopped procedure') {
+      tppaStore.setRunning(false);
+      startStop.value = false;
+      resetErrors();
+    }
+
+    // Force immediate UI update
+    formatMessage(message);
   });
 
   websocketService.connect();

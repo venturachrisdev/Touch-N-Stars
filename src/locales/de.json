@@ -147,6 +147,7 @@
     "language": {
       "en": "Englisch",
       "de": "Deutsch",
+      "fr": "Französisch",
       "select": "Sprache auswählen"
     },
     "equipment": {
@@ -194,7 +195,8 @@
           "showGuiderGraph": "Guider-Diagramm anzeigen",
           "showGuiderAfGraph": "Autofokus-Diagramm anzeigen"
         }
-      }
+      },
+    "running": "WIRD AUSGEFÜHRT"
     },
     "mount": {
       "title": "Montierung",
@@ -320,7 +322,8 @@
       "west": "Westen",
       "down": "Unten",
       "up": "Oben",
-      "not_available": "Nicht verfügbar"
+      "not_available": "Nicht verfügbar",
+      "running": "WIRD AUSGEFÜHRT"
     },
     "logs": {
       "loading": "Daten werden geladen...",
@@ -364,7 +367,7 @@
       "stopped": "Gestoppt"
     },
     "flat": {
-      "please_connect_flatDevice": "Bitte Flachfeldgerät verbinden",
+      "please_connect_flatDevice": "Bitte Flatpanel verbinden",
       "device_name": "Name:",
       "cover_state": "Deckelstatus:",
       "light_state": "Lichtstatus:",
@@ -374,11 +377,21 @@
         "close": "Deckel schließen",
         "open": "Deckel öffnen"
       },
-      "title": "Flachfeldgerät"
+      "title": "Flatpanel"
     },
-    "switch": {
-      "gauges": "Messwerte",
-      "switch": "Schalter"
-    }
+    "weatherModal": {
+      "weatherInformation": "Wetterinformationen",
+      "metric": "Metrisch",
+      "imperial": "Imperial",
+      "temperature": "Temperatur",
+      "cloudCover": "Wolkenbedeckung",
+      "wind": "Wind",
+      "humidity": "Luftfeuchtigkeit",
+      "pressure": "Luftdruck"
+    },
+  },
+  "switch": {
+    "gauges": "Messwerte",
+    "switch": "Schalter"
   }
 }

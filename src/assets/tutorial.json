@@ -5,11 +5,13 @@
       "icon": "navigation-nav.svg",
       "title": {
         "en": "Navigation",
-        "de": "Navigation"
+        "de": "Navigation",
+        "fr": "Navigation"
       },
       "content": {
         "en": "Tap any icon to access its features. On mobile devices, swipe left or right to see more navigation options",
-        "de": "Tippe auf ein Symbol, um dessen Funktionen zu öffnen. Auf mobilen Geräten kannst du nach links oder rechts wischen, um weitere Navigationspunkte zu sehen"
+        "de": "Tippe auf ein Symbol, um dessen Funktionen zu öffnen. Auf mobilen Geräten kannst du nach links oder rechts wischen, um weitere Navigationspunkte zu sehen",
+        "fr": "Appuyez sur n'importe quelle icône pour accéder à ses fonctionnalités. Sur les appareils mobiles, faites glisser vers la gauche ou la droite pour voir plus d'options de navigation"
       }
     },
     {
@@ -17,11 +19,13 @@
       "icon": "equipment-nav.svg",
       "title": {
         "en": "Equipment",
-        "de": "Equipment"
+        "de": "Equipment",
+        "fr": "Équipement"
       },
       "content": {
         "en": "Connect and control your gear - mount, camera, focuser and more",
-        "de": "Verbinde und steuere deine Ausrüstung - Montierung, Kamera, Fokussierer und mehr"
+        "de": "Verbinde und steuere deine Ausrüstung - Montierung, Kamera, Fokussierer und mehr",
+        "fr": "Connectez et contrôlez votre équipement - monture, caméra, mise au point et autres accessoires"
       }
     },
     {
@@ -29,11 +33,13 @@
       "icon": "settings-nav.svg",
       "title": {
         "en": "Settings",
-        "de": "Einstellungen"
+        "de": "Einstellungen",
+        "fr": "Paramètres"
       },
       "content": {
         "en": "Set up your connections, language and other preferences",
-        "de": "Stelle deine Verbindungen, Sprache und andere Vorlieben ein"
+        "de": "Stelle deine Verbindungen, Sprache und andere Vorlieben ein",
+        "fr": "Configurez vos connexions, langue et autres préférences"
       }
     },
     {
@@ -41,11 +47,13 @@
       "icon": "camera-nav.svg",
       "title": {
         "en": "Camera",
-        "de": "Kamera"
+        "de": "Kamera",
+        "fr": "Caméra"
       },
       "content": {
         "en": "Control your camera settings and check imaging status",
-        "de": "Steuere deine Kameraeinstellungen und prüfe den Aufnahmestatus"
+        "de": "Steuere deine Kameraeinstellungen und prüfe den Aufnahmestatus",
+        "fr": "Contrôlez les paramètres de votre caméra et vérifiez l'état de l'acquisition"
       }
     },
     {
@@ -53,11 +61,13 @@
       "icon": "autofocus-nav.svg",
       "title": {
         "en": "Autofocus",
-        "de": "Autofokus"
+        "de": "Autofokus",
+        "fr": "Autofocus"
       },
       "content": {
         "en": "Keep your images sharp with autofocus tools",
-        "de": "Halte deine Bilder scharf mit den Autofokus-Tools"
+        "de": "Halte deine Bilder scharf mit den Autofokus-Tools",
+        "fr": "Gardez vos images nettes avec les outils d'autofocus"
       }
     },
     {
@@ -65,11 +75,13 @@
       "icon": "mount-nav.svg",
       "title": {
         "en": "Mount",
-        "de": "Montierung"
+        "de": "Montierung",
+        "fr": "Monture"
       },
       "content": {
         "en": "Control tracking, parking and movement of your mount",
-        "de": "Steuere Nachführung, Parken und Bewegung deiner Montierung"
+        "de": "Steuere Nachführung, Parken und Bewegung deiner Montierung",
+        "fr": "Contrôlez le suivi, le parcage et le mouvement de votre monture"
       }
     },
     {
@@ -77,11 +89,13 @@
       "icon": "dome-nav.svg",
       "title": {
         "en": "Dome",
-        "de": "Kuppel"
+        "de": "Kuppel",
+        "fr": "Dôme"
       },
       "content": {
         "en": "Control dome rotation and shutter",
-        "de": "Steuere Kuppeldrehung und Verschluss"
+        "de": "Steuere Kuppeldrehung und Verschluss",
+        "fr": "Contrôlez la rotation du dôme et l'obturateur"
       }
     },
     {
@@ -89,11 +103,13 @@
       "icon": "flatpanel-nav.svg",
       "title": {
         "en": "Flatpanel",
-        "de": "Flatpanel"
+        "de": "Flatpanel",
+        "fr": "Panneau à Flats"
       },
       "content": {
         "en": "Control your flatpanel settings",
-        "de": "Steuere dein Flatpanel"
+        "de": "Steuere dein Flatpanel",
+        "fr": "Contrôlez les paramètres de votre panneau à Flats"
       }
     },
     {
@@ -101,11 +117,13 @@
       "icon": "guiding-nav.svg",
       "title": {
         "en": "Guiding",
-        "de": "Guiding"
+        "de": "Guiding",
+        "fr": "Guidage"
       },
       "content": {
         "en": "Monitor and control guiding for precise tracking",
-        "de": "Überwache und steuere das Guiding für präzise Nachführung"
+        "de": "Überwache und steuere das Guiding für präzise Nachführung",
+        "fr": "Surveillez et contrôlez le guidage pour un suivi précis"
       }
     },
     {
@@ -113,11 +131,13 @@
       "icon": "sequence-nav.svg",
       "title": {
         "en": "Sequence",
-        "de": "Sequenz"
+        "de": "Sequenz",
+        "fr": "Séquence"
       },
       "content": {
         "en": "Set up and control your imaging sequences",
-        "de": "Richte deine Aufnahmesequenzen ein und steuere sie"
+        "de": "Richte deine Aufnahmesequenzen ein und steuere sie",
+        "fr": "Configurez et contrôlez vos séquences d'acquisition"
       }
     },
     {
@@ -125,11 +145,13 @@
       "icon": "sequence-monitor.svg",
       "title": {
         "en": "Monitoring",
-        "de": "Überwachung"
+        "de": "Überwachung",
+        "fr": "Surveillance"
       },
       "content": {
         "en": "Check your ongoing sequence",
-        "de": "Prüfe deine laufende Sequenz"
+        "de": "Prüfe deine laufende Sequenz",
+        "fr": "Vérifiez votre séquence en cours"
       }
     }
   ]
