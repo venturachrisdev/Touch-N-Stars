@@ -42,11 +42,11 @@
       "add": "Přidat",
       "update": "Aktualizace",
       "instance": {
-        "name": "Název Instance",
+        "name": "Název Instalace",
         "ip": "IP Addresa",
         "port": "Port",
-        "edit": "Upravit Instanci",
-        "delete": "Smazat Instanci"
+        "edit": "Upravit Instalaci",
+        "delete": "Smazat Instalaci"
       },
       "errors": {
         "emptyFields": "Vyplňte všechna pole"
