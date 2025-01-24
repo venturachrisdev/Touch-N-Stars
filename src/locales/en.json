@@ -388,6 +388,10 @@
       "wind": "Wind",
       "humidity": "Humidity",
       "pressure": "Pressure"
+    },
+    "switch": {
+      "gauges": "Gauges",
+      "switch": "Switch"
     }
   }
 }
