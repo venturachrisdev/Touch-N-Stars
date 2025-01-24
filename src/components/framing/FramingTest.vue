@@ -77,13 +77,13 @@ framingStore.height = 500;
 scaleDegPerPixel.value = framingStore.fov / framingStore.width;
 
 onMounted(async () => {
-    // Bild abrufen
-    await getTargetPic();
+  // Bild abrufen
+  await getTargetPic();
 
-    // Linke obere Ecke (x,y) so, dass das Element in der Container-Mitte startet
-    x.value = framingStore.containerSize / 2 - framingStore.camWidth / 2;
-    y.value = framingStore.containerSize / 2 - framingStore.camHeight / 2;
-    isLoading.value = false;
+  // Linke obere Ecke (x,y) so, dass das Element in der Container-Mitte startet
+  x.value = framingStore.containerSize / 2 - framingStore.camWidth / 2;
+  y.value = framingStore.containerSize / 2 - framingStore.camHeight / 2;
+  isLoading.value = false;
 });
 
 function calcCameraFov() {
@@ -102,7 +102,7 @@ function calcCameraFov() {
   const fovY = 2 * rad2deg(Math.atan(sensorHeightM / 2 / focalLengthM));
   console.log(`Reale Kamera-FOV: ~${fovX.toFixed(3)}° × ${fovY.toFixed(3)}°`);
 
-    // => FOV in Pixel
+  // => FOV in Pixel
   const fovPxX = fovX / scaleDegPerPixel.value;
   const fovPxY = fovY / scaleDegPerPixel.value;
   console.log('FOV in Pixel:', fovPxX.toFixed(2), '×', fovPxY.toFixed(2));
