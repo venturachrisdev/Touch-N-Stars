@@ -388,6 +388,10 @@
       "wind": "Vent",
       "humidity": "Humidité",
       "pressure": "Pression"
+    },
+    "switch": {
+      "gauges": "Jauges",
+      "switch": "Changer"
     }
   }
 }
