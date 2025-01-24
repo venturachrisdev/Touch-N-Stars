@@ -12,7 +12,14 @@ export const useFramingStore = defineStore('FramingStore', {
     useNinaCache: true,
     width: 200,
     height: 200,
-    fov: 2,
+    fov: 5,
+    camWidth: 0,
+    camHeight: 0,
+    containerSize: 500,
   }),
-  actions: {},
+  actions: {
+
+    
+
+  },
 });
