@@ -1,11 +1,11 @@
 {
   "common": {
     "cancel": "Zrušit",
-    "confirm": "Confirm"
+    "confirm": "Potvrdit"
   },
   "general": {
     "cancel": "Zrušit",
-    "confirm": "Confirm",
+    "confirm": "Potvrdit",
     "hide": "Schovat",
     "show": "Zobrazit"
   },
