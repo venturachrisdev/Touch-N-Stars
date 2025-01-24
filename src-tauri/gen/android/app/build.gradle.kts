@@ -5,6 +5,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("rust")
+    id("com.google.gms.google-services")
 }
 
 val tauriProperties = Properties().apply {
@@ -86,6 +87,10 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    
+    // Firebase dependencies
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation("com.google.firebase:firebase-analytics")
 }
 
 apply(from = "tauri.build.gradle.kts")
