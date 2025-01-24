@@ -179,6 +179,11 @@
             >
               <span>WebSocket</span>
             </li>
+            <li
+              class="hover:text-gray-100 transition-colors duration-200 flex items-center space-x-2"
+            >
+              <span>Google Firebase for Android</span>
+            </li>
           </ul>
         </div>
       </div>
