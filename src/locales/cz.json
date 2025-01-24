@@ -54,34 +54,34 @@
       "showTutorial": "Ukázat Tutoriál"
     },
     "framing": {
-      "confirmSetTargetTitle": "Confirm Target Selection",
-      "confirmSetTargetMessage": "Are you sure you want to set this target as the sequence target?",
-      "useNinaCache": "Use NINA cache for the target image",
-      "setSequnceTarget": "set to sequence target",
+      "confirmSetTargetTitle": "Potvrzení Výběru Cíle",
+      "confirmSetTargetMessage": "Jste si jisti, že chcete tento cíl nastavit jako součást sekvence?",
+      "useNinaCache": "Využití mezipaměti NINA pro cílový obraz",
+      "setSequnceTarget": "nastavit tento cíl jako součást sekvence",
       "search": {
-        "title": "Search",
-        "placeholder": "Enter a search term..."
+        "title": "Hledat",
+        "placeholder": "Zadejte hledaný výraz..."
       }
     },
     "connectEquipment": {
       "camera": {
-        "connect": "Connect camera",
-        "disconnect": "Disconnect camera",
-        "error": "Error controlling camera:"
+        "connect": "Připojit kameru",
+        "disconnect": "Odpojit kameru",
+        "error": "Chyba při ovládání kamery:"
       },
-      "connectAll": "Connect All",
-      "disconnectAll": "Disconnect All",
-      "connectAllError": "Error connecting all devices",
-      "disconnectAllError": "Error disconnecting all devices",
+      "connectAll": "Připojit Vše",
+      "disconnectAll": "Odpojit Vše",
+      "connectAllError": "Chyba při připojení všech zařízení",
+      "disconnectAllError": "Chyba při odpojení všech zařízení",
       "filter": {
-        "connect": "Connect filter wheel",
-        "disconnect": "Disconnect filter wheel",
-        "error": "Error controlling filter wheel:"
+        "connect": "Připojení filtračního kola",
+        "disconnect": "Odpojení filtračního kola",
+        "error": "Chyba při ovládání filtračního kola:"
       },
       "mount": {
-        "connect": "Connect mount",
-        "disconnect": "Disconnect mount",
-        "error": "Error controlling mount:"
+        "connect": "Připojit montáž",
+        "disconnect": "Odpojit montáž",
+        "error": "Chyba při ovládání montáže:"
       },
       "focuser": {
         "connect": "Connect focuser",
