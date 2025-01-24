@@ -166,8 +166,8 @@ function degreesToDMS(deg) {
 
 onMounted(() => {
   framingStore.height = 200;
-  framingStore.width = 200; 
-  framingStore.fov = 2; 
+  framingStore.width = 200;
+  framingStore.fov = 2;
 });
 </script>
 

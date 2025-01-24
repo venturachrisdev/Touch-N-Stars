@@ -1,6 +1,6 @@
 <template>
   <div class="container flex items-center justify-center">
-    <div class="container ">
+    <div class="container">
       <img
         class="rounded-md"
         v-if="targetPic"
