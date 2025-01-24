@@ -114,9 +114,9 @@
         "error": "Erreur de contrôle du dôme:"
       },
       "switch": {
-        "connect": "Connecter le switch",
-        "disconnect": "Déconnecter le switch",
-        "error": "Erreur de contrôle du switch"
+        "connect": "Connecter le Commutateurs",
+        "disconnect": "Déconnecter le Commutateurs",
+        "error": "Erreur de contrôle du Commutateurs"
       },
       "weather": {
         "connect": "Connecter la météo",
