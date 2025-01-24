@@ -8,8 +8,8 @@
     <div
       class="border relative overflow-hidden"
       :style="{
-        width: `${containerSize}px`,
-        height: `${containerSize}px`,
+        width: `${framingStore.containerSize}px`,
+        height: `${framingStore.containerSize}px`,
         position: 'relative',
       }"
       ref="containerRef"
@@ -35,7 +35,6 @@
         }"
       ></div>
 
-      <!-- Moveable-Komponente -->
       <Moveable
         ref="moveableRef"
         :target="targetRef"
@@ -51,49 +50,40 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeMount } from 'vue';
+import { ref, onMounted } from 'vue';
 import Moveable from 'vue3-moveable';
 import { useFramingStore } from '@/store/framingStore';
 import apiService from '@/services/apiService';
 
 const framingStore = useFramingStore();
+const isLoading = ref(true);
+const currentRAHMS = ref('');
+const currentDecDMS = ref('');
+const targetPic = ref(null);
+const scaleDegPerPixel = ref(0.004); // Grad pro Pixel
+const baseRA = framingStore.RAangle;
+const baseDec = framingStore.DECangle;
+const x = ref(0);
+const y = ref(0);
+const containerRef = ref(null);
+const targetRef = ref(null);
 
 framingStore.RAangle = 10.683333333333334;
 framingStore.DECangle = 41.26861111111111;
 framingStore.width = 500;
 framingStore.height = 500;
 
-const isLoading = ref(true);
-const currentRAHMS = ref('');
-const currentDecDMS = ref('');
-const targetPic = ref(null);
-const scaleDegPerPixel = ref(0.004); // Grad pro Pixel
-
-const containerSize = framingStore.width; // 500 px Breite und Höhe
-
-// -> Daraus folgt: Grad pro Pixel
-//    2° / 500 px = 0.004°/px
+// Grad pro Pixel berechnen
 scaleDegPerPixel.value = framingStore.fov / framingStore.width;
 
-// Basis-RA/Dec in der Mitte des Containers
-const baseRA = framingStore.RAangle;
-const baseDec = framingStore.DECangle;
+onMounted(async () => {
+    // Bild abrufen
+    await getTargetPic();
 
-// Linke obere Ecke (x,y) so, dass das Element in der Container-Mitte startet
-console.log('camWidth', framingStore.camWidth);
-console.log('containerSize', containerSize);
-
-const x = ref(containerSize / 2 - framingStore.camWidth / 2);
-const y = ref(containerSize / 2 - framingStore.camHeight / 2);
-
-const containerRef = ref(null);
-const targetRef = ref(null);
-onBeforeMount(async () => {
-  await getTargetPic();
-  x.value = containerSize / 2 - framingStore.camWidth / 2;
-  y.value = containerSize / 2 - framingStore.camHeight / 2;
-  console.log('x', x);
-  isLoading.value = false;
+    // Linke obere Ecke (x,y) so, dass das Element in der Container-Mitte startet
+    x.value = framingStore.containerSize / 2 - framingStore.camWidth / 2;
+    y.value = framingStore.containerSize / 2 - framingStore.camHeight / 2;
+    isLoading.value = false;
 });
 
 function calcCameraFov() {
@@ -109,11 +99,10 @@ function calcCameraFov() {
 
   // => Reale FOV in Grad
   const fovX = 2 * rad2deg(Math.atan(sensorWidthM / 2 / focalLengthM));
-  // ~ 0.87°
   const fovY = 2 * rad2deg(Math.atan(sensorHeightM / 2 / focalLengthM));
-  // ~ 0.44°
   console.log(`Reale Kamera-FOV: ~${fovX.toFixed(3)}° × ${fovY.toFixed(3)}°`);
 
+    // => FOV in Pixel
   const fovPxX = fovX / scaleDegPerPixel.value;
   const fovPxY = fovY / scaleDegPerPixel.value;
   console.log('FOV in Pixel:', fovPxX.toFixed(2), '×', fovPxY.toFixed(2));
@@ -130,10 +119,10 @@ function onDrag(e) {
   // Grenzen: Element soll nicht aus 500×500 px hinausragen
   if (x.value < 0) x.value = 0;
   if (y.value < 0) y.value = 0;
-  if (x.value > containerSize - framingStore.camWidth)
-    x.value = containerSize - framingStore.camWidth;
-  if (y.value > containerSize - framingStore.camHeight)
-    y.value = containerSize - framingStore.camHeight;
+  if (x.value > framingStore.containerSize - framingStore.camWidth)
+    x.value = framingStore.containerSize - framingStore.camWidth;
+  if (y.value > framingStore.containerSize - framingStore.camHeight)
+    y.value = framingStore.containerSize - framingStore.camHeight;
 
   // Nach dem Verschieben: RA/Dec berechnen
   calculateRaDec();
@@ -166,7 +155,7 @@ function calculateRaDec() {
   const targetCenterY = y.value + framingStore.camHeight / 2;
 
   // Container-Mitte
-  const center = containerSize / 2;
+  const center = framingStore.containerSize / 2;
 
   // Pixel-Differenz:
   // - deltaX > 0, wenn Target rechts vom Zentrum
@@ -188,7 +177,7 @@ function calculateRaDec() {
   currentDecDMS.value = degreesToDMS(currentDec);
 
   //console.log(`RA=${currentRA.toFixed(3)}°, Dec=${currentDec.toFixed(3)}°`);
-  console.log('RA', degreesToHMS(currentRA), 'DEC', degreesToDMS(currentDec));
+  //console.log('RA', degreesToHMS(currentRA), 'DEC', degreesToDMS(currentDec));
 }
 
 function degreesToHMS(deg) {
