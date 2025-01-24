@@ -84,64 +84,64 @@
         "error": "Chyba při ovládání montáže:"
       },
       "focuser": {
-        "connect": "Connect focuser",
-        "disconnect": "Disconnect focuser",
-        "error": "Error controlling focuser:"
+        "connect": "Připojit zaostření",
+        "disconnect": "Odpojit zaostření",
+        "error": "Chyba při ovládání ostření:"
       },
       "rotator": {
-        "connect": "Connect rotator",
-        "disconnect": "Disconnect rotator",
-        "error": "Error controlling rotator:"
+        "connect": "Připojit rotátor",
+        "disconnect": "Odpojit rotátor",
+        "error": "Chyba při ovládání rotátoru:"
       },
       "guider": {
-        "connect": "Connect guider",
-        "disconnect": "Disconnect guider",
-        "error": "Error controlling guider:"
+        "connect": "Připojit pointaci",
+        "disconnect": "Odpojit pointaci",
+        "error": "Chyba při ovládání pointace:"
       },
       "safety": {
-        "connect": "Connect safety monitor",
-        "disconnect": "Disconnect safety monitor",
-        "error": "Error controlling safety monitor"
+        "connect": "Připojit bezpečnostní monitor",
+        "disconnect": "Odpojit bezpečnostní monitor",
+        "error": "Chyba při ovládání bezpečnostního monitoru"
       },
       "flat": {
-        "connect": "Connect flatdevice",
-        "disconnect": "Disconnect flatdevice",
-        "error": "Error controlling flatdevice:"
+        "connect": "Připojit flat box",
+        "disconnect": "Odpojit flat box",
+        "error": "Chyba při ovládání flat boxu:"
       },
       "dome": {
-        "connect": "Connect dome",
-        "disconnect": "Disconnect dome",
-        "error": "Error controlling dome:"
+        "connect": "Připojit kopuli",
+        "disconnect": "Odpojit kopuli",
+        "error": "Chyba při ovládání kopule:"
       },
       "switch": {
-        "connect": "Connect switch",
-        "disconnect": "Disconnect switch",
-        "error": "Error controlling switch"
+        "connect": "Připojit přepínač",
+        "disconnect": "Odpojit přepínač",
+        "error": "Chyba při ovládání přepínače"
       },
       "weather": {
-        "connect": "Connect weather",
-        "disconnect": "Disconnect weather",
-        "error": "Error controlling weather"
+        "connect": "Připojit počasí",
+        "disconnect": "Odpojit počasí",
+        "error": "Chyba při ovládání počasí"
       }
     },
     "lastLogs": {
-      "loading": "Loading data...",
-      "error": "Error loading data:",
-      "timestamp": "Timestamp",
-      "level": "Level",
-      "message": "Message",
-      "member": "Member",
-      "line": "Line"
+      "loading": "Načítání dat...",
+      "error": "Chyba při načítání dat...:",
+      "timestamp": "Časové razítko",
+      "level": "Úroveň",
+      "message": "Zpráva",
+      "member": "Člen",
+      "line": "Řádek"
     },
     "navigation": {
-      "equipment": "Equipment",
-      "camera": "Camera",
-      "autofocus": "Autofocus",
-      "mount": "Mount",
-      "guider": "Guider",
-      "dome": "Dome",
-      "sequence": "Sequence",
-      "settings": "Settings",
+      "equipment": "Zařízení",
+      "camera": "Kamera",
+      "autofocus": "AutoOstření",
+      "mount": "Montáž",
+      "guider": "Pointace",
+      "dome": "Kopule",
+      "sequence": "Sekvence",
+      "settings": "Nastavení",
       "vnc": "VNC"
     },
     "language": {
