@@ -1,6 +1,6 @@
 <template>
   <div class="container flex items-center justify-center">
-    <div class="container max-w-md">
+    <div class="container ">
       <img
         class="rounded-md"
         v-if="targetPic"
@@ -23,12 +23,16 @@ async function getTargetPic() {
   try {
     const ra = framingStore.RAangle;
     const dec = framingStore.DECangle;
+    const width = framingStore.width;
+    const height = framingStore.height;
+    const fov = framingStore.fov;
+
     const useCache = framingStore.useNinaCache;
-    console.log('Bild wird abgerufen', 'RA: ', ra, 'DEC: ', useCache);
+    console.log('Bild wird abgerufen', 'RA: ', ra, 'DEC: ', dec, useCache);
     if (targetPic.value) {
       URL.revokeObjectURL(targetPic.value);
     }
-    targetPic.value = await apiService.searchTargetPic(200, 200, 2, ra, dec, useCache);
+    targetPic.value = await apiService.searchTargetPic(width, height, fov, ra, dec, useCache);
     console.log('Load TargestPic');
   } catch (error) {
     console.error('Fehler beim Abrufen des Bildes:', error);

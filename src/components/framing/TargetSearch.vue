@@ -75,6 +75,7 @@ import slewAndCenter from '@/components/framing/slewAndCenter.vue';
 import TargetPic from '@/components/framing/TargetPic.vue';
 import controlUseNinaCache from '@/components/framing/controlUseNinaCache.vue';
 import { useFramingStore } from '@/store/framingStore';
+import { onMounted } from 'vue';
 
 const framingStore = useFramingStore();
 
@@ -162,6 +163,12 @@ function degreesToDMS(deg) {
   // 6) Zusammenbauen: ±DD:MM:SS.s
   return `${sign}${dStr}:${mStr}:${sStr}`;
 }
+
+onMounted(() => {
+  framingStore.height = 200;
+  framingStore.width = 200; 
+  framingStore.fov = 2; 
+});
 </script>
 
 <style scoped></style>
