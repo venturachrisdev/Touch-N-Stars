@@ -31,13 +31,13 @@
             'scale-100 opacity-100': isVisible,
           }"
         >
-          <h1 class="text-3xl font-bold text-white mb-4">{{ $t('setup.welcome') }}</h1>
-          <p class="text-gray-300 mb-6">{{ $t('setup.description') }}</p>
+          <h1 class="text-3xl font-bold text-white mb-4">{{ t('setup.welcome') }}</h1>
+          <p class="text-gray-300 mb-6">{{ t('setup.description') }}</p>
           <button
             @click="currentStep++"
             class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 px-4 rounded-lg transition-all transform hover:scale-105"
           >
-            {{ $t('common.confirm') }}
+            {{ t('common.confirm') }}
           </button>
         </div>
 
@@ -46,7 +46,7 @@
           key="language"
           class="bg-gray-800 p-8 rounded-lg shadow-lg"
         >
-          <h2 class="text-2xl font-bold text-white mb-6">{{ $t('setup.selectLanguage') }}</h2>
+          <h2 class="text-2xl font-bold text-white mb-6">{{ t('setup.selectLanguage') }}</h2>
           <select
             v-model="selectedLanguage"
             class="w-full px-4 py-3 bg-gray-700 text-gray-300 rounded-lg mb-6 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
@@ -65,13 +65,13 @@
               @click="currentStep--"
               class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg"
             >
-              {{ $t('common.cancel') }}
+              {{ t('common.cancel') }}
             </button>
             <button
               @click="saveLanguage"
               class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded-lg"
             >
-              {{ $t('common.confirm') }}
+              {{ t('common.confirm') }}
             </button>
           </div>
         </div>
@@ -81,7 +81,7 @@
           key="gps"
           class="bg-gray-800 p-8 rounded-lg shadow-lg"
         >
-          <h2 class="text-2xl font-bold text-white mb-6">{{ $t('setup.gpsConfiguration') }}</h2>
+          <h2 class="text-2xl font-bold text-white mb-6">{{ t('setup.gpsConfiguration') }}</h2>
           <div class="space-y-4">
             <div class="flex items-center gap-2">
               <div class="flex-1">
@@ -105,7 +105,7 @@
               @click="getCurrentLocation"
               class="w-full bg-gray-600 hover:bg-gray-500 text-white py-2 px-4 rounded-md"
             >
-              {{ $t('components.settings.coordinates') }}
+            {{ t('components.settings.coordinates') }}
             </button>
             <div v-if="gpsError" class="text-red-400 text-sm">{{ gpsError }}</div>
           </div>
@@ -114,13 +114,13 @@
               @click="currentStep--"
               class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg"
             >
-              {{ $t('common.cancel') }}
+              {{ t('common.cancel') }}
             </button>
             <button
               @click="saveGPS"
               class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded-lg"
             >
-              {{ $t('common.confirm') }}
+              {{ t('common.confirm') }}
             </button>
           </div>
         </div>
@@ -131,7 +131,7 @@
           class="bg-gray-800 p-8 rounded-lg shadow-lg"
         >
           <h2 class="text-2xl font-bold text-white mb-6">
-            {{ $t('setup.instanceConfiguration') }}
+            {{ t('setup.instanceConfiguration') }}
           </h2>
           <div class="space-y-4">
             <div>
@@ -166,25 +166,25 @@
                 @click="currentStep--"
                 class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg"
               >
-                {{ $t('common.cancel') }}
-              </button>
-              <button
-                @click="saveInstance"
-                class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded-lg"
-              >
-                {{ $t('common.confirm') }}
+              {{ t('common.cancel') }}
+            </button>
+            <button
+              @click="saveInstance"
+              class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded-lg"
+            >
+              {{ t('common.confirm') }}
               </button>
             </div>
           </div>
         </div>
 
         <div v-else key="complete" class="bg-gray-800 p-8 rounded-lg shadow-lg">
-          <h2 class="text-2xl font-bold text-white mb-6">{{ $t('setup.completeSetup') }}</h2>
+          <h2 class="text-2xl font-bold text-white mb-6">{{ t('setup.completeSetup') }}</h2>
           <button
             @click="completeSetup"
             class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 px-4 rounded-lg"
           >
-            {{ $t('common.confirm') }}
+            {{ t('common.confirm') }}
           </button>
         </div>
       </transition>
@@ -199,7 +199,7 @@ import { getAvailableLanguages } from '@/i18n';
 import { useRouter } from 'vue-router';
 import { useSettingsStore } from '@/store/settingsStore';
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const router = useRouter();
 const settingsStore = useSettingsStore();
 
@@ -277,21 +277,22 @@ function saveGPS() {
 function saveInstance() {
   // Validate Nina connection details
   if (!instanceName.value.trim()) {
-    alert('Please enter an instance name');
+    alert(t('components.settings.errors.instanceNameRequired'));
     return;
   }
 
   // Validate IP address
-  const ipPattern = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  const ipPattern =
+    /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
   if (!ipPattern.test(instanceIP.value)) {
-    alert('Please enter a valid IP address');
+    alert(t('components.settings.errors.invalidIPFormat'));
     return;
   }
 
   // Validate port number
   const port = parseInt(instancePort.value);
   if (isNaN(port) || port < 1 || port > 65535) {
-    alert('Please enter a valid port number (1-65535)');
+    alert(t('components.settings.errors.invalidPortRange'));
     return;
   }
 

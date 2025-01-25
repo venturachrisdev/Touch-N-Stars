@@ -49,7 +49,10 @@
         "delete": "Elimina istanza"
       },
       "errors": {
-        "emptyFields": "Compila tutti i campi"
+        "emptyFields": "Compila tutti i campi",
+        "instanceNameRequired": "Il nome dell'istanza è obbligatorio",
+        "invalidIPFormat": "Formato indirizzo IP non valido",
+        "invalidPortRange": "La porta deve essere compresa tra 1 e 65535"
       },
       "showTutorial": "Mostra Tutorial"
     },
