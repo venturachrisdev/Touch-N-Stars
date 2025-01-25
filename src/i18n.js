@@ -3,12 +3,23 @@ import de from './locales/de.json';
 import en from './locales/en.json';
 import fr from './locales/fr.json';
 import it from './locales/it.json';
+import cz from './locales/cz.json';
+
+// Available languages with their display names
+const availableLanguages = [
+  { code: 'en', name: 'English' },
+  { code: 'de', name: 'Deutsch' },
+  { code: 'fr', name: 'Français' },
+  { code: 'it', name: 'Italiano' },
+  { code: 'cz', name: 'čeština' },
+];
 
 const messages = {
   de,
   en,
   fr,
   it,
+  cz,
 };
 
 // Create i18n instance
@@ -20,6 +31,10 @@ const i18n = createI18n({
 });
 
 // Export i18n instance and initialize function
+export function getAvailableLanguages() {
+  return availableLanguages;
+}
+
 export { i18n as default, initializeI18n };
 
 // Initialize store and set locale after app is mounted
