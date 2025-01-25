@@ -145,9 +145,10 @@
       "vnc": "VNC"
     },
     "language": {
-      "en": "Anglicky",
-      "de": "Nemecky",
-      "fr": "Francouzky",
+      "en": "Angličtina",
+      "de": "Němčina",
+      "fr": "Francouština",
+      "cz": "Čeština",
       "select": "Výběr jazyka"
     },
     "equipment": {
