@@ -275,6 +275,26 @@ function saveGPS() {
 }
 
 function saveInstance() {
+  // Validate Nina connection details
+  if (!instanceName.value.trim()) {
+    alert('Please enter an instance name');
+    return;
+  }
+
+  // Validate IP address
+  const ipPattern = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  if (!ipPattern.test(instanceIP.value)) {
+    alert('Please enter a valid IP address');
+    return;
+  }
+
+  // Validate port number
+  const port = parseInt(instancePort.value);
+  if (isNaN(port) || port < 1 || port > 65535) {
+    alert('Please enter a valid port number (1-65535)');
+    return;
+  }
+
   settingsStore.addInstance({
     name: instanceName.value,
     ip: instanceIP.value,
