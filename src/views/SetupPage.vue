@@ -195,6 +195,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { getAvailableLanguages } from '@/i18n';
 import { useRouter } from 'vue-router';
 import { useSettingsStore } from '@/store/settingsStore';
 
@@ -223,12 +224,7 @@ const instanceName = ref('');
 const instanceIP = ref('');
 const instancePort = ref('');
 
-const availableLanguages = [
-  { code: 'en', name: 'English' },
-  { code: 'de', name: 'Deutsch' },
-  { code: 'fr', name: 'Français' },
-  { code: 'it', name: 'italiano' },
-];
+const availableLanguages = getAvailableLanguages();
 
 function saveLanguage() {
   locale.value = selectedLanguage.value;

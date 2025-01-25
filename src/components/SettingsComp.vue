@@ -241,6 +241,7 @@
 <script setup>
 import { ref, watchEffect, watch, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { getAvailableLanguages } from '@/i18n';
 import { useSettingsStore } from '@/store/settingsStore';
 import { apiStore } from '@/store/store';
 import apiService from '@/services/apiService';
@@ -275,12 +276,7 @@ const tempInstance = ref({
   port: '',
 });
 
-const languages = [
-  { code: 'en', name: 'English' },
-  { code: 'de', name: 'Deutsch' },
-  { code: 'fr', name: 'Français' },
-  { code: 'it', name: 'italiano' },
-];
+const languages = getAvailableLanguages();
 
 // Load stored settings on mount
 onMounted(() => {
