@@ -6,7 +6,7 @@
   "general": {
     "cancel": "Zrušit",
     "confirm": "Potvrdit",
-    "hide": "Schovat",
+    "hide": "Skrýt",
     "show": "Zobrazit"
   },
   "pages": {
@@ -17,7 +17,7 @@
   "app": {
     "title": "Touch'N'Stars",
     "unreachable": "NINA-API je momentálně nedostupné nebo používáte jeho zastaralou verzi",
-    "connecting": "Probíhá navazování spojení"
+    "connecting": "Pokus o připojení"
   },
   "setup": {
     "welcome": "Vítá Vás Touch'N'Stars",
