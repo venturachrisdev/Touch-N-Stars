@@ -214,7 +214,7 @@
         "errors": {
           "park": "Chyba parkování montáže",
           "unpark": "Chyba odparkování montáže",
-          "home": Chyba v navádění montáže",
+          "home": "Chyba v navádění montáže",
           "tracking": "Chyba při nastavování režimu sledován"
         }
       },
