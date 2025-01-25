@@ -42,11 +42,11 @@
       "add": "Přidat",
       "update": "Aktualizace",
       "instance": {
-        "name": "Název Instalace",
+        "name": "Název Relace",
         "ip": "IP Addresa",
         "port": "Port",
-        "edit": "Upravit Instalaci",
-        "delete": "Smazat Instalaci"
+        "edit": "Upravit Relace",
+        "delete": "Smazat Relace"
       },
       "errors": {
         "emptyFields": "Vyplňte všechna pole"
@@ -71,8 +71,8 @@
       },
       "connectAll": "Připojit Vše",
       "disconnectAll": "Odpojit Vše",
-      "connectAllError": "Chyba při připojení všech zařízení",
-      "disconnectAllError": "Chyba při odpojení všech zařízení",
+      "connectAllError": "Chyba při připojování všech zařízení",
+      "disconnectAllError": "Chyba při odpojování všech zařízení",
       "filter": {
         "connect": "Připojení filtračního kola",
         "disconnect": "Odpojení filtračního kola",
@@ -104,9 +104,9 @@
         "error": "Chyba při ovládání bezpečnostního monitoru"
       },
       "flat": {
-        "connect": "Připojit flat box",
-        "disconnect": "Odpojit flat box",
-        "error": "Chyba při ovládání flat boxu:"
+        "connect": "Připojit flat zařizení",
+        "disconnect": "Odpojit flat zařizení",
+        "error": "Chyba při ovládání flat zařízení:"
       },
       "dome": {
         "connect": "Připojit kopuli",
@@ -193,8 +193,8 @@
           "showImage": "Zobrazit poslední snímek",
           "showImageStats": "Zobrazit statistiku posledního snímku",
           "showImgStatsGraph": "Zobrazit HFR-Graf",
-          "showGuiderGraph": "Zobrazit pointační-graf",
-          "showGuiderAfGraph": "Zobrazit autoostření-graf"
+          "showGuiderGraph": "Zobrazit graf-pointace",
+          "showGuiderAfGraph": "Zobrazit graf-ostření"
         }
       },
       "running": "BĚŽÍCÍ"
@@ -213,8 +213,8 @@
         "king": "King",
         "stop": "zastavit",
         "errors": {
-          "park": "Chyba parkování montáže",
-          "unpark": "Chyba odparkování montáže",
+          "park": "Chyba při parkování montáže",
+          "unpark": "Chyba při odparkování montáže",
           "home": "Chyba v navádění montáže",
           "tracking": "Chyba při nastavování režimu sledován"
         }
@@ -230,7 +230,7 @@
       }
     },
     "guider": {
-      "notConnected": "připojte pointaci",
+      "notConnected": "Připojte pointaci",
       "start": "Spustit",
       "startWithCal": "Spustit s kalibarcí",
       "stop": "Zastavit",
@@ -244,16 +244,16 @@
       "start_autofocus": "Spustit AutoOstření",
       "cancel_autofocus": "Zrušit AutoOstření",
       "autofocus_graph": "AutoOstření graf",
-      "autofocus_running": "Autoostření běží",
+      "autofocus_running": "AutoOstření běží",
       "autofocus_error": "AutoOstření chyba",
       "please_connect_focuser": "Připojte ostření",
       "current_position": "Současná pozice:",
       "temperature": "Teploty:",
-      "moving": "Přesun",
-      "stopped": "Stopped",
-      "autofocus_active": "AutoOstření aktivní active",
+      "moving": "V pohybu",
+      "stopped": "Zastaveno",
+      "autofocus_active": "AutoOstření aktivní",
       "autofocus": "AutoOstření",
-      "last_autofocus": "Poslední autoOstření"
+      "last_autofocus": "Poslední AutoOstření"
     },
     "dome": {
       "title": "Kopule",
@@ -271,11 +271,11 @@
       "control": {
         "open": "Otevřít štěrbinu",
         "close": "Zavřít štěrbinu",
-        "stop": "Zastavení pohyb šterbiny",
+        "stop": "Zastavit pohyb štěrbiny",
         "errors": {
-          "open": "Chyba otevření štěrbiny",
-          "close": "Chybné zavření šterbiny",
-          "stop": "Chyba v zastavení šterbiny"
+          "open": "Chyba při otevření štěrbiny",
+          "close": "Chybné při zavření štěrbiny",
+          "stop": "Chyba v zastavení štěrbiny"
         }
       }
     },
@@ -368,7 +368,7 @@
       "stopped": "zastavil"
     },
     "flat": {
-      "please_connect_flatDevice": "připojte flat zařízení",
+      "please_connect_flatDevice": "Připojte flat zařízení",
       "device_name": "Jméno:",
       "cover_state": "Stav Krytu:",
       "light_state": "Stav Světla:",
