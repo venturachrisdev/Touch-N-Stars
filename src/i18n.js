@@ -11,7 +11,7 @@ const availableLanguages = [
   { code: 'de', name: 'Deutsch' },
   { code: 'fr', name: 'Français' },
   { code: 'it', name: 'Italiano' },
-  { code: 'cz', name: 'Czech' },
+  { code: 'cz', name: 'čeština' },
 ];
 
 const messages = {
