@@ -105,7 +105,7 @@
               @click="getCurrentLocation"
               class="w-full bg-gray-600 hover:bg-gray-500 text-white py-2 px-4 rounded-md"
             >
-            {{ t('components.settings.coordinates') }}
+              {{ t('components.settings.coordinates') }}
             </button>
             <div v-if="gpsError" class="text-red-400 text-sm">{{ gpsError }}</div>
           </div>
@@ -166,13 +166,13 @@
                 @click="currentStep--"
                 class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg"
               >
-              {{ t('common.cancel') }}
-            </button>
-            <button
-              @click="saveInstance"
-              class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded-lg"
-            >
-              {{ t('common.confirm') }}
+                {{ t('common.cancel') }}
+              </button>
+              <button
+                @click="saveInstance"
+                class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded-lg"
+              >
+                {{ t('common.confirm') }}
               </button>
             </div>
           </div>

@@ -46,12 +46,8 @@ import { ref, onMounted, nextTick } from 'vue';
 import Moveable from 'vue3-moveable';
 import { useFramingStore } from '@/store/framingStore';
 import apiService from '@/services/apiService';
-import { apiStore } from '@/store/store';
-import { useSettingsStore } from '@/store/settingsStore';
 
 const framingStore = useFramingStore();
-const store = apiStore();
-const settingsStore = useSettingsStore();
 const isLoading = ref(true);
 const targetPic = ref(null);
 const scaleDegPerPixel = ref(0.004); // Grad pro Pixel
@@ -66,6 +62,7 @@ const targetRef = ref(null);
 scaleDegPerPixel.value = framingStore.fov / framingStore.containerSize;
 
 onMounted(async () => {
+  await fetchFramingInfo();
   // Maximale Containergröe ermitteln
   // Height-200 px um genug Platz nach unten zu haben
   const smallerDimension = Math.min(window.innerWidth, window.innerHeight - 200);
@@ -74,6 +71,7 @@ onMounted(async () => {
   //console.log('Container-Größe:', framingStore.containerSize);
 
   // Bild abrufen
+
   await getTargetPic();
 
   // Linke obere Ecke (x,y) so, dass das Element in der Container-Mitte startet
@@ -85,10 +83,10 @@ onMounted(async () => {
 });
 
 function calcCameraFov() {
-  const sensorWidthPx = settingsStore.framingAssistant.sensorWidthPx;
-  const sensorHeightPx = settingsStore.framingAssistant.sensorHeightPx;
-  const pixelSizeM = settingsStore.framingAssistant.pixelSizeM / 1000000; //3.8e-6;  3.8 µm
-  const focalLengthM = settingsStore.framingAssistant.focalLengthM / 1000; // 0.750 m
+  const sensorWidthPx = framingStore.framingInfo.CameraWidth;
+  const sensorHeightPx = framingStore.framingInfo.CameraHeight;
+  const pixelSizeM = framingStore.framingInfo.CameraPixelSize / 1000000; //3.8e-6;  3.8 µm
+  const focalLengthM = framingStore.framingInfo.FocalLength / 1000; // 0.750 m
   console.log(
     'focalLengthM',
     focalLengthM,
@@ -155,6 +153,16 @@ async function getTargetPic() {
     console.log('Load TargestPic');
   } catch (error) {
     console.error('Fehler beim Abrufen des Bildes:', error);
+  }
+}
+
+async function fetchFramingInfo() {
+  try {
+    const data = await apiService.framingAction('info');
+    framingStore.framingInfo = data.Response;
+    console.log('FramingInfo', framingStore.framingInfo);
+  } catch (error) {
+    console.error('Fehler beim Abrufen des FramingInfo:', error);
   }
 }
 

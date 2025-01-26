@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useFramingStore = defineStore('FramingStore', {
   state: () => ({
+    framingInfo: [],
     searchQuery: '',
     targetSearchResult: [],
     selectedItem: null,
