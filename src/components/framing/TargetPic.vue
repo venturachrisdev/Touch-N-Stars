@@ -46,10 +46,10 @@ function loadImage() {
 }
 
 function debounceLoadImage() {
-    clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(() => {
-        loadImage();
-    }, 1000); // Wartezeit in Millisekunden 
+  clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    loadImage();
+  }, 1000); // Wartezeit in Millisekunden
 }
 
 // Beobachte Änderungen an RAangleString und DECangleString

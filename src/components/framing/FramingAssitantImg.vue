@@ -38,9 +38,6 @@
         @drag="onDrag"
       />
     </div>
-    <div>
-      <p>RA: {{ framingStore.RAangleString }} DEC: {{ framingStore.DECangleString }}</p>
-    </div>
   </div>
 </template>
 
@@ -49,8 +46,12 @@ import { ref, onMounted, nextTick } from 'vue';
 import Moveable from 'vue3-moveable';
 import { useFramingStore } from '@/store/framingStore';
 import apiService from '@/services/apiService';
+import { apiStore } from '@/store/store';
+import { useSettingsStore } from '@/store/settingsStore';
 
 const framingStore = useFramingStore();
+const store = apiStore();
+const settingsStore = useSettingsStore();
 const isLoading = ref(true);
 const targetPic = ref(null);
 const scaleDegPerPixel = ref(0.004); // Grad pro Pixel
@@ -70,7 +71,7 @@ onMounted(async () => {
   const smallerDimension = Math.min(window.innerWidth, window.innerHeight - 200);
   const roundedDimension = Math.floor(smallerDimension / 100) * 100;
   framingStore.containerSize = roundedDimension;
-  console.log('Container-Größe:', framingStore.containerSize);
+  //console.log('Container-Größe:', framingStore.containerSize);
 
   // Bild abrufen
   await getTargetPic();
@@ -78,29 +79,28 @@ onMounted(async () => {
   // Linke obere Ecke (x,y) so, dass das Element in der Container-Mitte startet
   x.value = framingStore.containerSize / 2 - framingStore.camWidth / 2;
   y.value = framingStore.containerSize / 2 - framingStore.camHeight / 2;
-  isLoading.value = false;
 
   await nextTick();
-    // Breite und Höhe des fov-Elements abrufen
-    console.log('FOV Breite:');
-    const fovElement = containerRef.value;
-    console.log('FOV Breite:',fovElement);
-  if (fovElement) {
-    const width = fovElement.offsetWidth; // Breite in Pixel
-    const height = fovElement.offsetHeight; // Höhe in Pixel
-
-    console.log("FOV Breite:", width, "px");
-    console.log("FOV Höhe:", height, "px");
-  }
+  isLoading.value = false;
 });
 
 function calcCameraFov() {
-  const sensorWidthPx = 6000;
-  const sensorHeightPx = 4000;
-  const pixelSizeM = 3.8e-6; // 3.8 µm
-  const focalLengthM = 0.7; // 750 mm
+  const sensorWidthPx = settingsStore.framingAssistant.sensorWidthPx;
+  const sensorHeightPx = settingsStore.framingAssistant.sensorHeightPx;
+  const pixelSizeM = settingsStore.framingAssistant.pixelSizeM / 1000000; //3.8e-6;  3.8 µm
+  const focalLengthM = settingsStore.framingAssistant.focalLengthM / 1000; // 0.750 m
+  console.log(
+    'focalLengthM',
+    focalLengthM,
+    'pixelSizeM',
+    pixelSizeM,
+    'sensorWidthPx',
+    sensorWidthPx,
+    'sensorHeightPx',
+    sensorHeightPx
+  );
   scaleDegPerPixel.value = framingStore.fov / framingStore.containerSize;
-  console.log('scaleDegPerPixel', scaleDegPerPixel.value);
+  //console.log('scaleDegPerPixel', scaleDegPerPixel.value);
 
   // => Physische Sensorgröße
   const sensorWidthM = sensorWidthPx * pixelSizeM; // ~0.0114 m
@@ -109,12 +109,12 @@ function calcCameraFov() {
   // => Reale FOV in Grad
   const fovX = 2 * rad2deg(Math.atan(sensorWidthM / 2 / focalLengthM));
   const fovY = 2 * rad2deg(Math.atan(sensorHeightM / 2 / focalLengthM));
-  console.log(`Reale Kamera-FOV: ~${fovX.toFixed(3)}° × ${fovY.toFixed(3)}°`);
+  //console.log(`Reale Kamera-FOV: ~${fovX.toFixed(3)}° × ${fovY.toFixed(3)}°`);
 
   // => FOV in Pixel
   const fovPxX = fovX / scaleDegPerPixel.value;
   const fovPxY = fovY / scaleDegPerPixel.value;
-  console.log('FOV in Pixel:', fovPxX.toFixed(2), '×', fovPxY.toFixed(2));
+  //console.log('FOV in Pixel:', fovPxX.toFixed(2), '×', fovPxY.toFixed(2));
 
   framingStore.camWidth = fovPxX; // Breite des verschiebbaren Elements
   framingStore.camHeight = fovPxY; // Höhe des verschiebbaren Elements
@@ -176,23 +176,23 @@ function calculateRaDec() {
 
   // 5) RA muss um cos(Dec) geteilt werden
   //    Grobe Näherung: nutze baseDec zur Korrektur
-  let cosDec = Math.cos(baseDec * Math.PI / 180);
+  let cosDec = Math.cos((baseDec * Math.PI) / 180);
   // Sicherheitshalber: falls cosDec = 0 (Polnähe)
   if (Math.abs(cosDec) < 1e-8) {
-    cosDec = 1e-8; 
+    cosDec = 1e-8;
   }
   const offsetRA = (deltaX * scaleDegPerPixel.value) / cosDec;
 
   // 6) Aktuelle Koordinaten
-  const currentRA  = baseRA  - offsetRA;
+  const currentRA = baseRA - offsetRA;
   const currentDec = baseDec + offsetDec;
 
   // 7) In Strings umwandeln (HMS / DMS)
-  framingStore.RAangleString  = degreesToHMS(currentRA);
+  framingStore.RAangleString = degreesToHMS(currentRA);
   framingStore.DECangleString = degreesToDMS(currentDec);
 
   // 8) Speichern
-  framingStore.RAangle  = currentRA;
+  framingStore.RAangle = currentRA;
   framingStore.DECangle = currentDec;
 }
 

@@ -3,7 +3,7 @@
     <div class="p-4">
       <input
         class="text-black"
-        type="text"
+        type="number"
         v-model="framingStore.fov"
         min="1"
         max="50"

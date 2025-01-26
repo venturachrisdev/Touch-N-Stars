@@ -56,10 +56,14 @@
         </div>
         <div>
           <TargetPic class="border border-gray-500 rounded-md" />
-        </div>  
+        </div>
       </div>
       <div class="mb-2 mt-1">
-        <button v-if="framingStore.selectedItem" @click="showFramingModal = true" class="default-button-cyan">
+        <button
+          v-if="framingStore.selectedItem"
+          @click="showFramingModal = true"
+          class="default-button-cyan"
+        >
           {{ $t('components.framing.openFraminingModal') }}
         </button>
       </div>
@@ -69,7 +73,6 @@
           v-model:DECangleString="framingStore.DECangleString"
         />
       </div>
-
     </div>
     <!-- Framing Modal -->
     <div
@@ -77,7 +80,7 @@
       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
     >
       <div
-        class="bg-gray-900 rounded-lg p-4 scrollbar-hide"
+        class="bg-gray-900 rounded-lg p-4 overflow-y-auto max-h-[90vh] pr-3 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800/50"
       >
         <FramingAssistangModal />
         <button

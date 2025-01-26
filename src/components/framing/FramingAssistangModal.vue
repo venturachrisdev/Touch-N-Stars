@@ -1,36 +1,32 @@
 <template>
   <div class="flex flex-col items-center justify-center">
-    <div class="p-4">
-      <input
-        class="text-black"
-        type="text"
-        v-model="framingStore.fov"
-        min="1"
-        max="50"
-        step="1"
-        @input="reloadFraming"
-      />
-    </div>
-
     <!-- Mit Suspense können wir einen "Loading"-Fallback anzeigen -->
     <Suspense>
       <template #default>
         <!-- Dynamische Komponente mit einem Key, um das Neu-Laden zu erzwingen -->
         <component :is="currentComponent" :key="componentKey" />
+        
       </template>
 
       <template #fallback>
         <div>Lade Komponente...</div>
       </template>
     </Suspense>
+    <div  class="flex-col w-full space-y-2 mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5">
+      <!-- FovParameter-Komponente -->
+    <fovParameter />
+  </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, defineAsyncComponent } from 'vue';
+import { ref, computed, defineAsyncComponent, watch } from 'vue';
 import { useFramingStore } from '@/store/framingStore';
+import { useSettingsStore } from '@/store/settingsStore';
+import fovParameter from '@/components/framing/fovParameter.vue';
 
 const framingStore = useFramingStore();
+const settingsStore = useSettingsStore();
 
 // Reaktive Variable, die steuert, ob FramingTest angezeigt werden soll
 const showFraming = ref(true);
@@ -56,4 +52,29 @@ function reloadFraming() {
   // Key ändern, um die Komponente neu zu laden
   componentKey.value++;
 }
+
+let debounceTimeout;
+
+function debounceLoadImage() {
+  clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    reloadFraming();
+  }, 500); // Wartezeit in Millisekunden
+}
+
+watch(
+  () => [
+    settingsStore.framingAssistant.focalLengthM,
+    settingsStore.framingAssistant.pixelSizeM,
+    settingsStore.framingAssistant.sensorWidthPx,
+    settingsStore.framingAssistant.sensorHeightPx,
+    framingStore.fov,
+  ],
+  (
+    [newFocalLength, newPixelSize, newSensorWidth, newSensorHeightPx, newFov],
+    [oldFocalLength, oldPixelSize, oldSensorWidth, oldSensorHeightPx, oldFov]
+  ) => {
+    debounceLoadImage();
+  }
+);
 </script>
