@@ -100,8 +100,7 @@
                     @click="selectInstance(instance)"
                     :class="[
                       'p-1 transition-colors',
-                      selectedInstance === instance.id ||
-                      settingsStore.isLastCreatedInstance(instance.id)
+                      selectedInstance === instance.id
                         ? 'text-green-500'
                         : 'text-gray-300 hover:text-green-500',
                     ]"
