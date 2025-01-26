@@ -15,7 +15,7 @@
         "de": "Tippe auf ein Symbol, um dessen Funktionen zu öffnen. Auf mobilen Geräten kannst du nach links oder rechts wischen, um weitere Navigationspunkte zu sehen",
         "fr": "Appuyez sur n'importe quelle icône pour accéder à ses fonctionnalités. Sur les appareils mobiles, faites glisser vers la gauche ou la droite pour voir plus d'options de navigation",
         "it": "Tocca qualsiasi icona per accedere alle sue funzionalità. Sui dispositivi mobili, scorri a sinistra o a destra per vedere più opzioni di navigazione",
-        "cz": "Klepněte na libovolnou ikonu pro přístup k jejím funkcím. Na mobilních zařízeních přejeďte prstem doleva nebo doprava pro zobrazení dalších navigačních možností"
+        "cz": "Klepnutím na libovolnou ikonu získáte přístup k jejím funkcím. Na mobilních zařízeních zobrazíte další možnosti navigace posunutím doleva nebo doprava"
       }
     },
     {
@@ -26,14 +26,14 @@
         "de": "Equipment",
         "fr": "Équipement",
         "it": "Attrezzatura",
-        "cz": "Vybavení"
+        "cz": "Zařízení"
       },
       "content": {
         "en": "Connect and control your gear - mount, camera, focuser and more",
         "de": "Verbinde und steuere deine Ausrüstung - Montierung, Kamera, Fokussierer und mehr",
         "fr": "Connectez et contrôlez votre équipement - monture, caméra, mise au point et autres accessoires",
         "it": "Collega e controlla la tua attrezzatura - montatura, fotocamera, messa a fuoco e altro",
-        "cz": "Připojte a ovládejte své vybavení - montáž, kamera, zaostřovač a další"
+        "cz": "Připojte a ovládejte své zařízení - montáž, kameru, ostření a další zařízení"
       }
     },
     {
@@ -80,14 +80,14 @@
         "de": "Autofokus",
         "fr": "Autofocus",
         "it": "Autofocus",
-        "cz": "Automatické zaostření"
+        "cz": "AutoOstření"
       },
       "content": {
         "en": "Keep your images sharp with autofocus tools",
         "de": "Halte deine Bilder scharf mit den Autofokus-Tools",
         "fr": "Gardez vos images nettes avec les outils d'autofocus",
         "it": "Mantieni le tue immagini nitide con gli strumenti di autofocus",
-        "cz": "Udržujte své snímky ostré pomocí nástrojů pro automatické zaostření"
+        "cz": "Udržujte své snímky ostré pomocí nástrojů pro autoOstření"
       }
     },
     {
@@ -105,7 +105,7 @@
         "de": "Steuere Nachführung, Parken und Bewegung deiner Montierung",
         "fr": "Contrôlez le suivi, le parcage et le mouvement de votre monture",
         "it": "Controlla l'inseguimento, il parcheggio e il movimento della tua montatura",
-        "cz": "Ovládejte sledování, parkování a pohyb vaší montáže"
+        "cz": "Ovládejte navádění, parkování a pohyb vaší montáže"
       }
     },
     {
@@ -123,7 +123,7 @@
         "de": "Steuere Kuppeldrehung und Verschluss",
         "fr": "Contrôlez la rotation du dôme et l'obturateur",
         "it": "Controlla la rotazione della cupola e l'otturatore",
-        "cz": "Ovládejte otáčení kopule a závěrku"
+        "cz": "Ovládejte otáčení kopule a štěrbiny"
       }
     },
     {
@@ -134,14 +134,14 @@
         "de": "Flatpanel",
         "fr": "Panneau à Flats",
         "it": "Pannello per Flat",
-        "cz": "Plochý panel"
+        "cz": "Flat Panel"
       },
       "content": {
         "en": "Control your flatpanel settings",
         "de": "Steuere dein Flatpanel",
         "fr": "Contrôlez les paramètres de votre panneau à Flats",
         "it": "Controlla le impostazioni del tuo pannello per Flat",
-        "cz": "Ovládejte nastavení svého plochého panelu"
+        "cz": "Ovládejte nastavení svého flat panelu"
       }
     },
     {
@@ -152,14 +152,14 @@
         "de": "Guiding",
         "fr": "Guidage",
         "it": "Guida",
-        "cz": "Sledování"
+        "cz": "Navádění"
       },
       "content": {
         "en": "Monitor and control guiding for precise tracking",
         "de": "Überwache und steuere das Guiding für präzise Nachführung",
         "fr": "Surveillez et contrôlez le guidage pour un suivi précis",
         "it": "Monitora e controlla la guida per un inseguimento preciso",
-        "cz": "Sledujte a ovládejte sledování pro přesné navádění"
+        "cz": "Monitorování a kontrola navádění pro přesné sledování"
       }
     },
     {
@@ -177,7 +177,7 @@
         "de": "Richte deine Aufnahmesequenzen ein und steuere sie",
         "fr": "Configurez et contrôlez vos séquences d'acquisition",
         "it": "Configura e controlla le tue sequenze di acquisizione",
-        "cz": "Nastavte a ovládejte své snímací sekvence"
+        "cz": "Nastavení a ovládání snímacích sekvencí"
       }
     },
     {
@@ -188,14 +188,14 @@
         "de": "Überwachung",
         "fr": "Surveillance",
         "it": "Monitoraggio",
-        "cz": "Sledování"
+        "cz": "Monitorování"
       },
       "content": {
         "en": "Check your ongoing sequence",
         "de": "Prüfe deine laufende Sequenz",
         "fr": "Vérifiez votre séquence en cours",
         "it": "Controlla la tua sequenza in corso",
-        "cz": "Zkontrolujte svou probíhající sekvenci"
+        "cz": "Zkontrolujte probíhající sekvenci"
       }
     }
   ]
