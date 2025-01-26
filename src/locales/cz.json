@@ -1,0 +1,402 @@
+{
+  "common": {
+    "cancel": "Zrušit",
+    "confirm": "Potvrdit"
+  },
+  "general": {
+    "cancel": "Zrušit",
+    "confirm": "Potvrdit",
+    "hide": "Skrýt",
+    "show": "Zobrazit"
+  },
+  "pages": {
+    "equipment": {
+      "title": "Kontrola Zařízení"
+    }
+  },
+  "app": {
+    "title": "Touch'N'Stars",
+    "unreachable": "NINA-API je momentálně nedostupné nebo používáte jeho zastaralou verzi",
+    "connecting": "Pokus o připojení"
+  },
+  "setup": {
+    "welcome": "Vítá Vás Touch'N'Stars",
+    "description": "Začněme rychlým nastavením",
+    "selectLanguage": "Vyberte jazyk",
+    "gpsConfiguration": "Konfigurace GPS",
+    "completeSetup": "Kompletní Nastavení",
+    "instanceConfiguration": "Podrobnosti o připojení N.I.N.A"
+  },
+  "components": {
+    "tutorial": {
+      "previous": "Předchozí",
+      "next": "Další",
+      "skip": "Přeskočit Tutoriál"
+    },
+    "settings": {
+      "title": "Nastavení",
+      "language": "Jazyk",
+      "coordinates": "Souřadnice GPS",
+      "connection": "Podrobnosti o připojení k N.I.N.A",
+      "save": "Uložit",
+      "add": "Přidat",
+      "update": "Aktualizace",
+      "instance": {
+        "name": "Název Relace",
+        "ip": "IP Addresa",
+        "port": "Port",
+        "edit": "Upravit Relace",
+        "delete": "Smazat Relace"
+      },
+      "errors": {
+        "emptyFields": "Vyplňte všechna pole",
+        "instanceNameRequired": "Název instance je povinný",
+        "invalidIPFormat": "Neplatný formát IP adresy",
+        "invalidPortRange": "Port musí být v rozsahu 1 až 65535"
+      },
+      "showTutorial": "Ukázat Tutoriál"
+    },
+    "framing": {
+      "confirmSetTargetTitle": "Potvrzení Výběru Cíle",
+      "confirmSetTargetMessage": "Jste si jisti, že chcete tento cíl nastavit jako součást sekvence?",
+      "useNinaCache": "Využití mezipaměti NINA pro cílový obraz",
+      "setSequnceTarget": "nastavit tento cíl jako součást sekvence",
+      "search": {
+        "title": "Hledat",
+        "placeholder": "Zadejte hledaný výraz..."
+      }
+    },
+    "connectEquipment": {
+      "camera": {
+        "connect": "Připojit kameru",
+        "disconnect": "Odpojit kameru",
+        "error": "Chyba při ovládání kamery:"
+      },
+      "connectAll": "Připojit Vše",
+      "disconnectAll": "Odpojit Vše",
+      "connectAllError": "Chyba při připojování všech zařízení",
+      "disconnectAllError": "Chyba při odpojování všech zařízení",
+      "filter": {
+        "connect": "Připojení filtračního kola",
+        "disconnect": "Odpojení filtračního kola",
+        "error": "Chyba při ovládání filtračního kola:"
+      },
+      "mount": {
+        "connect": "Připojit montáž",
+        "disconnect": "Odpojit montáž",
+        "error": "Chyba při ovládání montáže:"
+      },
+      "focuser": {
+        "connect": "Připojit zaostření",
+        "disconnect": "Odpojit zaostření",
+        "error": "Chyba při ovládání ostření:"
+      },
+      "rotator": {
+        "connect": "Připojit rotátor",
+        "disconnect": "Odpojit rotátor",
+        "error": "Chyba při ovládání rotátoru:"
+      },
+      "guider": {
+        "connect": "Připojit pointaci",
+        "disconnect": "Odpojit pointaci",
+        "error": "Chyba při ovládání pointace:"
+      },
+      "safety": {
+        "connect": "Připojit bezpečnostní monitor",
+        "disconnect": "Odpojit bezpečnostní monitor",
+        "error": "Chyba při ovládání bezpečnostního monitoru"
+      },
+      "flat": {
+        "connect": "Připojit flat zařizení",
+        "disconnect": "Odpojit flat zařizení",
+        "error": "Chyba při ovládání flat zařízení:"
+      },
+      "dome": {
+        "connect": "Připojit kopuli",
+        "disconnect": "Odpojit kopuli",
+        "error": "Chyba při ovládání kopule:"
+      },
+      "switch": {
+        "connect": "Připojit přepínač",
+        "disconnect": "Odpojit přepínač",
+        "error": "Chyba při ovládání přepínače"
+      },
+      "weather": {
+        "connect": "Připojit počasí",
+        "disconnect": "Odpojit počasí",
+        "error": "Chyba při ovládání počasí"
+      }
+    },
+    "lastLogs": {
+      "loading": "Načítání dat...",
+      "error": "Chyba při načítání dat...:",
+      "timestamp": "Časové razítko",
+      "level": "Úroveň",
+      "message": "Zpráva",
+      "member": "Člen",
+      "line": "Řádek"
+    },
+    "navigation": {
+      "equipment": "Zařízení",
+      "camera": "Kamera",
+      "autofocus": "AutoOstření",
+      "mount": "Montáž",
+      "guider": "Pointace",
+      "dome": "Kopule",
+      "sequence": "Sekvence",
+      "settings": "Nastavení",
+      "vnc": "VNC"
+    },
+    "language": {
+      "en": "Angličtina",
+      "de": "Němčina",
+      "fr": "Francouština",
+      "it": "Italština",
+      "cz": "Čeština",
+      "select": "Výběr jazyka"
+    },
+    "equipment": {
+      "control": "Kontrola Zařízení"
+    },
+    "sequence": {
+      "title": "Sekvence",
+      "stats": "Statistiky",
+      "noSequenceLoaded": "Žádná načtená sekvence",
+      "noSequenceData": "zatím nejsou k dispozici žádná data",
+      "startSequence": "Spustit sekvenci",
+      "stopSequence": "Zastavit sekvenci",
+      "resetSequence": "Resetovat sekvenci",
+      "resetConfirmationTitle": "Potvrzení resetu",
+      "resetConfirmationMessage": "Jste si jisti, že chcete resetovat sekvenci? Tuto akci nelze vrátit zpět.",
+      "exposures": "Expozice",
+      "exposureTime": "Čas expozice",
+      "filter": "Filtr",
+      "ditherEvery": "Každý Dither",
+      "type": "Typ",
+      "deltaHFR": "DeltaHFR",
+      "sampleSize": "Velikost vzorku",
+      "triggers": "Spouštěče:",
+      "details": {
+        "of": "of",
+        "gain": "Gain",
+        "ditherAfter": "Dither po",
+        "exposures": "expozice"
+      },
+      "date": "Datum",
+      "hfr": "HFR",
+      "stars": "Hvězdy",
+      "mean": "Průměr",
+      "median": "Střední",
+      "stDev": "St. Dev.",
+      "rmsText": "RMS",
+      "sequence_control": "Ovládání Sekvence",
+      "temperature": "Teplota",
+      "monitor": {
+        "settings": {
+          "title": "Zobrazit nastavení",
+          "showImage": "Zobrazit poslední snímek",
+          "showImageStats": "Zobrazit statistiku posledního snímku",
+          "showImgStatsGraph": "Zobrazit HFR-Graf",
+          "showGuiderGraph": "Zobrazit graf-pointace",
+          "showGuiderAfGraph": "Zobrazit graf-ostření"
+        }
+      },
+      "running": "BĚŽÍCÍ"
+    },
+    "mount": {
+      "title": "Montáž",
+      "slew": "Přejezd",
+      "control": {
+        "park": "Park",
+        "unpark": "Unpark",
+        "home": "Home",
+        "trackingMode": "Režim Sledování",
+        "siderial": "Hvězdný",
+        "lunar": "Lunární",
+        "solar": "Solární",
+        "king": "King",
+        "stop": "zastavit",
+        "errors": {
+          "park": "Chyba při parkování montáže",
+          "unpark": "Chyba při odparkování montáže",
+          "home": "Chyba v navádění montáže",
+          "tracking": "Chyba při nastavování režimu sledován"
+        }
+      },
+      "info": {
+        "notConnected": "Připojte montáž",
+        "parked": "Parkování",
+        "unparked": "Odparkování",
+        "trackingActive": "Sledování je aktivní",
+        "trackingDisabled": "Sledování vypnuto",
+        "slewing": "Montáž přejíždí",
+        "notSlewing": "nepřejíždí"
+      }
+    },
+    "guider": {
+      "notConnected": "Připojte pointaci",
+      "start": "Spustit",
+      "startWithCal": "Spustit s kalibarcí",
+      "stop": "Zastavit",
+      "rms_error": "RMS Chyba",
+      "title": "Navádění"
+    },
+    "focuser": {
+      "title": "Ostření",
+      "new_position": "Nová pozice:",
+      "move": "Pohyb",
+      "start_autofocus": "Spustit AutoOstření",
+      "cancel_autofocus": "Zrušit AutoOstření",
+      "autofocus_graph": "AutoOstření graf",
+      "autofocus_running": "AutoOstření běží",
+      "autofocus_error": "AutoOstření chyba",
+      "please_connect_focuser": "Připojte ostření",
+      "current_position": "Současná pozice:",
+      "temperature": "Teploty:",
+      "moving": "V pohybu",
+      "stopped": "Zastaveno",
+      "autofocus_active": "AutoOstření aktivní",
+      "autofocus": "AutoOstření",
+      "last_autofocus": "Poslední AutoOstření"
+    },
+    "dome": {
+      "title": "Kopule",
+      "azimuth": "azimut",
+      "slewing": "otáčení",
+      "slewing_stopped": "otáčení se zastavilo",
+      "following": "sledování",
+      "following_stopped": "sledování zastaveno",
+      "at_home": "Domů",
+      "not_at_home": "není na místě",
+      "park": "parkovat",
+      "unpark": "odparkovat",
+      "shutter_close": "šterbina zavřená",
+      "shutter_open": "šterbina otevřená",
+      "control": {
+        "open": "Otevřít štěrbinu",
+        "close": "Zavřít štěrbinu",
+        "stop": "Zastavit pohyb štěrbiny",
+        "errors": {
+          "open": "Chyba při otevření štěrbiny",
+          "close": "Chybné při zavření štěrbiny",
+          "stop": "Chyba v zastavení štěrbiny"
+        }
+      }
+    },
+    "camera": {
+      "title": "kamera",
+      "connect": "Připojte kameru",
+      "settings": "Nastavení",
+      "loop": "Cyklus",
+      "capture_running": "Snímání probíhá",
+      "image_loading": "Načítání snímku...",
+      "start_capture": "Spustit snímání",
+      "cancel": "Rušit",
+      "exposure_time": "Čas expozice:",
+      "gain_iso": "Gain / ISO:",
+      "name": "Jméno kamery",
+      "gain": "Gain",
+      "offset": "Offset",
+      "temperature": "Teplota",
+      "standby": "Pohotovostní režim",
+      "info": "Informace",
+      "info_settings": "Informace & Nastavení",
+      "please_connect": "Připojte kameru",
+      "cooler_on": "Chlazení On",
+      "cooler_off": "Chlazení Off",
+      "dew_heater": "Topný pásek",
+      "dew_heater_on": "Topný pásek On",
+      "dew_heater_off": "Topný pásek Off",
+      "camera_cooling": "Chlazení kamery",
+      "target_temperature": "Cílová teplota",
+      "warm_up_time": "Doba zahřátí",
+      "cooling_time": "Doba chlazení"
+    },
+    "tppa": {
+      "title": "Tříbodové Polární Zarovnání",
+      "camera_mount_required": "Kamera musí být připojena a montáž musí být odparkována",
+      "start_alignment": "Spustit Zarovnání",
+      "stop_alignment": "Zastavit Zarovnánít",
+      "altitude_error": "Chyba v Nad. výšce:",
+      "azimuth_error": "Chyba v Azimutu:",
+      "total_error": "Celková Chyba:",
+      "last_update": "Naposledy Aktualizováno:",
+      "error_values_missing": "Chybějící hodnoty chyby",
+      "unknown_response_format": "Neznámý formát odpovědi",
+      "east": "Východ",
+      "west": "Západ",
+      "down": "Dolů",
+      "up": "Nahoru",
+      "not_available": "Není k dispozici",
+      "running": "PROBÍHÁ"
+    },
+    "logs": {
+      "loading": "Načítání dat...",
+      "error": "Chyba při načítání dat:"
+    },
+    "test": {
+      "title": "Test"
+    },
+    "loading": "Načítání...",
+    "slewAndCenter": {
+      "title": "Přejet a Vycentrovat",
+      "LastSelectedImageSource_wrong": "Vyberte offline mapu oblohy jako zdroj obrázku v NINA / Snímkování",
+      "ra": "RA:",
+      "dec": "Dec:",
+      "ra_placeholder": "RA 03:47:28.2",
+      "dec_placeholder": "Dec +24:06:19",
+      "slew": "Přejet",
+      "slew_and_center": "Přejet a Vycentrovat",
+      "errors": {
+        "invalidRAFormat": "Neplatný formát RA. Používejte prosím HH:MM:SS.",
+        "invalidDECFormat": "Neplatný formát DEC. Používejte prosím ±DD:MM:SS.",
+        "invalidRAInput": "Neplatný vstup RA.",
+        "invalidDECInput": "Neplatný vstup DEC.",
+        "apiUnreachable": "Nedostupnost rozhraní API pro snímkování",
+        "invalidFormat": "Nesprávný formát. Očekává se: ±DD:MM:SS.s",
+        "apiResponseError": "Chyba v odpovědi API:",
+        "mountInfoError": "Chyba při získávání informací o montáži:"
+      }
+    },
+    "filterwheel": {
+      "filter": "Filtr:",
+      "unknown": "Neznámý",
+      "nofilteravailable": "Žádný filtr není k dispozici"
+    },
+    "rotator": {
+      "label": "Rotátor",
+      "move": "Pohyb",
+      "notConnected": "připojte rotátor",
+      "currentPosition": "Současná pozice:",
+      "moving": "Vpohybu",
+      "stopped": "zastavil"
+    },
+    "flat": {
+      "please_connect_flatDevice": "Připojte flat zařízení",
+      "device_name": "Jméno:",
+      "cover_state": "Stav Krytu:",
+      "light_state": "Stav Světla:",
+      "brightness": "Jas:",
+      "toggle_light": "Světlo:",
+      "cover": {
+        "close": "kryt zavřen",
+        "open": "kryt otevřen"
+      },
+      "title": "Flat box"
+    },
+    "weatherModal": {
+      "weatherInformation": "Informace o Počasí",
+      "metric": "Metrické",
+      "imperial": "Imperiální",
+      "temperature": "Teplota",
+      "cloudCover": "Oblačnost",
+      "wind": "Vítr",
+      "humidity": "Vlhkost",
+      "pressure": "Tlak"
+    },
+    "switch": {
+      "gauges": "Měřidla",
+      "switch": "Přepínač"
+    }
+  }
+}

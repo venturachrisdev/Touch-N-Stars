@@ -49,7 +49,10 @@
         "delete": "Instanz löschen"
       },
       "errors": {
-        "emptyFields": "Bitte füllen Sie alle Felder aus"
+        "emptyFields": "Bitte füllen Sie alle Felder aus",
+        "instanceNameRequired": "Instanzname ist erforderlich",
+        "invalidIPFormat": "Ungültiges IP-Adressformat",
+        "invalidPortRange": "Port muss zwischen 1 und 65535 liegen"
       },
       "showTutorial": "Tutorial anzeigen"
     },
