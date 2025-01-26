@@ -7,6 +7,7 @@ plugins {
     id("kotlin-kapt")
     id("rust")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 val tauriProperties = Properties().apply {
@@ -96,6 +97,7 @@ dependencies {
     // Firebase dependencies
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-crashlytics")
 }
 
 apply(from = "tauri.build.gradle.kts")
