@@ -77,6 +77,13 @@ framingStore.height = 500;
 scaleDegPerPixel.value = framingStore.fov / framingStore.width;
 
 onMounted(async () => {
+  // Maximale Containergröe ermitteln
+  // Height-200 px um genug Platz nach unten zu haben
+  const smallerDimension = Math.min(window.innerWidth, (window.innerHeight-200));
+  const roundedDimension = Math.floor(smallerDimension / 100) * 100;
+  framingStore.containerSize = roundedDimension;
+  console.log('Container-Größe:', framingStore.containerSize);
+
   // Bild abrufen
   await getTargetPic();
 
@@ -132,8 +139,8 @@ async function getTargetPic() {
   try {
     const ra = framingStore.RAangle;
     const dec = framingStore.DECangle;
-    const width = framingStore.width;
-    const height = framingStore.height;
+    const width = framingStore.containerSize;
+    const height = framingStore.containerSize;
     const fov = framingStore.fov;
 
     const useCache = framingStore.useNinaCache;

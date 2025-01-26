@@ -1,4 +1,5 @@
 <template>
+  <div class=" flex flex-col items-center justify-center">
   <div>
     <input
       class="text-black"
@@ -22,6 +23,7 @@
       <div>Lade Komponente...</div>
     </template>
   </Suspense>
+</div>
 </template>
 
 <script setup>
