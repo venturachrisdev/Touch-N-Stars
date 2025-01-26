@@ -61,7 +61,8 @@
       "search": {
         "title": "Search",
         "placeholder": "Enter a search term..."
-      }
+      },
+      "openFraminingModal": "Open in framing-assistant"
     },
     "connectEquipment": {
       "camera": {

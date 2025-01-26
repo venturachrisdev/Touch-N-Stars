@@ -16,6 +16,8 @@ import { ref, watch, onMounted } from 'vue';
 import apiService from '@/services/apiService';
 import { useFramingStore } from '@/store/framingStore';
 
+let debounceTimeout;
+
 const framingStore = useFramingStore();
 const targetPic = ref(null);
 
@@ -43,9 +45,16 @@ function loadImage() {
   getTargetPic();
 }
 
+function debounceLoadImage() {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+        loadImage();
+    }, 1000); // Wartezeit in Millisekunden 
+}
+
 // Beobachte Änderungen an RAangleString und DECangleString
-watch(() => framingStore.RAangle, loadImage);
-watch(() => framingStore.DECangle, loadImage);
+watch(() => framingStore.RAangle, debounceLoadImage);
+watch(() => framingStore.DECangle, debounceLoadImage);
 
 // Lade das Bild beim Mounten der Komponente
 onMounted(() => {

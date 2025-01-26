@@ -61,7 +61,8 @@
       "search": {
         "title": "Suche",
         "placeholder": "Suchbegriff eingeben..."
-      }
+      },
+      "openFraminingModal": "Im Framing-Assistant öffnen"
     },
     "connectEquipment": {
       "camera": {

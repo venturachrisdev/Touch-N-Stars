@@ -15,13 +15,7 @@
       ref="containerRef"
     >
       <!-- TargetPic als Hintergrund -->
-      <img
-        class="absolute inset-0"
-        :src="targetPic"
-        :style="{
-          zIndex: 1,
-        }"
-      />
+      <img class="absolute inset-0" :src="targetPic" />
 
       <!-- Verschiebbares Ziel-Element -->
       <div
@@ -44,7 +38,7 @@
       />
     </div>
     <div>
-      <p>RA: {{ currentRAHMS }} DEC: {{ currentDecDMS }}</p>
+      <p>RA: {{ framingStore.RAangleString }} DEC: {{ framingStore.DECangleString }}</p>
     </div>
   </div>
 </template>
@@ -68,18 +62,13 @@ const y = ref(0);
 const containerRef = ref(null);
 const targetRef = ref(null);
 
-framingStore.RAangle = 10.683333333333334;
-framingStore.DECangle = 41.26861111111111;
-framingStore.width = 500;
-framingStore.height = 500;
-
 // Grad pro Pixel berechnen
-scaleDegPerPixel.value = framingStore.fov / framingStore.width;
+scaleDegPerPixel.value = framingStore.fov / framingStore.containerSize;
 
 onMounted(async () => {
   // Maximale Containergröe ermitteln
   // Height-200 px um genug Platz nach unten zu haben
-  const smallerDimension = Math.min(window.innerWidth, (window.innerHeight-200));
+  const smallerDimension = Math.min(window.innerWidth, window.innerHeight - 200);
   const roundedDimension = Math.floor(smallerDimension / 100) * 100;
   framingStore.containerSize = roundedDimension;
   console.log('Container-Größe:', framingStore.containerSize);
@@ -98,7 +87,7 @@ function calcCameraFov() {
   const sensorHeightPx = 4000;
   const pixelSizeM = 3.8e-6; // 3.8 µm
   const focalLengthM = 0.7; // 750 mm
-  scaleDegPerPixel.value = framingStore.fov / framingStore.width;
+  scaleDegPerPixel.value = framingStore.fov / framingStore.containerSize;
 
   // => Physische Sensorgröße
   const sensorWidthM = sensorWidthPx * pixelSizeM; // ~0.0114 m
@@ -123,7 +112,7 @@ function onDrag(e) {
   x.value += e.delta[0];
   y.value += e.delta[1];
 
-  // Grenzen: Element soll nicht aus 500×500 px hinausragen
+  // Grenzen: Element soll nicht aus hinausragen
   if (x.value < 0) x.value = 0;
   if (y.value < 0) y.value = 0;
   if (x.value > framingStore.containerSize - framingStore.camWidth)
@@ -161,8 +150,10 @@ function calculateRaDec() {
   const targetCenterX = x.value + framingStore.camWidth / 2;
   const targetCenterY = y.value + framingStore.camHeight / 2;
 
+  console.log('Target-Mitte:', targetCenterX, targetCenterY);
   // Container-Mitte
   const center = framingStore.containerSize / 2;
+  console.log('Container-Mitte:', center);
 
   // Pixel-Differenz:
   // - deltaX > 0, wenn Target rechts vom Zentrum
@@ -172,6 +163,8 @@ function calculateRaDec() {
   const deltaX = targetCenterX - center;
   const deltaY = center - targetCenterY;
 
+  console.log('Pixel-Differenz:', deltaX, deltaY);
+
   // Umrechnung in Grad
   // RA steigt nach rechts, Dec steigt nach oben
   const offsetRA = deltaX * scaleDegPerPixel.value;
@@ -180,8 +173,11 @@ function calculateRaDec() {
   const currentRA = baseRA - offsetRA;
   const currentDec = baseDec + offsetDec;
 
-  currentRAHMS.value = degreesToHMS(currentRA);
-  currentDecDMS.value = degreesToDMS(currentDec);
+  framingStore.RAangleString = degreesToHMS(currentRA);
+  framingStore.DECangleString = degreesToDMS(currentDec);
+
+  framingStore.RAangle = currentRA;
+  framingStore.DECangle = currentDec;
 
   //console.log(`RA=${currentRA.toFixed(3)}°, Dec=${currentDec.toFixed(3)}°`);
   //console.log('RA', degreesToHMS(currentRA), 'DEC', degreesToDMS(currentDec));
@@ -250,7 +246,6 @@ function rad2deg(rad) {
 }
 .target {
   position: absolute;
-  border: 1px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
