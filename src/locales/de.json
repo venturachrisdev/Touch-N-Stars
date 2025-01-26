@@ -62,7 +62,14 @@
         "title": "Suche",
         "placeholder": "Suchbegriff eingeben..."
       },
-      "openFraminingModal": "Im Framing-Assistant öffnen"
+      "openFraminingModal": "Im Framing-Assistant öffnen",
+      "fovSettings": {
+        "fov": "Field of View",
+        "focalLengthM": "Brennweite (mm)",
+        "pixelSizeM": "Kamerapixelgröße (µm)",
+        "sensorHeightPx": "Kamerasensor Höhe (px)",
+        "sensorWidthPx": "Kamerasensor Breite (px)"
+      }
     },
     "connectEquipment": {
       "camera": {
