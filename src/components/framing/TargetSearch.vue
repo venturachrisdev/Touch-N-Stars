@@ -77,7 +77,7 @@
       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
     >
       <div
-        class="bg-gray-900 rounded-lg p-4 sm:p-6 w-full sm:max-w-4xl h-full sm:h-auto sm:max-h-[90vh] overflow-y-auto mx-2 sm:mx-0 scrollbar-hide"
+        class="bg-gray-900 rounded-lg p-4 scrollbar-hide"
       >
         <FramingAssistangModal />
         <button
