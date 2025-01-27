@@ -29,12 +29,6 @@ export const useSettingsStore = defineStore('settings', {
       completed: localStorage.getItem('tutorialCompleted') === 'true',
       steps: tutorialContent.steps,
     },
-    framingAssistant: {
-      sensorWidthPx: 3000,
-      sensorHeightPx: 1500,
-      pixelSizeM: 3.8,
-      focalLengthM: 500,
-    },
   }),
   actions: {
     setCoordinates(coords) {
@@ -153,7 +147,6 @@ export const useSettingsStore = defineStore('settings', {
           'lastCreatedInstanceId',
           'monitorViewSetting',
           'tutorial',
-          'framingAssistant',
         ],
       },
     ],
