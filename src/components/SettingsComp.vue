@@ -168,7 +168,7 @@
               />
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-400 mb-1">IP</label>
+              <label class="block text-sm font-medium text-gray-400 mb-1">IP / FQDN</label>
               <input
                 v-model="tempInstance.ip"
                 type="text"
