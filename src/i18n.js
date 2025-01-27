@@ -4,6 +4,7 @@ import en from './locales/en.json';
 import fr from './locales/fr.json';
 import it from './locales/it.json';
 import cz from './locales/cz.json';
+import cn from './locales/cn.json';
 
 // Available languages with their display names
 const availableLanguages = [
@@ -12,6 +13,7 @@ const availableLanguages = [
   { code: 'fr', name: 'Français' },
   { code: 'it', name: 'Italiano' },
   { code: 'cz', name: 'čeština' },
+  { code: 'cn', name: '中文' },
 ];
 
 const messages = {
@@ -20,6 +22,7 @@ const messages = {
   fr,
   it,
   cz,
+  cn,
 };
 
 // Create i18n instance

@@ -51,7 +51,7 @@
       "errors": {
         "emptyFields": "Bitte füllen Sie alle Felder aus",
         "instanceNameRequired": "Instanzname ist erforderlich",
-        "invalidIPFormat": "Ungültiges IP-Adressformat",
+        "invalidIPFormat": "Bitte geben Sie IP oder FQDN an",
         "invalidPortRange": "Port muss zwischen 1 und 65535 liegen"
       },
       "showTutorial": "Tutorial anzeigen"
@@ -207,7 +207,7 @@
           "showGuiderAfGraph": "Autofokus-Diagramm anzeigen"
         }
       },
-    "running": "WIRD AUSGEFÜHRT"
+      "running": "WIRD AUSGEFÜHRT"
     },
     "mount": {
       "title": "Montierung",
