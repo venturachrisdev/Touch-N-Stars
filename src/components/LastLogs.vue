@@ -20,7 +20,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="(entry, index) in logStore.LogsInfo.logs"
+            v-for="(entry, index) in filteredLogs"
             :key="index"
             class="odd:bg-gray-900 even:bg-gray-600"
           >
@@ -44,6 +44,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { useLogStore } from '@/store/logStore';
 const logStore = useLogStore();
 
@@ -52,6 +53,11 @@ function formatTimestamp(timestamp) {
   const date = new Date(timestamp);
   return date.toLocaleString();
 }
+
+// Computed Property für gefilterte Logs
+const filteredLogs = computed(() =>
+  logStore.LogsInfo.logs.filter((entry) => !entry.message.includes('EDS_ERR_INVALID_PARAMETER'))
+);
 </script>
 
 <style scoped></style>
