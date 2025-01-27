@@ -51,7 +51,7 @@
         "errors": {
           "emptyFields": "请填完所有字段",
           "instanceNameRequired": "实例名称必填",
-          "invalidIPFormat": "无效的 IP 格式",
+          "invalidIPFormat": "请提供 IP 或 FQDN",
           "invalidPortRange": "无效的端口范围"
         },
         "showTutorial": "显示教程"
