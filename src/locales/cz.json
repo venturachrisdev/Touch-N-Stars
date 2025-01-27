@@ -51,7 +51,7 @@
       "errors": {
         "emptyFields": "Vyplňte všechna pole",
         "instanceNameRequired": "Název instance je povinný",
-        "invalidIPFormat": "Neplatný formát IP adresy",
+        "invalidIPFormat": "Uveďte prosím IP nebo FQDN",
         "invalidPortRange": "Port musí být v rozsahu 1 až 65535"
       },
       "showTutorial": "Ukázat Tutoriál"

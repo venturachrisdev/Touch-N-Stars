@@ -51,7 +51,7 @@
       "errors": {
         "emptyFields": "Merci de remplir tous les champs",
         "instanceNameRequired": "Le nom de l'instance est requis",
-        "invalidIPFormat": "Format d'adresse IP invalide",
+        "invalidIPFormat": "Veuillez fournir IP ou FQDN",
         "invalidPortRange": "Le port doit être compris entre 1 et 65535"
       },
       "showTutorial": "Montrer le tutoriel"
