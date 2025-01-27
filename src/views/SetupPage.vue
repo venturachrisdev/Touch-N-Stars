@@ -144,7 +144,7 @@
               />
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-400 mb-1">IP Address</label>
+              <label class="block text-sm font-medium text-gray-400 mb-1">IP Address / FQDN</label>
               <input
                 v-model="instanceIP"
                 type="text"
@@ -281,10 +281,7 @@ function saveInstance() {
     return;
   }
 
-  // Validate IP address
-  const ipPattern =
-    /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-  if (!ipPattern.test(instanceIP.value)) {
+    if (!instanceIP.value) {
     alert(t('components.settings.errors.invalidIPFormat'));
     return;
   }
