@@ -64,6 +64,14 @@
       "search": {
         "title": "Suche",
         "placeholder": "Suchbegriff eingeben..."
+      },
+      "openFraminingModal": "Im Framing-Assistant öffnen",
+      "fovSettings": {
+        "fov": "Field of View",
+        "focalLengthM": "Brennweite (mm)",
+        "pixelSizeM": "Kamerapixelgröße (µm)",
+        "sensorHeightPx": "Kamerasensor Höhe (px)",
+        "sensorWidthPx": "Kamerasensor Breite (px)"
       }
     },
     "connectEquipment": {
@@ -206,7 +214,7 @@
       "slew": "Schwenken",
       "control": {
         "park": "Parken",
-        "unpark": "Entparken",
+        "unpark": "Ausparken",
         "home": "Home",
         "trackingMode": "Nachführungsmodus",
         "siderial": "Siderisch",
@@ -216,7 +224,7 @@
         "stop": "Stopp",
         "errors": {
           "park": "Fehler beim Parken der Montierung",
-          "unpark": "Fehler beim Entparken der Montierung",
+          "unpark": "Fehler beim Ausparken der Montierung",
           "home": "Fehler beim Homing der Montierung",
           "tracking": "Fehler beim Einstellen des Nachführungsmodus"
         }
@@ -224,7 +232,7 @@
       "info": {
         "notConnected": "Bitte Montierung verbinden",
         "parked": "Geparkt",
-        "unparked": "Entparkt",
+        "unparked": "Ausgeparkt",
         "trackingActive": "Nachführung aktiv",
         "trackingDisabled": "Nachführung deaktiviert",
         "slewing": "Montierung schwenkt",
@@ -267,7 +275,7 @@
       "at_home": "Home",
       "not_at_home": "Nicht in Home-Position",
       "park": "Parken",
-      "unpark": "Entparken",
+      "unpark": "Ausparken",
       "shutter_close": "Verschluss schließen",
       "shutter_open": "Verschluss öffnen",
       "control": {
@@ -312,7 +320,7 @@
     },
     "tppa": {
       "title": "Drei-Punkt-Polarausrichtung",
-      "camera_mount_required": "Kamera muss verbunden und Montierung entparkt sein",
+      "camera_mount_required": "Kamera muss verbunden und Montierung ausgeparkt sein",
       "start_alignment": "Ausrichtung starten",
       "stop_alignment": "Ausrichtung stoppen",
       "altitude_error": "Höhenfehler:",
