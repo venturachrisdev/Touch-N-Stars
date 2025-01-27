@@ -59,7 +59,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
    */
   async function capturePhoto(apiService, exposureTime, gain) {
     if (exposureTime <= 0) {
-      alert('Bitte geben Sie eine gültige Belichtungszeit ein.');
+      exposureTime = 2; // Default-Wert
       return;
     }
     loading.value = true;
@@ -85,7 +85,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
       isLoadingImage.value = true;
 
       let attempts = 0;
-      const maxAttempts = 15;
+      const maxAttempts = 60;
       let image = null;
 
       while (!image && attempts < maxAttempts && !isAbort.value) {
@@ -105,11 +105,10 @@ export const useCameraStore = defineStore('cameraStore', () => {
 
       // Wenn bis hier kein Bild und kein Abbruch
       if (!image && !isAbort.value) {
-        alert('Bild wurde nicht rechtzeitig bereitgestellt.');
+        alert('Image was not provided in time');
       }
     } catch (error) {
       console.error('Fehler bei der Aufnahme:', error.message);
-      alert('Fehler bei der Aufnahme. Siehe Konsole.');
     } finally {
       loading.value = false;
       isLoadingImage.value = false;
@@ -139,7 +138,6 @@ export const useCameraStore = defineStore('cameraStore', () => {
       console.log('Belichtung erfolgreich abgebrochen.');
     } catch (error) {
       console.error('Fehler beim Abbrechen der Belichtung:', error);
-      alert('Abbrechen fehlgeschlagen: ' + (error.message || 'Unbekannter Fehler'));
     } finally {
       loading.value = false;
     }

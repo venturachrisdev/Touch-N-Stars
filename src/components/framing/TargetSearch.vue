@@ -58,7 +58,7 @@
           <TargetPic class="border border-gray-500 rounded-md" />
         </div>
       </div>
-      <div class="mb-2 mt-1">
+      <div v-if="false" class="mb-2 mt-1">
         <button
           v-if="framingStore.selectedItem"
           @click="showFramingModal = true"
