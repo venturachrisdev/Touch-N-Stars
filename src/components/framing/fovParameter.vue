@@ -39,7 +39,7 @@
     />
   </div>
   <div>
-    <getImageRotation/>
+    <getImageRotation />
   </div>
 </template>
 <script setup>

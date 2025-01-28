@@ -5,7 +5,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
   const exposureTime = ref(2);
   const remainingExposureTime = ref(0);
   const progress = ref(0);
-  const imageData = ref(null); 
+  const imageData = ref(null);
   const loading = ref(false);
   const isExposure = ref(false);
   const isLoadingImage = ref(false);
@@ -58,7 +58,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
   /**
    * Startet die Aufnahme + Countdown + Bildabruf
    */
-  async function capturePhoto(apiService, exposureTime, gain, solve=false) {
+  async function capturePhoto(apiService, exposureTime, gain, solve = false) {
     if (exposureTime <= 0) {
       exposureTime = 2; // Default-Wert
       return;
@@ -144,7 +144,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
     }
   }
 
-  async function getCameraRotation(apiService, exposureTime=2, gain, solve=true) {
+  async function getCameraRotation(apiService, exposureTime = 2, gain) {
     loading.value = true;
     isLoadingImage.value = true;
     progress.value = 0;
@@ -156,10 +156,10 @@ export const useCameraStore = defineStore('cameraStore', () => {
       let plateSolveResult = null;
       let plateSolveStatusCode = 0;
       isLoadingImage.value = true;
-      result =  await apiService.getPlatesovle(exposureTime, gain);
-      console.log('result: ' , result);
+      result = await apiService.getPlatesovle(exposureTime, gain);
+      console.log('result: ', result);
 
-      plateSolveResult = result?.Response?.PlateSolveResult;  
+      plateSolveResult = result?.Response?.PlateSolveResult;
       plateSolveStatusCode = result?.StatusCode;
       if (plateSolveStatusCode != 200) {
         plateSolveError.value = true;
