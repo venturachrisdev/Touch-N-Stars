@@ -43,7 +43,7 @@
           </button>
         </div>
         <div class="w-full">
-          <setSequenceTarget v-if="true" class="mt-2" />
+          <setSequenceTarget class="mt-2" />
         </div>
       </div>
     </div>
@@ -76,13 +76,13 @@ const DECangle = ref(null);
 const Info = ref(null);
 
 watch(
-  () => props.RAangleString,
+  () => framingStore.RAangleString,
   (newValue) => {
     localRAangleString.value = newValue;
   }
 );
 watch(
-  () => props.DECangleString,
+  () => framingStore.DECangleString,
   (newValue) => {
     localDECangleString.value = newValue;
   }

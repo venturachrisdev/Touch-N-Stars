@@ -58,12 +58,50 @@
           <TargetPic class="border border-gray-500 rounded-md" />
         </div>
       </div>
-
-      <div class="mt-4">
+      <div v-if="false" class="mb-2 mt-1">
+        <button
+          v-if="framingStore.selectedItem"
+          @click="showFramingModal = true"
+          class="default-button-cyan"
+        >
+          {{ $t('components.framing.openFraminingModal') }}
+        </button>
+      </div>
+      <div>
         <slewAndCenter
           v-model:RAangleString="framingStore.RAangleString"
           v-model:DECangleString="framingStore.DECangleString"
         />
+      </div>
+    </div>
+    <!-- Framing Modal -->
+    <div
+      v-if="showFramingModal"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+    >
+      <div
+        class="bg-gray-900 rounded-lg p-4 overflow-y-auto max-h-[90vh] pr-3 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800/50"
+      >
+        <FramingAssistangModal />
+        <button
+          @click="showFramingModal = false"
+          class="fixed sm:absolute top-2 right-2 sm:top-4 sm:right-4 p-2 text-gray-400 hover:text-white bg-gray-900 rounded-full"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
@@ -75,9 +113,11 @@ import slewAndCenter from '@/components/framing/slewAndCenter.vue';
 import TargetPic from '@/components/framing/TargetPic.vue';
 import controlUseNinaCache from '@/components/framing/controlUseNinaCache.vue';
 import { useFramingStore } from '@/store/framingStore';
+import { onMounted, ref } from 'vue';
+import FramingAssistangModal from '@/components/framing/FramingAssistangModal.vue';
 
 const framingStore = useFramingStore();
-
+const showFramingModal = ref(false);
 async function fetchTargetSearch() {
   if (framingStore.searchQuery.trim() === '') {
     framingStore.targetSearchResult = [];
@@ -162,6 +202,12 @@ function degreesToDMS(deg) {
   // 6) Zusammenbauen: ±DD:MM:SS.s
   return `${sign}${dStr}:${mStr}:${sStr}`;
 }
+
+onMounted(() => {
+  framingStore.height = 200;
+  framingStore.width = 200;
+  framingStore.fov = 2;
+});
 </script>
 
 <style scoped></style>
