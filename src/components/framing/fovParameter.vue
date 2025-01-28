@@ -38,9 +38,12 @@
       max="360"
     />
   </div>
+  <div>
+    <getImageRotation/>
+  </div>
 </template>
 <script setup>
 import { useFramingStore } from '@/store/framingStore';
-
+import getImageRotation from '@/components/framing/getImageRotation.vue';
 const framingStore = useFramingStore();
 </script>

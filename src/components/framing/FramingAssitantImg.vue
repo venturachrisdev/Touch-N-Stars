@@ -30,7 +30,7 @@
         }"
       ></div>
 
-      <!-- Moveable: rotierbar ist hier fest auf "true" gesetzt -->
+      <!-- Moveable-->
       <Moveable
         ref="moveableRef"
         :target="targetRef"
@@ -47,27 +47,21 @@ import { ref, onMounted, nextTick, watch } from 'vue';
 import Moveable from 'vue3-moveable';
 import { useFramingStore } from '@/store/framingStore';
 import apiService from '@/services/apiService';
+import { useCameraStore } from '@/store/cameraStore';
 
-// Stores / refs
+const cameraStore = useCameraStore();
 const framingStore = useFramingStore();
 const isLoading = ref(true);
 const targetPic = ref(null);
-
-// Für die Berechnungen
 const scaleDegPerPixel = ref(0.004); // Grad pro Pixel
 const baseRA = framingStore.RAangle;
 const baseDec = framingStore.DECangle;
-
-// Positions-Koordinaten
 const x = ref(0);
 const y = ref(0);
-
-// Referenzen
 const containerRef = ref(null);
 const targetRef = ref(null);
 const moveableRef = ref(null);
 
-// Beim Mounten Daten laden
 onMounted(async () => {
   await fetchFramingInfo();
 
@@ -88,8 +82,17 @@ onMounted(async () => {
 });
 
 watch(
+  () => cameraStore.positionAngle,
+  () => {
+    framingStore.rotationAngle = cameraStore.positionAngle;
+    console.log('rotationAngle:', framingStore.rotationAngle);
+  }
+);
+
+watch(
   () => framingStore.rotationAngle,
   () => {
+    console.log('debounceRotateRange:', framingStore.rotationAngle);
     debounceRotateRange();
   }
 );
@@ -115,11 +118,11 @@ function calcCameraFov() {
 
   scaleDegPerPixel.value = framingStore.fov / framingStore.containerSize;
 
-  // Sensor-Größe in Meter
+  // Sensor-Größe
   const sensorWidthM = sensorWidthPx * pixelSizeM;
   const sensorHeightM = sensorHeightPx * pixelSizeM;
 
-  // Reales FOV in Grad
+  // FOV in Grad
   const fovX = 2 * rad2deg(Math.atan(sensorWidthM / 2 / focalLengthM));
   const fovY = 2 * rad2deg(Math.atan(sensorHeightM / 2 / focalLengthM));
 
