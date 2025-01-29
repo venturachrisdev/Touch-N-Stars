@@ -19,7 +19,7 @@ function statusColor(status) {
     case 'SKIPPED':
       return 'text-gray-400';
     default:
-      return 'text-white';
+      return 'text-gray-200';
   }
 }
 
@@ -37,94 +37,94 @@ function filterFields(trigger) {
     'Triggers',
     'Items',
   ];
-  return Object.entries(trigger).filter(([key]) => {
-    return !excludedKeys.includes(key);
-  });
+  return Object.entries(trigger).filter(([key]) => !excludedKeys.includes(key));
 }
 </script>
 
 <template>
-  <div>
+  <div class="space-y-3">
     <div
       v-for="(item, index) in props.items"
       :key="index"
-      class="border-l border-gray-400 pl-4 mb-2 text-xs md:text-base"
+      class="bg-gray-800 rounded-lg p-4 shadow-lg border border-gray-700 transition-all hover:border-gray-500"
     >
-      <!-- Name & Status -->
-      <div class="flex items-center justify-between mb-1">
-        <h3 class="font-medium">{{ removeSuffix(item.Name) }}</h3>
-        <span :class="statusColor(item.Status)">
+      <!-- Header Section -->
+      <div class="flex items-center justify-between mb-3 pb-2 border-b border-gray-600">
+        <h3 class="font-semibold text-gray-200 text-sm md:text-base">
+          {{ removeSuffix(item.Name) }}
+        </h3>
+        <span :class="statusColor(item.Status)" class="font-medium text-sm">
           {{ item.Status }}
         </span>
       </div>
 
-      <!-- Items -->
-      <div class="border-l border-gray-400">
-        <div class="text-gray-500 text-xs pl-4">
-          <div v-if="typeof item.ExposureCount !== 'undefined'">
-            {{ $t('components.sequence.exposures') }}: {{ item.ExposureCount }}
-            {{ $t('components.sequence.details.of') }} {{ item.Iterations }}
-          </div>
-          <div v-if="typeof item.ExposureTime !== 'undefined'">
-            {{ $t('components.sequence.exposureTime') }}: {{ item.ExposureTime }}s
-          </div>
-          <div v-if="typeof item.Gain !== 'undefined'">
-            {{ $t('components.sequence.details.gain') }}: {{ item.Gain }}
-          </div>
-          <div v-if="typeof item.Filter !== 'undefined'">
-            {{ $t('components.sequence.filter') }}: {{ item.Filter }}
-          </div>
-          <div
-            v-if="
-              typeof item.DitherTargetExposures !== 'undefined' && item.DitherTargetExposures !== 0
-            "
-          >
-            {{ $t('components.sequence.ditherEvery') }} {{ item.DitherTargetExposures }}
-            {{ $t('components.sequence.details.exposures') }}
-          </div>
-          <div v-if="typeof item.Type !== 'undefined'">
-            {{ $t('components.sequence.type') }}: {{ item.Type }}
-          </div>
-          <div v-if="typeof item.DeltaHFR !== 'undefined'">
-            {{ $t('components.sequence.deltaHFR') }}: {{ item.DeltaHFR }}
-          </div>
-
-          <div v-if="typeof item.SampleSize !== 'undefined'">
-            {{ $t('components.sequence.sampleSize') }}: {{ item.SampleSize }}
-          </div>
+      <!-- Details Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mb-4">
+        <div v-if="typeof item.ExposureCount !== 'undefined'" class="flex gap-2">
+          <span class="text-gray-400">{{ $t('components.sequence.exposures') }}:</span>
+          <span class="text-gray-200">{{ item.ExposureCount }} / {{ item.Iterations }}</span>
+        </div>
+        <div v-if="typeof item.ExposureTime !== 'undefined'" class="flex gap-2">
+          <span class="text-gray-400">{{ $t('components.sequence.exposureTime') }}:</span>
+          <span class="text-gray-200">{{ item.ExposureTime }}s</span>
+        </div>
+        <div v-if="typeof item.Gain !== 'undefined'" class="flex gap-2">
+          <span class="text-gray-400">{{ $t('components.sequence.details.gain') }}:</span>
+          <span class="text-gray-200">{{ item.Gain }}</span>
+        </div>
+        <div v-if="typeof item.Filter !== 'undefined'" class="flex gap-2">
+          <span class="text-gray-400">{{ $t('components.sequence.filter') }}:</span>
+          <span class="text-gray-200">{{ item.Filter }}</span>
+        </div>
+        <div
+          v-if="item.DitherTargetExposures && item.DitherTargetExposures !== 0"
+          class="flex gap-2"
+        >
+          <span class="text-gray-400">{{ $t('components.sequence.ditherEvery') }}:</span>
+          <span class="text-gray-200">{{ item.DitherTargetExposures }}</span>
+        </div>
+        <div v-if="typeof item.Type !== 'undefined'" class="flex gap-2">
+          <span class="text-gray-400">{{ $t('components.sequence.type') }}:</span>
+          <span class="text-gray-200">{{ item.Type }}</span>
+        </div>
+        <div v-if="typeof item.DeltaHFR !== 'undefined'" class="flex gap-2">
+          <span class="text-gray-400">{{ $t('components.sequence.deltaHFR') }}:</span>
+          <span class="text-gray-200">{{ item.DeltaHFR }}</span>
+        </div>
+        <div v-if="typeof item.SampleSize !== 'undefined'" class="flex gap-2">
+          <span class="text-gray-400">{{ $t('components.sequence.sampleSize') }}:</span>
+          <span class="text-gray-200">{{ item.SampleSize }}</span>
         </div>
       </div>
 
-      <!-- Rekursion bei verschachtelten Items -->
-      <div v-if="item.Items && item.Items.length" class="pl-4 mt-2">
+      <!-- Nested Items -->
+      <div v-if="item.Items && item.Items.length" class="ml-4 space-y-3">
         <RecursiveItem :items="item.Items" />
       </div>
 
-      <!-- Triggers anzeigen -->
-      <div v-if="item.Triggers && item.Triggers.length" class="pl-4 mt-2">
-        <h4 class="font-semibold mb-1 text-sm md:text-base">
-          {{ $t('components.sequence.triggers') }}:
+      <!-- Triggers Section -->
+      <div v-if="item.Triggers && item.Triggers.length" class="mt-4">
+        <h4 class="text-sm font-semibold text-gray-300 mb-2">
+          {{ $t('components.sequence.triggers') }}
         </h4>
-        <div v-for="(trigger, tIndex) in item.Triggers" :key="tIndex">
-          <div class="border-l border-gray-300 pl-2">
-            <div class="flex items-center justify-between mb-1 pl-2">
-              <!-- Trigger-Name -->
-              <span>{{ removeSuffix(trigger.Name) }}</span>
-
-              <!-- Trigger-Status -->
-              <span :class="statusColor(trigger.Status)">
+        <div class="space-y-2">
+          <div
+            v-for="(trigger, tIndex) in item.Triggers"
+            :key="tIndex"
+            class="bg-gray-700 rounded p-3 border border-gray-600"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-gray-200">
+                {{ removeSuffix(trigger.Name) }}
+              </span>
+              <span :class="statusColor(trigger.Status)" class="text-sm">
                 {{ trigger.Status }}
               </span>
             </div>
-            <div class="flex flex-col justify-between ml-4 mb-1 border-l border-gray-300 pl-2">
-              <!-- Unbekannte (dynamische) Felder -->
-              <div
-                v-for="[key, value] in filterFields(trigger)"
-                :key="key"
-                class="text-xs text-gray-600"
-              >
-                <!-- key zeigt den Feldnamen an, value den Inhalt -->
-                <span>{{ key }}: {{ value }} </span>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+              <div v-for="[key, value] in filterFields(trigger)" :key="key" class="flex gap-1">
+                <span class="text-gray-400">{{ key }}:</span>
+                <span class="text-gray-200">{{ value }}</span>
               </div>
             </div>
           </div>
