@@ -47,6 +47,10 @@ function getDisplayFields(item) {
       !excludedKeys.has(key) && item[key] !== undefined && item[key] !== null && item[key] !== ''
   );
 }
+
+function hasRunningChildren(item) {
+  return item.Items?.some((child) => child.Status === 'RUNNING' || hasRunningChildren(child));
+}
 </script>
 
 <template>
@@ -56,8 +60,9 @@ function getDisplayFields(item) {
       :key="index"
       class="bg-gray-800 rounded-lg p-4 shadow-lg border-2 transition-all"
       :class="{
-        'border-blue-500': item.Status === 'RUNNING',
-        'border-gray-700 hover:border-gray-500': item.Status !== 'RUNNING',
+        'border-blue-500': item.Status === 'RUNNING' && !hasRunningChildren(item),
+        'border-gray-700 hover:border-gray-500':
+          item.Status !== 'RUNNING' || hasRunningChildren(item),
       }"
     >
       <!-- Header Section -->
@@ -123,9 +128,3 @@ function getDisplayFields(item) {
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'RecursiveItem',
-};
-</script>
