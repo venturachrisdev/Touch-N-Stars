@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
+import { useFramingStore } from './framingStore';
 import { ref } from 'vue';
 
 export const useCameraStore = defineStore('cameraStore', () => {
+  const framingStore = useFramingStore();
   const exposureTime = ref(2);
   const remainingExposureTime = ref(0);
   const progress = ref(0);
@@ -18,7 +20,6 @@ export const useCameraStore = defineStore('cameraStore', () => {
   const coolingTime = ref(10);
   const warmingTime = ref(10);
   const buttonCoolerOn = ref(false);
-  const positionAngle = ref(0);
   const plateSolveError = ref(false);
   let exposureCountdownTimer = null;
 
@@ -166,8 +167,8 @@ export const useCameraStore = defineStore('cameraStore', () => {
         console.log('plateSolveError: ', plateSolveStatusCode, plateSolveError.value);
       }
       if (plateSolveResult) {
-        positionAngle.value = plateSolveResult.PositionAngle;
-        console.log('Camera position angle: ', positionAngle.value);
+        framingStore.rotationAngle = plateSolveResult.PositionAngle;
+        console.log('Camera position angle: ', framingStore.rotationAngle);
       }
     } catch (error) {
       console.error('Fehler bei der Aufnahme:', error.message);
@@ -195,7 +196,6 @@ export const useCameraStore = defineStore('cameraStore', () => {
     coolingTime,
     warmingTime,
     buttonCoolerOn,
-    positionAngle,
     plateSolveError,
 
     // Actions

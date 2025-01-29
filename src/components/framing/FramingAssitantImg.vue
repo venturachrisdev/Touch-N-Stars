@@ -82,14 +82,6 @@ onMounted(async () => {
 });
 
 watch(
-  () => cameraStore.positionAngle,
-  () => {
-    framingStore.rotationAngle = cameraStore.positionAngle;
-    console.log('rotationAngle:', framingStore.rotationAngle);
-  }
-);
-
-watch(
   () => framingStore.rotationAngle,
   () => {
     console.log('debounceRotateRange:', framingStore.rotationAngle);
