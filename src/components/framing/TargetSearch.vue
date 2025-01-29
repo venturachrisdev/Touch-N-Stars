@@ -113,7 +113,7 @@ import slewAndCenter from '@/components/framing/slewAndCenter.vue';
 import TargetPic from '@/components/framing/TargetPic.vue';
 import controlUseNinaCache from '@/components/framing/controlUseNinaCache.vue';
 import { useFramingStore } from '@/store/framingStore';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import FramingAssistangModal from '@/components/framing/FramingAssistangModal.vue';
 
 const framingStore = useFramingStore();

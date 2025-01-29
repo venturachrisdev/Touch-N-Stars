@@ -41,6 +41,11 @@
   <div>
     <getImageRotation />
   </div>
+  <!-- Vielleicht später
+  <div>
+    <moveRotator />
+  </div>
+  -->
   <div>
     <button
       class="flex items-center justify-center min-w-24 min-h-12 bg-cyan-900/15 border border-green-400 rounded-md text-white font-medium transition-colors w-full"
@@ -54,6 +59,7 @@
 import { useFramingStore } from '@/store/framingStore';
 import getImageRotation from '@/components/framing/getImageRotation.vue';
 import { CheckCircleIcon } from '@heroicons/vue/24/outline';
+//import moveRotator from '@/components/framing/moveRotator.vue';
 
 const framingStore = useFramingStore();
 </script>

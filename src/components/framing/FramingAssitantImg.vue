@@ -47,9 +47,7 @@ import { ref, onMounted, nextTick, watch } from 'vue';
 import Moveable from 'vue3-moveable';
 import { useFramingStore } from '@/store/framingStore';
 import apiService from '@/services/apiService';
-import { useCameraStore } from '@/store/cameraStore';
 
-const cameraStore = useCameraStore();
 const framingStore = useFramingStore();
 const isLoading = ref(true);
 const targetPic = ref(null);

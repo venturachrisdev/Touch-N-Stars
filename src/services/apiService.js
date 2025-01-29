@@ -504,6 +504,24 @@ const apiService = {
     }
   },
 
+  async framingRotate(rotation) {
+    try {
+      const { BASE_URL } = getUrls();
+      await axios.get(`${BASE_URL}/framing/set-rotation`, {
+        params: { rotation },
+      });
+      const response = await axios.get(`${BASE_URL}/framing/slew`, {
+        params: {
+          slew_option: 'Rotate',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error controlling slewAndCenterAndRotate:', error);
+      throw error;
+    }
+  },
+
   async searchNGC(query, limit = 10) {
     const { API_URL } = getUrls();
     return this._getWithParams(`${API_URL}ngc/search`, { query, limit });
