@@ -60,7 +60,7 @@
       </div>
       <div v-if="true" class="mb-2 mt-1">
         <button
-          v-if="framingStore.selectedItem"
+          v-if="framingStore.selectedItem && false"
           @click="framingStore.showFramingModal = true"
           class="default-button-cyan"
         >
