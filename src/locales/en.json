@@ -67,12 +67,15 @@
       },
       "openFraminingModal": "Open in framing-assistant",
       "fovSettings": {
-        "fov": "Field of View",
-        "focalLengthM": "Focal length (mm)",
-        "pixelSizeM": "Camerapixel size (µm)",
-        "sensorHeightPx": "Camerasensor height (px)",
-        "sensorWidthPx": "Camerasensor width (px)"
-      }
+        "rotationAngle":  "Camera rotation",
+        "fov": "Field of View"
+      },
+      "getImageRotation": {
+        "startCapture": "Determine rotation from camera",
+        "SolveRun": "Platesolve",
+        "SolveError": "Error solving image"
+      },
+      "moveRotator": "Rotate camera"
     },
     "connectEquipment": {
       "camera": {
@@ -353,6 +356,7 @@
       "dec_placeholder": "Dec +24:06:19",
       "slew": "Slew",
       "slew_and_center": "Slew and Center",
+      "rotate": "Rotate",
       "errors": {
         "invalidRAFormat": "Invalid RA format. Please use HH:MM:SS.",
         "invalidDECFormat": "Invalid DEC format. Please use ±DD:MM:SS.",
