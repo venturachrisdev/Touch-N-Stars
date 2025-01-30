@@ -134,11 +134,13 @@ async function getlastImage(index, quality, resize, scale) {
   try {
     const result = await apiService.getSequenceImage(index, quality, resize, scale);
     const image = result?.Response;
+    console.log('Image Data: ', image);
     if (image) {
       imageData.value = `data:image/jpeg;base64,${image}`;
       setSelectedDataset(index);
       lastImgIndex.value = index;
       isLoadingImg.value = false;
+      console.log('isLoadingImg: ', isLoadingImg.value, 'lastImgIndex', lastImgIndex.value);
     }
   } catch (error) {
     console.error('Fehler beim Abrufen des Bildes:', error.message);
@@ -146,7 +148,7 @@ async function getlastImage(index, quality, resize, scale) {
 }
 
 async function getlastModalImage(index, quality, resize, scale) {
-  console.log('Modal Bild, Index: ', index);
+  console.log('getlastModalImage: Index ', index, 'Quality: ', quality, 'Resize: ', resize, 'Scale: ', scale);
   try {
     const resultModal = await apiService.getSequenceImage(index, quality, false, scale);
     const imageModal = resultModal?.Response;
@@ -182,6 +184,8 @@ watch(
   (newVal, oldVal) => {
     if (!oldVal || newVal.length > oldVal.length) {
       const latestIndex = newVal.length - 1;
+      console.log('Watch imageHistoryInfo');
+      console.log('latestIndex: ', latestIndex );
       getlastImage(latestIndex, 75, true, 0.5);
       if (showModal.value) {
         getlastModalImage(latestIndex, 90, true, 0.8);
@@ -193,7 +197,10 @@ watch(
 
 onMounted(() => {
   const latestIndex = store.imageHistoryInfo.length - 1;
-  getlastImage(latestIndex, 80, true, 0.6);
+  getlastImage(latestIndex, 75, true, 0.5);
+  console.log('Mounted last LastSequenceImg');
+  console.log('latestIndex: ', latestIndex );
+  console.log('isLoadingImg: ', isLoadingImg.value);
 });
 </script>
 
