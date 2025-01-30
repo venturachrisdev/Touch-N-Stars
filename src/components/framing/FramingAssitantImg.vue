@@ -67,7 +67,7 @@ onMounted(async () => {
   const smallerDimension = Math.min(window.innerWidth, window.innerHeight - 200);
   const roundedDimension = Math.floor(smallerDimension / 100) * 100;
   framingStore.containerSize = roundedDimension;
-
+  setMinTargetFov();
   // Bild abrufen
   await getTargetPic();
 
@@ -76,6 +76,7 @@ onMounted(async () => {
   y.value = framingStore.containerSize / 2 - framingStore.camHeight / 2;
 
   await nextTick();
+  await new Promise((resolve) => setTimeout(resolve, 500));
   isLoading.value = false;
 });
 
@@ -100,13 +101,13 @@ function rotateByRange() {
 }
 
 // Methode, um Kamera-FOV und das verschiebbare Rechteck zu berechnen
-function calcCameraFov() {
+function calcCameraFov(fov) {
   const sensorWidthPx = framingStore.framingInfo.CameraWidth;
   const sensorHeightPx = framingStore.framingInfo.CameraHeight;
   const pixelSizeM = framingStore.framingInfo.CameraPixelSize / 1_000_000;
   const focalLengthM = framingStore.framingInfo.FocalLength / 1000;
 
-  scaleDegPerPixel.value = framingStore.fov / framingStore.containerSize;
+  scaleDegPerPixel.value = fov / framingStore.containerSize;
 
   // Sensor-Größe
   const sensorWidthM = sensorWidthPx * pixelSizeM;
@@ -122,6 +123,22 @@ function calcCameraFov() {
 
   framingStore.camWidth = fovPxX;
   framingStore.camHeight = fovPxY;
+}
+
+function setMinTargetFov() {
+  let fov = framingStore.fov;
+  calcCameraFov(fov);
+  console.log('setMinTargetFov ', fov);
+  while (framingStore.camWidth > framingStore.containerSize) {
+    fov += 1;
+    calcCameraFov(fov);
+    console.log('fov hochgesetzt:', framingStore.fov);
+    if (fov > 50) {
+      console.warn('Fov zu hoch, Abbruch!');
+      break;
+    }
+  }
+  framingStore.fov = fov; // Aktualisiere `framingStore.fov`
 }
 
 // Drag-Event von Moveable
@@ -149,7 +166,7 @@ async function getTargetPic() {
     const fov = framingStore.fov;
     const useCache = framingStore.useNinaCache;
 
-    calcCameraFov();
+    calcCameraFov(framingStore.fov);
 
     if (targetPic.value) {
       URL.revokeObjectURL(targetPic.value);

@@ -42,7 +42,7 @@
             {{ $t('components.slewAndCenter.slew_and_center') }}
           </button>
         </div>
-        <div v-if="store.rotatorInfo.Connected && false" class="mt-2">
+        <div v-if="store.rotatorInfo.Connected && true" class="mt-2">
           <button @click="camerRotate" class="default-button-cyan">
             {{ $t('components.slewAndCenter.rotate') }}
           </button>
