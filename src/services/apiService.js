@@ -511,8 +511,8 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       await axios.get(`${BASE_URL}/framing/set-rotation`, {
-        params: { 
-          rotation : rotation,
+        params: {
+          rotation: rotation,
         },
       });
       const response = await axios.get(`${BASE_URL}/framing/slew`, {

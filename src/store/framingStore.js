@@ -1,7 +1,5 @@
-
 import { defineStore } from 'pinia';
 import apiService from '@/services/apiService';
-
 
 export const useFramingStore = defineStore('FramingStore', {
   state: () => ({
@@ -25,7 +23,7 @@ export const useFramingStore = defineStore('FramingStore', {
     isRotating: false,
   }),
   actions: {
-    async slew(RAangle, DECangle) { 
+    async slew(RAangle, DECangle) {
       console.log('SlewAndCenter', RAangle, DECangle);
       this.isSlewing = true;
       try {
@@ -34,9 +32,9 @@ export const useFramingStore = defineStore('FramingStore', {
         console.error('SlewAndCenter Error', error);
       } finally {
         this.isSlewing = false;
-      }      
+      }
     },
-    async slewAndCenter(RAangle, DECangle) { 
+    async slewAndCenter(RAangle, DECangle) {
       console.log('SlewAndCenter', RAangle, DECangle);
       this.isSlewingAndCentering = true;
       try {
@@ -45,9 +43,9 @@ export const useFramingStore = defineStore('FramingStore', {
         console.error('SlewAndCenter Error', error);
       } finally {
         this.isSlewingAndCentering = false;
-      }      
+      }
     },
-    async cameraRotate() { 
+    async cameraRotate() {
       console.log('cameraRotate', this.rotationAngle);
       this.isRotating = true;
       try {
@@ -56,8 +54,7 @@ export const useFramingStore = defineStore('FramingStore', {
         console.error('cameraRotate Error', error);
       } finally {
         this.isRotating = false;
-      }      
-    }
-
+      }
+    },
   },
 });

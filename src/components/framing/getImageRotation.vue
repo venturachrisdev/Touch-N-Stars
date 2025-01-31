@@ -69,7 +69,6 @@ import { useCameraStore } from '@/store/cameraStore';
 import { apiStore } from '@/store/store';
 import { ref } from 'vue';
 
-
 const cameraStore = useCameraStore();
 const store = apiStore();
 const gain = ref(store.profileInfo.PlateSolveSettings.Gain);

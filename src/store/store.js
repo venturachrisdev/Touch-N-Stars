@@ -385,8 +385,7 @@ export const apiStore = defineStore('store', {
                 apiName: apiMapping[key],
               });
             }
-          }
-          else if (device.Id && device.Id !== 'No_Device') {
+          } else if (device.Id && device.Id !== 'No_Device') {
             this.existingEquipmentList.push({
               type: key,
               id: device.Id,

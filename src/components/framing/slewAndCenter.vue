@@ -4,7 +4,7 @@
       <h5 class="text-xl font-bold text-white mb-4">{{ $t('components.slewAndCenter.title') }}</h5>
 
       <div
-        v-if="store.profileInfo.FramingAssistantSettings.LastSelectedImageSource !== 'SKYATLAS' "
+        v-if="store.profileInfo.FramingAssistantSettings.LastSelectedImageSource !== 'SKYATLAS'"
         class="flex justify-center items-center pb-2"
       >
         <div class="w-full p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
@@ -35,18 +35,26 @@
           />
         </div>
         <div class="mt-4 flex gap-2">
-          <button 
-            @click="slew" 
-            :disabled="framingStore.isSlewing || framingStore.isSlewingAndCentering || framingStore.isRotating" 
+          <button
+            @click="slew"
+            :disabled="
+              framingStore.isSlewing ||
+              framingStore.isSlewingAndCentering ||
+              framingStore.isRotating
+            "
             class="default-button-cyan flex items-center justify-center disabled:opacity-50"
           >
             <span v-if="framingStore.isSlewing" class="loader mr-2"></span>
             {{ $t('components.slewAndCenter.slew') }}
           </button>
 
-          <button 
-            @click="slewAndCenter" 
-            :disabled="framingStore.isSlewing || framingStore.isSlewingAndCentering || framingStore.isRotating" 
+          <button
+            @click="slewAndCenter"
+            :disabled="
+              framingStore.isSlewing ||
+              framingStore.isSlewingAndCentering ||
+              framingStore.isRotating
+            "
             class="default-button-cyan flex items-center justify-center disabled:opacity-50"
           >
             <span v-if="framingStore.isSlewingAndCentering" class="loader mr-2"></span>
@@ -54,9 +62,13 @@
           </button>
         </div>
         <div v-if="store.rotatorInfo.Connected && true" class="mt-2">
-          <button 
-            @click="cameraRotate" 
-            :disabled="framingStore.isSlewing || framingStore.isSlewingAndCentering || framingStore.isRotating" 
+          <button
+            @click="cameraRotate"
+            :disabled="
+              framingStore.isSlewing ||
+              framingStore.isSlewingAndCentering ||
+              framingStore.isRotating
+            "
             class="default-button-cyan flex items-center justify-center disabled:opacity-50"
           >
             <span v-if="framingStore.isRotating" class="loader mr-2"></span>
@@ -92,8 +104,6 @@ const localDECangleString = ref(props.DECangleString);
 const RAangle = ref(null);
 const DECangle = ref(null);
 const Info = ref(null);
-const isSlewing = ref(false);
-const isRotating = ref(false);
 
 watch(
   () => framingStore.RAangleString,
@@ -251,7 +261,11 @@ onBeforeUnmount(() => {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

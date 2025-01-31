@@ -260,6 +260,6 @@ function rad2deg(rad) {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px dashed red; 
+  border: 1px dashed red;
 }
 </style>
