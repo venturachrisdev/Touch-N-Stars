@@ -25,7 +25,7 @@
         :style="{
           width: `${framingStore.camWidth}px`,
           height: `${framingStore.camHeight}px`,
-          transform: `translate(${x}px, ${y}px) rotate(${framingStore.rotationAngle}deg)`,
+          transform: `translate(${x}px, ${y}px) rotate(${-framingStore.rotationAngle}deg)`,
           zIndex: 2,
         }"
       ></div>
@@ -260,5 +260,6 @@ function rad2deg(rad) {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px dashed red; 
 }
 </style>

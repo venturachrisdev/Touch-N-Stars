@@ -491,15 +491,18 @@ const apiService = {
       const { BASE_URL } = getUrls();
       await axios.get(`${BASE_URL}/framing/set-coordinates`, {
         params: { RAangle, DECangle },
+        waitForResult: true,
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 4000));
-
-      const params = Center ? { slew_option: 'Center' } : {};
-      const response = await axios.get(`${BASE_URL}/framing/slew`, { params });
+      const response = await axios.get(`${BASE_URL}/framing/slew`, {
+        params: {
+          slew_option: Center ? 'Center' : '',
+          waitForResult: true,
+        },
+      });
       return response.data;
     } catch (error) {
-      console.error('Error controlling mount:', error);
+      console.error('Error controlling slewAndCenterAndRotate:', error);
       throw error;
     }
   },
@@ -508,11 +511,14 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       await axios.get(`${BASE_URL}/framing/set-rotation`, {
-        params: { rotation },
+        params: { 
+          rotation : rotation,
+        },
       });
       const response = await axios.get(`${BASE_URL}/framing/slew`, {
         params: {
           slew_option: 'Rotate',
+          waitForResult: true,
         },
       });
       return response.data;
