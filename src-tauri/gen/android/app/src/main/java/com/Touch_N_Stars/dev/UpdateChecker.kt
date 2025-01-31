@@ -45,6 +45,19 @@ class UpdateChecker(private val context: Context, private val currentVersion: St
         Log.i("UpdateChecker", "Starting update check...")
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                // First check if endpoint is reachable
+                val headRequest = Request.Builder()
+                    .url("https://api.github.com/repos/Touch-N-Stars/Touch-N-Stars/tags")
+                    .head()
+                    .build()
+
+                val headResponse = client.newCall(headRequest).execute()
+                if (!headResponse.isSuccessful) {
+                    Log.i("UpdateChecker", "API endpoint unreachable, skipping update check")
+                    return@launch
+                }
+
+                // Proceed with normal check
                 val request = Request.Builder()
                     .url("https://api.github.com/repos/Touch-N-Stars/Touch-N-Stars/tags")
                     .build()
@@ -55,22 +68,17 @@ class UpdateChecker(private val context: Context, private val currentVersion: St
                 val latestTag = tags.firstOrNull { it.name.startsWith("v") } ?: return@launch
                 val latestVersion = latestTag.name.removePrefix("v")
 
-                // Check if we've already installed this version
-                val lastInstalledVersion = prefs.getString("last_installed_version", "") ?: ""
-                if (lastInstalledVersion == latestVersion) {
+                if (prefs.getString("last_installed_version", "") == latestVersion) {
                     Log.i("UpdateChecker", "Already installed latest version: $latestVersion")
                     return@launch
                 }
 
                 if (isNewerVersion(latestVersion, currentVersion)) {
-                    Log.i("UpdateChecker", "New version available: $latestVersion (current: $currentVersion)")
+                    Log.i("UpdateChecker", "New version available: $latestVersion")
                     showUpdateDialog(latestVersion)
-                } else {
-                    Log.i("UpdateChecker", "No update needed. Current: $currentVersion, Latest: $latestVersion")
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
-                showErrorDialog("Failed to check for updates: ${e.message}")
+                Log.i("UpdateChecker", "Network unavailable, skipping update check")
             }
         }
     }
