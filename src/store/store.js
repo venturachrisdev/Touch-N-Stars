@@ -42,7 +42,7 @@ export const apiStore = defineStore('store', {
     coordinates: null,
     currentLanguage: 'en',
     showSettings: false,
-    minimumApiVersion: '2.1.4.0',
+    minimumApiVersion: '2.1.7.0',
   }),
 
   actions: {
