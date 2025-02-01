@@ -94,7 +94,7 @@
             </svg>
             <span>{{ $t('components.weatherModal.cloudCover') }}</span>
           </h3>
-          <p class="text-gray-300 pl-7">{{ weatherInfo.CloudCover }}%</p>
+          <p class="text-gray-300 pl-7">{{ cloudCover }}</p>
         </div>
 
         <!-- Wind -->
@@ -117,7 +117,8 @@
             <span>{{ $t('components.weatherModal.wind') }}</span>
           </h3>
           <p class="text-gray-300 pl-7">
-            {{ windSpeed }} {{ windSpeedUnit }} ({{ windDirection }})
+            {{ windSpeed }} {{ windSpeedUnit }}
+            {{ windDirection !== 'N/A' ? `(${windDirection})` : '' }}
           </p>
         </div>
 
@@ -140,7 +141,7 @@
             </svg>
             <span>{{ $t('components.weatherModal.humidity') }}</span>
           </h3>
-          <p class="text-gray-300 pl-7">{{ weatherInfo.Humidity }}%</p>
+          <p class="text-gray-300 pl-7">{{ humidity }}</p>
         </div>
 
         <!-- Pressure -->
@@ -162,7 +163,7 @@
             </svg>
             <span>{{ $t('components.weatherModal.pressure') }}</span>
           </h3>
-          <p class="text-gray-300 pl-7">{{ weatherInfo.Pressure }} hPa</p>
+          <p class="text-gray-300 pl-7">{{ pressure }}</p>
         </div>
       </div>
     </div>
@@ -183,22 +184,31 @@ const { weatherInfo } = defineProps({
 const settingsStore = useSettingsStore();
 
 const temperature = computed(() => {
+  if (isNaN(weatherInfo.Temperature)) {
+    return 'N/A';
+  }
   return settingsStore.useImperialUnits
     ? ((weatherInfo.Temperature * 9) / 5 + 32).toFixed(1)
     : weatherInfo.Temperature.toFixed(1);
 });
 
 const temperatureUnit = computed(() => {
-  return settingsStore.useImperialUnits ? '°F' : '°C';
+  return isNaN(weatherInfo.Temperature) ? '' : settingsStore.useImperialUnits ? '°F' : '°C';
 });
 
 const windSpeed = computed(() => {
+  if (isNaN(weatherInfo.WindSpeed)) {
+    return 'N/A';
+  }
   return settingsStore.useImperialUnits
     ? (weatherInfo.WindSpeed * 2.23694).toFixed(1)
     : weatherInfo.WindSpeed.toFixed(1);
 });
 
 const windDirection = computed(() => {
+  if (isNaN(weatherInfo.WindDirection)) {
+    return 'N/A';
+  }
   const directions = [
     'N',
     'NNE',
@@ -222,7 +232,19 @@ const windDirection = computed(() => {
 });
 
 const windSpeedUnit = computed(() => {
-  return settingsStore.useImperialUnits ? 'mph' : 'km/h';
+  return isNaN(weatherInfo.WindSpeed) ? '' : settingsStore.useImperialUnits ? 'mph' : 'km/h';
+});
+
+const cloudCover = computed(() => {
+  return isNaN(weatherInfo.CloudCover) ? 'N/A' : `${weatherInfo.CloudCover}%`;
+});
+
+const humidity = computed(() => {
+  return isNaN(weatherInfo.Humidity) ? 'N/A' : `${weatherInfo.Humidity}%`;
+});
+
+const pressure = computed(() => {
+  return isNaN(weatherInfo.Pressure) ? 'N/A' : `${weatherInfo.Pressure} hPa`;
 });
 
 function toggleUnits() {
