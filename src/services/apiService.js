@@ -491,7 +491,6 @@ const apiService = {
       const { BASE_URL } = getUrls();
       await axios.get(`${BASE_URL}/framing/set-coordinates`, {
         params: { RAangle, DECangle },
-        waitForResult: true,
       });
 
       const response = await axios.get(`${BASE_URL}/framing/slew`, {

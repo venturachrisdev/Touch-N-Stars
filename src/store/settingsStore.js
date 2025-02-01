@@ -29,6 +29,9 @@ export const useSettingsStore = defineStore('settings', {
       completed: localStorage.getItem('tutorialCompleted') === 'true',
       steps: tutorialContent.steps,
     },
+    framing: {
+      useNinaCache: true,
+    }
   }),
   actions: {
     setCoordinates(coords) {
