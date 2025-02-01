@@ -6,11 +6,9 @@
   />
 </template>
 <script setup>
-import { useFramingStore } from '@/store/framingStore';
 import { useSettingsStore } from '@/store/settingsStore';
 import toggleButton from '@/components/helpers/toggleButton.vue';
 
-const framingStore = useFramingStore();
 const settingsStore = useSettingsStore();
 
 function toggleNinaCache() {
