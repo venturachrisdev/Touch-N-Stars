@@ -11,10 +11,10 @@ import { useSettingsStore } from '@/store/settingsStore';
 import toggleButton from '@/components/helpers/toggleButton.vue';
 
 const framingStore = useFramingStore();
-const settingsStore = useSettingsStore(); 
+const settingsStore = useSettingsStore();
 
 function toggleNinaCache() {
-  if (framingStore.useNinaCache) {
+  if (settingsStore.framing.useNinaCache) {
     settingsStore.framing.useNinaCache = false;
     console.log('Hipps nutzen');
   } else {

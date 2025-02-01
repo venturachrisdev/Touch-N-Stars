@@ -31,7 +31,7 @@ export const useSettingsStore = defineStore('settings', {
     },
     framing: {
       useNinaCache: true,
-    }
+    },
   }),
   actions: {
     setCoordinates(coords) {

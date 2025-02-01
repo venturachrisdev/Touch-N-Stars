@@ -1,12 +1,7 @@
 <template>
   <div class="container flex items-center justify-center">
     <div class="container">
-      <img
-        class="rounded-md"
-        v-if="targetPic"
-        :src="targetPic"
-        alt="Bild konnte nicht geladen werden"
-      />
+      <img class="rounded-md" v-if="targetPic" :src="targetPic" />
     </div>
   </div>
 </template>

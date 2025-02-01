@@ -45,6 +45,7 @@
         v-if="framingStore.selectedItem"
         class="grid grid-cols-2 mt-4 p-4 border border-gray-700 rounded shadow"
       >
+      <div flex flex-col justify-between>
         <div class="text-xs">
           <p v-if="framingStore.selectedItem['Common names']">
             <strong>Name:</strong> {{ framingStore.selectedItem['Common names'] }}
@@ -54,6 +55,7 @@
             <strong>M:</strong> M{{ framingStore.selectedItem.M }}
           </p>
         </div>
+      </div>
         <div>
           <TargetPic class="border border-gray-500 rounded-md" />
         </div>
