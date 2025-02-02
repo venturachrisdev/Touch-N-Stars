@@ -221,6 +221,8 @@
         "unpark": "Ausparken",
         "home": "Home",
         "trackingMode": "Nachführungsmodus",
+        "manuellControl": "Manuelle Bedienung",
+        "slewRate": "Bewegungsrate °/s",
         "siderial": "Siderisch",
         "lunar": "Lunar",
         "solar": "Solar",

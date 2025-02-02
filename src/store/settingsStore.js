@@ -32,6 +32,11 @@ export const useSettingsStore = defineStore('settings', {
     framing: {
       useNinaCache: true,
     },
+    mount: {
+      slewRate: 2,
+      reversePrimaryAxis: false,
+      reverseSecondaryAxis: false,
+    },
   }),
   actions: {
     setCoordinates(coords) {

@@ -143,14 +143,14 @@ const apiService = {
     }
   },
 
-  async moveAxis(direction, rate=8) {
+  async moveAxis(direction, rate = 8) {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/mount/move-axis`, {
-        params: { 
+        params: {
           direction,
-          rate
-         },
+          rate,
+        },
       });
       return response.data;
     } catch (error) {
@@ -159,13 +159,11 @@ const apiService = {
     }
   },
 
-  async moveAxisStop(direction) {
+  async moveAxisStop() {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/mount/move-axis/stop`, {
-        params: { 
-          direction,
-         },
+        params: {},
       });
       return response.data;
     } catch (error) {
@@ -523,7 +521,7 @@ const apiService = {
       await axios.get(`${BASE_URL}/framing/set-coordinates`, {
         params: { RAangle, DECangle },
       });
-      await new Promise(resolve => setTimeout(resolve, 3000)); // damit NINA genug Zeit hat die Koordinaten zu setzen
+      await new Promise((resolve) => setTimeout(resolve, 3000)); // damit NINA genug Zeit hat die Koordinaten zu setzen
       const response = await axios.get(`${BASE_URL}/framing/slew`, {
         params: {
           slew_option: Center ? 'Center' : '',
@@ -545,7 +543,7 @@ const apiService = {
           rotation: rotation,
         },
       });
-      await new Promise(resolve => setTimeout(resolve, 3000)); // damit NINA genug Zeit hat die Koordinaten zu setzen
+      await new Promise((resolve) => setTimeout(resolve, 3000)); // damit NINA genug Zeit hat die Koordinaten zu setzen
       const response = await axios.get(`${BASE_URL}/framing/slew`, {
         params: {
           slew_option: 'Rotate',
