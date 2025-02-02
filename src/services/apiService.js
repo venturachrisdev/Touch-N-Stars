@@ -138,7 +138,38 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error('Error switch profil:', error);
+      console.error('Error setTrackingMode:', error);
+      throw error;
+    }
+  },
+
+  async moveAxis(direction, rate=8) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/equipment/mount/move-axis`, {
+        params: { 
+          direction,
+          rate
+         },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error moveAxis:', error);
+      throw error;
+    }
+  },
+
+  async moveAxisStop(direction) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/equipment/mount/move-axis/stop`, {
+        params: { 
+          direction,
+         },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error moveAxisStop:', error);
       throw error;
     }
   },
