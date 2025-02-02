@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-import { apiStore } from '@/store/store';
+import apiService from '@/services/apiService';
 import { useMountStore } from '@/store/mountStore';
 import { useSettingsStore } from '@/store/settingsStore';
 import {
