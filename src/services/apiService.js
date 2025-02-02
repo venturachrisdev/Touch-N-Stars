@@ -492,7 +492,7 @@ const apiService = {
       await axios.get(`${BASE_URL}/framing/set-coordinates`, {
         params: { RAangle, DECangle },
       });
-
+      await new Promise(resolve => setTimeout(resolve, 3000)); // damit NINA genug Zeit hat die Koordinaten zu setzen
       const response = await axios.get(`${BASE_URL}/framing/slew`, {
         params: {
           slew_option: Center ? 'Center' : '',
@@ -514,6 +514,7 @@ const apiService = {
           rotation: rotation,
         },
       });
+      await new Promise(resolve => setTimeout(resolve, 3000)); // damit NINA genug Zeit hat die Koordinaten zu setzen
       const response = await axios.get(`${BASE_URL}/framing/slew`, {
         params: {
           slew_option: 'Rotate',
