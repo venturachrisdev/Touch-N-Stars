@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Framingassistant
 - Switchpage
 - portuguese support
+- Manuell mount controll
   
 ### Changed
 - Filter wheel cannot be connected if it is manual
