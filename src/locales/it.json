@@ -16,8 +16,9 @@
   },
   "app": {
     "title": "Touch'N'Stars",
-    "unreachable": "NINA-API non raggiungibile o versione troppo vecchia",
-    "connecting": "Tentativo di stabilire connessione"
+    "unreachable": "NINA-API non raggiungibile",
+    "connecting": "Tentativo di stabilire connessione",
+    "api_version_incompatible": "Versione avanzata-API corrente incompatibile: {current} richiesta: {required}"
   },
   "setup": {
     "welcome": "Benvenuto in Touch'N'Stars",
@@ -64,7 +65,18 @@
       "search": {
         "title": "Cerca",
         "placeholder": "Inserisci un termine di ricerca..."
-      }
+      },
+      "fovSettings": {
+        "fov": "Campo visivo",
+        "rotationAngle": "Rotazione della fotocamera"
+      },
+      "getImageRotation": {
+        "SolveError": "Errore di risoluzione dell'immagine",
+        "SolveRun": "Piastre",
+        "startCapture": "Determina la rotazione dalla fotocamera"
+      },
+      "moveRotator": "Ruota la fotocamera",
+      "openFraminingModal": "Aperto nell'inquadratura assistente"
     },
     "connectEquipment": {
       "camera": {
@@ -148,10 +160,6 @@
       "vnc": "VNC"
     },
     "language": {
-      "en": "Inglese",
-      "de": "Tedesco",
-      "fr": "Francese",
-      "it": "Italiano",
       "select": "Seleziona lingua"
     },
     "equipment": {
@@ -355,7 +363,8 @@
         "invalidFormat": "Formato non valido. Previsto: ±DD:MM:SS.s",
         "apiResponseError": "Errore risposta API:",
         "mountInfoError": "Errore recupero informazioni montatura:"
-      }
+      },
+      "rotate": "Ruotare"
     },
     "filterwheel": {
       "filter": "Filtro:",
