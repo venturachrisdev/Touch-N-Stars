@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Framingassistant
 - Switchpage
 - portuguese support
+- Manuell mount controll
   
 ### Changed
 - Filter wheel cannot be connected if it is manual
@@ -17,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Camera and last sequence image is now in an Modal for zooming
 - Adaptations to API version 2.1.7.0
 - update cz, fr, it, de, en, cn
+- Adaptations to the API V2.1.0.7
   
 ### Fixed
 - Camera - timeout
