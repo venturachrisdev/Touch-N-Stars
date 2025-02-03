@@ -14,7 +14,7 @@
     <!-- Inhalt der Modal -->
     <div v-else class="relative w-full h-full bg-gray-900 z-60 flex items-center justify-center">
       <button
-        class="absolute top-4 right-4 text-white hover:text-gray-300 text-2xl font-extrabold z-70"
+        class="absolute rounded-full h-7 w-7 shadow-lg shadow-black flex justify-center items-center bg-gray-800 top-4 right-4 text-white hover:text-gray-300 text-2xl font-extrabold z-70"
         @click="closeModal"
         aria-label="Schließen"
       >
@@ -23,7 +23,7 @@
 
       <!-- Zoom Overlay -->
       <div
-        class="absolute top-4 left-4 bg-gray-800 text-white text-sm px-3 py-1 rounded-lg z-[100] pointer-events-none"
+        class="absolute top-4 left-4 shadow-lg shadow-black bg-gray-800 text-white text-sm px-3 py-1 rounded-lg z-[100] pointer-events-none"
       >
         Zoom: {{ zoomLevel.toFixed(2) }}x
       </div>
