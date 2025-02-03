@@ -69,7 +69,7 @@ export const apiStore = defineStore('store', {
 
         if (this.isBackendReachable) {
           this.currentApiVersion = versionResponse.Response;
-          this.isVersionNewerOrEqual = this.isVersionNewerOrEqual(
+          this.isVersionNewerOrEqual = this.checkVersionNewerOrEqual(
             this.currentApiVersion,
             this.minimumApiVersion
           );
@@ -441,7 +441,7 @@ export const apiStore = defineStore('store', {
       cStore.coordinates.latitude = this.profileInfo.AstrometrySettings.Latitude;
       cStore.coordinates.altitude = this.profileInfo.AstrometrySettings.Elevation;
     },
-    isVersionNewerOrEqual(currentVersion, minimumVersion) {
+    checkVersionNewerOrEqual(currentVersion, minimumVersion) {
       const parseVersion = (version) => version.split('.').map(Number);
 
       const currentParts = parseVersion(currentVersion);
