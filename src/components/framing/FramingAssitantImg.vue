@@ -129,7 +129,7 @@ function setMinTargetFov() {
   let fov = framingStore.fov;
   calcCameraFov(fov);
   console.log('setMinTargetFov ', fov);
-  while ((framingStore.camWidth + 200) > framingStore.containerSize ) {
+  while (framingStore.camWidth + 200 > framingStore.containerSize) {
     fov += 1;
     calcCameraFov(fov);
     console.log('fov hochgesetzt:', framingStore.fov);
