@@ -16,8 +16,9 @@
   },
   "app": {
     "title": "Touch'N'Stars",
-    "unreachable": "NINA-API je momentálně nedostupné nebo používáte jeho zastaralou verzi",
-    "connecting": "Pokus o připojení"
+    "unreachable": "NINA-API je nedostupné",
+    "connecting": "Pokus o připojení",
+    "api_version_incompatible": "Verze pokročilého rozhraní API nekompatibilní aktuální: { current } povinné: { required }"
   },
   "setup": {
     "welcome": "Vítá Vás Touch'N'Stars",
@@ -64,7 +65,18 @@
       "search": {
         "title": "Hledat",
         "placeholder": "Zadejte hledaný výraz..."
-      }
+      },
+      "fovSettings": {
+        "rotationAngle": "Camera rotation",
+        "fov": "Field of View"
+      },
+      "getImageRotation": {
+        "SolveError": "Error solving image",
+        "SolveRun": "Platesolve",
+        "startCapture": "Determine rotation from camera"
+      },
+      "moveRotator": "Rotate camera",
+      "openFraminingModal": "Open in framing-assistant"
     },
     "connectEquipment": {
       "camera": {
@@ -148,11 +160,6 @@
       "vnc": "VNC"
     },
     "language": {
-      "en": "Angličtina",
-      "de": "Němčina",
-      "fr": "Francouština",
-      "it": "Italština",
-      "cz": "Čeština",
       "select": "Výběr jazyka"
     },
     "equipment": {
@@ -356,7 +363,8 @@
         "invalidFormat": "Nesprávný formát. Očekává se: ±DD:MM:SS.s",
         "apiResponseError": "Chyba v odpovědi API:",
         "mountInfoError": "Chyba při získávání informací o montáži:"
-      }
+      },
+      "rotate": "Rotate"
     },
     "filterwheel": {
       "filter": "Filtr:",

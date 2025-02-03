@@ -16,8 +16,9 @@
   },
   "app": {
     "title": "Touch'N'Stars",
-    "unreachable": "NINA-API n'est pas accessible ou la version est trop ancienne",
-    "connecting": "Tentative d'établissement de la connexion"
+    "unreachable": "NINA-API n'est pas accessible",
+    "connecting": "Tentative d'établissement de la connexion",
+    "api_version_incompatible": "Version avancée-API Courant incompatible: {current} requis: {required}"
   },
   "setup": {
     "welcome": "Bienvenue dans Touch'N'Stars",
@@ -64,7 +65,18 @@
       "search": {
         "title": "Chercher",
         "placeholder": "Entrer un élément de recherche..."
-      }
+      },
+      "fovSettings": {
+        "fov": "Champ de vision",
+        "rotationAngle": "Rotation de la caméra"
+      },
+      "getImageRotation": {
+        "SolveError": "Image de résolution d'erreur",
+        "startCapture": "Déterminer la rotation de la caméra",
+        "SolveRun": "Plaques"
+      },
+      "moveRotator": "Caméra de rotation",
+      "openFraminingModal": "Ouvert dans un cadrage"
     },
     "connectEquipment": {
       "camera": {
@@ -148,9 +160,6 @@
       "vnc": "VNC"
     },
     "language": {
-      "en": "English",
-      "de": "German",
-      "fr": "Français",
       "select": "Choisir la langue"
     },
     "equipment": {
@@ -354,7 +363,8 @@
         "invalidFormat": "Format invalide. Attendu: ±DD:MM:SS.s",
         "apiResponseError": "Erreur dans la réponse de l'API:",
         "mountInfoError": "Erreur dans l'acquisition de l'information sur la monture:"
-      }
+      },
+      "rotate": "Tourner"
     },
     "filterwheel": {
       "filter": "Filtre:",

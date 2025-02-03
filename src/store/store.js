@@ -42,7 +42,9 @@ export const apiStore = defineStore('store', {
     coordinates: null,
     currentLanguage: 'en',
     showSettings: false,
-    minimumApiVersion: '2.1.4.0',
+    minimumApiVersion: '2.1.7.0',
+    currentApiVersion: null,
+    isVersionNewerOrEqual: false,
   }),
 
   actions: {
@@ -62,9 +64,23 @@ export const apiStore = defineStore('store', {
 
     async fetchAllInfos() {
       try {
-        this.isBackendReachable = await apiService.isBackendReachable();
-        if (!this.isVersionNewerOrEqual(this.isBackendReachable.Response, this.minimumApiVersion)) {
-          console.warn('Backend ist nicht erreichbar');
+        const versionResponse = await apiService.isBackendReachable();
+        this.isBackendReachable = !!versionResponse;
+
+        if (this.isBackendReachable) {
+          this.currentApiVersion = versionResponse.Response;
+          this.isVersionNewerOrEqual = this.isVersionNewerOrEqual(
+            this.currentApiVersion,
+            this.minimumApiVersion
+          );
+
+          if (!this.isVersionNewerOrEqual) {
+            console.warn('API version incompatible');
+            this.clearAllStates();
+            return;
+          }
+        } else {
+          console.warn('Backend is not reachable');
           this.clearAllStates();
           return;
         }
@@ -416,13 +432,20 @@ export const apiStore = defineStore('store', {
       const minimumParts = parseVersion(minimumVersion);
 
       for (let i = 0; i < minimumParts.length; i++) {
-        const current = currentParts[i] || 0; // Standardwert: 0, falls currentVersion kürzer ist
-        const minimum = minimumParts[i] || 0; // Standardwert: 0, falls minimumVersion kürzer ist
+        const current = currentParts[i] || 0;
+        const minimum = minimumParts[i] || 0;
 
-        if (current > minimum) return true; // Neuere Version
-        if (current < minimum) return false; // Ältere Version
+        if (current > minimum) {
+          this.isVersionNewerOrEqual = true;
+          return true;
+        }
+        if (current < minimum) {
+          this.isVersionNewerOrEqual = false;
+          return false;
+        }
       }
-      return true; // Alle Teile gleich oder currentVersion ist neuer
+      this.isVersionNewerOrEqual = true;
+      return true;
     },
   },
 });
