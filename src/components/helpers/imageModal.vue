@@ -82,7 +82,7 @@ const logZoomLevel = () => {
     const { width, height } = image.value.getBoundingClientRect();
     currentWidth.value = width;
     currentHeight.value = height;
-    
+
     const zoomX = width / originalWidth.value;
     const zoomY = height / originalHeight.value;
     zoomLevel.value = Math.max(zoomX, zoomY);
