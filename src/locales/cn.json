@@ -76,7 +76,8 @@
         "startCapture": "Determine rotation from camera"
       },
       "moveRotator": "Rotate camera",
-      "openFraminingModal": "Open in framing-assistant"
+      "openFraminingModal": "Open in framing-assistant",
+      "infoTargetImage": "If the image is only displayed in black, the “Offline Sky Map Cache“ must be set up in NINA or the “use NINA cache” option must be deactivated"
     },
     "connectEquipment": {
       "camera": {
@@ -228,7 +229,9 @@
           "unpark": "解除停靠赤道仪时出错",
           "home": "归位赤道仪时出错",
           "tracking": "设置跟踪模式时出错"
-        }
+        },
+        "manuellControl": "Manual control",
+        "slewRate": "Slew rate °/s"
       },
       "info": {
         "notConnected": "请连接赤道仪",

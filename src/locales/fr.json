@@ -76,7 +76,8 @@
         "SolveRun": "Plaques"
       },
       "moveRotator": "Caméra de rotation",
-      "openFraminingModal": "Ouvert dans un cadrage"
+      "openFraminingModal": "Ouvert dans un cadrage",
+      "infoTargetImage": "Si l'image n'est affichée qu'en noir, le «cache de carte du ciel hors ligne» doit être configuré dans Nina ou l'option «Utiliser Nina Cache» doit être désactivée"
     },
     "connectEquipment": {
       "camera": {
@@ -228,7 +229,9 @@
           "unpark": "Erreur en déparquant la monture",
           "home": "Erreur en amenant la monture en position Home",
           "tracking": "Erreur en modifiant le mode de suivi"
-        }
+        },
+        "manuellControl": "Contrôle manuel",
+        "slewRate": "Taux de dalles ° / s"
       },
       "info": {
         "notConnected": "Merci de connecter la mount",

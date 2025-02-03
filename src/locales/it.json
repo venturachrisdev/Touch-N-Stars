@@ -76,7 +76,8 @@
         "startCapture": "Determina la rotazione dalla fotocamera"
       },
       "moveRotator": "Ruota la fotocamera",
-      "openFraminingModal": "Aperto nell'inquadratura assistente"
+      "openFraminingModal": "Aperto nell'inquadratura assistente",
+      "infoTargetImage": "Se l'immagine viene visualizzata solo in nero, la \"cache della mappa del cielo offline\" deve essere impostata in Nina o l'opzione \"Usa cache Nina\" deve essere disattivata"
     },
     "connectEquipment": {
       "camera": {
@@ -228,7 +229,9 @@
           "unpark": "Errore sblocco montatura",
           "home": "Errore home montatura",
           "tracking": "Errore impostazione modalità tracking"
-        }
+        },
+        "manuellControl": "Controllo manuale",
+        "slewRate": "Trovatela di Slew °/s"
       },
       "info": {
         "notConnected": "Collega montatura",
