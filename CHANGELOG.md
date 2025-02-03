@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adaptations to API version 2.1.7.0
 - update cz, fr, it, de, en, cn
 - Sequence overview reworked
+- display of the zoom factor in the image modal 
   
 ### Fixed
 - Camera - timeout
