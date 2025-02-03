@@ -76,7 +76,8 @@
         "SolveRun": "Platesolve",
         "SolveError": "Fehler beim Platesolve"
       },
-      "moveRotator": "Camera rotieren"
+      "moveRotator": "Camera rotieren",
+      "infoTargetImage": "Wenn das Bild nur in Schwarz angezeigt wird, muss der 'Offline Sky Map Cache' in NINA eingerichtet oder die Option 'NINA cache' deaktiviert werden"
     },
     "connectEquipment": {
       "camera": {
@@ -218,6 +219,8 @@
         "unpark": "Ausparken",
         "home": "Home",
         "trackingMode": "Nachführungsmodus",
+        "manuellControl": "Manuelle Bedienung",
+        "slewRate": "Bewegungsrate °/s",
         "siderial": "Siderisch",
         "lunar": "Lunar",
         "solar": "Solar",

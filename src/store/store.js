@@ -385,6 +385,22 @@ export const apiStore = defineStore('store', {
                 apiName: apiMapping[key],
               });
             }
+          } else if (key === 'RotatorSettings') {
+            if (device.Id !== 'Manual Rotator' && device.Id !== 'No_Device') {
+              this.existingEquipmentList.push({
+                type: key,
+                id: device.Id,
+                apiName: apiMapping[key],
+              });
+            }
+          } else if (key === 'FilterWheelSettings') {
+            if (device.Id !== 'Manual Filter Wheel' && device.Id !== 'No_Device') {
+              this.existingEquipmentList.push({
+                type: key,
+                id: device.Id,
+                apiName: apiMapping[key],
+              });
+            }
           } else if (device.Id && device.Id !== 'No_Device') {
             this.existingEquipmentList.push({
               type: key,

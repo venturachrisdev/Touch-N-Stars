@@ -3,7 +3,7 @@
   <div class="flex flex-col space-y-2">
     <button
       class="btn-primary bg-gradient-to-br from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600 transition-all duration-200 shadow-lg hover:shadow-cyan-500/20"
-      @click="cameraStore.getCameraRotation(apiService, cameraStore.exposureTime, cameraStore.gain)"
+      @click="cameraStore.getCameraRotation(apiService, exposureTime, gain)"
       :disabled="cameraStore.loading"
     >
       <template v-if="cameraStore.loading">
@@ -66,6 +66,11 @@
 <script setup>
 import apiService from '@/services/apiService';
 import { useCameraStore } from '@/store/cameraStore';
+import { apiStore } from '@/store/store';
+import { ref } from 'vue';
 
 const cameraStore = useCameraStore();
+const store = apiStore();
+const gain = ref(store.profileInfo.PlateSolveSettings.Gain);
+const exposureTime = ref(store.profileInfo.PlateSolveSettings.ExposureTime);
 </script>

@@ -45,14 +45,16 @@
         v-if="framingStore.selectedItem"
         class="grid grid-cols-2 mt-4 p-4 border border-gray-700 rounded shadow"
       >
-        <div class="text-xs">
-          <p v-if="framingStore.selectedItem['Common names']">
-            <strong>Name:</strong> {{ framingStore.selectedItem['Common names'] }}
-          </p>
-          <p><strong>NGC:</strong> {{ framingStore.selectedItem.Name }}</p>
-          <p v-if="framingStore.selectedItem.M">
-            <strong>M:</strong> M{{ framingStore.selectedItem.M }}
-          </p>
+        <div flex flex-col justify-between>
+          <div class="text-xs">
+            <p v-if="framingStore.selectedItem['Common names']">
+              <strong>Name:</strong> {{ framingStore.selectedItem['Common names'] }}
+            </p>
+            <p>{{ framingStore.selectedItem.Name }}</p>
+            <p v-if="framingStore.selectedItem.M">
+              {{ framingStore.selectedItem.M }}
+            </p>
+          </div>
         </div>
         <div>
           <TargetPic class="border border-gray-500 rounded-md" />
@@ -60,7 +62,7 @@
       </div>
       <div v-if="true" class="mb-2 mt-1">
         <button
-          v-if="framingStore.selectedItem && false"
+          v-if="framingStore.selectedItem && true"
           @click="framingStore.showFramingModal = true"
           class="default-button-cyan"
         >
@@ -81,6 +83,7 @@
     >
       <div
         class="bg-gray-900 rounded-lg p-4 overflow-y-auto max-h-[95vh] border border-gray-700 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800/50"
+        :style="{ minWidth: `${framingStore.containerSize}px` }"
       >
         <FramingAssistangModal />
         <button
@@ -206,6 +209,11 @@ onMounted(() => {
   framingStore.height = 200;
   framingStore.width = 200;
   framingStore.fov = 2;
+
+  // Container-Größe für Framinngassitant berechnen
+  const smallerDimension = Math.min(window.innerWidth, window.innerHeight - 200);
+  const roundedDimension = Math.floor(smallerDimension / 100) * 100;
+  framingStore.containerSize = roundedDimension;
 });
 </script>
 
