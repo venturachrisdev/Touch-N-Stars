@@ -5,12 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.0.8 - Unreleased]
 ### Added
 - Framingassistant
 - Switchpage
 - portuguese support
-- Manuell mount controll
+- Manuell mount control
   
 ### Changed
 - Filter wheel cannot be connected if it is manual
@@ -18,11 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Camera and last sequence image is now in an Modal for zooming
 - Adaptations to API version 2.1.7.0
 - update cz, fr, it, de, en, cn
-- Adaptations to the API V2.1.0.7
+- Sequence overview reworked
   
 ### Fixed
 - Camera - timeout
 - Sequence image does not always load
+- Weather modal
+- Android Update
+- Subnav
 
 ## [1.0.0.7] - 2025-01-27
 ### Added
