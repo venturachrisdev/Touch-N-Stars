@@ -250,7 +250,8 @@
       "stop": "Parar",
       "rms_error": "Erro RMS",
       "title": "Guiagem",
-      "running": "CORRENDO"
+      "running": "CORRENDO",
+      "notes": "* Este gráfico exibe dados orientadores de acordo com as configurações da N.I.N.A."
     },
     "focuser": {
       "title": "Focalizador",

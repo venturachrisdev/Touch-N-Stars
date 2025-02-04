@@ -250,7 +250,8 @@
       "stop": "停止",
       "rms_error": "RMS 错误",
       "title": "导星",
-      "running": "RUNNING"
+      "running": "RUNNING",
+      "notes": "* This graph displays guiding data according to N.I.N.A.'s settings."
     },
     "focuser": {
       "title": "调焦器",

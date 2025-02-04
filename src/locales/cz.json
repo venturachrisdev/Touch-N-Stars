@@ -250,7 +250,8 @@
       "stop": "Zastavit",
       "rms_error": "RMS Chyba",
       "title": "Navádění",
-      "running": "RUNNING"
+      "running": "RUNNING",
+      "notes": "* This graph displays guiding data according to N.I.N.A.'s settings."
     },
     "focuser": {
       "title": "Ostření",

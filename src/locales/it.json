@@ -250,7 +250,8 @@
       "stop": "Ferma",
       "rms_error": "Errore RMS",
       "title": "Guida",
-      "running": "CORSA"
+      "running": "CORSA",
+      "notes": "* Questo grafico visualizza i dati guida in base alle impostazioni di N.I.N.A."
     },
     "focuser": {
       "title": "Messa a Fuoco",
