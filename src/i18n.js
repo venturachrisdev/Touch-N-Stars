@@ -6,6 +6,7 @@ import it from './locales/it.json';
 import cz from './locales/cz.json';
 import cn from './locales/cn.json';
 import pt from './locales/pt.json';
+import klingon from './locales/klingon.json';
 
 // Available languages with their display names
 const availableLanguages = [
@@ -16,6 +17,7 @@ const availableLanguages = [
   { code: 'cz', name: 'čeština' },
   { code: 'cn', name: '中文' },
   { code: 'pt', name: 'Português' },
+  { code: 'klingon', name: 'Klingon' },
 ];
 
 const messages = {
@@ -26,6 +28,7 @@ const messages = {
   cz,
   cn,
   pt,
+  klingon,
 };
 
 // Create i18n instance
