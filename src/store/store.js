@@ -62,6 +62,28 @@ export const apiStore = defineStore('store', {
       return !!this.collapsedStates[containerName];
     },
 
+    async getGuiderInfo() {
+      try {
+        const response = await apiService.guiderAction('info');
+        if (response.Success) {
+          this.guiderInfo = response.Response;
+        }
+      } catch (error) {
+        console.error('Error fetching guider info:', error);
+      }
+    },
+
+    async getGuiderChartInfo() {
+      try {
+        const response = await apiService.guiderAction('graph');
+        if (response.Success) {
+          this.guiderChartInfo = response.Response;
+        }
+      } catch (error) {
+        console.error('Error fetching guider chart info:', error);
+      }
+    },
+
     async fetchAllInfos() {
       try {
         const versionResponse = await apiService.isBackendReachable();
