@@ -249,7 +249,8 @@
       "startWithCal": "Spustit s kalibarcí",
       "stop": "Zastavit",
       "rms_error": "RMS Chyba",
-      "title": "Navádění"
+      "title": "Navádění",
+      "running": "RUNNING"
     },
     "focuser": {
       "title": "Ostření",

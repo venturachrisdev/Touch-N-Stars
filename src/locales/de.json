@@ -249,7 +249,8 @@
       "startWithCal": "Starten mit Kalibrierung",
       "stop": "Stopp",
       "rms_error": "RMS-Fehler",
-      "title": "Guider"
+      "title": "Guider",
+      "running": "WIRD AUSGEFÜHRT"
     },
     "focuser": {
       "title": "Fokussierer",

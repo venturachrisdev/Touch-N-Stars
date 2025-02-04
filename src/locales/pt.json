@@ -249,7 +249,8 @@
       "startWithCal": "Iniciando com calibração",
       "stop": "Parar",
       "rms_error": "Erro RMS",
-      "title": "Guiagem"
+      "title": "Guiagem",
+      "running": "CORRENDO"
     },
     "focuser": {
       "title": "Focalizador",

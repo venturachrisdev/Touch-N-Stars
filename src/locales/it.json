@@ -249,7 +249,8 @@
       "startWithCal": "Avvia con calibrazione",
       "stop": "Ferma",
       "rms_error": "Errore RMS",
-      "title": "Guida"
+      "title": "Guida",
+      "running": "CORSA"
     },
     "focuser": {
       "title": "Messa a Fuoco",

@@ -249,7 +249,8 @@
       "startWithCal": "开始校准",
       "stop": "停止",
       "rms_error": "RMS 错误",
-      "title": "导星"
+      "title": "导星",
+      "running": "RUNNING"
     },
     "focuser": {
       "title": "调焦器",

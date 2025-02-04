@@ -18,7 +18,7 @@ const initGraph = () => {
   chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: Array(store.guiderChartInfo.HistorySize).fill(''),
+      labels: Array(store.RADistanceRaw.length).fill(''),
       datasets: [
         {
           label: 'RA "',
@@ -26,7 +26,7 @@ const initGraph = () => {
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           tension: 0.5,
           pointRadius: 0,
-          data: [0],
+          data: [...store.RADistanceRaw],
         },
         {
           label: 'Dec "',
@@ -34,7 +34,7 @@ const initGraph = () => {
           backgroundColor: 'rgba(153, 102, 255, 0.2)',
           tension: 0.5,
           pointRadius: 0,
-          data: [0],
+          data: [...store.DECDistanceRaw],
         },
       ],
     },

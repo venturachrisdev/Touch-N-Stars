@@ -249,7 +249,8 @@
       "startWithCal": "Starting with calibration",
       "stop": "Stop",
       "rms_error": "RMS Error",
-      "title": "Guider"
+      "title": "Guider",
+      "running": "RUNNING"
     },
     "focuser": {
       "title": "Focuser",
