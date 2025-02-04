@@ -1,6 +1,11 @@
 <template>
   <div>
-    <canvas ref="rmsGraph"></canvas>
+    <div>
+      <canvas ref="rmsGraph"></canvas>
+    </div>
+    <div class="note">
+      {{ $t('components.guider.notes') }}
+    </div>
   </div>
 </template>
 
@@ -18,7 +23,7 @@ const initGraph = () => {
   chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: Array(store.guiderChartInfo.HistorySize).fill(''),
+      labels: Array(store.RADistanceRaw.length).fill(''),
       datasets: [
         {
           label: 'RA "',
@@ -26,7 +31,7 @@ const initGraph = () => {
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           tension: 0.5,
           pointRadius: 0,
-          data: [0],
+          data: [...store.RADistanceRaw],
         },
         {
           label: 'Dec "',
@@ -34,7 +39,7 @@ const initGraph = () => {
           backgroundColor: 'rgba(153, 102, 255, 0.2)',
           tension: 0.5,
           pointRadius: 0,
-          data: [0],
+          data: [...store.DECDistanceRaw],
         },
       ],
     },
@@ -95,5 +100,12 @@ onBeforeUnmount(() => {
 canvas {
   max-width: 100%;
   height: 200px;
+}
+
+.note {
+  font-size: 0.8em;
+  color: #666;
+  margin-top: 8px;
+  font-style: italic;
 }
 </style>
