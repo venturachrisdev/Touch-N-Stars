@@ -238,7 +238,6 @@
   </div>
 
   <exposureCountdown />
-
 </template>
 
 <script setup>

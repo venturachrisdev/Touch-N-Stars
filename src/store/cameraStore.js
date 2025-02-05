@@ -208,14 +208,15 @@ export const useCameraStore = defineStore('cameraStore', () => {
     countdownRunning.value = true;
     while (countdownRunning.value) {
       const now = Date.now();
-      const remainingTime = Math.floor((endTime - now) / 1000);
+      let remainingTime = Math.floor((endTime - now) / 1000);
 
-      if (remainingTime <= 0) {
+      if (remainingTime <= 0 || !store.cameraInfo.IsExposing) {
         exposureProgress.value = 100;
         exposureCountdown.value = 0;
         await new Promise((resolve) => setTimeout(resolve, 1000)); // 1 Sekunde warten
         exposureProgress.value = 0;
         countdownRunning.value = false;
+        remainingTime = 0;
         break;
       }
 

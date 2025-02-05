@@ -19,7 +19,7 @@ const cameraStore = useCameraStore();
 watch(
   () => store.cameraInfo.ExposureEndTime,
   (newVal) => {
-    if (newVal && cameraStore.isExposure) {
+    if (newVal && store.cameraInfo.IsExposing) {
       cameraStore.updateCountdown();
     }
   }
