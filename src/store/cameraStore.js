@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
-import { useFramingStore } from './framingStore';
+import { apiStore } from '@/store/store';
+import { useFramingStore } from '@/store/framingStore';
 import { ref } from 'vue';
 
 export const useCameraStore = defineStore('cameraStore', () => {
   const framingStore = useFramingStore();
+  const store = apiStore();
   const exposureTime = ref(2);
   const remainingExposureTime = ref(0);
   const progress = ref(0);
@@ -21,6 +23,10 @@ export const useCameraStore = defineStore('cameraStore', () => {
   const warmingTime = ref(10);
   const buttonCoolerOn = ref(false);
   const plateSolveError = ref(false);
+  const exposureCountdown = ref(0);
+  const exposureProgress = ref(0);
+  const countdownRunning = ref(false);
+
   let exposureCountdownTimer = null;
 
   /**
@@ -178,6 +184,49 @@ export const useCameraStore = defineStore('cameraStore', () => {
     }
   }
 
+  //Countdown für Statusanzeige
+  async function updateCountdown() {
+    const exposureEndTime = store.cameraInfo.ExposureEndTime;
+    
+    if (!exposureEndTime) {
+      exposureCountdown.value = 0;
+      exposureProgress.value= 0;
+      return;
+    }
+  
+    const endTime = new Date(exposureEndTime).getTime();
+    if (isNaN(endTime)) {
+      console.error("Ungültiges Datumsformat für ExposureEndTime.");
+      exposureCountdown.value = 0;
+      exposureProgress.value = 0;
+      return;
+    }
+
+    const durationTime = Math.floor((endTime - Date.now())/1000); 
+    console.log('durationTime' , durationTime);
+  
+    countdownRunning.value = true;
+    while (countdownRunning.value) {
+      const now = Date.now();
+      const remainingTime = Math.floor((endTime - now) / 1000);
+  
+      if (remainingTime <= 0) {
+        exposureProgress.value = 100;
+        await new Promise(resolve => setTimeout(resolve, 1000)); // 1 Sekunde warten
+        exposureCountdown.value = 0;
+        exposureProgress.value = 0;
+        countdownRunning.value = false;
+        break;
+      }
+  
+      exposureCountdown.value = remainingTime;
+      console.log('exposureCountdown', exposureCountdown.value);
+      exposureProgress.value = Math.max(0, Math.min(100, ((1 - remainingTime / durationTime) * 100)));
+      console.log('exposureProgress Fortschritt %:', exposureProgress.value);
+      await new Promise(resolve => setTimeout(resolve, 1000)); // 1 Sekunde warten
+    }
+  }
+
   return {
     // State
     exposureTime,
@@ -197,10 +246,14 @@ export const useCameraStore = defineStore('cameraStore', () => {
     warmingTime,
     buttonCoolerOn,
     plateSolveError,
-
+    exposureCountdown,
+    exposureProgress,
+    countdownRunning,
+    
     // Actions
     capturePhoto,
     getCameraRotation,
     abortExposure,
+    updateCountdown,
   };
 });
