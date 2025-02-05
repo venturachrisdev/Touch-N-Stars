@@ -224,8 +224,6 @@
       @close="closeModal"
     />
   </div>
-  <exposureCountdown />
-  <div class="p-10"></div>
 </template>
 
 <script setup>
@@ -240,7 +238,6 @@ import changeFilter from '@/components/filterwheel/changeFilter.vue';
 import controlRotator from '@/components/rotator/controlRotator.vue';
 import infoRotator from '@/components/rotator/infoRotator.vue';
 import ImageModal from '@/components/helpers/imageModal.vue';
-import exposureCountdown from '@/components/helpers/ExposureCountdown.vue';
 
 // Initialisiere Stores
 const store = apiStore();

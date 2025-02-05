@@ -2,7 +2,7 @@
   <!-- Fortschrittsbalken -->
   <div class="w-full rounded-lg overflow-hidden">
     <div
-      class="bg-blue-600 transition-all duration-500 ease-linear"
+      class="bg-gradient-to-r from-blue-800 to-blue-200 transition-all duration-500 ease-linear"
       :style="{ width: cameraStore.exposureProgress + '%', height: '1px' }"
     ></div>
   </div>

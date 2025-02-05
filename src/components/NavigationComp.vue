@@ -236,6 +236,9 @@
       </div>
     </div>
   </div>
+
+  <exposureCountdown />
+
 </template>
 
 <script setup>
@@ -249,7 +252,7 @@ import {
   AdjustmentsVerticalIcon,
 } from '@heroicons/vue/24/outline';
 import { apiStore } from '@/store/store';
-
+import exposureCountdown from '@/components/helpers/ExposureCountdown.vue';
 const store = apiStore();
 </script>
 
