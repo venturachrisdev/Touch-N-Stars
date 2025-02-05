@@ -405,7 +405,11 @@
       "cloudCover": "Oblačnost",
       "wind": "Vítr",
       "humidity": "Vlhkost",
-      "pressure": "Tlak"
+      "pressure": "Tlak",
+      "dewPoint": "Dewpoint",
+      "rainRate": "Rain rate",
+      "skyQuality": "Sky quality",
+      "skyTemperature": "Sky temperature"
     },
     "switch": {
       "gauges": "Měřící přístroje",

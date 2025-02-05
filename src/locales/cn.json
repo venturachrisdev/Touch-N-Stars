@@ -405,7 +405,11 @@
       "cloudCover": "云量",
       "wind": "风",
       "humidity": "湿度",
-      "pressure": "气压"
+      "pressure": "气压",
+      "dewPoint": "Dewpoint",
+      "rainRate": "Rain rate",
+      "skyQuality": "Sky quality",
+      "skyTemperature": "Sky temperature"
     },
     "switch": {
       "gauges": "仪表",
