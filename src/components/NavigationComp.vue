@@ -134,7 +134,7 @@
               class="icon"
               :class="[
                 'icon',
-                store.flatdeviceInfo.CoverState === 2
+                store.flatdeviceInfo.CoverState === 'Closed'
                   ? 'text-red-500'
                   : store.flatdeviceInfo.LightOn
                     ? 'text-yellow-300'
