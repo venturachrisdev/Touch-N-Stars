@@ -225,7 +225,7 @@
     />
   </div>
   <exposureCountdown />
-<div class="p-10"></div>
+  <div class="p-10"></div>
 </template>
 
 <script setup>
