@@ -405,7 +405,11 @@
       "cloudCover": "Wolkenbedeckung",
       "wind": "Wind",
       "humidity": "Luftfeuchtigkeit",
-      "pressure": "Luftdruck"
+      "pressure": "Luftdruck",
+      "dewPoint": "Taupunkt",
+      "rainRate": "Regenrate",
+      "skyQuality": "Himmelqualität",
+      "skyTemperature": "Himmelstemperatur"
     },
     "switch": {
       "gauges": "Messwerte",
