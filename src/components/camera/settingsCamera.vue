@@ -1,81 +1,75 @@
 <template>
-  <div class="flex items-center gap-2">
-    <div class="flex flex-col border border-gray-500 p-1 pb-2 rounded-lg">
-      <label for="exposure" class="text-xs mb-1 text-gray-400">{{
-        $t('components.camera.exposure_time')
-      }}</label>
+  <div class="flex flex-col sm:flex-row items-center gap-2">
+    <div class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg">
+      <label for="exposure" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400">
+        {{ $t('components.camera.exposure_time') }}
+      </label>
       <input
         id="exposure"
         v-model.number="cameraStore.exposureTime"
         type="number"
-        class="w-28 text-black px-3 h-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+        class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
         placeholder="sek"
       />
     </div>
-    <div class="flex flex-col border border-gray-500 p-1 pb-2 rounded-lg">
-      <label for="gain" class="text-xs mb-1 text-gray-400">{{
-        $t('components.camera.gain_iso')
-      }}</label>
-      <div v-if="store.cameraInfo.Gains && store.cameraInfo.Gains.length > 0">
-        <select
-          id="gain"
-          v-model.number="cameraStore.gain"
-          class="w-28 text-black px-3 h-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
-        >
-          <option v-for="(value, key) in store.cameraInfo.Gains" :key="key" :value="key">
-            {{ value }}
-          </option>
-        </select>
-      </div>
-      <div v-else>
-        <input
-          id="gain"
-          v-model.number="cameraStore.gain"
-          type="number"
-          class="w-28 text-black px-3 h-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
-          placeholder="1"
-        />
-      </div>
+    
+    <div class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg">
+      <label for="gain" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400">
+        {{ $t('components.camera.gain_iso') }}
+      </label>
+      <select
+        v-if="store.cameraInfo.Gains && store.cameraInfo.Gains.length > 0"
+        id="gain"
+        v-model.number="cameraStore.gain"
+        class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+      >
+        <option v-for="(value, key) in store.cameraInfo.Gains" :key="key" :value="key">
+          {{ value }}
+        </option>
+      </select>
+      <input
+        v-else
+        id="gain"
+        v-model.number="cameraStore.gain"
+        type="number"
+        class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+        placeholder="1"
+      />
     </div>
-    <div
-      v-if="store.cameraInfo.CanSetOffset"
-      class="flex flex-col border border-gray-500 p-1 pb-2 rounded-lg"
-    >
-      <label for="offset" class="text-xs mb-1 text-gray-400">{{
-        $t('components.camera.offset')
-      }}</label>
-      <div v-if="store.cameraInfo.Offset && store.cameraInfo.Offset.length > 0">
-        <select
-          id="offset"
-          v-model.number="cameraStore.offset"
-          class="w-28 text-black px-3 h-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
-        >
-          <option
-            v-for="(value, key) in store.cameraInfo.Offset"
-            :key="key"
-            :value="key"
-            @change="setOffset"
-          >
-            {{ value }}
-          </option>
-        </select>
-      </div>
-      <div v-else>
-        <input
-          id="offset"
-          v-model.number="cameraStore.offset"
-          type="number"
-          class="w-28 text-black px-3 h-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
-          placeholder="0"
-          @blur="setOffset"
-          :min="store.cameraInfo.OffsetMin"
-          :max="store.cameraInfo.OffsetMax"
-        />
-      </div>
+    
+    <div v-if="store.cameraInfo.CanSetOffset" class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg">
+      <label for="offset" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400">
+        {{ $t('components.camera.offset') }}
+      </label>
+      <select
+        v-if="store.cameraInfo.Offset && store.cameraInfo.Offset.length > 0"
+        id="offset"
+        v-model.number="cameraStore.offset"
+        @change="setOffset"
+        class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+      >
+        <option v-for="(value, key) in store.cameraInfo.Offset" :key="key" :value="key">
+          {{ value }}
+        </option>
+      </select>
+      <input
+        v-else
+        id="offset"
+        v-model.number="cameraStore.offset"
+        type="number"
+        @blur="setOffset"
+        :min="store.cameraInfo.OffsetMin"
+        :max="store.cameraInfo.OffsetMax"
+        class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
+        placeholder="0"
+      />
     </div>
-    <setBinning class="w-28" />
+    <setBinning  />
   </div>
 </template>
+
+
+
 
 <script setup>
 import { apiStore } from '@/store/store';

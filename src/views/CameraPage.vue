@@ -6,7 +6,7 @@
     </div>
 
     <!-- Camera Connection Status -->
-    <div class="w-full flex justify-center">
+    <div class="w-full flex justify-center mb-3">
       <div class="max-w-xl">
         <div
           v-if="!store.cameraInfo.Connected"
@@ -26,7 +26,7 @@
             <div class="flex-grow border-t border-gray-700"></div>
           </div>
           <div class="container flex items-center justify-center space-x-1">
-            <div class="container space-y-1 max-w-md landscape:max-w-xl">
+            <div class="container space-y-1 max-w-md lg:max-w-xl">
               <div class="w-full p-2 bg-gray-800/50 rounded-lg border border-gray-700/50">
                 <label for="infoCamera" class="text-xs mb-1 text-gray-400">
                   {{ $t('components.camera.title') }}
@@ -34,7 +34,7 @@
                 <infoCamera
                   v-model="store.cameraInfo.Connected"
                   :show-all-info="true"
-                  class="grid grid-cols-2 landscape:grid-cols-3"
+                  class="grid grid-cols-2 lg:grid-cols-3"
                 />
               </div>
               <div
@@ -44,7 +44,7 @@
                 <label for="infoRotator" class="text-xs mb-1 text-gray-400">
                   {{ $t('components.rotator.label') }}
                 </label>
-                <infoRotator class="grid grid-cols-2 landscape:grid-cols-3" />
+                <infoRotator class="grid grid-cols-2 lg:grid-cols-3" />
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@
               v-if="store.cameraInfo.CanSetTemperature"
               class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
             />
-            <div class="grid grid-flow-row-dense grid-cols-1 landscape:grid-cols-2 gap-6">
+            <div >
               <changeFilter
                 v-if="store.filterInfo.Connected"
                 class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
@@ -73,7 +73,9 @@
               v-if="store.rotatorInfo.Connected"
               class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
             />
-            <settingsCamera class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
+            <settingsCamera 
+              class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" 
+              />
           </div>
         </div>
       </div>
@@ -111,9 +113,9 @@
       </div>
 
       <!-- Capture Controls and Image Display -->
-      <div class="flex flex-col landscape:flex-row gap-1">
+      <div class="flex flex-col lg:flex-row gap-1 mx-5">
         <!-- Left Panel - Controls -->
-        <div class="flex flex-col landscape:w-1/6 space-y-4 min-h-[200px] landscape:min-h-0">
+        <div class="flex flex-col lg:w-1/6 space-y-3 min-h-[100px] lg:min-h-0">
           <!-- Loop Checkbox -->
           <div class="flex items-center p-4 bg-gray-800/50 rounded-lg border border-gray-700/50">
             <input
@@ -200,7 +202,7 @@
         </div>
 
         <!-- Right Panel - Image Display -->
-        <div class="flex w-full landscape:w-5/6">
+        <div class="flex w-full lg:w-5/6">
           <div
             ref="imageContainer"
             class="image-container overflow-hidden min-h-[65vh] w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700/50 flex-grow"
