@@ -147,7 +147,8 @@
       "level": "Level",
       "message": "Nachricht",
       "member": "Mitglied",
-      "line": "Zeile"
+      "line": "Zeile",
+      "download": "Herunterladen"
     },
     "navigation": {
       "equipment": "Geräte",

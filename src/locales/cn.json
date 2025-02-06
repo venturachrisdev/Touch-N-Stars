@@ -147,7 +147,8 @@
       "level": "级别",
       "message": "消息",
       "member": "成员",
-      "line": "行"
+      "line": "行",
+      "download": "Download"
     },
     "navigation": {
       "equipment": "设备",

@@ -147,7 +147,8 @@
       "level": "Livello",
       "message": "Messaggio",
       "member": "Membro",
-      "line": "Linea"
+      "line": "Linea",
+      "download": "Scaricamento"
     },
     "navigation": {
       "equipment": "Attrezzatura",
