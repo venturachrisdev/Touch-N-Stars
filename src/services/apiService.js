@@ -337,6 +337,19 @@ const apiService = {
     }
   },
 
+  async setBinningMode(mode) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/equipment/camera/set-binning`, {
+        params: { binning: mode },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error retrieving capture result:', error);
+      throw error;
+    }
+  },
+
   //-------------------------------------  Filterwheel ---------------------------------------
   filterAction(action) {
     const { BASE_URL } = getUrls();
