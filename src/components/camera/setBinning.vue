@@ -1,5 +1,7 @@
 <template>
-  <div class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg">
+  <div
+    class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg"
+  >
     <label for="gain" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400">
       {{ $t('components.camera.binning_mode') }}
     </label>

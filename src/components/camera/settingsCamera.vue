@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col sm:flex-row items-center gap-2">
-    <div class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg">
+    <div
+      class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg"
+    >
       <label for="exposure" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400">
         {{ $t('components.camera.exposure_time') }}
       </label>
@@ -12,8 +14,10 @@
         placeholder="sek"
       />
     </div>
-    
-    <div class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg">
+
+    <div
+      class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg"
+    >
       <label for="gain" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400">
         {{ $t('components.camera.gain_iso') }}
       </label>
@@ -36,8 +40,11 @@
         placeholder="1"
       />
     </div>
-    
-    <div v-if="store.cameraInfo.CanSetOffset" class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg">
+
+    <div
+      v-if="store.cameraInfo.CanSetOffset"
+      class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg"
+    >
       <label for="offset" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400">
         {{ $t('components.camera.offset') }}
       </label>
@@ -64,12 +71,9 @@
         placeholder="0"
       />
     </div>
-    <setBinning  />
+    <setBinning />
   </div>
 </template>
-
-
-
 
 <script setup>
 import { apiStore } from '@/store/store';

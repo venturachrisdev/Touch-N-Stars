@@ -1,12 +1,14 @@
 <template>
   <div class="flex flex-col items-center gap-2 max-w-xl">
     <div v-if="store.cameraInfo.CanSetTemperature" class="w-full">
-      <div class="flex flex-col border border-gray-500 p-1 pb-2 rounded-lg min-w-36 ">
+      <div class="flex flex-col border border-gray-500 p-1 pb-2 rounded-lg min-w-36">
         <label for="Cooler" class="text-xs mb-1 text-gray-400"
           >{{ $t('components.camera.camera_cooling') }}
         </label>
         <div class="flex flex-col sm:flex-row gap-2">
-          <div class="flex flex-row items-center sm:flex-col col-span-2 w-full border border-gray-500 p-1 rounded-lg">
+          <div
+            class="flex flex-row items-center sm:flex-col col-span-2 w-full border border-gray-500 p-1 rounded-lg"
+          >
             <label for="TemperatureSetPoint" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400"
               >{{ $t('components.camera.target_temperature') }}:
             </label>
@@ -21,7 +23,9 @@
               />
             </div>
           </div>
-          <div class="flex flex-row items-center sm:flex-col col-span-2 w-full border border-gray-500 p-1 rounded-lg">
+          <div
+            class="flex flex-row items-center sm:flex-col col-span-2 w-full border border-gray-500 p-1 rounded-lg"
+          >
             <label for="TemperatureDurationTime" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400"
               >{{ $t('components.camera.cooling_time') }}
             </label>
@@ -34,7 +38,9 @@
               step="1"
             />
           </div>
-          <div class="flex flex-row items-center sm:flex-col col-span-2 w-full border border-gray-500 p-1 rounded-lg">
+          <div
+            class="flex flex-row items-center sm:flex-col col-span-2 w-full border border-gray-500 p-1 rounded-lg"
+          >
             <label for="TemperatureDurationTime" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400"
               >{{ $t('components.camera.warm_up_time') }}
             </label>

@@ -63,7 +63,7 @@
               v-if="store.cameraInfo.CanSetTemperature"
               class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
             />
-            <div >
+            <div>
               <changeFilter
                 v-if="store.filterInfo.Connected"
                 class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
@@ -73,9 +73,7 @@
               v-if="store.rotatorInfo.Connected"
               class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
             />
-            <settingsCamera 
-              class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" 
-              />
+            <settingsCamera class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
           </div>
         </div>
       </div>
