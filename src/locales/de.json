@@ -323,7 +323,8 @@
       "camera_cooling": "Kamerakühlung",
       "target_temperature": "Zieltemperatur",
       "warm_up_time": "Aufwärmzeit",
-      "cooling_time": "Kühlzeit"
+      "cooling_time": "Kühlzeit",
+      "binning_mode": "Binning"
     },
     "tppa": {
       "title": "Drei-Punkt-Polarausrichtung",
