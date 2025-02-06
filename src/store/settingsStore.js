@@ -37,9 +37,6 @@ export const useSettingsStore = defineStore('settings', {
       reversePrimaryAxis: false,
       reverseSecondaryAxis: false,
     },
-    camera: {
-      binningMode: '',
-    },
   }),
   actions: {
     setCoordinates(coords) {
