@@ -73,6 +73,7 @@
         />
       </div>
     </div>
+    <setBinning class="w-28" />
   </div>
 </template>
 
@@ -80,6 +81,7 @@
 import { apiStore } from '@/store/store';
 import { useCameraStore } from '@/store/cameraStore';
 import apiService from '@/services/apiService';
+import setBinning from '@/components/camera/setBinning.vue';
 
 const store = apiStore();
 const cameraStore = useCameraStore();
