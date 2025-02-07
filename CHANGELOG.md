@@ -28,6 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - regular expression for dec and ra adapted
 - Fixed custom sky survey cache path
 
+### Known Issues
+- Android - Logfile Download not working
+
 ## [1.0.0.8] - 2025-02-04
 ### Added
 - Framingassistant
