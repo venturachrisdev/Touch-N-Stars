@@ -132,7 +132,11 @@
             <button
               class="btn-primary bg-gradient-to-br from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600 transition-all duration-200 shadow-lg hover:shadow-cyan-500/20"
               @click="
-                cameraStore.capturePhoto(apiService, cameraStore.exposureTime, cameraStore.gain)
+                cameraStore.capturePhoto(
+                  apiService,
+                  settingsStore.camera.exposureTime,
+                  settingsStore.camera.gain
+                )
               "
               :disabled="cameraStore.loading"
             >
@@ -230,6 +234,7 @@
 import { ref } from 'vue';
 import { apiStore } from '@/store/store';
 import { useCameraStore } from '@/store/cameraStore';
+import { useSettingsStore } from '@/store/settingsStore';
 import apiService from '@/services/apiService';
 import infoCamera from '@/components/camera/infoCamera.vue';
 import settingsCamera from '@/components/camera/settingsCamera.vue';
@@ -242,6 +247,7 @@ import ImageModal from '@/components/helpers/imageModal.vue';
 // Initialisiere Stores
 const store = apiStore();
 const cameraStore = useCameraStore();
+const settingsStore = useSettingsStore();
 const imageContainer = ref(null);
 const image = ref(null);
 const showModal = ref(false);
