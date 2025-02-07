@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Flatpanel icon does not change color
 - Guidergraph: Data was not always loaded
 - load online target image
+- regular expression for dec and ra adapted
 
 ## [1.0.0.8] - 2025-02-04
 ### Added
