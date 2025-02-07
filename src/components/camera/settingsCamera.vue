@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col sm:flex-row items-center gap-2">
+  <div v-if="store.cameraInfo.Connected" class="flex flex-wrap items-center gap-2">
     <div
-      class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg"
+      class="flex flex-row sm:flex-col w-full sm:w-auto items-center min-w-28 border border-gray-500 p-1 rounded-lg"
     >
       <label for="exposure" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400">
         {{ $t('components.camera.exposure_time') }}
@@ -16,7 +16,7 @@
     </div>
 
     <div
-      class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg"
+      class="flex flex-row sm:flex-col w-full sm:w-auto items-center min-w-28 border border-gray-500 p-1 rounded-lg"
     >
       <label for="gain" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400">
         {{ $t('components.camera.gain_iso') }}
@@ -43,7 +43,7 @@
 
     <div
       v-if="store.cameraInfo.CanSetOffset"
-      class="flex flex-row sm:flex-col items-center w-full min-w-28 border border-gray-500 p-1 rounded-lg"
+      class="flex flex-row sm:flex-col w-full sm:w-auto items-center min-w-28 border border-gray-500 p-1 rounded-lg"
     >
       <label for="offset" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400">
         {{ $t('components.camera.offset') }}
@@ -71,7 +71,8 @@
         placeholder="0"
       />
     </div>
-    <setBinning />
+    <setBinning v-if="store.cameraInfo.BinningModes.length > 1" />
+    <setReadoutMode v-if="store.cameraInfo.ReadoutModes.length > 1" />
   </div>
 </template>
 
@@ -81,6 +82,7 @@ import { apiStore } from '@/store/store';
 import { useSettingsStore } from '@/store/settingsStore';
 import apiService from '@/services/apiService';
 import setBinning from '@/components/camera/setBinning.vue';
+import setReadoutMode from './setReadoutMode.vue';
 
 const store = apiStore();
 const settingsStore = useSettingsStore();

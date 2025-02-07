@@ -345,7 +345,20 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error('Error retrieving capture result:', error);
+      console.error('Error retrieving result:', error);
+      throw error;
+    }
+  },
+
+  async setReadoutMode(mode) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/equipment/camera/set-readout`, {
+        params: { mode: mode },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error retrieving result:', error);
       throw error;
     }
   },
