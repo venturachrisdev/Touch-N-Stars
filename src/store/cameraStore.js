@@ -6,7 +6,6 @@ import { ref } from 'vue';
 export const useCameraStore = defineStore('cameraStore', () => {
   const framingStore = useFramingStore();
   const store = apiStore();
-  const exposureTime = ref(2);
   const remainingExposureTime = ref(0);
   const progress = ref(0);
   const imageData = ref(null);
@@ -16,8 +15,6 @@ export const useCameraStore = defineStore('cameraStore', () => {
   const isLooping = ref(false);
   const isAbort = ref(false);
   const showInfo = ref(false);
-  const gain = ref(0);
-  const offset = ref(0);
   const coolingTemp = ref(-10);
   const coolingTime = ref(10);
   const warmingTime = ref(10);
@@ -30,16 +27,12 @@ export const useCameraStore = defineStore('cameraStore', () => {
 
   let exposureCountdownTimer = null;
 
-  /**
-   * Hilfsfunktion, um kurz zu warten
-   */
+  // Hilfsfunktion, um kurz zu warten
   function wait(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  /**
-   * Startet den Belichtungs-Countdown
-   */
+  // Startet den Belichtungs-Countdown
   function startExposureCountdown(totalTime) {
     // Hier gleich Promise zurückgeben, damit wir drauf warten können
     return new Promise((resolve, reject) => {
@@ -63,9 +56,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
     });
   }
 
-  /**
-   * Startet die Aufnahme + Countdown + Bildabruf
-   */
+  // Startet die Aufnahme + Countdown + Bildabruf
   async function capturePhoto(apiService, exposureTime, gain, solve = false) {
     if (exposureTime <= 0) {
       exposureTime = 2; // Default-Wert
@@ -230,8 +221,6 @@ export const useCameraStore = defineStore('cameraStore', () => {
   }
 
   return {
-    // State
-    exposureTime,
     remainingExposureTime,
     progress,
     imageData,
@@ -241,8 +230,6 @@ export const useCameraStore = defineStore('cameraStore', () => {
     isLooping,
     isAbort,
     showInfo,
-    gain,
-    offset,
     coolingTemp,
     coolingTime,
     warmingTime,

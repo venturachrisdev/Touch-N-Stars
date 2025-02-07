@@ -441,16 +441,16 @@ export const apiStore = defineStore('store', {
       cStore.coolingTemp = cameraSettings.Temperature ?? -10;
       cStore.coolingTime = cameraSettings.CoolingDuration ?? 10;
       cStore.warmingTime = cameraSettings.WarmingDuration ?? 10;
-      cStore.gain = cameraSettings.Gain ?? 0;
-      cStore.buttonCoolerOn = this.cameraInfo?.CoolerOn ?? false;
-      cStore.offset = cameraSettings.Offset ?? 0;
+      // cStore.gain = cameraSettings.Gain ?? 0;
+      // cStore.buttonCoolerOn = this.cameraInfo?.CoolerOn ?? false;
+      // cStore.offset = cameraSettings.Offset ?? 0;
       console.log(
         'Kameraeinstellungen gesetzt:',
         cStore.coolingTemp,
         cStore.coolingTime,
-        cStore.warmingTime,
-        cStore.gain,
-        cStore.offset
+        cStore.warmingTime
+        //  cStore.gain,
+        // cStore.offset
       );
     },
     setDefaultRotatorSettings() {

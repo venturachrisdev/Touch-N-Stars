@@ -8,7 +8,7 @@
       </label>
       <input
         id="exposure"
-        v-model.number="cameraStore.exposureTime"
+        v-model.number="settingsStore.camera.exposureTime"
         type="number"
         class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
         placeholder="sek"
@@ -24,7 +24,7 @@
       <select
         v-if="store.cameraInfo.Gains && store.cameraInfo.Gains.length > 0"
         id="gain"
-        v-model.number="cameraStore.gain"
+        v-model.number="settingsStore.camera.gain"
         class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
       >
         <option v-for="(value, key) in store.cameraInfo.Gains" :key="key" :value="key">
@@ -34,7 +34,7 @@
       <input
         v-else
         id="gain"
-        v-model.number="cameraStore.gain"
+        v-model.number="settingsStore.camera.gain"
         type="number"
         class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
         placeholder="1"
@@ -51,7 +51,7 @@
       <select
         v-if="store.cameraInfo.Offset && store.cameraInfo.Offset.length > 0"
         id="offset"
-        v-model.number="cameraStore.offset"
+        v-model.number="settingsStore.camera.offset"
         @change="setOffset"
         class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
       >
@@ -62,9 +62,9 @@
       <input
         v-else
         id="offset"
-        v-model.number="cameraStore.offset"
+        v-model.number="settingsStore.camera.offset"
         type="number"
-        @blur="setOffset"
+        @change="setOffset"
         :min="store.cameraInfo.OffsetMin"
         :max="store.cameraInfo.OffsetMax"
         class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
@@ -76,26 +76,45 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
 import { apiStore } from '@/store/store';
-import { useCameraStore } from '@/store/cameraStore';
+import { useSettingsStore } from '@/store/settingsStore';
 import apiService from '@/services/apiService';
 import setBinning from '@/components/camera/setBinning.vue';
 
 const store = apiStore();
-const cameraStore = useCameraStore();
+const settingsStore = useSettingsStore();
+
+onMounted(() => {
+  initializeOffset();
+});
+
+// Setzt den initialen Offset
+const initializeOffset = () => {
+  if (!store.cameraInfo) {
+    console.warn('Kamera-Info nicht geladen');
+    return;
+  }
+
+  const offset = store.cameraInfo.Offset ?? 0; // Falls undefined -> Standardwert 1
+  settingsStore.camera.offset = offset;
+};
 
 async function setOffset() {
-  console.log(cameraStore.offset);
-  if (store.cameraInfo.OffsetMin > cameraStore.offset) {
-    cameraStore.offset = store.cameraInfo.OffsetMin;
+  console.log(settingsStore.camera.offset);
+  if (store.cameraInfo.OffsetMin > settingsStore.camera.offset) {
+    settingsStore.camera.offset = store.cameraInfo.OffsetMin;
     console.log('Offset zu klein min: ', store.cameraInfo.OffsetMin);
   }
-  if (store.cameraInfo.OffsetMax < cameraStore.offset) {
-    cameraStore.offset = store.cameraInfo.OffsetMax;
+  if (store.cameraInfo.OffsetMax < settingsStore.camera.offset) {
+    settingsStore.camera.offset = store.cameraInfo.OffsetMax;
     console.log('Offset zu groß, Max: ', store.cameraInfo.OffsetMax);
   }
   try {
-    const data = await apiService.profileChangeValue('CameraSettings-Offset', cameraStore.offset);
+    const data = await apiService.profileChangeValue(
+      'CameraSettings-Offset',
+      settingsStore.camera.offset
+    );
     console.log(data);
   } catch (error) {
     console.log('Fehler beim setzten des Offset');
