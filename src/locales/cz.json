@@ -18,7 +18,7 @@
     "title": "Touch'N'Stars",
     "unreachable": "NINA-API je nedostupné",
     "connecting": "Pokus o připojení",
-    "api_version_incompatible": "Verze pokročilého rozhraní API nekompatibilní aktuální: { current } povinné: { required }"
+    "api_version_incompatible": "Verze pokročilého rozhraní API je nekompatibilní, aktuální: { current } požadovaná: { required }"
   },
   "setup": {
     "welcome": "Vítá Vás Touch'N'Stars",
@@ -67,17 +67,17 @@
         "placeholder": "Zadejte hledaný výraz..."
       },
       "fovSettings": {
-        "rotationAngle": "Camera rotation",
-        "fov": "Field of View"
+        "rotationAngle": "Natočení kamery",
+        "fov": "Zorné Pole"
       },
       "getImageRotation": {
-        "SolveError": "Error solving image",
-        "SolveRun": "Platesolve",
-        "startCapture": "Determine rotation from camera"
+        "SolveError": "Chyba při řešení snímku",
+        "SolveRun": "Astrometrie",
+        "startCapture": "Určení rotace z kamerya"
       },
-      "moveRotator": "Rotate camera",
-      "openFraminingModal": "Open in framing-assistant",
-      "infoTargetImage": "If the image is only displayed in black, the “Offline Sky Map Cache“ must be set up in NINA or the “use NINA cache” option must be deactivated"
+      "moveRotator": "Otáčení kamery",
+      "openFraminingModal": "Spustť ve Snímkování",
+      "infoTargetImage": "Pokud se snímek zobrazuje pouze černě, je nutné v NINA nastavit „Offline Mapa Oblohy“ nebo deaktivovat možnost „Použít NINA Mezipamět"
     },
     "connectEquipment": {
       "camera": {
@@ -231,8 +231,8 @@
           "home": "Chyba v navádění montáže",
           "tracking": "Chyba při nastavování režimu sledován"
         },
-        "manuellControl": "Manual control",
-        "slewRate": "Slew rate °/s"
+        "manuellControl": "Ruční Ovládání",
+        "slewRate": "Rychlost pohybu °/s"
       },
       "info": {
         "notConnected": "Připojte montáž",
@@ -251,8 +251,8 @@
       "stop": "Zastavit",
       "rms_error": "RMS Chyba",
       "title": "Navádění",
-      "running": "RUNNING",
-      "notes": "* This graph displays guiding data according to N.I.N.A.'s settings."
+      "running": "PROBÍHÁ",
+      "notes": "* Tento graf zobrazuje data navádění podle nastavení N.I.N.A."
     },
     "focuser": {
       "title": "Ostření",
@@ -370,7 +370,7 @@
         "apiResponseError": "Chyba v odpovědi API:",
         "mountInfoError": "Chyba při získávání informací o montáži:"
       },
-      "rotate": "Rotate"
+      "rotate": "Rotace"
     },
     "filterwheel": {
       "filter": "Filtr:",
@@ -407,10 +407,10 @@
       "wind": "Vítr",
       "humidity": "Vlhkost",
       "pressure": "Tlak",
-      "dewPoint": "Dewpoint",
-      "rainRate": "Rain rate",
-      "skyQuality": "Sky quality",
-      "skyTemperature": "Sky temperature"
+      "dewPoint": "Rosný bod",
+      "rainRate": "Intenzita deště",
+      "skyQuality": "Kvalita oblohy",
+      "skyTemperature": "Teplota oblohy"
     },
     "switch": {
       "gauges": "Měřící přístroje",
