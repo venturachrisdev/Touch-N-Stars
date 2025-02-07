@@ -2,6 +2,7 @@ package com.Touch_N_Stars.dev
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import com.Touch_N_Stars.dev.BuildConfig
 import android.content.pm.PackageManager
 import android.util.Log
@@ -23,6 +24,11 @@ class MainActivity : TauriActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Disable the lockscreen and keep the screen on
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
         
         try {
             // Get current version from package info
