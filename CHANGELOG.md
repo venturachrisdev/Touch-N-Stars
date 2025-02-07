@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Camera design adjustments
+- Save exposuretime gain and offset permanently
 
 ### Fixed
 - Flatpanel icon does not change color
