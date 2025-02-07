@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Graphic showing the remaining exposure time
 - Binning can be set
+- Readoutmode can be set
 
 ### Changed
 - Camera design adjustments
