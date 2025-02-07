@@ -46,9 +46,11 @@
 import { ref, onMounted, nextTick, watch } from 'vue';
 import Moveable from 'vue3-moveable';
 import { useFramingStore } from '@/store/framingStore';
+import { useSettingsStore } from '@/store/settingsStore';
 import apiService from '@/services/apiService';
 
 const framingStore = useFramingStore();
+const settingsStore = useSettingsStore();
 const isLoading = ref(true);
 const targetPic = ref(null);
 const scaleDegPerPixel = ref(0.004); // Grad pro Pixel
@@ -164,7 +166,7 @@ async function getTargetPic() {
     const width = framingStore.containerSize;
     const height = framingStore.containerSize;
     const fov = framingStore.fov;
-    const useCache = framingStore.useNinaCache;
+    const useCache = settingsStore.framing.useNinaCache;
 
     calcCameraFov(framingStore.fov);
 
