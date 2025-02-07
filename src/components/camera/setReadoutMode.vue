@@ -3,16 +3,16 @@
     class="flex flex-row sm:flex-col w-full sm:w-auto items-center min-w-28 border border-gray-500 p-1 rounded-lg"
   >
     <label for="gain" class="text-sm sm:text-xs mr-3 mb-1 text-gray-400">
-      {{ $t('components.camera.binning_mode') }}
+      {{ $t('components.camera.readout_mode') }}
     </label>
     <select
-      @change="setBinnig"
-      id="binning"
-      v-model="cameraStore.binningMode"
+      @change="setReadoutMode"
+      id="setReadoutMode"
+      v-model="cameraStore.readoutMode"
       class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
     >
-      <option v-for="mode in store.cameraInfo.BinningModes" :key="mode.Name" :value="mode.Name">
-        {{ mode.Name }}
+      <option v-for="(mode, index) in store.cameraInfo.ReadoutModes" :key="index" :value="index">
+        {{ mode }}
       </option>
     </select>
   </div>
@@ -28,28 +28,26 @@ const store = apiStore();
 const cameraStore = useCameraStore();
 
 onMounted(() => {
-  initializeBinningMode();
+  initializeReadoutMode();
 });
 
-// Setzt den initialen Binning Mode aus BinX und BinY
-const initializeBinningMode = () => {
+const initializeReadoutMode = () => {
   if (!store.cameraInfo) {
     console.warn('Kamera-Info nicht geladen');
     return;
   }
 
-  const binX = store.cameraInfo.BinX ?? 1; // Falls undefined -> Standardwert 1
-  const binY = store.cameraInfo.BinY ?? 1;
-  cameraStore.binningMode = `${binX}x${binY}`;
+  const readoutMode = store.cameraInfo.ReadoutMode ?? 0; // Falls undefined -> Standardwert 0
+  cameraStore.readoutMode = readoutMode;
 };
 
-async function setBinnig() {
-  console.log('Set binning to: ', cameraStore.binningMode);
+async function setReadoutMode() {
+  console.log('Set Readout to: ', cameraStore.readoutMode);
   try {
-    const data = await apiService.setBinningMode(cameraStore.binningMode);
+    const data = await apiService.setReadoutMode(cameraStore.readoutMode);
     console.log(data);
   } catch (error) {
-    console.log('Fehler beim setzten des binning');
+    console.log('Fehler beim setzten des readoutMode');
   }
 }
 </script>

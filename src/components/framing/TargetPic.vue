@@ -41,11 +41,13 @@
 import { ref, watch, onMounted } from 'vue';
 import apiService from '@/services/apiService';
 import { useFramingStore } from '@/store/framingStore';
+import { useSettingsStore } from '@/store/settingsStore';
 import { InformationCircleIcon } from '@heroicons/vue/24/outline';
 
 let debounceTimeout;
 
 const framingStore = useFramingStore();
+const settingsStore = useSettingsStore();
 const targetPic = ref(null);
 const showModal = ref(false);
 
@@ -57,7 +59,7 @@ async function getTargetPic() {
     const height = framingStore.height;
     const fov = framingStore.fov;
 
-    const useCache = framingStore.useNinaCache;
+    const useCache = settingsStore.framing.useNinaCache;
     console.log('Bild wird abgerufen', 'RA: ', ra, 'DEC: ', dec, useCache);
     if (targetPic.value) {
       URL.revokeObjectURL(targetPic.value);
