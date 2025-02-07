@@ -80,7 +80,7 @@
     </div>
 
     <!-- Hauptbereich, wenn Kamera verbunden -->
-    <div v-show="store.cameraInfo.Connected">
+    <div v-show="store.cameraInfo.Connected" class="pb-14">
       <!-- Toggle Button for Info/Settings -->
       <div class="flex items-center space-x-3 mb-4">
         <div class="w-3 h-[1px] bg-gray-700"></div>
