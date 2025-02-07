@@ -323,7 +323,9 @@
       "camera_cooling": "Raffreddamento fotocamera",
       "target_temperature": "Temperatura target",
       "warm_up_time": "Tempo riscaldamento",
-      "cooling_time": "Tempo raffreddamento"
+      "cooling_time": "Tempo raffreddamento",
+      "binning_mode": "Binning",
+      "readout_mode": "Modalità di lettura"
     },
     "tppa": {
       "title": "Allineamento Polare a Tre Punti",

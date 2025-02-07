@@ -323,7 +323,9 @@
       "camera_cooling": "相机冷却",
       "target_temperature": "目标温度",
       "warm_up_time": "预热时间",
-      "cooling_time": "冷却时间"
+      "cooling_time": "冷却时间",
+      "binning_mode": "Binning",
+      "readout_mode": "Readout Mode"
     },
     "tppa": {
       "title": "三点极轴对准",
