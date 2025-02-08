@@ -50,7 +50,7 @@
     <div class="flex-grow ml-2 h-[1px] bg-gray-700"></div>
   </div>
   <div>
-    <moveAxis v-if="false" />
+    <moveAxis v-if="true" />
   </div>
 </template>
 
