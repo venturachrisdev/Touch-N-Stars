@@ -323,7 +323,9 @@
       "target_temperature": "Température choisie",
       "warm_up_time": "Délai de réchauffement",
       "cooling_time": "Délai de refroidissement",
-      "cancel": "Annuler"
+      "cancel": "Annuler",
+      "binning_mode": "Rabattement",
+      "readout_mode": "Mode de lecture"
     },
     "tppa": {
       "title": "Alignement Polaire Trois Points",

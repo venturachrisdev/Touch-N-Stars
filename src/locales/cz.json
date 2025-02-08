@@ -323,7 +323,9 @@
       "camera_cooling": "Chlazení kamery",
       "target_temperature": "Cílová teplota",
       "warm_up_time": "Doba zahřátí",
-      "cooling_time": "Doba chlazení"
+      "cooling_time": "Doba chlazení",
+      "binning_mode": "Binning",
+      "readout_mode": "Readout Mode"
     },
     "tppa": {
       "title": "Tříbodové Polární Zarovnání",

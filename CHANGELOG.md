@@ -5,20 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0.9] - unreleased
+## [1.0.0.9] - 2025-02-07
 ### Added
 - Graphic showing the remaining exposure time
 - Binning can be set
+- Readoutmode can be set
+- Download Logs from Modal
+- Klingon support
 
 ### Changed
 - Camera design adjustments
 - Save exposuretime gain and offset permanently
+- prevent lockscreen on Android
+- Load all values from Weather
+- Logic of CORS in plugin changed
+- Removed wshv and Autofocus watcher
 
 ### Fixed
 - Flatpanel icon does not change color
 - Guidergraph: Data was not always loaded
-- load online target image
+- Error when loading the target image fixed
 - regular expression for dec and ra adapted
+- Fixed custom sky survey cache path
 
 ## [1.0.0.8] - 2025-02-04
 ### Added
