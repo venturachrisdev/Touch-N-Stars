@@ -55,7 +55,11 @@
         "invalidIPFormat": "Si prega di fornire IP o FQDN",
         "invalidPortRange": "La porta deve essere compresa tra 1 e 65535"
       },
-      "showTutorial": "Mostra Tutorial"
+      "showTutorial": "Mostra Tutorial",
+      "system": {
+        "description": "Fare clic su icona per riavviare o arrestare il sistema",
+        "title": "Controlli di sistema"
+      }
     },
     "framing": {
       "confirmSetTargetTitle": "Conferma Selezione Target",
