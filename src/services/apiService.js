@@ -460,6 +460,40 @@ const apiService = {
       throw error;
     }
   },
+
+  //-------------------------------------  Flatassitant ---------------------------------------
+  //auto-exposure
+  async flatAutoExposure(
+    count,
+    minExposure,
+    maxExposure,
+    histogramMean,
+    meanTolerance,
+    binning,
+    gain,
+    offset
+  ) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/flats/auto-exposure`, {
+        params: {
+          count,
+          minExposure,
+          maxExposure,
+          histogramMean,
+          meanTolerance,
+          binning,
+          gain,
+          offset,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error sauto-exposure:', error);
+      throw error;
+    }
+  },
+
   //-------------------------------------  dome ---------------------------------------
   domeAction(action) {
     const { BASE_URL } = getUrls();
