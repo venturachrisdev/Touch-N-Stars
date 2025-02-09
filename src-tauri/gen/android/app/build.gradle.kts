@@ -18,7 +18,7 @@ val tauriProperties = Properties().apply {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "com.Touch_N_Stars.dev"
     defaultConfig {
         manifestPlaceholders["usesCleartextTraffic"] = "false"
@@ -45,10 +45,10 @@ android {
     buildTypes {
         getByName("release") {
         signingConfig = signingConfigs.getByName("release")
-        manifestPlaceholders["usesCleartextTraffic"] = "true"
-        isDebuggable = true
+        manifestPlaceholders["usesCleartextTraffic"] = "false"
+        isDebuggable = false
         }
-        
+
         getByName("debug") {
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             isDebuggable = true
@@ -56,7 +56,7 @@ android {
             isMinifyEnabled = false
             packaging {
                 jniLibs.keepDebugSymbols.add("*/arm64-v8a/*.so")
-                jniLibs.keepDebugSymbols.add("*/armeabi-v7a/*.so") 
+                jniLibs.keepDebugSymbols.add("*/armeabi-v7a/*.so")
                 jniLibs.keepDebugSymbols.add("*/x86/*.so")
                 jniLibs.keepDebugSymbols.add("*/x86_64/*.so")
             }
@@ -93,7 +93,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-    
     // Firebase dependencies
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-analytics")

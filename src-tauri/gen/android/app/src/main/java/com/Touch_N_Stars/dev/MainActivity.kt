@@ -33,13 +33,13 @@ class MainActivity : TauriActivity() {
         try {
             // Get current version from package info
             val packageInfo = packageManager.getPackageInfo(packageName, 0)
-            val versionName = packageInfo.versionName
+            val versionName = packageInfo.versionName ?: "unknown"
             
             updateChecker = UpdateChecker(this, versionName)
             updateChecker.checkForUpdates()
         } catch (e: PackageManager.NameNotFoundException) {
             // Fallback to BuildConfig if package info not available
-            val currentVersion = BuildConfig.VERSION_NAME
+            val currentVersion = BuildConfig.VERSION_NAME ?: "unknown"
             updateChecker = UpdateChecker(this, currentVersion)
             updateChecker.checkForUpdates()
         } catch (e: Exception) {
