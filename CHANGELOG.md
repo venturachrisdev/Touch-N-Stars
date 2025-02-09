@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Manuell mount controll
 
 ### Changed
+- Images are processed in the same way as in NINA
 
 ### Fixed
 

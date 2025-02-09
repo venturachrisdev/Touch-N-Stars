@@ -80,6 +80,7 @@ const apiService = {
           quality: quality,
           resize: resize,
           scale: scale,
+          autoPrepare: true,
         },
       });
       return response.data;
