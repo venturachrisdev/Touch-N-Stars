@@ -654,6 +654,17 @@ const apiService = {
     }
   },
 
+  //-------------------------------------  System Controls ------------------------------
+  shutdown() {
+    const { API_URL } = getUrls();
+    return this._simpleGetRequest(`${API_URL}system/shutdown`);
+  },
+
+  restart() {
+    const { API_URL } = getUrls();
+    return this._simpleGetRequest(`${API_URL}system/restart`);
+  },
+
   //-------------------------------------  Helper ---------------------------------------
   _simpleGetRequest(url) {
     return axios

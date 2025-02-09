@@ -55,7 +55,11 @@
         "invalidIPFormat": "请提供 IP 或 FQDN",
         "invalidPortRange": "无效的端口范围"
       },
-      "showTutorial": "显示教程"
+      "showTutorial": "显示教程",
+      "system": {
+        "description": "Click either icon to restart or shutdown the system",
+        "title": "System Controls"
+      }
     },
     "framing": {
       "confirmSetTargetTitle": "确认目标选择",

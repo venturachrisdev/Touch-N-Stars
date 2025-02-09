@@ -55,7 +55,11 @@
         "invalidIPFormat": "Bitte geben Sie IP oder FQDN an",
         "invalidPortRange": "Port muss zwischen 1 und 65535 liegen"
       },
-      "showTutorial": "Tutorial anzeigen"
+      "showTutorial": "Tutorial anzeigen",
+      "system": {
+        "description": "Klicken Sie auf ein Symbol, um das System neu zu starten oder herunterzufahren",
+        "title": "Systemsteuerungen"
+      }
     },
     "framing": {
       "confirmSetTargetTitle": "Zielauswahl bestätigen",

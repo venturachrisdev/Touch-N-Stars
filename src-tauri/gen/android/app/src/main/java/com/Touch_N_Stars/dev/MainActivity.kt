@@ -25,21 +25,30 @@ class MainActivity : TauriActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Disable the lockscreen and keep the screen on
+        // Keep the screen on
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+        
+        // Use modern APIs if available, else fall back to deprecated flags for older versions.
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+            setTurnScreenOn(true)
+        } else {
+            window.addFlags(
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+            )
+        }
         
         try {
             // Get current version from package info
             val packageInfo = packageManager.getPackageInfo(packageName, 0)
-            val versionName = packageInfo.versionName
+            val versionName = packageInfo.versionName ?: "unknown"
             
             updateChecker = UpdateChecker(this, versionName)
             updateChecker.checkForUpdates()
         } catch (e: PackageManager.NameNotFoundException) {
             // Fallback to BuildConfig if package info not available
-            val currentVersion = BuildConfig.VERSION_NAME
+            val currentVersion = BuildConfig.VERSION_NAME ?: "unknown"
             updateChecker = UpdateChecker(this, currentVersion)
             updateChecker.checkForUpdates()
         } catch (e: Exception) {

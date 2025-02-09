@@ -119,7 +119,6 @@ watch(
 );
 
 function validateRA(raString) {
-
   const raPattern = /^([01]?[0-9]|2[0-3]):([0-5]?[0-9]):(60(\.0+)?|[0-5]?[0-9](\.\d+)?)$/;
   return raPattern.test(raString);
 }

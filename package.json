@@ -14,7 +14,7 @@
     "@heroicons/vue": "^2.2.0",
     "@pinkcao/vue-drag-resize-rotate": "^2.0.0",
     "@tauri-apps/api": "^2.2.0",
-    "@tauri-apps/plugin-geolocation": "^2.2.2",
+    "@tauri-apps/plugin-geolocation": "^2.2.3",
     "@vueuse/head": "^2.0.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",
@@ -35,7 +35,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/eslint-parser": "^7.26.5",
-    "@tauri-apps/cli": "^2.2.4",
+    "@tauri-apps/cli": "^2.2.7",
     "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/cli-plugin-router": "^5.0.8",

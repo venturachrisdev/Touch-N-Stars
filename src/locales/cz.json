@@ -55,7 +55,11 @@
         "invalidIPFormat": "Uveďte prosím IP nebo FQDN",
         "invalidPortRange": "Port musí být v rozsahu 1 až 65535"
       },
-      "showTutorial": "Ukázat Tutoriál"
+      "showTutorial": "Ukázat Tutoriál",
+      "system": {
+        "description": "Click either icon to restart or shutdown the system",
+        "title": "System Controls"
+      }
     },
     "framing": {
       "confirmSetTargetTitle": "Potvrzení Výběru Cíle",

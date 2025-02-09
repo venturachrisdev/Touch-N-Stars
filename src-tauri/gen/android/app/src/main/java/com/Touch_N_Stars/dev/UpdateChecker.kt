@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import androidx.core.content.FileProvider
 import com.squareup.moshi.JsonClass
@@ -20,6 +21,7 @@ import java.io.File
 import java.io.FileOutputStream
 
 const val INSTALL_REQUEST_CODE = 1001
+const val REQUEST_INSTALL_PERMISSION = 1002
 
 @JsonClass(generateAdapter = true)
 data class GitHubTag(
@@ -45,7 +47,6 @@ class UpdateChecker(private val context: Context, private val currentVersion: St
         Log.i("UpdateChecker", "Starting update check...")
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // First check if endpoint is reachable
                 val headRequest = Request.Builder()
                     .url("https://api.github.com/repos/Touch-N-Stars/Touch-N-Stars/tags")
                     .head()
@@ -57,7 +58,6 @@ class UpdateChecker(private val context: Context, private val currentVersion: St
                     return@launch
                 }
 
-                // Proceed with normal check
                 val request = Request.Builder()
                     .url("https://api.github.com/repos/Touch-N-Stars/Touch-N-Stars/tags")
                     .build()
@@ -112,10 +112,22 @@ class UpdateChecker(private val context: Context, private val currentVersion: St
                 .setTitle("New Version Available")
                 .setMessage("Current version: $currentVersion\nNew version: $newVersion\n\nWould you like to update now? The app will close during installation.")
                 .setPositiveButton("Update") { _, _ ->
+                    checkInstallPermissions()
                     showProgressDialog(newVersion)
                 }
                 .setNegativeButton("Later", null)
                 .show()
+        }
+    }
+
+    private fun checkInstallPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (!context.packageManager.canRequestPackageInstalls()) {
+                val intent = Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
+                    data = Uri.parse("package:${context.packageName}")
+                }
+                (context as Activity).startActivityForResult(intent, REQUEST_INSTALL_PERMISSION)
+            }
         }
     }
 
@@ -166,30 +178,23 @@ class UpdateChecker(private val context: Context, private val currentVersion: St
                     
                     val uri = FileProvider.getUriForFile(
                         context,
-                        "${context.packageName}.fileprovider", 
+                        "${context.packageName}.provider", 
                         file
                     )
 
-                    // Create explicit installation intent
-                    val installIntent = Intent(Intent.ACTION_INSTALL_PACKAGE).apply {
-                        data = uri
+                    val installIntent = Intent(Intent.ACTION_VIEW).apply {
+                        setDataAndType(uri, "application/vnd.android.package-archive")
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true)
-                        putExtra(Intent.EXTRA_RETURN_RESULT, true)
                     }
 
                     try {
                         Log.i("UpdateChecker", "Starting installation of update")
-                        
-                        // Start installation and wait for result
-                        (context as Activity).startActivityForResult(installIntent, INSTALL_REQUEST_CODE)
+                        context.startActivity(installIntent)
                         Log.i("UpdateChecker", "Installation intent started successfully")
                         
-                        // Save installed version
                         prefs.edit().putString("last_installed_version", version).apply()
                         
-                        // Close the app after starting installation
                         (context as Activity).finishAffinity()
                         System.exit(0)
                     } catch (e: Exception) {
@@ -199,7 +204,6 @@ class UpdateChecker(private val context: Context, private val currentVersion: St
                     }
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
                 withContext(Dispatchers.Main) {
                     showErrorDialog("Update failed: ${e.message}")
                     Log.e("UpdateChecker", "Update failed: ${e.message}", e)
