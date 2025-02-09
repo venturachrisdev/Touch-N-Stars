@@ -406,7 +406,9 @@
       "max_exposure_time": "Max exposure time",
       "histogram_mean_target": "Histogram mean target",
       "mean_tolerance": "Mean tolerance",
-      "start_auto_exposure": "Start auto exposure"
+      "completed_recordings" : "Completed recordings:",
+      "start_auto_exposure": "Start auto exposure",
+      "stop": "Stop"
     },
     "weatherModal": {
       "weatherInformation": "Weather Information",

@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import apiService from '@/services/apiService';
+import { apiStore } from '@/store/store';
 
 export const useFlatassistantStore = defineStore('flatassistantStore', {
   state: () => ({
@@ -10,6 +12,43 @@ export const useFlatassistantStore = defineStore('flatassistantStore', {
     binning: '1x1',
     gain: 100,
     offset: 0,
+    status: {
+      State: '',
+      TotalIterations: 0,
+      CompletedIterations: 0,
+    },
+    intervalId: null,
   }),
-  actions: {},
+  actions: {
+    async fetchFlatsInfos() {
+      try {
+        const store = apiStore();
+
+        if (!store.isBackendReachable) {
+          console.warn('Backend ist nicht erreichbar flats');
+          return;
+        }
+        const status = await apiService.flatassistantAction('status');
+        this.status = status.Response;
+        console.log('Flats Status:', this.status);
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Informationen:', error);
+      }
+    },
+
+    startFetchingFlats() {
+      if (!this.intervalId) {
+        console.log('startFetchingFlats ');
+        this.intervalId = setInterval(this.fetchFlatsInfos, 1000);
+      }
+    },
+
+    stopFetchingFlats() {
+      if (this.intervalId) {
+        console.log('stopFetchingFlats ');
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      }
+    },
+  },
 });

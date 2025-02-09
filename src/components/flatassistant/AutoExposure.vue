@@ -2,9 +2,8 @@
   <div
     class="flex flex-col w-full max-w-xs space-y-2 mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5"
   >
-
     <setCount />
-    <setGain/>
+    <setGain />
     <setOffset />
     <setMinExposureTime />
     <setMaxExposureTime />
@@ -12,9 +11,22 @@
     <setHistogramTolerance />
 
     <setBinning v-if="store.cameraInfo.BinningModes.length > 1" />
-    <button @click="startAutoExposure" class="default-button-cyan">
-      {{ $t('components.flatassistant.start_auto_exposure') }}
-    </button>
+    <div v-show="flatsStore.status.State != 'Running'">
+      <button @click="startAutoExposure" class="default-button-cyan">
+        {{ $t('components.flatassistant.start_auto_exposure') }}
+      </button>
+    </div>
+    <div v-show="flatsStore.status.State == 'Running'">
+      <button @click="stopFlats" class="default-button-red">
+        {{ $t('components.flatassistant.stop') }}
+      </button>
+    </div>
+  </div>
+  <div
+    v-show="flatsStore.status.CompletedIterations > -1"
+    class="flex flex-col w-full max-w-xs space-y-2 mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5"
+  >
+    <getStatus />
   </div>
 </template>
 <script setup>
@@ -31,6 +43,7 @@ import setMinExposureTime from '@/components/flatassistant/setMinExposureTime.vu
 import setMaxExposureTime from '@/components/flatassistant/setMaxExposureTime.vue';
 import setHistogramMeanTarget from '@/components/flatassistant/setHistogramMeanTarget.vue';
 import setHistogramTolerance from '@/components/flatassistant/setHistogramTolerance.vue';
+import getStatus from '@/components/flatassistant/getStatus.vue';
 
 const store = apiStore();
 const flatsStore = useFlatassistantStore();
@@ -58,6 +71,16 @@ async function startAutoExposure() {
     console.log(data);
   } catch (error) {
     console.log('Error startAutoExposure');
+  }
+}
+
+async function stopFlats() {
+  console.log('Flats stop: ');
+  try {
+    const data = await apiService.flatassistantAction('stop');
+    console.log(data);
+  } catch (error) {
+    console.log('Error stopAutoExposure');
   }
 }
 </script>

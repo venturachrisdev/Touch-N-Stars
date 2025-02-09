@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex flex-row w-full  items-center min-w-28 border border-gray-500 p-1 rounded-lg"
-  >
+  <div class="flex flex-row w-full items-center min-w-28 border border-gray-500 p-1 rounded-lg">
     <label for="count" class="text-sm mr-3 mb-1 text-gray-400">
       {{ $t('components.flatassistant.count') }}
     </label>

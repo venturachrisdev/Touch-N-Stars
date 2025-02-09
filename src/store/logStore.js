@@ -42,7 +42,7 @@ export const useLogStore = defineStore('LogStore', {
 
     startFetchingLog() {
       if (!this.intervalId) {
-        this.intervalId = setInterval(this.fetchLogInfos, 2000);
+        this.intervalId = setInterval(this.fetchLogInfos, 1000);
       }
     },
 

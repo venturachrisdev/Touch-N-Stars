@@ -461,7 +461,12 @@ const apiService = {
     }
   },
 
-  //-------------------------------------  Flatassitant ---------------------------------------
+  //-------------------------------------  Flatassistant ---------------------------------------
+  flatassistantAction(action) {
+    const { BASE_URL } = getUrls();
+    return this._simpleGetRequest(`${BASE_URL}/flats/${action}`);
+  },
+
   //auto-exposure
   async flatAutoExposure(
     count,

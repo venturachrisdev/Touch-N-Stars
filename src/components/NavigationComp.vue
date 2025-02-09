@@ -200,10 +200,7 @@
             active-class="active-nav-button"
             :title="$t('components.navigation.sequence')"
           >
-            <ListBulletIcon
-              class="icon"
-              :class="store.sequenceRunning ? 'text-green-500' : 'text-white'"
-            />
+            <DeviceTabletIcon class="icon" />
           </router-link>
         </div>
         <div
@@ -262,6 +259,7 @@ import {
   Cog6ToothIcon,
   LightBulbIcon,
   AdjustmentsVerticalIcon,
+  DeviceTabletIcon,
 } from '@heroicons/vue/24/outline';
 import { apiStore } from '@/store/store';
 import exposureCountdown from '@/components/helpers/ExposureCountdown.vue';
