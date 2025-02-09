@@ -193,6 +193,19 @@
             />
           </router-link>
         </div>
+        <div v-if="true">
+          <router-link
+            to="/flats"
+            class="nav-button"
+            active-class="active-nav-button"
+            :title="$t('components.navigation.sequence')"
+          >
+            <ListBulletIcon
+              class="icon"
+              :class="store.sequenceRunning ? 'text-green-500' : 'text-white'"
+            />
+          </router-link>
+        </div>
         <div
           v-if="
             store.sequenceRunning || (store.imageHistoryInfo && store.imageHistoryInfo.length > 0)

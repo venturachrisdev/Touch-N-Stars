@@ -400,6 +400,14 @@
       },
       "title": "Flatpanel"
     },
+    "flatassistant": {
+      "count": "Count",
+      "min_exposure_time": "Min exposure time",
+      "max_exposure_time": "Max exposure time",
+      "histogram_mean_target": "Histogram mean target",
+      "mean_tolerance": "Mean tolerance",
+      "start_auto_exposure": "Start auto exposure"
+    },
     "weatherModal": {
       "weatherInformation": "Weather Information",
       "metric": "Metric",
