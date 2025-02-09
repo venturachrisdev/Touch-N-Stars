@@ -119,6 +119,7 @@ watch(
 );
 
 function validateRA(raString) {
+
   const raPattern = /^([01]?[0-9]|2[0-3]):([0-5]?[0-9]):(60(\.0+)?|[0-5]?[0-9](\.\d+)?)$/;
   return raPattern.test(raString);
 }
@@ -129,6 +130,9 @@ function validateDEC(decString) {
 }
 
 function handleBlurRA() {
+  if (!localRAangleString.value) {
+    return; // Nichts tun, wenn der Wert leer ist
+  }
   if (validateRA(localRAangleString.value)) {
     updateRA();
   } else {
@@ -137,6 +141,9 @@ function handleBlurRA() {
 }
 
 function handleBlurDEC() {
+  if (!localDECangleString.value) {
+    return; // Nichts tun, wenn der Wert leer ist
+  }
   if (validateDEC(localDECangleString.value)) {
     console.log('Lokal DEC', localDECangleString.value);
     updateDec();
