@@ -3,7 +3,16 @@
     <div class="grid grid-cols-3 gap-4 p-4 place-items-center w-64 mx-auto">
       <!-- Obere Reihe (Nord) -->
       <div></div>
-      <button @click="sendCommand('north')" class="btn">
+      <button
+        @mousedown="sendCommand('north')"
+        @mouseup="sendStop"
+        @mouseleave="sendStop"
+        @touchstart.prevent="sendCommand('north')"
+        @touchend.prevent="sendStop"
+        @touchcancel="sendStop"
+        @contextmenu.prevent
+        class="btn"
+      >
         <ArrowUpCircleIcon
           :class="mountStore.lastDirection === 'north' ? 'text-green-500' : 'text-gray-400'"
           class="w-12 h-12"
@@ -12,7 +21,16 @@
       <div></div>
 
       <!-- Mittlere Reihe (West, Stop, Ost) -->
-      <button @click="sendCommand('west')" class="btn">
+      <button
+        @mousedown="sendCommand('west')"
+        @mouseup="sendStop"
+        @mouseleave="sendStop"
+        @touchstart.prevent="sendCommand('west')"
+        @touchend.prevent="sendStop"
+        @touchcancel="sendStop"
+        @contextmenu.prevent
+        class="btn"
+      >
         <ArrowLeftCircleIcon
           :class="mountStore.lastDirection === 'west' ? 'text-green-500' : 'text-gray-400'"
           class="w-12 h-12"
@@ -21,7 +39,16 @@
       <button @click="sendStop" class="btn btn-stop">
         <StopCircleIcon class="w-12 h-12 text-red-500" />
       </button>
-      <button @click="sendCommand('east')" class="btn">
+      <button
+        @mousedown="sendCommand('east')"
+        @mouseup="sendStop"
+        @mouseleave="sendStop"
+        @touchstart.prevent="sendCommand('east')"
+        @touchend.prevent="sendStop"
+        @touchcancel="sendStop"
+        @contextmenu.prevent
+        class="btn"
+      >
         <ArrowRightCircleIcon
           :class="mountStore.lastDirection === 'east' ? 'text-green-500' : 'text-gray-400'"
           class="w-12 h-12"
@@ -30,7 +57,16 @@
 
       <!-- Untere Reihe (Süd) -->
       <div></div>
-      <button @click="sendCommand('south')" class="btn">
+      <button
+        @mousedown="sendCommand('south')"
+        @mouseup="sendStop"
+        @mouseleave="sendStop"
+        @touchstart.prevent="sendCommand('south')"
+        @touchend.prevent="sendStop"
+        @touchcancel="sendStop"
+        @contextmenu.prevent
+        class="btn"
+      >
         <ArrowDownCircleIcon
           :class="mountStore.lastDirection === 'south' ? 'text-green-500' : 'text-gray-400'"
           class="w-12 h-12"
@@ -48,18 +84,18 @@
       <input
         class="w-full mx-2"
         type="range"
-        min="0.1"
+        min="0.01"
         max="5"
-        step="0.1"
+        step="0.001"
         v-model="settingsStore.mount.slewRate"
       />
       <input
-        class="text-black px-4 h-10 w-20 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-200"
+        class="text-black px-4 h-10 w-24 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-200"
         type="number"
         v-model="settingsStore.mount.slewRate"
-        min="0.1"
+        min="0.001"
         max="5"
-        step="0.1"
+        step="0.01"
       />
     </div>
   </div>
