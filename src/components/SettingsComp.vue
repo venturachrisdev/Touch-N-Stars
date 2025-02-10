@@ -246,7 +246,7 @@
       <div class="flex justify-center gap-2">
         <!-- Restart Button -->
         <button
-          @click="apiService.restart()"
+          @click="restartSystem"
           class="p-2 bg-gray-600 hover:bg-gray-500 rounded-md transition-colors"
           title="Restart System"
         >
@@ -268,7 +268,7 @@
 
         <!-- Shutdown Button -->
         <button
-          @click="apiService.shutdown()"
+          @click="shutdownSystem"
           class="p-2 bg-gray-600 hover:bg-gray-500 rounded-md transition-colors"
           title="Shutdown System"
         >
@@ -305,7 +305,9 @@ import { useSettingsStore } from '@/store/settingsStore';
 import { apiStore } from '@/store/store';
 import apiService from '@/services/apiService';
 import TutorialModal from '@/components/TutorialModal.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const { locale } = useI18n();
 const settingsStore = useSettingsStore();
 const store = apiStore();
@@ -500,5 +502,19 @@ function showTutorial() {
 function closeTutorial() {
   showTutorialModal.value = false;
   settingsStore.completeTutorial();
+}
+
+function restartSystem() {
+  router.push('/');
+  store.showSettings = false;
+  store.isBackendReachable = false;
+  apiService.restart();
+}
+
+function shutdownSystem() {
+  router.push('/');
+  store.showSettings = false;
+  store.isBackendReachable = false;
+  apiService.shutdown();
 }
 </script>
