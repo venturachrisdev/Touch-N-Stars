@@ -423,10 +423,6 @@ function editInstance(id) {
 
 function selectInstance(instance) {
   selectedInstance.value = instance.id;
-  settingsStore.setConnection({
-    ip: instance.ip,
-    port: instance.port,
-  });
   settingsStore.setSelectedInstanceId(instance.id);
 }
 
