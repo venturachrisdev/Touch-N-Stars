@@ -30,7 +30,7 @@ export const useFlatassistantStore = defineStore('flatassistantStore', {
         }
         const status = await apiService.flatassistantAction('status');
         this.status = status.Response;
-        console.log('Flats Status:', this.status);
+        //console.log('Flats Status:', this.status);
       } catch (error) {
         console.error('Fehler beim Abrufen der Informationen:', error);
       }

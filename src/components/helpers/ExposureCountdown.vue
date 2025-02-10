@@ -2,14 +2,19 @@
   <!-- Fortschrittsbalken -->
   <div class="w-full rounded-lg overflow-hidden">
     <div
-      class="bg-gradient-to-r from-blue-800 to-blue-200 transition-all duration-500 ease-linear"
-      :style="{ width: cameraStore.exposureProgress + '%', height: '1px' }"
+      v-if="cameraStore.exposureProgress > 0"
+      class="bg-gradient-to-r from-blue-800 to-blue-200"
+      :style="{
+        width: cameraStore.exposureProgress + '%',
+        height: '1px',
+        transition: cameraStore.exposureProgress > 0 ? 'width 0.5s linear' : 'none' // Animiert nur, wenn > 0
+      }"
     ></div>
   </div>
 </template>
 
 <script setup>
-import { watch, onMounted } from 'vue';
+import { watch, onMounted, nextTick } from 'vue';
 import { apiStore } from '@/store/store';
 import { useCameraStore } from '@/store/cameraStore';
 
@@ -18,9 +23,13 @@ const cameraStore = useCameraStore();
 
 watch(
   () => store.cameraInfo.ExposureEndTime,
-  (newVal) => {
+  async (newVal) => {
     if (newVal && store.cameraInfo.IsExposing) {
       cameraStore.updateCountdown();
+    } else {
+      // Warte einen Tick, damit die Animation nicht beeinflusst wird
+      await nextTick();
+      cameraStore.exposureProgress = 0;
     }
   }
 );

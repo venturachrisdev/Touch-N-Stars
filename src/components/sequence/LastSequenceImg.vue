@@ -137,7 +137,7 @@ async function wait(ms) {
 async function getlastImage(index, quality, resize, scale) {
   try {
     const result = await apiService.getSequenceImage(index, quality, resize, scale);
-
+    console.log(result);
     if (result.StatusCode != 200) {
       console.error('Unknown error: Check NINIA Log for more information');
       return;
