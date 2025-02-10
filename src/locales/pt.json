@@ -55,7 +55,11 @@
         "invalidIPFormat": "Por favor, forneça o IP ou FQDN",
         "invalidPortRange": "Porta inválida"
       },
-      "showTutorial": "Exibir Tutorial"
+      "showTutorial": "Exibir Tutorial",
+      "system": {
+        "description": "Clique em qualquer ícone para reiniciar ou desligar o sistema",
+        "title": "Controles do sistema"
+      }
     },
     "framing": {
       "confirmSetTargetTitle": "Confirmar seleção de alvo",
