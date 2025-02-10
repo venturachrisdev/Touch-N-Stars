@@ -7,7 +7,7 @@
       :style="{
         width: cameraStore.exposureProgress + '%',
         height: '1px',
-        transition: cameraStore.exposureProgress > 0 ? 'width 0.5s linear' : 'none' // Animiert nur, wenn > 0
+        transition: cameraStore.exposureProgress > 0 ? 'width 0.5s linear' : 'none', // Animiert nur, wenn > 0
       }"
     ></div>
   </div>
