@@ -7,6 +7,22 @@
         class="absolute top-0 right-0 p-2 hover:bg-gray-700 rounded-lg"
         :title="$t('components.lastLogs.download')"
       >
+        <!-- Success indicator -->
+        <div
+          v-if="showSuccess"
+          class="absolute -top-1 -right-1 z-10 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center animate-fade-out opacity-0 pointer-events-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="3"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5 text-gray-300"
@@ -64,10 +80,13 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useLogStore } from '@/store/logStore';
+const showSuccess = ref(false);
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
+import { Capacitor } from '@capacitor/core';
+import { saveAs } from 'file-saver';
 const logStore = useLogStore();
 
 // Funktion zum Formatieren des Timestamps (optional)
@@ -88,7 +107,7 @@ async function downloadLogs() {
   const fileName = `logs-${new Date().toISOString().slice(0, 10)}.log`;
 
   // Platform detection for native Android vs web
-  if (typeof window !== 'undefined' && window.Capacitor) {
+  if (Capacitor.getPlatform() === 'android') {
     // Let user choose directory
     try {
       const dirResult = await FilePicker.pickDirectory();
@@ -120,22 +139,31 @@ async function downloadLogs() {
       });
 
       console.log('Log file saved successfully');
+      showSuccess.value = true;
+      setTimeout(() => (showSuccess.value = false), 2000);
     } catch (error) {
       console.error('Error saving log file:', error);
     }
   } else {
-    // Web browser fallback
-    const blob = new Blob([logContent], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    // Web browser fallback using file-saver
+    const blob = new Blob([logContent], { type: 'text/plain;charset=utf-8' });
+    saveAs(blob, fileName);
+    showSuccess.value = true;
+    setTimeout(() => (showSuccess.value = false), 2000);
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.animate-fade-out {
+  animation: fade-out 1s ease-in forwards;
+}
+</style>
