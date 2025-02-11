@@ -71,6 +71,22 @@ const apiService = {
     }
   },
 
+  async imageHistoryAllFilterd(imageType) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/image-history`, {
+        params: { 
+          all: true ,
+          imageType : imageType,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error read Image History:', error);
+      throw error;
+    }
+  },
+
   //-------------------------------------  Image  ---------------------------------------
   async getSequenceImage(index, quality, resize, scale) {
     try {
