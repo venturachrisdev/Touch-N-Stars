@@ -338,6 +338,7 @@ import { useSettingsStore } from '@/store/settingsStore';
 import { apiStore } from '@/store/store';
 import apiService from '@/services/apiService';
 import TutorialModal from '@/components/TutorialModal.vue';
+import { Geolocation } from '@capacitor/geolocation';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -464,36 +465,26 @@ function removeInstance(id) {
 }
 
 async function getCurrentLocation() {
-  if (!window.__TAURI__) {
-    gpsError.value = 'GPS only available in Android builds';
-    return;
-  }
-
   try {
-    const { checkPermissions, requestPermissions, getCurrentPosition } = await import(
-      '@tauri-apps/plugin-geolocation'
-    );
-
-    let permissions = await checkPermissions();
-    if (permissions.location === 'prompt' || permissions.location === 'prompt-with-rationale') {
-      permissions = await requestPermissions(['location']);
+    // Check for location permission
+    const status = await Geolocation.checkPermissions();
+    if (status.location !== 'granted') {
+      const result = await Geolocation.requestPermissions();
+      if (result.location !== 'granted') {
+        gpsError.value = 'Location permission not granted';
+        return;
+      }
     }
-
-    if (permissions.location === 'granted') {
-      const pos = await getCurrentPosition({
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0,
-      });
-
-      latitude.value = pos.coords.latitude.toFixed(6);
-      longitude.value = pos.coords.longitude.toFixed(6);
-      altitude.value = pos.coords.altitude?.toFixed(3) || 0;
-
-      gpsError.value = null;
-    } else {
-      gpsError.value = 'Location permission not granted';
-    }
+    // Get current position with high accuracy
+    const pos = await Geolocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 0,
+    });
+    latitude.value = pos.coords.latitude.toFixed(6);
+    longitude.value = pos.coords.longitude.toFixed(6);
+    altitude.value = pos.coords.altitude;
+    gpsError.value = null;
   } catch (error) {
     gpsError.value = error.message || 'Failed to get GPS location';
   }

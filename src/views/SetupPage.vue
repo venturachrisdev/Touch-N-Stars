@@ -199,7 +199,6 @@ import { useI18n } from 'vue-i18n';
 import { getAvailableLanguages } from '@/i18n';
 import { useRouter } from 'vue-router';
 import { useSettingsStore } from '@/store/settingsStore';
-// Import Capacitor Geolocation API
 import { Geolocation } from '@capacitor/geolocation';
 
 const { locale, t } = useI18n();
@@ -221,6 +220,7 @@ function afterEnter() {
 const selectedLanguage = ref(locale.value);
 const latitude = ref('');
 const longitude = ref('');
+const altitude = ref('');
 const gpsError = ref(null);
 
 const instanceName = ref('');
@@ -254,6 +254,7 @@ async function getCurrentLocation() {
     });
     latitude.value = pos.coords.latitude.toFixed(6);
     longitude.value = pos.coords.longitude.toFixed(6);
+    altitude.value = pos.coords.altitude;
     gpsError.value = null;
   } catch (error) {
     gpsError.value = error.message || 'Failed to get GPS location';
@@ -264,6 +265,7 @@ function saveGPS() {
   settingsStore.setCoordinates({
     latitude: latitude.value,
     longitude: longitude.value,
+    altitude: altitude.value,
   });
   currentStep.value++;
 }
