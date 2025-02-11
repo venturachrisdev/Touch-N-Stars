@@ -58,7 +58,10 @@
       "showTutorial": "Montrer le tutoriel",
       "system": {
         "description": "Cliquez sur l'icône pour redémarrer ou arrêter le système",
-        "title": "Commandes de système"
+        "title": "Commandes de système",
+        "confirmRestart": "Êtes-vous sûr de vouloir redémarrer le système?",
+        "confirmShutdown": "Êtes-vous sûr de vouloir fermer le système?",
+        "confirmation": "Confirmation"
       }
     },
     "framing": {

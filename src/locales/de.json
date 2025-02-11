@@ -58,7 +58,10 @@
       "showTutorial": "Tutorial anzeigen",
       "system": {
         "description": "Klicken Sie auf ein Symbol, um das System neu zu starten oder herunterzufahren",
-        "title": "Systemsteuerungen"
+        "title": "Systemsteuerungen",
+        "confirmRestart": "Sind Sie sicher, dass Sie das System neu starten möchten?",
+        "confirmShutdown": "Sind Sie sicher, dass Sie das System herunterfahren möchten?",
+        "confirmation": "Bestätigung"
       }
     },
     "framing": {
