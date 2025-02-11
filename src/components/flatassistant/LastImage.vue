@@ -34,12 +34,12 @@ async function getlastImage(index, quality, resize, scale) {
 
 watch(
   () => flatsStore.status.CompletedIterations,
-  async (newVal) => {
+  async () => {
     const imageHistoryAllFilterd = await apiService.imageHistoryAllFilterd('FLAT');
     const latestIndex = imageHistoryAllFilterd.Response.length - 1;
     console.log('Watch imageHistoryInfo');
     console.log('latestIndex: ', latestIndex);
-    if (latestIndex > 0  && isLoadingImg === false) {
+    if (latestIndex > 0 && isLoadingImg.value === false) {
       await wait(1000); // Es kann sein, dass das Bild noch nicht verfügbar ist
       getlastImage(latestIndex, 50, true, 0.3);
     }

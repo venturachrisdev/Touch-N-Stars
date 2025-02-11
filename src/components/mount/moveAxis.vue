@@ -93,9 +93,9 @@
         class="text-black px-4 h-10 w-24 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-200"
         type="number"
         v-model="settingsStore.mount.slewRate"
-        min="0.001"
-        max="5"
-        step="0.01"
+        min="0.0001"
+        max="3"
+        step="0.001"
       />
     </div>
   </div>
