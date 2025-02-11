@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-if="isLoadingImg">Lade Bild...</p>
+    <p v-if="isLoadingImg"></p>
     <img v-else :src="imageData" alt="Flat Image" />
   </div>
 </template>
@@ -39,9 +39,10 @@ watch(
     const latestIndex = imageHistoryAllFilterd.Response.length - 1;
     console.log('Watch imageHistoryInfo');
     console.log('latestIndex: ', latestIndex);
-
-    await wait(1000); // Es kann sein, dass das Bild noch nicht verfügbar ist
-    getlastImage(latestIndex, 50, true, 0.3);
+    if (latestIndex > 0  && isLoadingImg === false) {
+      await wait(1000); // Es kann sein, dass das Bild noch nicht verfügbar ist
+      getlastImage(latestIndex, 50, true, 0.3);
+    }
   },
   { immediate: false }
 );
@@ -50,6 +51,8 @@ onMounted(async () => {
   const imageHistoryAllFilterd = await apiService.imageHistoryAllFilterd('FLAT');
   const latestIndex = imageHistoryAllFilterd.Response.length - 1;
   console.log('latestIndex: ', latestIndex);
-  getlastImage(latestIndex, 50, true, 0.3);
+  if (latestIndex > 0) {
+    getlastImage(latestIndex, 50, true, 0.3);
+  }
 });
 </script>
