@@ -571,39 +571,39 @@ const apiService = {
     }
   },
 
-    //skyflat
-    async flatSkyflat(
-      count,
-      minExposure,
-      maxExposure,
-      histogramMean,
-      meanTolerance,
-      binning,
-      gain,
-      offset,
-      filter
-    ) {
-      try {
-        const { BASE_URL } = getUrls();
-        const response = await axios.get(`${BASE_URL}/flats/skyflat`, {
-          params: {
-            count,
-            minExposure,
-            maxExposure,
-            histogramMean,
-            meanTolerance,
-            binning,
-            gain,
-            offset,
-            filter,
-          },
-        });
-        return response.data;
-      } catch (error) {
-        console.error('Error skyflats:', error);
-        throw error;
-      }
-    },
+  //skyflat
+  async flatSkyflat(
+    count,
+    minExposure,
+    maxExposure,
+    histogramMean,
+    meanTolerance,
+    binning,
+    gain,
+    offset,
+    filter
+  ) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/flats/skyflat`, {
+        params: {
+          count,
+          minExposure,
+          maxExposure,
+          histogramMean,
+          meanTolerance,
+          binning,
+          gain,
+          offset,
+          filter,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error skyflats:', error);
+      throw error;
+    }
+  },
 
   //-------------------------------------  dome ---------------------------------------
   domeAction(action) {
