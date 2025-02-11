@@ -295,6 +295,39 @@
       </div>
     </div>
   </div>
+
+  <!-- Confirmation Modal -->
+  <div
+    v-if="confirmAction"
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+  >
+    <div class="bg-gray-800 p-6 rounded-lg max-w-sm w-full">
+      <h3 class="text-lg font-semibold text-white mb-4">
+        {{ $t('components.settings.system.confirmation') }}
+      </h3>
+      <p class="text-gray-300 mb-6">
+        {{
+          confirmAction === 'shutdown'
+            ? $t('components.settings.system.confirmShutdown')
+            : $t('components.settings.system.confirmRestart')
+        }}
+      </p>
+      <div class="flex justify-end space-x-4">
+        <button
+          @click="cancelConfirmation"
+          class="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-md"
+        >
+          {{ $t('common.cancel') }}
+        </button>
+        <button
+          @click="confirmActionHandler"
+          class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-md"
+        >
+          {{ $t('common.confirm') }}
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -483,7 +516,7 @@ async function saveCoordinates() {
         longitude: longitude.value,
         altitude: altitude.value,
       });
-      console.log('Koordinaten gespeichert');
+      console.log('Coordinates saved');
     } catch (error) {
       console.error('Failed to update backend coordinates:', error);
     }
@@ -500,17 +533,41 @@ function closeTutorial() {
   settingsStore.completeTutorial();
 }
 
-function restartSystem() {
+// Confirmation modal logic
+const confirmAction = ref(null);
+
+function cancelConfirmation() {
+  confirmAction.value = null;
+}
+
+function performRestart() {
   router.push('/');
   store.showSettings = false;
   store.isBackendReachable = false;
   apiService.restart();
 }
 
-function shutdownSystem() {
+function performShutdown() {
   router.push('/');
   store.showSettings = false;
   store.isBackendReachable = false;
   apiService.shutdown();
+}
+
+function confirmActionHandler() {
+  if (confirmAction.value === 'restart') {
+    performRestart();
+  } else if (confirmAction.value === 'shutdown') {
+    performShutdown();
+  }
+  confirmAction.value = null;
+}
+
+function restartSystem() {
+  confirmAction.value = 'restart';
+}
+
+function shutdownSystem() {
+  confirmAction.value = 'shutdown';
 }
 </script>

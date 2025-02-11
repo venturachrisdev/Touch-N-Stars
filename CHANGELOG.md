@@ -14,6 +14,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [1.0.1.0] - unreleased
+### Added
+- Shutdown / Restart support (NINA PC)
+- New Translation keys
+
+### Changed
+- Android framework replaced with CapacitorJS (previous App needs to be removed first)
+
+### Fixed
+- ISO was not set correctly with DLSR
+- Pinia store now correctly stores Instance configurations
+
 ## [1.0.0.9] - 2025-02-07
 ### Added
 - Graphic showing the remaining exposure time

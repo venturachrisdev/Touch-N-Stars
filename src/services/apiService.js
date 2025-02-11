@@ -232,7 +232,7 @@ const apiService = {
   },
 
   async startCapture(duration, gain, solve = false) {
-    console.log('Zeit:',duration, 'Gain: ', gain  )
+    console.log('Zeit:', duration, 'Gain: ', gain);
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
