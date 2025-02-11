@@ -7,6 +7,8 @@ export const useFlatassistantStore = defineStore('flatassistantStore', {
     count: 20,
     minExposureTime: 0.01,
     maxExposureTime: 20,
+    minBrightness: 0,
+    maxBrightness: 32000,
     histogramMean: 50,
     meanTolerance: 10,
     binning: '1x1',

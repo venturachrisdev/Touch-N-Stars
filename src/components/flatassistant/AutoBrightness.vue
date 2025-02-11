@@ -5,8 +5,8 @@
     <setCount />
     <setGain />
     <setOffset />
-    <setMinExposureTime />
-    <setMaxExposureTime />
+    <setMinBrightness />
+    <setMaxBrightness />
     <setHistogramMeanTarget />
     <setHistogramTolerance />
     <changeFilter v-if="store.filterInfo.Connected" />
@@ -33,8 +33,8 @@ import setBinning from '@/components/flatassistant/setBinning.vue';
 import setGain from '@/components/flatassistant/setGain.vue';
 import setOffset from './setOffset.vue';
 import setCount from '@/components/flatassistant/setCount.vue';
-import setMinExposureTime from '@/components/flatassistant/setMinExposureTime.vue';
-import setMaxExposureTime from '@/components/flatassistant/setMaxExposureTime.vue';
+import setMinBrightness from '@/components/flatassistant/setMinBrightness.vue';
+import setMaxBrightness from '@/components/flatassistant/setMaxBrightness.vue';
 import setHistogramMeanTarget from '@/components/flatassistant/setHistogramMeanTarget.vue';
 import setHistogramTolerance from '@/components/flatassistant/setHistogramTolerance.vue';
 import changeFilter from '@/components/filterwheel/changeFilter.vue';
@@ -52,10 +52,10 @@ onMounted(() => {
 async function startAutoExposure() {
   console.log('Flats startAutoExposure: ');
   try {
-    const data = await apiService.flatAutoExposure(
+    const data = await apiService.flatAutoBrightness(
       flatsStore.count,
-      flatsStore.minExposureTime,
-      flatsStore.maxExposureTime,
+      flatsStore.minBrightness,
+      flatsStore.maxBrightness,
       flatsStore.histogramMean,
       flatsStore.meanTolerance,
       flatsStore.binning,

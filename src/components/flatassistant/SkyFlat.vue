@@ -52,7 +52,7 @@ onMounted(() => {
 async function startAutoExposure() {
   console.log('Flats startAutoExposure: ');
   try {
-    const data = await apiService.flatAutoExposure(
+    const data = await apiService.flatSkyflat(
       flatsStore.count,
       flatsStore.minExposureTime,
       flatsStore.maxExposureTime,

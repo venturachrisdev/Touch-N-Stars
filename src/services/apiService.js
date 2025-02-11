@@ -532,10 +532,78 @@ const apiService = {
       });
       return response.data;
     } catch (error) {
-      console.error('Error sauto-exposure:', error);
+      console.error('Error auto-exposure:', error);
       throw error;
     }
   },
+
+  //auto-brightness
+  async flatAutoBrightness(
+    count,
+    minBrightness,
+    maxBrightness,
+    histogramMean,
+    meanTolerance,
+    binning,
+    gain,
+    offset,
+    filter
+  ) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/flats/auto-exposure`, {
+        params: {
+          count,
+          minBrightness,
+          maxBrightness,
+          histogramMean,
+          meanTolerance,
+          binning,
+          gain,
+          offset,
+          filter,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error auto-brightness:', error);
+      throw error;
+    }
+  },
+
+    //skyflat
+    async flatSkyflat(
+      count,
+      minExposure,
+      maxExposure,
+      histogramMean,
+      meanTolerance,
+      binning,
+      gain,
+      offset,
+      filter
+    ) {
+      try {
+        const { BASE_URL } = getUrls();
+        const response = await axios.get(`${BASE_URL}/flats/skyflat`, {
+          params: {
+            count,
+            minExposure,
+            maxExposure,
+            histogramMean,
+            meanTolerance,
+            binning,
+            gain,
+            offset,
+            filter,
+          },
+        });
+        return response.data;
+      } catch (error) {
+        console.error('Error skyflats:', error);
+        throw error;
+      }
+    },
 
   //-------------------------------------  dome ---------------------------------------
   domeAction(action) {
