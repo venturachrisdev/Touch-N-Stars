@@ -66,6 +66,8 @@
 <script setup>
 import { computed } from 'vue';
 import { useLogStore } from '@/store/logStore';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { FilePicker } from '@capawesome/capacitor-file-picker';
 const logStore = useLogStore();
 
 // Funktion zum Formatieren des Timestamps (optional)
@@ -74,25 +76,65 @@ function formatTimestamp(timestamp) {
   return date.toLocaleString();
 }
 
-// Computed Property für gefilterte Logs
 const filteredLogs = computed(() =>
   logStore.LogsInfo.logs.filter((entry) => !entry.message.includes('EDS_ERR_INVALID_PARAMETER'))
 );
 
-function downloadLogs() {
+async function downloadLogs() {
   const logContent = filteredLogs.value
     .map((entry) => `[${formatTimestamp(entry.timestamp)}] ${entry.level}: ${entry.message}`)
     .join('\n');
 
-  const blob = new Blob([logContent], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `logs-${new Date().toISOString().slice(0, 10)}.log`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  const fileName = `logs-${new Date().toISOString().slice(0, 10)}.log`;
+
+  // Platform detection for native Android vs web
+  if (typeof window !== 'undefined' && window.Capacitor) {
+    // Let user choose directory
+    try {
+      const dirResult = await FilePicker.pickDirectory();
+      if (!dirResult.path) return;
+
+      // Extract clean path from URI and ensure directory exists
+      const cleanPath = dirResult.path.replace(/content:\/\/.*?\/tree\/primary%3A/, '');
+      const decodedPath = decodeURIComponent(cleanPath).replace(/:/, '/');
+
+      try {
+        await Filesystem.mkdir({
+          path: decodedPath,
+          directory: Directory.ExternalStorage,
+          recursive: true,
+        });
+      } catch (mkdirError) {
+        if (mkdirError.message !== 'Directory exists') {
+          throw mkdirError;
+        }
+      }
+
+      await Filesystem.writeFile({
+        path: `${decodedPath}/${fileName}`,
+        data: logContent,
+        directory: Directory.ExternalStorage,
+        encoding: 'utf8',
+        recursive: true,
+        exists: true,
+      });
+
+      console.log('Log file saved successfully');
+    } catch (error) {
+      console.error('Error saving log file:', error);
+    }
+  } else {
+    // Web browser fallback
+    const blob = new Blob([logContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
 }
 </script>
 
