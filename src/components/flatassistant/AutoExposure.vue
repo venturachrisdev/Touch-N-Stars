@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col w-full max-w-xs space-y-2 mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5"
+    class="flex flex-col w-full max-w-md space-y-2 mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5"
   >
     <setCount />
     <setGain />
@@ -24,9 +24,10 @@
   </div>
   <div
     v-show="flatsStore.status.CompletedIterations > -1"
-    class="flex flex-col w-full max-w-xs space-y-2 mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5"
+    class="flex flex-col w-full max-w-md space-y-2 mt-4 border border-gray-700 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg p-5"
   >
     <getStatus />
+    <LastImage />
   </div>
 </template>
 <script setup>
@@ -44,6 +45,7 @@ import setMaxExposureTime from '@/components/flatassistant/setMaxExposureTime.vu
 import setHistogramMeanTarget from '@/components/flatassistant/setHistogramMeanTarget.vue';
 import setHistogramTolerance from '@/components/flatassistant/setHistogramTolerance.vue';
 import getStatus from '@/components/flatassistant/getStatus.vue';
+import LastImage from '@/components/flatassistant/LastImage.vue';
 
 const store = apiStore();
 const flatsStore = useFlatassistantStore();

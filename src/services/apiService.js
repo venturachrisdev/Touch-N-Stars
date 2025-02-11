@@ -75,9 +75,9 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/image-history`, {
-        params: { 
-          all: true ,
-          imageType : imageType,
+        params: {
+          all: true,
+          imageType: imageType,
         },
       });
       return response.data;
@@ -97,6 +97,25 @@ const apiService = {
           resize: resize,
           scale: scale,
           autoPrepare: true,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error read Image :', error);
+      throw error;
+    }
+  },
+
+  async getSequenceImageFilterd(index, quality, resize, scale, imageType) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/image/${index}`, {
+        params: {
+          quality: quality,
+          resize: resize,
+          scale: scale,
+          autoPrepare: true,
+          imageType: imageType,
         },
       });
       return response.data;
