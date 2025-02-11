@@ -58,7 +58,10 @@
       "showTutorial": "Mostra Tutorial",
       "system": {
         "description": "Fare clic su icona per riavviare o arrestare il sistema",
-        "title": "Controlli di sistema"
+        "title": "Controlli di sistema",
+        "confirmRestart": "Sei sicuro di voler riavviare il sistema?",
+        "confirmShutdown": "Sei sicuro di voler chiudere il sistema?",
+        "confirmation": "Conferma"
       }
     },
     "framing": {

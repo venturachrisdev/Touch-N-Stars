@@ -5,14 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0.9] - unreleased
+## [1.0.1.0] - unreleased
 ### Added
-- The PC can now be rebooted and switched off
+- Shutdown / Restart support (NINA PC)
+- New Translation keys
 
 ### Changed
+- Android framework replaced with CapacitorJS (previous App needs to be removed first)
 
 ### Fixed
 - ISO was not set correctly with DLSR
+- Pinia store now correctly stores Instance configurations
 
 ## [1.0.0.9] - 2025-02-07
 ### Added

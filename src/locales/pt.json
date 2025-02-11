@@ -58,7 +58,10 @@
       "showTutorial": "Exibir Tutorial",
       "system": {
         "description": "Clique em qualquer ícone para reiniciar ou desligar o sistema",
-        "title": "Controles do sistema"
+        "title": "Controles do sistema",
+        "confirmRestart": "Tem certeza de que deseja reiniciar o sistema?",
+        "confirmShutdown": "Tem certeza de que deseja desligar o sistema?",
+        "confirmation": "Confirmação"
       }
     },
     "framing": {

@@ -58,7 +58,10 @@
       "showTutorial": "显示教程",
       "system": {
         "description": "Click either icon to restart or shutdown the system",
-        "title": "System Controls"
+        "title": "System Controls",
+        "confirmRestart": "Are you sure you want to restart the system?",
+        "confirmShutdown": "Are you sure you want to shutdown the system?",
+        "confirmation": "Confirmation"
       }
     },
     "framing": {

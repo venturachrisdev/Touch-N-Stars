@@ -1,6 +1,6 @@
 {
   "name": "nina-webapp",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -8,9 +8,20 @@
     "lint": "vue-cli-service lint",
     "testbuild": "vue-cli-service build --dest \"%LOCALAPPDATA%\\NINA\\Plugins\\3.0.0\\Touch 'N' Stars\\app\"",
     "tauri": "tauri",
-    "format": "prettier --write \"src/**/*.{js,vue}\""
+    "format": "prettier --write \"src/**/*.{js,vue}\"",
+    "ionic:build": "npm run build",
+    "ionic:serve": "npm run serve"
   },
   "dependencies": {
+    "@capacitor/android": "7.0.1",
+    "@capacitor/app": "7.0.0",
+    "@capacitor/cli": "7.0.1",
+    "@capacitor/core": "7.0.1",
+    "@capacitor/geolocation": "7.0.0",
+    "@capacitor/haptics": "7.0.0",
+    "@capacitor/keyboard": "7.0.0",
+    "@capacitor/status-bar": "7.0.0",
+    "@capawesome/capacitor-android-edge-to-edge-support": "^7.0.0",
     "@heroicons/vue": "^2.2.0",
     "@pinkcao/vue-drag-resize-rotate": "^2.0.0",
     "@tauri-apps/api": "^2.2.0",
