@@ -27,7 +27,7 @@
         v-model.number="settingsStore.camera.gain"
         class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
       >
-        <option v-for="(value, key) in store.cameraInfo.Gains" :key="key" :value="key">
+        <option v-for="(value, key) in store.cameraInfo.Gains" :key="key" :value="value">
           {{ value }}
         </option>
       </select>
