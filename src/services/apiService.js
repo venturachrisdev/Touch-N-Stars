@@ -512,7 +512,8 @@ const apiService = {
     meanTolerance,
     binning,
     gain,
-    offset
+    offset,
+    filter
   ) {
     try {
       const { BASE_URL } = getUrls();
@@ -526,6 +527,7 @@ const apiService = {
           binning,
           gain,
           offset,
+          filter,
         },
       });
       return response.data;

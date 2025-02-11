@@ -9,7 +9,7 @@
     <setMaxExposureTime />
     <setHistogramMeanTarget />
     <setHistogramTolerance />
-
+    <changeFilter v-if="store.filterInfo.Connected" />
     <setBinning v-if="store.cameraInfo.BinningModes.length > 1" />
     <div v-show="flatsStore.status.State != 'Running'">
       <button @click="startAutoExposure" class="default-button-cyan">
@@ -48,6 +48,7 @@ import setHistogramMeanTarget from '@/components/flatassistant/setHistogramMeanT
 import setHistogramTolerance from '@/components/flatassistant/setHistogramTolerance.vue';
 import getStatus from '@/components/flatassistant/getStatus.vue';
 import LastImage from '@/components/flatassistant/LastImage.vue';
+import changeFilter from '@/components/filterwheel/changeFilter.vue';
 
 const store = apiStore();
 const flatsStore = useFlatassistantStore();
@@ -70,7 +71,8 @@ async function startAutoExposure() {
       flatsStore.meanTolerance,
       flatsStore.binning,
       flatsStore.gain,
-      flatsStore.offset
+      flatsStore.offset,
+      store.filterInfo?.SelectedFilter
     );
     console.log(data);
   } catch (error) {
