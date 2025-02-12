@@ -57,11 +57,11 @@
       },
       "showTutorial": "Ukázat Tutoriál",
       "system": {
-        "description": "Click either icon to restart or shutdown the system",
-        "title": "System Controls",
-        "confirmRestart": "Are you sure you want to restart the system?",
-        "confirmShutdown": "Are you sure you want to shutdown the system?",
-        "confirmation": "Confirmation"
+        "description": "Klikněte na libovolnou ikonu pro restart nebo vypnutí systému",
+        "title": "Ovládání Systému",
+        "confirmRestart": "Určitě chcete systém restartovat?",
+        "confirmShutdown": "Jste si jisti, že chcete systém vypnout?",
+        "confirmation": "Potvrzení"
       }
     },
     "framing": {
@@ -304,7 +304,7 @@
       }
     },
     "camera": {
-      "title": "kamera",
+      "title": "Kamera",
       "connect": "Připojte kameru",
       "settings": "Nastavení",
       "loop": "Cyklus",
@@ -332,7 +332,7 @@
       "warm_up_time": "Doba zahřátí",
       "cooling_time": "Doba chlazení",
       "binning_mode": "Binning",
-      "readout_mode": "Readout Mode"
+      "readout_mode": "Režim Čtení"
     },
     "tppa": {
       "title": "Tříbodové Polární Zarovnání",
