@@ -17,7 +17,7 @@ export const useFlatassistantStore = defineStore('flatassistantStore', {
     status: {
       State: '',
       TotalIterations: 0,
-      CompletedIterations: 0,
+      CompletedIterations: -1,
     },
     intervalId: null,
   }),

@@ -42,6 +42,9 @@ export const useSettingsStore = defineStore('settings', {
       gain: 0,
       offset: 0,
     },
+    flats: {
+      selectedOption: 'AutoExposure',
+    },
   }),
   actions: {
     setCoordinates(coords) {

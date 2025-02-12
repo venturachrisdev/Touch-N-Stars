@@ -417,7 +417,12 @@
       "mean_tolerance": "Mean tolerance",
       "completed_recordings" : "Completed recordings:",
       "start_auto_exposure": "Start auto exposure",
-      "stop": "Stop"
+      "start_auto_brightness": "Start autobrightness",
+      "start_sky_flat": "Start sky flat",
+      "stop": "Stop",
+      "auto_exposure": "Auto exposure",
+      "auto_brightness": "Auto brightness",
+      "skyflat": "Skyflat"
     },
     "weatherModal": {
       "weatherInformation": "Weather Information",

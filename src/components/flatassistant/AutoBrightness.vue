@@ -13,7 +13,7 @@
     <setBinning v-if="store.cameraInfo.BinningModes.length > 1" />
     <div v-show="flatsStore.status.State != 'Running'">
       <button @click="startAutoExposure" class="default-button-cyan">
-        {{ $t('components.flatassistant.start_auto_exposure') }}
+        {{ $t('components.flatassistant.start_auto_brightness') }}
       </button>
     </div>
     <div v-show="flatsStore.status.State == 'Running'">
