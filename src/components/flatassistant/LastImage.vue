@@ -1,7 +1,6 @@
 <template>
   <div>
-    <p v-if="isLoadingImg"></p>
-    <img v-else :src="imageData" alt="Flat Image" />
+    <img v-if="imageData" :src="imageData" alt="Flat Image" />
   </div>
 </template>
 
@@ -13,12 +12,13 @@ import { wait } from '@/utils/utils';
 
 const flatsStore = useFlatassistantStore();
 const imageData = ref(null);
-const isLoadingImg = ref(true);
+const isLoadingImg = ref(false);
 
 async function getlastImage(index, quality, resize, scale) {
+  console.log('Load image');
   try {
     const result = await apiService.getSequenceImageFilterd(index, quality, resize, scale, 'FLAT');
-    if (result.StatusCode != 200) {
+    if (result.StatusCode !== 200) {
       console.error('Unknown error: Check NINIA Log for more information');
       return;
     }
@@ -28,6 +28,7 @@ async function getlastImage(index, quality, resize, scale) {
       isLoadingImg.value = false;
     }
   } catch (error) {
+    isLoadingImg.value = false;
     console.error('Fehler beim Abrufen des Bildes:', error.message);
   }
 }
@@ -38,8 +39,8 @@ watch(
     const imageHistoryAllFilterd = await apiService.imageHistoryAllFilterd('FLAT');
     const latestIndex = imageHistoryAllFilterd.Response.length - 1;
     console.log('Watch imageHistoryInfo');
-    console.log('latestIndex: ', latestIndex);
-    if (latestIndex > 0 && isLoadingImg.value === false) {
+    console.log('latestIndex: ', latestIndex, 'isLoading: ', isLoadingImg.value);
+    if (latestIndex > 0 && !isLoadingImg.value) {
       await wait(1000); // Es kann sein, dass das Bild noch nicht verfügbar ist
       getlastImage(latestIndex, 50, true, 0.3);
     }
