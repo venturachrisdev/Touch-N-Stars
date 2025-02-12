@@ -193,7 +193,7 @@
             />
           </router-link>
         </div>
-        <div v-if="true">
+        <div v-if="store.cameraInfo.Connected && !store.sequenceRunning">
           <router-link
             to="/flats"
             class="nav-button"
