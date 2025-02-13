@@ -221,7 +221,7 @@
         </div>
       </div>
     </div>
-    <button @click="slewModal = true" class="default-button-cyan">
+    <button @click="cameraStore.slewModal = true" class="default-button-cyan">
       {{ $t('components.framing.openFraminingModal') }}
     </button>
 
@@ -234,7 +234,7 @@
 
         <!-- Framing Modal -->
         <div
-      v-if="slewModal"
+      v-if="cameraStore.slewModal"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
     >
       <div
@@ -243,7 +243,7 @@
       >
         <CenterHere />
         <button
-          @click="slewModal = false"
+          @click="cameraStore.slewModal = false"
           class="fixed sm:absolute top-2 right-2 sm:top-4 sm:right-4 p-2 text-gray-400 hover:text-white bg-gray-900 rounded-full"
         >
           <svg
@@ -290,7 +290,6 @@ const settingsStore = useSettingsStore();
 const imageContainer = ref(null);
 const image = ref(null);
 const showModal = ref(false);
-const slewModal = ref(false);
 
 // Modal öffnen / schließen
 function openModal() {

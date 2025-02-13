@@ -27,6 +27,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
   const binningMode = ref('1x1');
   const readoutMode = ref(0);
   const containerSize = ref(100);
+  const slewModal = ref(false);
 
   let exposureCountdownTimer = null;
 
@@ -247,6 +248,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
     binningMode,
     readoutMode,
     containerSize,
+    slewModal,
 
     // Actions
     capturePhoto,

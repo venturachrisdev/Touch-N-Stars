@@ -42,19 +42,38 @@
       <div>Dec: {{ marker.dec.toFixed(3) }}°</div>
     </div>
   </div>
+  <div>
+    <button
+            @click="slewAndCenter"
+            :disabled="
+              framingStore.isSlewing ||
+              framingStore.isSlewingAndCentering ||
+              framingStore.isRotating
+            "
+            class="default-button-cyan flex items-center justify-center disabled:opacity-50"
+          >
+            <span v-if="framingStore.isSlewingAndCentering" class="loader mr-2"></span>
+            {{ $t('components.slewAndCenter.slew_and_center') }}
+          </button>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue';
 import Moveable from 'vue3-moveable';
 import { useCameraStore } from '@/store/cameraStore';
 import { apiStore } from '@/store/store';
-import { degreesToHMS, degreesToDMS } from '@/utils/utils.js';
+import { useFramingStore } from '@/store/framingStore';
+import { useSettingsStore } from '@/store/settingsStore';
+import { wait, degreesToHMS, degreesToDMS } from '@/utils/utils.js';
+import apiService from '@/services/apiService';
 
 const cameraStore = useCameraStore();
+const framingStore = useFramingStore();
 const store = apiStore();
+const settingsStore = useSettingsStore();
 
-// Beispielwerte:
+
 const baseRA =  ref(100.0);         // RA in Grad für Bildzentrum
 const baseDec = ref(20.0);          // Dec in Grad für Bildzentrum
 const cameraRotationDeg = ref(15.0); // Kamera-Rotation in Grad
@@ -74,11 +93,10 @@ const marker = ref({
   ra:  null,
   dec: null,
 });
+const newRa = ref(0);
+const newDec = ref(0);
 
-/**
- * onMounted: Wir legen ggf. ein Resize-Event an,
- * damit beim Fenster-Resize das Target neu zentriert oder neu berechnet werden kann.
- */
+
 onMounted(() => {
   window.addEventListener('resize', onWindowResize);
   baseRA.value = cameraStore.plateSolveResult.Coordinates.RADegrees;
@@ -88,35 +106,39 @@ onMounted(() => {
 
   console.log(baseRA.value, baseDec.value, 'Winkel:' ,cameraRotationDeg.value,  scaleDegPerPixel.value);
 
+  nextTick(() => {
+    centerTargetBox();
+  });
+
 });
 
-/**
- * onBeforeUnmount: Eventlistener aufräumen
- */
+
 onBeforeUnmount(() => {
   window.removeEventListener('resize', onWindowResize);
 });
 
-/**
- * Wenn das Bild fertig geladen ist (onLoad), zentrieren wir die Target-Box
- * in der Bildmitte. (onImageLoad)
- */
+
+async function slewAndCenter() {
+  await framingStore.slewAndCenter(newRa.value, newDec.value);
+  console.log('done');
+  await wait(1000);
+  cameraStore.capturePhoto(
+                  apiService,
+                  settingsStore.camera.exposureTime,
+                  settingsStore.camera.gain
+                )
+  cameraStore.slewModal = false;
+
+}
+
 function onImageLoad() {
   centerTargetBox();
 }
 
-/**
- * Beim Fenster-Resize kannst du die Box neu zentrieren oder
- * zumindest die Position updaten, damit sie in der richtigen Relation bleibt.
- */
 function onWindowResize() {
   centerTargetBox();
 }
 
-/**
- * centerTargetBox():
- * Legt die Box in die (gerenderte) Bildmitte.
- */
 function centerTargetBox() {
   const rect = imageRef.value?.getBoundingClientRect();
   if (!rect) return;
@@ -127,9 +149,6 @@ function centerTargetBox() {
   calculateRaDec();
 }
 
-/**
- * Moveable-Event: "drag"
- */
 function onDrag(e) {
   // e.delta → Verschiebung seit dem letzten Drag in px
   position.value.x += e.delta[0];
@@ -211,19 +230,15 @@ function keepTargetInBounds() {
 
   marker.value.ra = ra;
   marker.value.dec = dec;
+  newRa.value = ra;
+  newDec.value = dec;
 
   console.log('RA', degreesToHMS(ra));
   console.log('Dec', degreesToDMS(dec));
 }
 </script>
 
-<!--
-  Beispiel-CSS:
-  - .wrapper umschließt alles
-  - .main-image responsiv (width: 100%; height: auto)
-  - .target-box absolute, rote Umrandung etc.
-  - .info-box absolutes Overlay oben links
--->
+
 <style scoped>
 .wrapper {
   /* Begrenze die Breite auf 80% der Viewport-Breite, 
