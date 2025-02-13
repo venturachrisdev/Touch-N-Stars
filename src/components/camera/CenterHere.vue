@@ -1,189 +1,264 @@
 <template>
-  <div v-if="isLoading" class="flex items-center justify-center min-h-screen">
+  <div class="wrapper">
+    <!-- Hauptbild: wird responsiv skaliert -->
+    <img
+      ref="imageRef"
+      :src="cameraStore.imageData"
+      alt="Captured Image"
+      class="main-image"
+      @load="onImageLoad"
+    />
+
+    <!-- Verschiebbare Box (Target) -->
     <div
-      class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"
-    ></div>
-  </div>
-  <div v-else>
-    <div
-      id="fov"
-      class="border relative overflow-hidden"
+      ref="targetRef"
+      class="target-box"
       :style="{
-        width: `${framingStore.containerSize}px`,
-        height: `${framingStore.containerSize}px`,
-        position: 'relative',
+        left: position.x + 'px',
+        top: position.y + 'px',
+        width: boxSize + 'px',
+        height: boxSize + 'px',
       }"
-      ref="containerRef"
     >
-      <!-- TargetPic als Hintergrund -->
-      <img class="absolute inset-0" ref="imageRef" :src="cameraStore.imageData" />
+      <p class="box-text">Drag me</p>
+    </div>
 
-      <!-- Verschiebbares / drehbares Ziel-Element -->
-      <div
-        class="target"
-        ref="targetRef"
-        :style="{
-          width: `${framingStore.camWidth}px`,
-          height: `${framingStore.camHeight}px`,
-          transform: `translate(${x}px, ${y}px) rotate(${-framingStore.rotationAngle}deg)`,
-          zIndex: 2,
-        }"
-      ></div>
+    <!-- Moveable-Komponente -->
+    <Moveable
+      ref="moveableRef"
+      :target="targetRef"
+      :draggable="true"
+      :rotatable="false"
+      :snappable="false"
+      @drag="onDrag"
+    />
 
-      <!-- Moveable-->
-      <Moveable
-        ref="moveableRef"
-        :target="targetRef"
-        :draggable="true"
-        :rotatable="false"
-        @drag="onDrag"
-      />
+    <!-- Anzeige der berechneten RA/Dec -->
+    <div
+      v-if="marker.ra !== null && marker.dec !== null"
+      class="info-box"
+    >
+      <div>RA: {{ marker.ra.toFixed(3) }}°</div>
+      <div>Dec: {{ marker.dec.toFixed(3) }}°</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, watch } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import Moveable from 'vue3-moveable';
-import { useFramingStore } from '@/store/framingStore';
-import { useSettingsStore } from '@/store/settingsStore';
 import { useCameraStore } from '@/store/cameraStore';
-import apiService from '@/services/apiService';
-import { degreesToHMS, degreesToDMS, rad2deg } from '@/utils/utils.js';
+import { apiStore } from '@/store/store';
+import { degreesToHMS, degreesToDMS } from '@/utils/utils.js';
 
-const framingStore = useFramingStore();
 const cameraStore = useCameraStore();
-const settingsStore = useSettingsStore();
-const isLoading = ref(true);
-const targetPic = ref(null);
+const store = apiStore();
+
+// Beispielwerte:
+const baseRA =  ref(100.0);         // RA in Grad für Bildzentrum
+const baseDec = ref(20.0);          // Dec in Grad für Bildzentrum
+const cameraRotationDeg = ref(15.0); // Kamera-Rotation in Grad
 const scaleDegPerPixel = ref(0.004); // Grad pro Pixel
-const baseRA = cameraStore?.plateSolveResult?.Coordinates?.RADegrees;
-const baseDec = cameraStore?.plateSolveResult?.Coordinates?.Dec;
-const x = ref(0);
-const y = ref(0);
-const containerRef = ref(null);
-const targetRef = ref(null);
+
+// Refs für DOM-Elemente
+const imageRef   = ref(null);
+const targetRef  = ref(null);
 const moveableRef = ref(null);
-const imageRef=ref(null);
-const imageWidth = ref(0);
-const imageHeight = ref(0);
 
-onMounted(async () => {
-  console.log("Plate Solve Result:", cameraStore.plateSolveResult);
-  console.log("Verfügbare Keys:", Object.keys(cameraStore.plateSolveResult));
-  console.log("RA Degrees:", cameraStore.plateSolveResult.Coordinates.RADegrees);
-  // Container-Größe berechnen
-  const smallerDimension = Math.min(window.innerWidth, window.innerHeight - 200);
-  const roundedDimension = Math.floor(smallerDimension / 100) * 100;
-  framingStore.containerSize = roundedDimension;
-  console.log('roundedDimension', roundedDimension);
-  framingStore.camWidth = 100;
-  framingStore.camHeight = 100;
-  // Element in die Mitte setzen
-  x.value = framingStore.containerSize / 2 - framingStore.camWidth / 2;
-  y.value = framingStore.containerSize / 2 - framingStore.camHeight / 2;
+// Position & Größe der Target-Box
+const position = ref({ x: 0, y: 0 });
+const boxSize = 50; // px
 
-  await nextTick();
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  isLoading.value = false;
+// Letzte berechnete RA/Dec
+const marker = ref({
+  ra:  null,
+  dec: null,
 });
 
-watch(
-  () => framingStore.rotationAngle,
-  () => {
-    console.log('debounceRotateRange:', framingStore.rotationAngle);
-    debounceRotateRange();
-  }
-);
+/**
+ * onMounted: Wir legen ggf. ein Resize-Event an,
+ * damit beim Fenster-Resize das Target neu zentriert oder neu berechnet werden kann.
+ */
+onMounted(() => {
+  window.addEventListener('resize', onWindowResize);
+  baseRA.value = cameraStore.plateSolveResult.Coordinates.RADegrees;
+  baseDec.value = cameraStore.plateSolveResult.Coordinates.Dec;
+  baseDec.cameraRotationDeg = cameraStore.plateSolveResult.PositionAngle;
+  scaleDegPerPixel.value = cameraStore.plateSolveResult.Pixscale / 3600;
 
-watch(
-  () => imageRef.value,
-  () => {
-    console.log('mageRef.value:', imageRef.value);
-    const rect = imageRef.value.getBoundingClientRect();
+  console.log(baseRA.value, baseDec.value,  cameraRotationDeg.value,  scaleDegPerPixel.value);
 
+});
 
-    imageWidth.value =  rect.width;
-    imageHeight.value = rect.height;
-    
-    console.log(`Bildgröße: ${imageWidth.value}x${imageHeight.value}`);
-  }
-);
+/**
+ * onBeforeUnmount: Eventlistener aufräumen
+ */
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', onWindowResize);
+});
 
-
-let debounceTimeout;
-function debounceRotateRange() {
-  clearTimeout(debounceTimeout);
-  debounceTimeout = setTimeout(() => {
-    rotateByRange();
-  }, 500); // Wartezeit in Millisekunden
+/**
+ * Wenn das Bild fertig geladen ist (onLoad), zentrieren wir die Target-Box
+ * in der Bildmitte. (onImageLoad)
+ */
+function onImageLoad() {
+  centerTargetBox();
 }
 
+/**
+ * Beim Fenster-Resize kannst du die Box neu zentrieren oder
+ * zumindest die Position updaten, damit sie in der richtigen Relation bleibt.
+ */
+function onWindowResize() {
+  centerTargetBox();
+}
 
-// Drag-Event von Moveable
-function onDrag(e) {
-  x.value += e.delta[0];
-  y.value += e.delta[1];
+/**
+ * centerTargetBox():
+ * Legt die Box in die (gerenderte) Bildmitte.
+ */
+function centerTargetBox() {
+  const rect = imageRef.value?.getBoundingClientRect();
+  if (!rect) return;
 
-  // Begrenzung: nicht über Container hinausragen
-  if (x.value < 0) x.value = 0;
-  if (y.value < 0) y.value = 0;
-  if (x.value > framingStore.containerSize - framingStore.camWidth)
-    x.value = framingStore.containerSize - framingStore.camWidth;
-  if (y.value > framingStore.containerSize - framingStore.camHeight)
-    y.value = framingStore.containerSize - framingStore.camHeight;
+  position.value.x = rect.width / 2 - boxSize / 2;
+  position.value.y = rect.height / 2 - boxSize / 2;
 
   calculateRaDec();
 }
 
+/**
+ * Moveable-Event: "drag"
+ */
+function onDrag(e) {
+  // e.delta → Verschiebung seit dem letzten Drag in px
+  position.value.x += e.delta[0];
+  position.value.y += e.delta[1];
 
-function calculateRaDec() {
-  // Center des Ziel-Rechtecks
-  const targetCenterX = x.value + framingStore.camWidth / 2;
-  const targetCenterY = y.value + framingStore.camHeight / 2;
+  // Box in Bildgrenzen halten (optional)
+  keepTargetInBounds();
 
-  // Container-Mitte
-  const center = framingStore.containerSize / 2;
-
-  // Abweichung in Pixel
-  const deltaX = targetCenterX - center;
-  const deltaY = center - targetCenterY;
-
-  // Offset DEC
-  const offsetDec = deltaY * scaleDegPerPixel.value;
-
-  // RA-Korrektur (cos(dec))
-  let cosDec = Math.cos((baseDec * Math.PI) / 180);
-  if (Math.abs(cosDec) < 1e-8) cosDec = 1e-8;
-  const offsetRA = (deltaX * scaleDegPerPixel.value) / cosDec;
-
-  // Aktuelle Koords
-  const currentRA = baseRA - offsetRA;
-  const currentDec = baseDec + offsetDec;
-
-  // Als String speichern
-  framingStore.RAangleString = degreesToHMS(currentRA);
-  framingStore.DECangleString = degreesToDMS(currentDec);
-
-  framingStore.RAangle = currentRA;
-  framingStore.DECangle = currentDec;
-
-  console.log(currentRA , currentDec);
+  // RA/Dec neu berechnen
+  calculateRaDec();
 }
 
+/**
+ * Box an die Bildgrenzen anpassen
+ */
+function keepTargetInBounds() {
+  const rect = imageRef.value?.getBoundingClientRect();
+  if (!rect) return;
+
+  const w = rect.width;
+  const h = rect.height;
+
+  // Klemmen
+  if (position.value.x < 0) position.value.x = 0;
+  if (position.value.y < 0) position.value.y = 0;
+  if (position.value.x > w - boxSize) position.value.x = w - boxSize;
+  if (position.value.y > h - boxSize) position.value.y = h - boxSize;
+}
+
+/**
+ * calculateRaDec():
+ * Ermittelt RA/Dec basierend auf Box-Position + Rotation.
+ */
+function calculateRaDec() {
+  const rect = imageRef.value?.getBoundingClientRect();
+  if (!rect) return;
+
+  const sensorWidth = store.cameraInfo.XSize;
+  const displayedWidth = rect.width;
+  const ratioX = sensorWidth / displayedWidth;
+  const sensorHeight = store.cameraInfo.YSize;
+  const displayedHeight = rect.height;
+  const ratioY = sensorHeight / displayedHeight;
+
+  // 1) Bildmitte
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+
+  // 2) Mittelpunkt der Box
+  const boxCenterX = position.value.x + boxSize / 2;
+  const boxCenterY = position.value.y + boxSize / 2;
+
+  // 3) dx, dy relativ zur Bildmitte
+  //    dx nach rechts positiv, dy nach oben positiv
+  let dx = boxCenterX - centerX;
+  let dy = centerY - boxCenterY; // invertiert
+
+
+  const scaleDegPerPixelX = scaleDegPerPixel.value * ratioX;
+  const scaleDegPerPixelY = scaleDegPerPixel.value * ratioY;
+
+  
+    // Offset DEC
+    const offsetDec = dy * scaleDegPerPixelX;
+
+    // RA-Korrektur (cos(dec))
+    let cosDec = Math.cos((baseDec.value * Math.PI) / 180);
+    if (Math.abs(cosDec) < 1e-8) cosDec = 1e-8;
+    const offsetRA = (dx * scaleDegPerPixelY) / cosDec;
+
+
+  // 6) Final: RA, Dec
+  const ra  = baseRA.value - offsetRA;  // Vorzeichen ggf. anpassen
+  const dec = baseDec.value + offsetDec;
+
+  marker.value.ra  = ra;
+  marker.value.dec = dec;
+
+  console.log('RA', degreesToHMS(ra));
+  console.log('dec',degreesToDMS(dec));
+}
 </script>
 
+<!--
+  Beispiel-CSS:
+  - .wrapper umschließt alles
+  - .main-image responsiv (width: 100%; height: auto)
+  - .target-box absolute, rote Umrandung etc.
+  - .info-box absolutes Overlay oben links
+-->
 <style scoped>
-.target {
+.wrapper {
+  /* Begrenze die Breite auf 80% der Viewport-Breite, 
+     max. 800px, zentriere optional via margin */
+  max-width: 800px;
+  width: 80vw;
+  margin: 0 auto;
+  position: relative;
+}
+
+.main-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.target-box {
   position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px dashed red;
+  border: 2px dashed red;
+  background-color: rgba(255, 0, 0, 0.05);
+  cursor: move;
+  user-select: none;
+}
+
+.box-text {
+  margin: auto;
+  color: red;
+  font-size: 10px;
+  text-align: center;
+}
+
+.info-box {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 8px;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.9rem;
 }
 </style>
-
-
-
-
-144
