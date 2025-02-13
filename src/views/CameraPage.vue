@@ -200,6 +200,9 @@
                 {{ $t('components.camera.cancel') }}
               </button>
             </div>
+            <button v-if="cameraStore.imageData" @click="cameraStore.slewModal = true" class="default-button-cyan">
+              {{ $t('components.camera.open_center_here') }}
+            </button>
           </div>
         </div>
 
@@ -221,9 +224,6 @@
         </div>
       </div>
     </div>
-    <button @click="cameraStore.slewModal = true" class="default-button-cyan">
-      {{ $t('components.framing.openFraminingModal') }}
-    </button>
 
     <ImageModal
       :showModal="showModal"
@@ -232,8 +232,8 @@
       @close="closeModal"
     />
 
-        <!-- Framing Modal -->
-        <div
+    <!-- Framing Modal -->
+    <div
       v-if="cameraStore.slewModal"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
     >

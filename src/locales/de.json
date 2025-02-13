@@ -332,7 +332,8 @@
       "warm_up_time": "Aufwärmzeit",
       "cooling_time": "Kühlzeit",
       "binning_mode": "Binning",
-      "readout_mode": "Readout Mode"
+      "readout_mode": "Readout Mode",
+      "open_center_here": "Center here"
     },
     "tppa": {
       "title": "Drei-Punkt-Polarausrichtung",

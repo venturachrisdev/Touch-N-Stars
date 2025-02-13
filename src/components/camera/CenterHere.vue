@@ -34,27 +34,22 @@
     />
 
     <!-- Anzeige der berechneten RA/Dec -->
-    <div
-      v-if="marker.ra !== null && marker.dec !== null"
-      class="info-box"
-    >
+    <div v-if="marker.ra !== null && marker.dec !== null" class="info-box">
       <div>RA: {{ marker.ra.toFixed(3) }}°</div>
       <div>Dec: {{ marker.dec.toFixed(3) }}°</div>
     </div>
   </div>
   <div>
     <button
-            @click="slewAndCenter"
-            :disabled="
-              framingStore.isSlewing ||
-              framingStore.isSlewingAndCentering ||
-              framingStore.isRotating
-            "
-            class="default-button-cyan flex items-center justify-center disabled:opacity-50"
-          >
-            <span v-if="framingStore.isSlewingAndCentering" class="loader mr-2"></span>
-            {{ $t('components.slewAndCenter.slew_and_center') }}
-          </button>
+      @click="slewAndCenter"
+      :disabled="
+        framingStore.isSlewing || framingStore.isSlewingAndCentering || framingStore.isRotating
+      "
+      class="default-button-cyan flex items-center justify-center disabled:opacity-50"
+    >
+      <span v-if="framingStore.isSlewingAndCentering" class="loader mr-2"></span>
+      {{ $t('components.slewAndCenter.slew_and_center') }}
+    </button>
   </div>
 </template>
 
@@ -73,15 +68,14 @@ const framingStore = useFramingStore();
 const store = apiStore();
 const settingsStore = useSettingsStore();
 
-
-const baseRA =  ref(100.0);         // RA in Grad für Bildzentrum
-const baseDec = ref(20.0);          // Dec in Grad für Bildzentrum
+const baseRA = ref(100.0); // RA in Grad für Bildzentrum
+const baseDec = ref(20.0); // Dec in Grad für Bildzentrum
 const cameraRotationDeg = ref(15.0); // Kamera-Rotation in Grad
 const scaleDegPerPixel = ref(0.004); // Grad pro Pixel
 
 // Refs für DOM-Elemente
-const imageRef   = ref(null);
-const targetRef  = ref(null);
+const imageRef = ref(null);
+const targetRef = ref(null);
 const moveableRef = ref(null);
 
 // Position & Größe der Target-Box
@@ -90,12 +84,11 @@ const boxSize = 50; // px
 
 // Letzte berechnete RA/Dec
 const marker = ref({
-  ra:  null,
+  ra: null,
   dec: null,
 });
 const newRa = ref(0);
 const newDec = ref(0);
-
 
 onMounted(() => {
   window.addEventListener('resize', onWindowResize);
@@ -104,31 +97,33 @@ onMounted(() => {
   cameraRotationDeg.value = cameraStore.plateSolveResult.PositionAngle;
   scaleDegPerPixel.value = cameraStore.plateSolveResult.Pixscale / 3600;
 
-  console.log(baseRA.value, baseDec.value, 'Winkel:' ,cameraRotationDeg.value,  scaleDegPerPixel.value);
+  console.log(
+    baseRA.value,
+    baseDec.value,
+    'Winkel:',
+    cameraRotationDeg.value,
+    scaleDegPerPixel.value
+  );
 
   nextTick(() => {
     centerTargetBox();
   });
-
 });
-
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', onWindowResize);
 });
-
 
 async function slewAndCenter() {
   await framingStore.slewAndCenter(newRa.value, newDec.value);
   console.log('done');
   await wait(1000);
   cameraStore.capturePhoto(
-                  apiService,
-                  settingsStore.camera.exposureTime,
-                  settingsStore.camera.gain
-                )
+    apiService,
+    settingsStore.camera.exposureTime,
+    settingsStore.camera.gain
+  );
   cameraStore.slewModal = false;
-
 }
 
 function onImageLoad() {
@@ -182,7 +177,7 @@ function keepTargetInBounds() {
  * calculateRaDec():
  * Ermittelt RA/Dec basierend auf Box-Position + Rotation.
  */
- function calculateRaDec() {
+function calculateRaDec() {
   const rect = imageRef.value?.getBoundingClientRect();
   if (!rect) return;
 
@@ -237,7 +232,6 @@ function keepTargetInBounds() {
   console.log('Dec', degreesToDMS(dec));
 }
 </script>
-
 
 <style scoped>
 .wrapper {
