@@ -280,6 +280,22 @@ const apiService = {
     }
   },
 
+  async getImageData() {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
+        params: {
+          getResult: true,
+          omitImage: true,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error retrieving capture result:', error);
+      throw error;
+    }
+  },
+
   async startCooling(temp, minutes) {
     try {
       const { BASE_URL } = getUrls();

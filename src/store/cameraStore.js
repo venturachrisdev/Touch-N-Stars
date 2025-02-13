@@ -20,6 +20,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
   const warmingTime = ref(10);
   const buttonCoolerOn = ref(false);
   const plateSolveError = ref(false);
+  const plateSolveResult = ref('');
   const exposureCountdown = ref(0);
   const exposureProgress = ref(0);
   const countdownRunning = ref(false);
@@ -58,7 +59,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
   }
 
   // Startet die Aufnahme + Countdown + Bildabruf
-  async function capturePhoto(apiService, exposureTime, gain, solve = false) {
+  async function capturePhoto(apiService, exposureTime, gain, solve = true) {
     if (exposureTime <= 0) {
       exposureTime = 2; // Default-Wert
       return;
@@ -94,6 +95,8 @@ export const useCameraStore = defineStore('cameraStore', () => {
           const result = await apiService.getCaptureResult();
           image = result?.Response?.Image;
           if (image) {
+            plateSolveResult.value = result?.Response?.PlateSolveResult;
+            console.log('Platesovle:', plateSolveResult.value);
             imageData.value = `data:image/jpeg;base64,${image}`;
             break;
           }
@@ -236,6 +239,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
     warmingTime,
     buttonCoolerOn,
     plateSolveError,
+    plateSolveResult,
     exposureCountdown,
     exposureProgress,
     countdownRunning,
