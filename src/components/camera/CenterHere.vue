@@ -83,10 +83,10 @@ onMounted(() => {
   window.addEventListener('resize', onWindowResize);
   baseRA.value = cameraStore.plateSolveResult.Coordinates.RADegrees;
   baseDec.value = cameraStore.plateSolveResult.Coordinates.Dec;
-  baseDec.cameraRotationDeg = cameraStore.plateSolveResult.PositionAngle;
+  cameraRotationDeg.value = cameraStore.plateSolveResult.PositionAngle;
   scaleDegPerPixel.value = cameraStore.plateSolveResult.Pixscale / 3600;
 
-  console.log(baseRA.value, baseDec.value,  cameraRotationDeg.value,  scaleDegPerPixel.value);
+  console.log(baseRA.value, baseDec.value, 'Winkel:' ,cameraRotationDeg.value,  scaleDegPerPixel.value);
 
 });
 
@@ -163,7 +163,7 @@ function keepTargetInBounds() {
  * calculateRaDec():
  * Ermittelt RA/Dec basierend auf Box-Position + Rotation.
  */
-function calculateRaDec() {
+ function calculateRaDec() {
   const rect = imageRef.value?.getBoundingClientRect();
   if (!rect) return;
 
@@ -174,42 +174,46 @@ function calculateRaDec() {
   const displayedHeight = rect.height;
   const ratioY = sensorHeight / displayedHeight;
 
-  // 1) Bildmitte
+  // Bildmitte
   const centerX = rect.width / 2;
   const centerY = rect.height / 2;
 
-  // 2) Mittelpunkt der Box
+  // Mittelpunkt der Box
   const boxCenterX = position.value.x + boxSize / 2;
   const boxCenterY = position.value.y + boxSize / 2;
 
-  // 3) dx, dy relativ zur Bildmitte
-  //    dx nach rechts positiv, dy nach oben positiv
+  // dx, dy relativ zur Bildmitte (dx nach rechts positiv, dy nach oben positiv)
   let dx = boxCenterX - centerX;
   let dy = centerY - boxCenterY; // invertiert
 
+  // Kamera-Rotationswinkel (in Radiant umrechnen)
+  const theta = (cameraRotationDeg.value * Math.PI) / 180;
+  console.log(cameraRotationDeg.value);
+
+  // Drehung der Verschiebung (dx, dy) um den Winkel theta
+  const rotatedDx = dx * Math.cos(theta) - dy * Math.sin(theta);
+  const rotatedDy = dx * Math.sin(theta) + dy * Math.cos(theta);
 
   const scaleDegPerPixelX = scaleDegPerPixel.value * ratioX;
   const scaleDegPerPixelY = scaleDegPerPixel.value * ratioY;
 
-  
-    // Offset DEC
-    const offsetDec = dy * scaleDegPerPixelX;
+  // Offset DEC
+  const offsetDec = rotatedDy * scaleDegPerPixelX;
 
-    // RA-Korrektur (cos(dec))
-    let cosDec = Math.cos((baseDec.value * Math.PI) / 180);
-    if (Math.abs(cosDec) < 1e-8) cosDec = 1e-8;
-    const offsetRA = (dx * scaleDegPerPixelY) / cosDec;
+  // RA-Korrektur (cos(dec))
+  let cosDec = Math.cos((baseDec.value * Math.PI) / 180);
+  if (Math.abs(cosDec) < 1e-8) cosDec = 1e-8;
+  const offsetRA = (rotatedDx * scaleDegPerPixelY) / cosDec;
 
-
-  // 6) Final: RA, Dec
-  const ra  = baseRA.value - offsetRA;  // Vorzeichen ggf. anpassen
+  // Final: RA, Dec
+  const ra = baseRA.value - offsetRA;
   const dec = baseDec.value + offsetDec;
 
-  marker.value.ra  = ra;
+  marker.value.ra = ra;
   marker.value.dec = dec;
 
   console.log('RA', degreesToHMS(ra));
-  console.log('dec',degreesToDMS(dec));
+  console.log('Dec', degreesToDMS(dec));
 }
 </script>
 
