@@ -3,7 +3,7 @@ import App from '@/App.vue';
 import router from '@/router';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
-import './assets/tailwind.css'; // Importiert Tailwind CSS
+import './assets/tailwind.css';
 import { createHead } from '@unhead/vue';
 import i18n from '@/i18n';
 import { Capacitor } from '@capacitor/core';
