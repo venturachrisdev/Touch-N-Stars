@@ -269,7 +269,6 @@ import {
   Cog6ToothIcon,
   LightBulbIcon,
   AdjustmentsVerticalIcon,
-  DeviceTabletIcon,
 } from '@heroicons/vue/24/outline';
 import { apiStore } from '@/store/store';
 import exposureCountdown from '@/components/helpers/ExposureCountdown.vue';
