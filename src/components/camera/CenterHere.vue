@@ -131,7 +131,8 @@ async function slewAndCenter() {
   cameraStore.capturePhoto(
     apiService,
     settingsStore.camera.exposureTime,
-    settingsStore.camera.gain
+    settingsStore.camera.gain,
+    settingsStore.camera.useSolve
   );
   cameraStore.imageData = '';
   cameraStore.slewModal = false;
