@@ -20,11 +20,14 @@ export const useCameraStore = defineStore('cameraStore', () => {
   const warmingTime = ref(10);
   const buttonCoolerOn = ref(false);
   const plateSolveError = ref(false);
+  const plateSolveResult = ref('');
   const exposureCountdown = ref(0);
   const exposureProgress = ref(0);
   const countdownRunning = ref(false);
   const binningMode = ref('1x1');
   const readoutMode = ref(0);
+  const containerSize = ref(100);
+  const slewModal = ref(false);
 
   let exposureCountdownTimer = null;
 
@@ -94,6 +97,8 @@ export const useCameraStore = defineStore('cameraStore', () => {
           const result = await apiService.getCaptureResult();
           image = result?.Response?.Image;
           if (image) {
+            plateSolveResult.value = result?.Response?.PlateSolveResult;
+            console.log('Platesovle:', plateSolveResult.value);
             imageData.value = `data:image/jpeg;base64,${image}`;
             break;
           }
@@ -236,11 +241,14 @@ export const useCameraStore = defineStore('cameraStore', () => {
     warmingTime,
     buttonCoolerOn,
     plateSolveError,
+    plateSolveResult,
     exposureCountdown,
     exposureProgress,
     countdownRunning,
     binningMode,
     readoutMode,
+    containerSize,
+    slewModal,
 
     // Actions
     capturePhoto,

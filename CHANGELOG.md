@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Shutdown / Restart support (NINA PC)
 - New Translation keys
 - Manuell mount controll
+- “center here” added
 
 ### Changed
 - Android framework replaced with CapacitorJS (previous App needs to be removed first)
 - Images are processed in the same way as in NINA
+- Camerapage layout reworked
 
 ### Fixed
 - ISO was not set correctly with DLSR
