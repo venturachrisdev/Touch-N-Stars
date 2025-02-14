@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Android framework replaced with CapacitorJS (previous App needs to be removed first)
+- Android 10 is now required as min. version
 - Camerapage layout reworked
 
 ### Fixed
