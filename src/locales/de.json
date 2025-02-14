@@ -408,6 +408,24 @@
       },
       "title": "Flatpanel"
     },
+    "flatassistant": {
+      "title": "Flat Assistant",
+      "count": "Anzahl",
+      "min_exposure_time": "Min Belichtungszeit",
+      "max_exposure_time": "Max Belichtungszeit",
+      "min_brightness": "Min Helligkeit",
+      "max_brightness": "Max Helligkeit",
+      "histogram_mean_target": "Histogrammdurchschnitsziel ",
+      "mean_tolerance": "Duchschnittstoleranz",
+      "completed_recordings" : "Completed recordings:",
+      "start_auto_exposure": "Start",
+      "start_auto_brightness": "Start",
+      "start_sky_flat": "Start",
+      "stop": "Stop",
+      "auto_exposure": "Dynamische Belichtungszeit",
+      "auto_brightness": "Dynamische Helligkeit",
+      "skyflat": "Skyflat"
+    },
     "weatherModal": {
       "weatherInformation": "Wetterinformationen",
       "metric": "Metrisch",

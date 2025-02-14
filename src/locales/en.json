@@ -409,6 +409,7 @@
       "title": "Flatpanel"
     },
     "flatassistant": {
+      "title": "Flat assistant",
       "count": "Count",
       "min_exposure_time": "Min exposure time",
       "max_exposure_time": "Max exposure time",
