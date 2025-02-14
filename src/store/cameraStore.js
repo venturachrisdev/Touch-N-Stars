@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia';
 import { apiStore } from '@/store/store';
 import { useFramingStore } from '@/store/framingStore';
+import { useSettingsStore } from './settingsStore';
 import { ref } from 'vue';
 
 export const useCameraStore = defineStore('cameraStore', () => {
   const framingStore = useFramingStore();
+  const settingsStore = useSettingsStore();
   const store = apiStore();
   const remainingExposureTime = ref(0);
   const progress = ref(0);
@@ -94,7 +96,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
 
       while (!image && attempts < maxAttempts && !isAbort.value) {
         try {
-          const result = await apiService.getCaptureResult();
+          const result = await apiService.getCaptureResult(settingsStore.camera.imageQuality);
           image = result?.Response?.Image;
           if (image) {
             plateSolveResult.value = result?.Response?.PlateSolveResult;

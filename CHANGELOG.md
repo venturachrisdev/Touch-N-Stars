@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Shutdown / Restart support (NINA PC)
 - New Translation keys
 - “center here” added
+- image settings
 
 ### Changed
 - Android framework replaced with CapacitorJS (previous App needs to be removed first)

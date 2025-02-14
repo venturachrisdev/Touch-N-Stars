@@ -207,7 +207,7 @@ watch(
 
       await wait(3000); // Es kann sein, dass das Bild noch nicht verfügbar ist
 
-      getlastImage(latestIndex, 75, true, 0.5);
+      getlastImage(latestIndex, settingsStore.camera.imageQuality, true, 0.5);
       if (showModal.value) {
         getlastModalImage(latestIndex, 90, true, 0.8);
       }
@@ -218,7 +218,7 @@ watch(
 
 onMounted(() => {
   const latestIndex = store.imageHistoryInfo.length - 1;
-  getlastImage(latestIndex, 75, true, 0.5);
+  getlastImage(latestIndex,  settingsStore.camera.imageQuality, true, 0.5);
   console.log('Mounted last LastSequenceImg');
   console.log('latestIndex: ', latestIndex);
   console.log('isLoadingImg: ', isLoadingImg.value);
