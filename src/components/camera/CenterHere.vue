@@ -127,12 +127,13 @@ onBeforeUnmount(() => {
 async function slewAndCenter() {
   const slewResult = await framingStore.slewAndCenter(newRa.value, newDec.value);
   console.log('slewAndCenter done', slewResult);
-  await wait(1000);
+  await wait(500);
   cameraStore.capturePhoto(
     apiService,
     settingsStore.camera.exposureTime,
     settingsStore.camera.gain
   );
+  cameraStore.imageData = '';
   cameraStore.slewModal = false;
 }
 

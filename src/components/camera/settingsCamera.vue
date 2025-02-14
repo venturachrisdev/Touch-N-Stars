@@ -84,7 +84,7 @@ import { useSettingsStore } from '@/store/settingsStore';
 import apiService from '@/services/apiService';
 import setBinning from '@/components/camera/setBinning.vue';
 import setReadoutMode from '@/components/camera/setReadoutMode.vue';
-import setSolve from '@/components/camera/setSolve.vue'; 
+import setSolve from '@/components/camera/setSolve.vue';
 
 const store = apiStore();
 const settingsStore = useSettingsStore();

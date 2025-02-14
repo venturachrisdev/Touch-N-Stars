@@ -135,7 +135,8 @@
                 cameraStore.capturePhoto(
                   apiService,
                   settingsStore.camera.exposureTime,
-                  settingsStore.camera.gain
+                  settingsStore.camera.gain,
+                  settingsStore.camera.useSolve
                 )
               "
               :disabled="cameraStore.loading"
@@ -219,7 +220,7 @@
             />
             <!-- SVG Icon oben rechts -->
             <div
-              v-if="cameraStore.imageData && cameraStore.plateSolveResult.Coordinates.RADegrees"
+              v-if="cameraStore.imageData && cameraStore?.plateSolveResult?.Coordinates?.RADegrees"
               class="absolute top-2 right-2 z-50"
             >
               <svg

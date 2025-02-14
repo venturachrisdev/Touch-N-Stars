@@ -61,7 +61,7 @@ export const useCameraStore = defineStore('cameraStore', () => {
   }
 
   // Startet die Aufnahme + Countdown + Bildabruf
-  async function capturePhoto(apiService, exposureTime, gain, solve = true) {
+  async function capturePhoto(apiService, exposureTime, gain, solve = false) {
     if (exposureTime <= 0) {
       exposureTime = 2; // Default-Wert
       return;

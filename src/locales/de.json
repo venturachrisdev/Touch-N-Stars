@@ -333,7 +333,7 @@
       "cooling_time": "Kühlzeit",
       "binning_mode": "Binning",
       "readout_mode": "Readout Mode",
-      "open_center_here": "Center here"
+      "set_use_platesolve": "Use Platesolve"
     },
     "tppa": {
       "title": "Drei-Punkt-Polarausrichtung",
