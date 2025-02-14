@@ -37,7 +37,17 @@
       <div>Dec: {{ marker.dec }}</div>
     </div>
   </div>
-  <div>
+  <div class="flex flex-col md:flex-row py-1 gap-1">
+    <button
+      @click="slew"
+      :disabled="
+        framingStore.isSlewing || framingStore.isSlewingAndCentering || framingStore.isRotating
+      "
+      class="default-button-cyan flex items-center justify-center disabled:opacity-50"
+    >
+      <span v-if="framingStore.isSlewing" class="loader mr-2"></span>
+      {{ $t('components.slewAndCenter.slew') }}
+    </button>
     <button
       @click="slewAndCenter"
       :disabled="
@@ -48,6 +58,7 @@
       <span v-if="framingStore.isSlewingAndCentering" class="loader mr-2"></span>
       {{ $t('components.slewAndCenter.slew_and_center') }}
     </button>
+
   </div>
 </template>
 
@@ -124,7 +135,35 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', onWindowResize);
 });
 
+async function unparkMount() {
+  if (store.mountInfo.AtPark) {
+    try {
+      await apiService.mountAction('unpark');
+      await wait(2000);
+      console.log(t('components.mount.control.unpark'));
+    } catch (error) {
+      console.log(t('components.mount.control.errors.unpark'));
+    }
+  }
+}
+
+async function slew() {
+  await unparkMount(); // Überprüfen und Entparken, falls erforderlich
+  const slewResult = await framingStore.slew(newRa.value, newDec.value);
+  console.log('slew done', slewResult);
+  await wait(500);
+  cameraStore.capturePhoto(
+    apiService,
+    settingsStore.camera.exposureTime,
+    settingsStore.camera.gain,
+    settingsStore.camera.useSolve
+  );
+  cameraStore.imageData = '';
+  cameraStore.slewModal = false;
+}
+
 async function slewAndCenter() {
+  await unparkMount(); // Überprüfen und Entparken, falls erforderlich
   const slewResult = await framingStore.slewAndCenter(newRa.value, newDec.value);
   console.log('slewAndCenter done', slewResult);
   await wait(500);
@@ -245,8 +284,8 @@ function calculateRaDec() {
 
   marker.value.ra = degreesToHMS(ra);
   marker.value.dec = degreesToDMS(dec);
-  console.log('RA', ra);
-  console.log('Dec', dec);
+  //console.log('RA', ra);
+  //console.log('Dec', dec);
 }
 </script>
 
