@@ -96,7 +96,7 @@ const apiService = {
           quality: quality,
           resize: resize,
           scale: scale,
-          autoPrepare: true,
+          autoPrepare: false,
         },
       });
       return response.data;
@@ -114,7 +114,7 @@ const apiService = {
           quality: quality,
           resize: resize,
           scale: scale,
-          autoPrepare: true,
+          autoPrepare: false,
           imageType: imageType,
         },
       });
