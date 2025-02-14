@@ -73,6 +73,7 @@
     </div>
     <setBinning v-if="store.cameraInfo.BinningModes.length > 1" />
     <setReadoutMode v-if="store.cameraInfo.ReadoutModes.length > 1" />
+    <setSolve />
   </div>
 </template>
 
@@ -82,7 +83,8 @@ import { apiStore } from '@/store/store';
 import { useSettingsStore } from '@/store/settingsStore';
 import apiService from '@/services/apiService';
 import setBinning from '@/components/camera/setBinning.vue';
-import setReadoutMode from './setReadoutMode.vue';
+import setReadoutMode from '@/components/camera/setReadoutMode.vue';
+import setSolve from '@/components/camera/setSolve.vue';
 
 const store = apiStore();
 const settingsStore = useSettingsStore();

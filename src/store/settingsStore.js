@@ -41,6 +41,7 @@ export const useSettingsStore = defineStore('settings', {
       exposureTime: 2,
       gain: 0,
       offset: 0,
+      useSolve: false,
     },
   }),
   actions: {

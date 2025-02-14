@@ -135,7 +135,8 @@
                 cameraStore.capturePhoto(
                   apiService,
                   settingsStore.camera.exposureTime,
-                  settingsStore.camera.gain
+                  settingsStore.camera.gain,
+                  settingsStore.camera.useSolve
                 )
               "
               :disabled="cameraStore.loading"
@@ -204,10 +205,10 @@
         </div>
 
         <!-- Right Panel - Image Display -->
-        <div class="flex w-full lg:w-5/6">
+        <div class="flex w-full lg:w-5/6 relative">
           <div
             ref="imageContainer"
-            class="image-container overflow-hidden min-h-[65vh] w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700/50 flex-grow"
+            class="image-container overflow-hidden w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700/50 flex-grow"
           >
             <img
               v-if="cameraStore.imageData"
@@ -217,16 +218,76 @@
               alt="Captured Image"
               class="block"
             />
+            <div v-else class="flex items-center justify-center">
+              <img
+                src="../assets/Logo_TouchNStars_600x600.png"
+                alt="Captured Image"
+                class="block"
+              />
+            </div>
+            <!-- SVG Icon oben rechts -->
+            <div
+              v-if="cameraStore.imageData && cameraStore?.plateSolveResult?.Coordinates?.RADegrees"
+              class="absolute top-2 right-2 z-50"
+            >
+              <svg
+                @click="cameraStore.slewModal = true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-10 h-10 text-white cursor-pointer hover:text-cyan-500 transition"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"
+                />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <ImageModal
       :showModal="showModal"
       :imageData="cameraStore.imageData"
       :isLoading="false"
       @close="closeModal"
     />
+
+    <!-- slewModal Modal -->
+    <div
+      v-if="cameraStore.slewModal"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+    >
+      <div
+        class="bg-gray-900 rounded-lg p-4 overflow-y-auto max-h-[95vh] border border-gray-700 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800/50"
+      >
+        <CenterHere />
+        <button
+          @click="cameraStore.slewModal = false"
+          class="fixed sm:absolute top-2 right-2 sm:top-4 sm:right-4 p-2 text-gray-400 hover:text-white bg-gray-900 rounded-full"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -243,6 +304,7 @@ import changeFilter from '@/components/filterwheel/changeFilter.vue';
 import controlRotator from '@/components/rotator/controlRotator.vue';
 import infoRotator from '@/components/rotator/infoRotator.vue';
 import ImageModal from '@/components/helpers/imageModal.vue';
+import CenterHere from '@/components/camera/CenterHere.vue';
 
 // Initialisiere Stores
 const store = apiStore();
