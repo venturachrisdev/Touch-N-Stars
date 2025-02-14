@@ -1,4 +1,8 @@
 <template>
+  <!-- Titel -->
+  <div class="text-left mb-2">
+    <h1 class="text-xl text-center font-bold">{{ $t('components.camera.title') }}</h1>
+  </div>
   <div class="flex flex-col items-center justify-center max-w-md p-2 mx-auto">
     <select
       v-model="settingsStore.flats.selectedOption"
