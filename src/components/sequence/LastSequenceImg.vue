@@ -207,7 +207,7 @@ watch(
 
       await wait(3000); // Es kann sein, dass das Bild noch nicht verfügbar ist
 
-      getlastImage(latestIndex, 75, true, 0.5);
+      getlastImage(latestIndex, settingsStore.camera.imageQuality, true, 0.5);
       if (showModal.value) {
         getlastModalImage(latestIndex, 90, true, 0.8);
       }
