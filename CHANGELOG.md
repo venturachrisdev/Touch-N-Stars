@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New Translation keys
 - Manuell mount controll
 - “center here” added
+- image settings
 
 ### Changed
 - Android framework replaced with CapacitorJS (previous App needs to be removed first)

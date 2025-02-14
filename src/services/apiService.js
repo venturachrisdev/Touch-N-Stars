@@ -303,11 +303,11 @@ const apiService = {
     }
   },
 
-  async getCaptureResult() {
+  async getCaptureResult(quality = 80) {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
-        params: { getResult: true, quality: 80 },
+        params: { getResult: true, quality: quality },
       });
       return response.data;
     } catch (error) {

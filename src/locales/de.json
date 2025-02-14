@@ -62,6 +62,10 @@
         "confirmRestart": "Sind Sie sicher, dass Sie das System neu starten möchten?",
         "confirmShutdown": "Sind Sie sicher, dass Sie das System herunterfahren möchten?",
         "confirmation": "Bestätigung"
+      },
+      "image": {
+        "title": "Bildeinstellungen",
+        "quality": "Qualität in % "
       }
     },
     "framing": {
