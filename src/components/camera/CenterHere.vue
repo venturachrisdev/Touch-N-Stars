@@ -19,9 +19,7 @@
         width: boxSize + 'px',
         height: boxSize + 'px',
       }"
-    >
-      <p class="box-text">Drag me</p>
-    </div>
+    ></div>
 
     <!-- Moveable-Komponente -->
     <Moveable
@@ -35,8 +33,8 @@
 
     <!-- Anzeige der berechneten RA/Dec -->
     <div v-if="marker.ra !== null && marker.dec !== null" class="info-box">
-      <div>RA: {{ marker.ra.toFixed(3) }}°</div>
-      <div>Dec: {{ marker.dec.toFixed(3) }}°</div>
+      <div>RA: {{ marker.ra }}</div>
+      <div>Dec: {{ marker.dec }}</div>
     </div>
   </div>
   <div>
@@ -81,6 +79,7 @@ const moveableRef = ref(null);
 // Position & Größe der Target-Box
 const position = ref({ x: 0, y: 0 });
 const boxSize = 50; // px
+let resizeObserver = null;
 
 // Letzte berechnete RA/Dec
 const marker = ref({
@@ -92,6 +91,17 @@ const newDec = ref(0);
 
 onMounted(() => {
   window.addEventListener('resize', onWindowResize);
+
+  // Beobachtet die Bildgröße
+  resizeObserver = new ResizeObserver(() => {
+    console.log('Bildgröße hat sich geändert!');
+    onWindowResize();
+  });
+
+  if (imageRef.value) {
+    resizeObserver.observe(imageRef.value);
+  }
+
   baseRA.value = cameraStore.plateSolveResult.Coordinates.RADegrees;
   baseDec.value = cameraStore.plateSolveResult.Coordinates.Dec;
   cameraRotationDeg.value = cameraStore.plateSolveResult.PositionAngle;
@@ -115,8 +125,8 @@ onBeforeUnmount(() => {
 });
 
 async function slewAndCenter() {
-  await framingStore.slewAndCenter(newRa.value, newDec.value);
-  console.log('done');
+  const slewResult = await framingStore.slewAndCenter(newRa.value, newDec.value);
+  console.log('slewAndCenter done', slewResult);
   await wait(1000);
   cameraStore.capturePhoto(
     apiService,
@@ -130,8 +140,15 @@ function onImageLoad() {
   centerTargetBox();
 }
 
-function onWindowResize() {
+async function onWindowResize() {
   centerTargetBox();
+  // RA/Dec Koordinaten neu berechnen
+  calculateRaDec();
+  await nextTick();
+  // 4. Moveable neu rendern
+  if (moveableRef.value) {
+    moveableRef.value.updateRect();
+  }
 }
 
 function centerTargetBox() {
@@ -140,7 +157,6 @@ function centerTargetBox() {
 
   position.value.x = rect.width / 2 - boxSize / 2;
   position.value.y = rect.height / 2 - boxSize / 2;
-
   calculateRaDec();
 }
 
@@ -202,7 +218,6 @@ function calculateRaDec() {
 
   // Kamera-Rotationswinkel (in Radiant umrechnen)
   const theta = (cameraRotationDeg.value * Math.PI) / 180;
-  console.log(cameraRotationDeg.value);
 
   // Drehung der Verschiebung (dx, dy) um den Winkel theta
   const rotatedDx = dx * Math.cos(theta) - dy * Math.sin(theta);
@@ -223,13 +238,13 @@ function calculateRaDec() {
   const ra = baseRA.value - offsetRA;
   const dec = baseDec.value + offsetDec;
 
-  marker.value.ra = ra;
-  marker.value.dec = dec;
   newRa.value = ra;
   newDec.value = dec;
 
-  console.log('RA', degreesToHMS(ra));
-  console.log('Dec', degreesToDMS(dec));
+  marker.value.ra = degreesToHMS(ra);
+  marker.value.dec = degreesToDMS(dec);
+  console.log('RA', ra);
+  console.log('Dec', dec);
 }
 </script>
 
@@ -237,7 +252,7 @@ function calculateRaDec() {
 .wrapper {
   /* Begrenze die Breite auf 80% der Viewport-Breite, 
      max. 800px, zentriere optional via margin */
-  max-width: 800px;
+
   width: 80vw;
   margin: 0 auto;
   position: relative;
@@ -251,8 +266,6 @@ function calculateRaDec() {
 
 .target-box {
   position: absolute;
-  border: 2px dashed red;
-  background-color: rgba(255, 0, 0, 0.05);
   cursor: move;
   user-select: none;
 }
@@ -273,5 +286,23 @@ function calculateRaDec() {
   color: #fff;
   border-radius: 4px;
   font-size: 0.9rem;
+}
+
+.loader {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

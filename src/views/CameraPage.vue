@@ -200,14 +200,11 @@
                 {{ $t('components.camera.cancel') }}
               </button>
             </div>
-            <button v-if="cameraStore.imageData" @click="cameraStore.slewModal = true" class="default-button-cyan">
-              {{ $t('components.camera.open_center_here') }}
-            </button>
           </div>
         </div>
 
         <!-- Right Panel - Image Display -->
-        <div class="flex w-full lg:w-5/6">
+        <div class="flex w-full lg:w-5/6 relative">
           <div
             ref="imageContainer"
             class="image-container overflow-hidden min-h-[65vh] w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700/50 flex-grow"
@@ -220,6 +217,27 @@
               alt="Captured Image"
               class="block"
             />
+            <!-- SVG Icon oben rechts -->
+            <div
+              v-if="cameraStore.imageData && cameraStore.plateSolveResult.Coordinates.RADegrees"
+              class="absolute top-2 right-2 z-50"
+            >
+              <svg
+                @click="cameraStore.slewModal = true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-10 h-10 text-white cursor-pointer hover:text-cyan-500 transition"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"
+                />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -232,7 +250,7 @@
       @close="closeModal"
     />
 
-    <!-- Framing Modal -->
+    <!-- slewModal Modal -->
     <div
       v-if="cameraStore.slewModal"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
