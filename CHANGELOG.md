@@ -9,9 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Shutdown / Restart support (NINA PC)
 - New Translation keys
+- “center here” added
 
 ### Changed
 - Android framework replaced with CapacitorJS (previous App needs to be removed first)
+- Camerapage layout reworked
 
 ### Fixed
 - ISO was not set correctly with DLSR
