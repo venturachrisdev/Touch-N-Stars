@@ -58,7 +58,6 @@
       <span v-if="framingStore.isSlewingAndCentering" class="loader mr-2"></span>
       {{ $t('components.slewAndCenter.slew_and_center') }}
     </button>
-
   </div>
 </template>
 
@@ -140,9 +139,8 @@ async function unparkMount() {
     try {
       await apiService.mountAction('unpark');
       await wait(2000);
-      console.log(t('components.mount.control.unpark'));
     } catch (error) {
-      console.log(t('components.mount.control.errors.unpark'));
+      console.log('Error Mount unpark');
     }
   }
 }
@@ -294,7 +292,7 @@ function calculateRaDec() {
   /* Begrenze die Breite auf 80% der Viewport-Breite, 
      max. 800px, zentriere optional via margin */
 
-  width: 80vw;
+  width: 90vw;
   margin: 0 auto;
   position: relative;
 }

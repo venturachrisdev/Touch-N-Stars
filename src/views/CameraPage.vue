@@ -208,7 +208,7 @@
         <div class="flex w-full lg:w-5/6 relative">
           <div
             ref="imageContainer"
-            class="image-container overflow-hidden min-h-[65vh] w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700/50 flex-grow"
+            class="image-container overflow-hidden w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700/50 flex-grow"
           >
             <img
               v-if="cameraStore.imageData"
@@ -218,6 +218,13 @@
               alt="Captured Image"
               class="block"
             />
+            <div v-else class="flex items-center justify-center">
+              <img
+                src="../assets/Logo_TouchNStars_600x600.png"
+                alt="Captured Image"
+                class="block"
+              />
+            </div>
             <!-- SVG Icon oben rechts -->
             <div
               v-if="cameraStore.imageData && cameraStore?.plateSolveResult?.Coordinates?.RADegrees"
@@ -258,7 +265,6 @@
     >
       <div
         class="bg-gray-900 rounded-lg p-4 overflow-y-auto max-h-[95vh] border border-gray-700 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800/50"
-        :style="{ minWidth: `${framingStore.containerSize}px` }"
       >
         <CenterHere />
         <button
@@ -289,7 +295,6 @@
 import { ref } from 'vue';
 import { apiStore } from '@/store/store';
 import { useCameraStore } from '@/store/cameraStore';
-import { useFramingStore } from '@/store/framingStore';
 import { useSettingsStore } from '@/store/settingsStore';
 import apiService from '@/services/apiService';
 import infoCamera from '@/components/camera/infoCamera.vue';
@@ -302,7 +307,6 @@ import ImageModal from '@/components/helpers/imageModal.vue';
 import CenterHere from '@/components/camera/CenterHere.vue';
 
 // Initialisiere Stores
-const framingStore = useFramingStore();
 const store = apiStore();
 const cameraStore = useCameraStore();
 const settingsStore = useSettingsStore();
