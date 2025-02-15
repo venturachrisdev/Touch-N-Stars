@@ -123,8 +123,6 @@ onMounted(async() => {
   cameraRotationDeg.value = cameraStore.plateSolveResult.PositionAngle;
   scaleDegPerPixel.value = cameraStore.plateSolveResult.Pixscale / 3600;
 
-  calculateChipSizeInPixels();
-
   console.log(
     baseRA.value,
     baseDec.value,
@@ -244,40 +242,6 @@ function keepTargetInBounds() {
   if (position.value.y > h - boxSize) position.value.y = h - boxSize;
 }
 
-function getImageAspectRatio() {
-  const rect = imageRef.value?.getBoundingClientRect();
-  if (!rect) return null;
-
-  const aspectRatio = rect.width / rect.height;
-  console.log("Seitenverhältnis:", aspectRatio.toFixed(2));
-
-  return aspectRatio;
-}
-
-function calculateChipSizeInPixels() {
-  const pixscale = cameraStore.plateSolveResult.Pixscale; // in arcsec/pixel
-  const radiusDeg = cameraStore.plateSolveResult.Radius; // in degrees
-  const aspectRatio = getImageAspectRatio(); // Automatisch ermittelt
-
-  console.log(pixscale, radiusDeg, aspectRatio);
-  if (!pixscale || !radiusDeg || !aspectRatio) {
-    console.error("Fehlende Daten für Chipgrößenberechnung!");
-    return null;
-  }
-
-  // Berechne Bildfeld in Bogensekunden
-  const fovArcsec = 2 * radiusDeg * 3600; // Gesamtbildfeld in arcsec
-
-  // Berechnung der Chipgröße in Pixeln
-  const sensorWidthPx = fovArcsec / pixscale;
-  const sensorHeightPx = sensorWidthPx / aspectRatio; // Höhe basierend auf Bildseitenverhältnis
-
-  console.log(`Chipgröße in Pixeln: ${Math.round(sensorWidthPx)} x ${Math.round(sensorHeightPx)}`);
-
-  sensorHeightPxCalc.value=  Math.round(sensorHeightPx);
-  sensorWidthPxCalc.value = Math.round(sensorWidthPx);
-}
-
 /**
  * calculateRaDec():
  * Ermittelt RA/Dec basierend auf Box-Position + Rotation.
@@ -286,21 +250,24 @@ async function calculateRaDec() {
   const rect = imageRef.value?.getBoundingClientRect();
   if (!rect) return;
 
-  //let sensorWidth = store.cameraInfo.XSize;
-  let sensorWidth = -1; // TEST ----------------------------------------------------------
-  const displayedWidth = rect.width;
-  const ratioX = sensorWidth / displayedWidth;
+  let sensorWidth = store.cameraInfo.XSize;
   let sensorHeight = store.cameraInfo.YSize;
-  const displayedHeight = rect.height;
-  const ratioY = sensorHeight / displayedHeight;
+
+  sensorWidth = -1;
 
   if (sensorWidth === -1){
     console.log('DLSR erkannt');
-    await fetchFramingInfo()
+    await fetchFramingInfo();
     sensorWidth = framingStore.framingInfo.CameraWidth;
     sensorHeight = framingStore.framingInfo.CameraHeight;
-    console.log('sensorWidth' , sensorWidth, 'sensorHeight' , sensorHeight)
   }
+
+  const displayedWidth = rect.width;
+  const ratioX = sensorWidth / displayedWidth;
+  const displayedHeight = rect.height;
+  const ratioY = sensorHeight / displayedHeight;
+
+  console.log(`Chipgröße org in Pixeln: ${Math.round(store.cameraInfo.XSize)} x ${Math.round(store.cameraInfo.YSize)}`);
 
   // Bildmitte
   const centerX = rect.width / 2;
