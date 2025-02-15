@@ -14,7 +14,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
-## [1.0.1.0] - unreleased
+
+## [1.0.1.1] - unreleasd
+### Added
+
+### Changed
+- DLSR chip size is loaded from the framing settings
+
+### Fixed
+
+
+
+## [1.0.1.0] - 2025-02-14
 ### Added
 - Shutdown / Restart support (NINA PC)
 - New Translation keys
@@ -24,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Android framework replaced with CapacitorJS (previous App needs to be removed first)
+- Android 10 is now required as min. version
 - Images are processed in the same way as in NINA
 - Camerapage layout reworked
 

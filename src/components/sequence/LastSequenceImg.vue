@@ -231,7 +231,7 @@ watch(
 
 onMounted(() => {
   const latestIndex = store.imageHistoryInfo.length - 1;
-  getlastImage(latestIndex, 75, true, 0.5);
+  getlastImage(latestIndex, settingsStore.camera.imageQuality, true, 0.5);
   console.log('Mounted last LastSequenceImg');
   console.log('latestIndex: ', latestIndex);
   console.log('isLoadingImg: ', isLoadingImg.value);
