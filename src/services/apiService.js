@@ -563,11 +563,12 @@ const apiService = {
     binning,
     gain,
     offset,
-    filter
+    filter,
+    exposureTime,
   ) {
     try {
       const { BASE_URL } = getUrls();
-      const response = await axios.get(`${BASE_URL}/flats/auto-exposure`, {
+      const response = await axios.get(`${BASE_URL}/flats/auto-brightness`, {
         params: {
           count,
           minBrightness,
@@ -578,6 +579,7 @@ const apiService = {
           gain,
           offset,
           filter,
+          exposureTime,
         },
       });
       return response.data;

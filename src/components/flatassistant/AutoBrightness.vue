@@ -30,6 +30,7 @@ import apiService from '@/services/apiService';
 import { apiStore } from '@/store/store';
 import { useFlatassistantStore } from '@/store/flatassistantStore';
 import { useCameraStore } from '@/store/cameraStore';
+import { useSettingsStore } from '@/store/settingsStore';
 import setBinning from '@/components/flatassistant/setBinning.vue';
 import setGain from '@/components/flatassistant/setGain.vue';
 import setOffset from './setOffset.vue';
@@ -44,6 +45,7 @@ import setExposureTime from '@/components/flatassistant/setExposureTime.vue';
 const store = apiStore();
 const flatsStore = useFlatassistantStore();
 const cameraStore = useCameraStore();
+const settingsStore = useSettingsStore();
 
 onMounted(() => {
   flatsStore.binning = cameraStore.binningMode;
@@ -56,18 +58,19 @@ async function startAutoExposure() {
   try {
     const data = await apiService.flatAutoBrightness(
       flatsStore.count,
-      flatsStore.minBrightness,
-      flatsStore.maxBrightness,
+      settingsStore.minBrightness,
+      settingsStore.maxBrightness,
       flatsStore.histogramMean,
       flatsStore.meanTolerance,
       flatsStore.binning,
       flatsStore.gain,
       flatsStore.offset,
-      store.filterInfo?.SelectedFilter
+      store.filterInfo?.SelectedFilter,
+      settingsStore.flats.exposureTime,
     );
     console.log(data);
   } catch (error) {
-    console.log('Error startAutoExposure');
+    console.log('Error flatAutoBrightness');
   }
 }
 
