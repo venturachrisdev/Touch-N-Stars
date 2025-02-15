@@ -5,21 +5,14 @@
     </label>
     <input
       id="count"
-      v-model.number="flatsStore.minBrightness"
+      v-model.number="settingsStore.minBrightness"
       type="number"
       class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
     />
   </div>
 </template>
 <script setup>
-import { onMounted } from 'vue';
-import { apiStore } from '@/store/store';
-import { useFlatassistantStore } from '@/store/flatassistantStore';
+import { useSettingsStore } from '@/store/settingsStore';
+const settingsStore = useSettingsStore();
 
-const store = apiStore();
-const flatsStore = useFlatassistantStore();
-
-onMounted(() => {
-  flatsStore.minBrightness = store.flatdeviceInfo.MinBrightness;
-});
 </script>

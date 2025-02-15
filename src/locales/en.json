@@ -415,8 +415,10 @@
     "flatassistant": {
       "title": "Flat assistant",
       "count": "Count",
+      "exposure_time": "Exposure time",
       "min_exposure_time": "Min exposure time",
       "max_exposure_time": "Max exposure time",
+      "brightness": "Brightness",
       "min_brightness": "Min brightness",
       "max_brightness": "Max brightness",
       "histogram_mean_target": "Histogram mean target",

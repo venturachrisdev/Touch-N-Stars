@@ -415,8 +415,10 @@
     "flatassistant": {
       "title": "Flat Assistant",
       "count": "Anzahl",
+      "exposure_time": "Belichtungszeit",
       "min_exposure_time": "Min Belichtungszeit",
       "max_exposure_time": "Max Belichtungszeit",
+      "brightness": "Helligkeit",
       "min_brightness": "Min Helligkeit",
       "max_brightness": "Max Helligkeit",
       "histogram_mean_target": "Histogrammdurchschnitsziel ",

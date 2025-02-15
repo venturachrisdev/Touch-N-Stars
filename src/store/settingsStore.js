@@ -47,6 +47,10 @@ export const useSettingsStore = defineStore('settings', {
     },
     flats: {
       selectedOption: 'AutoExposure',
+      minBrightness: 0,
+      maxBrightness: 100,
+      brightness: 50,
+      exposureTime: 2,
     },
   }),
   actions: {

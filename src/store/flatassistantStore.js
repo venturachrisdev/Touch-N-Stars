@@ -5,8 +5,10 @@ import { apiStore } from '@/store/store';
 export const useFlatassistantStore = defineStore('flatassistantStore', {
   state: () => ({
     count: 20,
+    ExposureTime: 2,
     minExposureTime: 0.01,
     maxExposureTime: 20,
+    brightness: 100,
     minBrightness: 0,
     maxBrightness: 32000,
     histogramMean: 50,

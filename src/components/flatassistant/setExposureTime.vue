@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-row w-full items-center min-w-28 border border-gray-500 p-1 rounded-lg">
     <label for="count" class="text-sm mr-3 mb-1 text-gray-400">
-      {{ $t('components.flatassistant.max_brightness') }}
+      {{ $t('components.flatassistant.exposure_time') }}
     </label>
     <input
       id="count"
-      v-model.number="settingsStore.maxBrightness"
+      v-model.number="settingsStore.exposureTime"
       type="number"
       class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
     />
