@@ -81,10 +81,6 @@ const baseDec = ref(20.0); // Dec in Grad für Bildzentrum
 const cameraRotationDeg = ref(15.0); // Kamera-Rotation in Grad
 const scaleDegPerPixel = ref(0.004); // Grad pro Pixel
 
-//Camera Parameter
-const sensorHeightPxCalc = ref(0);
-const sensorWidthPxCalc = ref(0);
-
 // Refs für DOM-Elemente
 const imageRef = ref(null);
 const targetRef = ref(null);
@@ -103,9 +99,9 @@ const marker = ref({
 const newRa = ref(0);
 const newDec = ref(0);
 
-onMounted(async() => {
+onMounted(async () => {
   await fetchFramingInfo();
-  
+
   window.addEventListener('resize', onWindowResize);
 
   // Beobachtet die Bildgröße
@@ -255,7 +251,7 @@ async function calculateRaDec() {
 
   sensorWidth = -1;
 
-  if (sensorWidth === -1){
+  if (sensorWidth === -1) {
     console.log('DLSR erkannt');
     await fetchFramingInfo();
     sensorWidth = framingStore.framingInfo.CameraWidth;
@@ -267,7 +263,9 @@ async function calculateRaDec() {
   const displayedHeight = rect.height;
   const ratioY = sensorHeight / displayedHeight;
 
-  console.log(`Chipgröße org in Pixeln: ${Math.round(store.cameraInfo.XSize)} x ${Math.round(store.cameraInfo.YSize)}`);
+  console.log(
+    `Chipgröße org in Pixeln: ${Math.round(store.cameraInfo.XSize)} x ${Math.round(store.cameraInfo.YSize)}`
+  );
 
   // Bildmitte
   const centerX = rect.width / 2;
