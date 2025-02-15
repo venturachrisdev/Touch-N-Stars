@@ -6,7 +6,7 @@
     <setGain />
     <setOffset />
     <setExposureTime />
-    <setMinBrightness /> setExposureTime
+    <setMinBrightness />
     <setMaxBrightness />
     <setHistogramMeanTarget />
     <setHistogramTolerance />
@@ -66,7 +66,7 @@ async function startAutoExposure() {
       flatsStore.gain,
       flatsStore.offset,
       store.filterInfo?.SelectedFilter,
-      settingsStore.flats.exposureTime,
+      settingsStore.flats.exposureTime
     );
     console.log(data);
   } catch (error) {

@@ -194,11 +194,7 @@
           </router-link>
         </div>
         <div v-if="store.cameraInfo.Connected && !store.sequenceRunning">
-          <router-link
-            to="/flats"
-            class="nav-button"
-            active-class="active-nav-button"
-          >
+          <router-link to="/flats" class="nav-button" active-class="active-nav-button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

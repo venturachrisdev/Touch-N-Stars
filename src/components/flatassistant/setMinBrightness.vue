@@ -5,7 +5,7 @@
     </label>
     <input
       id="count"
-      v-model.number="settingsStore.minBrightness"
+      v-model.number="settingsStore.flats.minBrightness"
       type="number"
       class="ml-auto text-black px-3 h-8 w-28 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
     />
@@ -14,5 +14,4 @@
 <script setup>
 import { useSettingsStore } from '@/store/settingsStore';
 const settingsStore = useSettingsStore();
-
 </script>

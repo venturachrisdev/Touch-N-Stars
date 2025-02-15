@@ -564,7 +564,7 @@ const apiService = {
     gain,
     offset,
     filter,
-    exposureTime,
+    exposureTime
   ) {
     try {
       const { BASE_URL } = getUrls();

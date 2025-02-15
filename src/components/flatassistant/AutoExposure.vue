@@ -5,6 +5,7 @@
     <setCount />
     <setGain />
     <setOffset />
+    <setBrightness />
     <setMinExposureTime />
     <setMaxExposureTime />
     <setHistogramMeanTarget />
@@ -38,6 +39,7 @@ import setMaxExposureTime from '@/components/flatassistant/setMaxExposureTime.vu
 import setHistogramMeanTarget from '@/components/flatassistant/setHistogramMeanTarget.vue';
 import setHistogramTolerance from '@/components/flatassistant/setHistogramTolerance.vue';
 import changeFilter from '@/components/filterwheel/changeFilter.vue';
+import setBrightness from '@/components/flatassistant/setBrightness.vue';
 
 const store = apiStore();
 const flatsStore = useFlatassistantStore();
