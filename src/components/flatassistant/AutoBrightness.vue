@@ -58,8 +58,8 @@ async function startAutoExposure() {
   try {
     const data = await apiService.flatAutoBrightness(
       flatsStore.count,
-      settingsStore.minBrightness,
-      settingsStore.maxBrightness,
+      settingsStore.flats.minBrightness,
+      settingsStore.flats.maxBrightness,
       flatsStore.histogramMean,
       flatsStore.meanTolerance,
       flatsStore.binning,

@@ -40,10 +40,12 @@ import setHistogramMeanTarget from '@/components/flatassistant/setHistogramMeanT
 import setHistogramTolerance from '@/components/flatassistant/setHistogramTolerance.vue';
 import changeFilter from '@/components/filterwheel/changeFilter.vue';
 import setBrightness from '@/components/flatassistant/setBrightness.vue';
+import { useSettingsStore } from '@/store/settingsStore';
 
 const store = apiStore();
 const flatsStore = useFlatassistantStore();
 const cameraStore = useCameraStore();
+const settingsStore = useSettingsStore();
 
 onMounted(() => {
   flatsStore.binning = cameraStore.binningMode;
@@ -63,7 +65,8 @@ async function startAutoExposure() {
       flatsStore.binning,
       flatsStore.gain,
       flatsStore.offset,
-      store.filterInfo?.SelectedFilter
+      store.filterInfo?.SelectedFilter,
+      settingsStore.flats.brightness
     );
     console.log(data);
   } catch (error) {

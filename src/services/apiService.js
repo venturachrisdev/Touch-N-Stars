@@ -529,7 +529,8 @@ const apiService = {
     binning,
     gain,
     offset,
-    filter
+    filter,
+    brightness
   ) {
     try {
       const { BASE_URL } = getUrls();
@@ -544,6 +545,7 @@ const apiService = {
           gain,
           offset,
           filter,
+          brightness,
         },
       });
       return response.data;
