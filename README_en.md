@@ -36,3 +36,7 @@ The hurdles Apple is putting up here are very high and I'm still unsure whether 
 ### 💙 **Acknowledgements**  
 Special thanks go to the entire **NINA** development team, whose excellent work enabled the creation of this web app.  
 A special thank you to **Christian**, the developer of the **Advanced API**, for his efforts and support. His work has significantly enabled the development of this web app.
+
+### 🔍 Further information
+- You can find more details about the application and how to use it in our [WIKI](https://github.com/Touch-N-Stars/Touch-N-Stars/releases](https://github.com/Touch-N-Stars/Touch-N-Stars/wiki/Touch'N'Stars-Wiki)).
+- Our [YouTube channel](https://www.youtube.com/watch?v=0chtlhO_cX4&list=PLAT-Qw0mxhRLn1KzFKGRuu3Pur-gjNS2C) has video instructions and further tips on how to use Touch'N'Stars
