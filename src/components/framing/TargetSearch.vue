@@ -345,6 +345,11 @@ async function updateRaDec() {
     framingStore.DECangleString = selectedStar.value.dec;
     framingStore.RAangle = selectedStar.value.raDeg;
     framingStore.DECangle = selectedStar.value.decDeg;
+    framingStore.selectedItem = {
+      Name: selectedStar.value.name,
+      RA: selectedStar.value.raDeg,
+      Dec: selectedStar.value.decDeg,
+    };
     try {
       await apiService.setFramingImageSource('SKYATLAS');
       await apiService.setFramingCoordinates(selectedStar.value.raDeg, selectedStar.value.decDeg);
