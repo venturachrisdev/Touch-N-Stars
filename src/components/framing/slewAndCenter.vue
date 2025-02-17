@@ -14,23 +14,6 @@
         </div>
       </div>
       <div v-else>
-        <!-- Star Selection Dropdown -->
-        <div class="mb-4">
-          <label for="visibleStars" class="block text-white text-sm font-bold mb-2">{{
-            $t('components.slewAndCenter.visibleStars')
-          }}</label>
-          <select
-            id="visibleStars"
-            v-model="selectedStar"
-            class="text-black w-full p-2 border border-gray-300 rounded"
-            @change="updateRaDec"
-          >
-            <option v-for="star in visibleStars" :key="star.name" :value="star">
-              {{ star.name }} (Mag: {{ star.magnitude }})
-            </option>
-          </select>
-        </div>
-
         <div class="flex flex-row justify-center items-center space-x-4">
           <p>{{ $t('components.slewAndCenter.ra') }}</p>
           <input
@@ -101,43 +84,26 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount, computed } from 'vue';
-import Papa from 'papaparse';
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import apiService from '@/services/apiService';
 import { apiStore } from '@/store/store';
 import { useFramingStore } from '@/store/framingStore';
-import { useSettingsStore } from '@/store/settingsStore';
 import { useI18n } from 'vue-i18n';
 import setSequenceTarget from '@/components/framing/setSequenceTarget.vue';
 
 const { t } = useI18n();
 const store = apiStore();
 const framingStore = useFramingStore();
-const settingsStore = useSettingsStore();
 const props = defineProps({
   RAangleString: String,
   DECangleString: String,
 });
 const emit = defineEmits(['update:RAangleString', 'update:DECangleString']);
-
-const stars = ref([]);
-const selectedStar = ref(null);
 const localRAangleString = ref(props.RAangleString);
 const localDECangleString = ref(props.DECangleString);
 const RAangle = ref(null);
 const DECangle = ref(null);
 const Info = ref(null);
-
-const currentSiderealTime = ref(0);
-
-// Computed property to filter visible stars
-const visibleStars = computed(() => {
-  return stars.value.filter((star) => {
-    const hourAngle = (currentSiderealTime.value - star.raDeg + 360) % 360;
-    const alt = calculateAltitude(star.decDeg, hourAngle);
-    return alt > 0;
-  });
-});
 
 watch(
   () => framingStore.RAangleString,
@@ -164,7 +130,7 @@ function validateDEC(decString) {
 
 function handleBlurRA() {
   if (!localRAangleString.value) {
-    return;
+    return; // Nichts tun, wenn der Wert leer ist
   }
   if (validateRA(localRAangleString.value)) {
     updateRA();
@@ -175,7 +141,7 @@ function handleBlurRA() {
 
 function handleBlurDEC() {
   if (!localDECangleString.value) {
-    return;
+    return; // Nichts tun, wenn der Wert leer ist
   }
   if (validateDEC(localDECangleString.value)) {
     console.log('Lokal DEC', localDECangleString.value);
@@ -210,7 +176,7 @@ async function unparkMount() {
 }
 
 async function slew() {
-  await unparkMount();
+  await unparkMount(); // Überprüfen und Entparken, falls erforderlich
   RAangle.value = hmsToDegrees(localRAangleString.value);
   DECangle.value = dmsToDegrees(localDECangleString.value);
   framingStore.slew(RAangle.value, DECangle.value);
@@ -219,7 +185,7 @@ async function slew() {
 async function slewAndCenter() {
   RAangle.value = hmsToDegrees(localRAangleString.value);
   DECangle.value = dmsToDegrees(localDECangleString.value);
-  await unparkMount();
+  await unparkMount(); // Überprüfen und Entparken, falls erforderlich
   framingStore.slewAndCenter(RAangle.value, DECangle.value);
   emit('update:RAangleString', localRAangleString.value);
   emit('update:DECangleString', localDECangleString.value);
@@ -281,104 +247,14 @@ function stopFetchingInfo() {
 }
 
 onMounted(async () => {
-  await loadStarData();
   startFetchingInfo();
   await apiService.applicatioTabSwitch('framing');
   await apiService.setFramingImageSource('SKYATLAS');
-  updateSiderealTime();
-  setInterval(updateSiderealTime, 1000);
 });
 
 onBeforeUnmount(() => {
   stopFetchingInfo();
 });
-
-async function loadStarData() {
-  try {
-    const response = await fetch('/stars.csv');
-    const csvData = await response.text();
-
-    Papa.parse(csvData, {
-      header: true,
-      skipEmptyLines: true,
-      complete: (results) => {
-        stars.value = results.data.map((star) => ({
-          name: star.name,
-          magnitude: parseFloat(star.magnitude),
-          ra: formatRA(star.ra),
-          dec: formatDEC(star.dec),
-          raDeg: convertRAtoDegrees(star.ra),
-          decDeg: convertDECtoDegrees(star.dec),
-        }));
-      },
-    });
-  } catch (error) {
-    console.error('Error loading star data:', error);
-  }
-}
-
-function formatRA(ra) {
-  const matches = ra.match(/(\d+)h\s*(\d+)m\s*([\d.]+)s/);
-  if (!matches) return '00:00:00.0';
-  return `${matches[1].padStart(2, '0')}:${matches[2].padStart(2, '0')}:${matches[3].padStart(5, '0')}`;
-}
-
-function formatDEC(dec) {
-  const matches = dec.match(/([+-]?)(\d+)°\s*(\d+)′\s*([\d.]+)″/);
-  if (!matches) return '+00:00:00.0';
-  return `${matches[1]}${matches[2].padStart(2, '0')}:${matches[3].padStart(2, '0')}:${matches[4].padStart(5, '0')}`;
-}
-
-function convertRAtoDegrees(ra) {
-  const matches = ra.match(/(\d+)h\s*(\d+)m\s*([\d.]+)s/);
-  return (
-    15 *
-    ((parseInt(matches[1]) || 0) +
-      (parseInt(matches[2]) || 0) / 60 +
-      (parseFloat(matches[3]) || 0) / 3600)
-  );
-}
-
-function convertDECtoDegrees(dec) {
-  const matches = dec.match(/([+-]?)(\d+)°\s*(\d+)′\s*([\d.]+)″/);
-  const sign = matches[1] === '-' ? -1 : 1;
-  return (
-    sign *
-    ((parseInt(matches[2]) || 0) +
-      (parseInt(matches[3]) || 0) / 60 +
-      (parseFloat(matches[4]) || 0) / 3600)
-  );
-}
-
-function calculateAltitude(decDeg, hourAngleDeg) {
-  const latRad = (settingsStore.coordinates.latitude * Math.PI) / 180;
-  const decRad = (decDeg * Math.PI) / 180;
-  const haRad = (hourAngleDeg * Math.PI) / 180;
-
-  return (
-    (Math.asin(
-      Math.sin(latRad) * Math.sin(decRad) + Math.cos(latRad) * Math.cos(decRad) * Math.cos(haRad)
-    ) *
-      180) /
-    Math.PI
-  );
-}
-
-function updateSiderealTime() {
-  const now = new Date();
-  const JD = now / 86400000 - now.getTimezoneOffset() / 1440 + 2440587.5;
-  const GMST = 18.697374558 + 24.06570982441908 * (JD - 2451545.0);
-  currentSiderealTime.value = (GMST % 24) * 15 + settingsStore.coordinates.longitude / 15;
-}
-
-function updateRaDec() {
-  if (selectedStar.value) {
-    localRAangleString.value = selectedStar.value.ra;
-    localDECangleString.value = selectedStar.value.dec;
-    updateRA();
-    updateDec();
-  }
-}
 </script>
 
 <style scoped>
