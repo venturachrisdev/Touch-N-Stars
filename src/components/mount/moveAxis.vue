@@ -187,7 +187,6 @@ onBeforeUnmount(() => {
 });
 </script>
 
-
 <style scoped>
 .btn {
   border-radius: 1rem; /* entspricht rounded-2xl */
