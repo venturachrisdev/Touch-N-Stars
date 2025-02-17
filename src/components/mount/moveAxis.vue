@@ -102,7 +102,7 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount } from 'vue';
+import { onMounted, onBeforeUnmount, ref } from 'vue';
 import websocketMountControl from '@/services/websocketMountControl';
 import { useMountStore } from '@/store/mountStore';
 import { useSettingsStore } from '@/store/settingsStore';
@@ -116,6 +116,7 @@ import {
 
 const mountStore = useMountStore();
 const settingsStore = useSettingsStore();
+let commandInterval = null; // Speichert das Intervall
 
 const sendCommand = (direction) => {
   if (!websocketMountControl.socket || websocketMountControl.socket.readyState !== WebSocket.OPEN) {
@@ -123,15 +124,20 @@ const sendCommand = (direction) => {
     return;
   }
 
-  mountStore.lastDirection = direction; // Speichert die Richtung
+  mountStore.lastDirection = direction;
 
-  const message = {
-    direction: direction,
-    rate: settingsStore.mount.slewRate * 10, // Beispiel: Skalierung falls nötig
+  const sendMessage = () => {
+    const message = {
+      direction: direction,
+      rate: settingsStore.mount.slewRate,
+    };
+
+    websocketMountControl.socket.send(JSON.stringify(message));
+    console.log(`WS-Befehl gesendet:`, message);
   };
 
-  websocketMountControl.socket.send(JSON.stringify(message));
-  console.log(`WS-Befehl gesendet:`, message);
+  sendMessage(); // Sende den Befehl sofort
+  commandInterval = setInterval(sendMessage, 800); // Wiederhole jede Sekunde
 };
 
 const sendStop = () => {
@@ -144,6 +150,9 @@ const sendStop = () => {
     console.error('WebSocket ist nicht verbunden.');
     return;
   }
+
+  clearInterval(commandInterval); // Stoppe das Wiederholen
+  commandInterval = null;
 
   const message = {
     direction: mountStore.lastDirection,
@@ -171,11 +180,13 @@ onBeforeUnmount(() => {
   websocketMountControl.setMessageCallback(null);
   mountStore.lastDirection = '';
   mountStore.wsIsConnected = false;
+  clearInterval(commandInterval);
   if (websocketMountControl.socket) {
     websocketMountControl.socket.close();
   }
 });
 </script>
+
 
 <style scoped>
 .btn {
