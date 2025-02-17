@@ -146,6 +146,9 @@ function getCurrentTime() {
 }
 
 function formatMessage(message) {
+  if (typeof message.Error === 'string' && message.Error !== "") {
+    return message.Error;
+  }
   if (message.Response) {
     if (typeof message.Response === 'string') {
       if (message.Response === 'started procedure') {
@@ -218,13 +221,13 @@ onMounted(() => {
   tppaStore.initialize();
 
   websocketService.setStatusCallback((status) => {
-    console.log('Status aktualisiert:', status);
+    console.log('status updated:', status);
     isConnected.value = status === 'Verbunden';
     tppaStore.isConnected = isConnected.value;
   });
 
   websocketService.setMessageCallback((message) => {
-    console.log('Neue Nachricht erhalten:', message);
+    console.log('New message received:', message);
     const newMessage = {
       message: message,
       time: getCurrentTime(),
