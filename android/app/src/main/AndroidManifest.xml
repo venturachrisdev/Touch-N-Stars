@@ -35,7 +35,7 @@
         <!-- FileProvider configuration -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities="com.TouchNStars.dev.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
