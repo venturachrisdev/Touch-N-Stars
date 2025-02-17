@@ -17,7 +17,8 @@
   "app": {
     "title": "Touch'N'Stars",
     "unreachable": "No se encuentra NINA-API o la versión es demasiada vieja",
-    "connecting": "Intentando establecer conexión"
+    "connecting": "Intentando establecer conexión",
+    "api_version_incompatible": "Versión avanzada-API Corriente incompatible: {actual} requerido: {requerido}"
   },
   "setup": {
     "welcome": "Bienvenido a Touch'N'Stars",
@@ -49,9 +50,23 @@
         "delete": "Borrar Instancia"
       },
       "errors": {
-        "emptyFields": "Rellenar todos los campos Por Favor"
+        "emptyFields": "Rellenar todos los campos Por Favor",
+        "instanceNameRequired": "Nombre de la instancia requerido",
+        "invalidIPFormat": "Proporcione IP o FQDN",
+        "invalidPortRange": "Puerto no válido"
       },
-      "showTutorial": "Mostrar Tutorial"
+      "showTutorial": "Mostrar Tutorial",
+      "image": {
+        "quality": "Calidad en %",
+        "title": "Configuración de imágenes"
+      },
+      "system": {
+        "confirmRestart": "¿Estás seguro de que quieres reiniciar el sistema?",
+        "confirmShutdown": "¿Estás seguro de que quieres cerrar el sistema?",
+        "confirmation": "Confirmación",
+        "description": "Haga clic en un icono para reiniciar o cerrar el sistema",
+        "title": "Controles del sistema"
+      }
     },
     "framing": {
       "confirmSetTargetTitle": "Confirmar Selección Objetivo",
@@ -61,7 +76,19 @@
       "search": {
         "title": "Buscar",
         "placeholder": "Entra termino búsqueda..."
-      }
+      },
+      "fovSettings": {
+        "fov": "Campo de visión",
+        "rotationAngle": "Rotación de la cámara"
+      },
+      "getImageRotation": {
+        "SolveError": "Imagen de resolución de errores",
+        "SolveRun": "Platesolar",
+        "startCapture": "Determinar la rotación de la cámara"
+      },
+      "infoTargetImage": "Si la imagen solo se muestra en negro, el \"caché del mapa del cielo fuera de línea\" debe configurarse en Nina o la opción \"Usar Nina Cache\" debe desactivarse",
+      "moveRotator": "Girar la cámara",
+      "openFraminingModal": "Abierto en ampliación asistente"
     },
     "connectEquipment": {
       "camera": {
@@ -131,7 +158,8 @@
       "level": "Nivel",
       "message": "Mensaje",
       "member": "Miembro",
-      "line": "Linea"
+      "line": "Linea",
+      "download": "Descargar"
     },
     "navigation": {
       "equipment": "Equipo",
@@ -145,9 +173,6 @@
       "vnc": "VNC"
     },
     "language": {
-      "en": "English",
-      "de": "German",
-      "es": "Español",
       "select": "Elegir idioma"
     },
     "equipment": {
@@ -195,7 +220,8 @@
           "showGuiderGraph": "Mostrar gráfica guiado",
           "showGuiderAfGraph": "Mostrar gráfica autoenfoque"
         }
-      }
+      },
+      "running": "CORRER"
     },
     "mount": {
       "title": "Montura",
@@ -215,7 +241,9 @@
           "unpark": "Error desaparcando montura",
           "home": "Error referenciando montura",
           "tracking": "Error configurar modo seguimiento"
-        }
+        },
+        "manuellControl": "Control manual",
+        "slewRate": "Tasa de seca °/s"
       },
       "info": {
         "notConnected": "Por favor conectar montura",
@@ -233,7 +261,9 @@
       "startWithCal": "Empezar calibración",
       "stop": "Parar",
       "rms_error": "Error RMS",
-      "title": "Guiado"
+      "title": "Guiado",
+      "notes": "* Este gráfico muestra datos de guía de acuerdo con la configuración de N.I.N.A.",
+      "running": "CORRER"
     },
     "focuser": {
       "title": "Enfocador",
@@ -304,7 +334,10 @@
       "camera_cooling": "Camera refrigerando",
       "target_temperature": "Temperatura configurada",
       "warm_up_time": "Tiempo calentamiento",
-      "cooling_time": "Tiempo enfriamiento"
+      "cooling_time": "Tiempo enfriamiento",
+      "binning_mode": "Binning",
+      "readout_mode": "Modo de lectura",
+      "set_use_platesolve": "Use platesolve"
     },
     "tppa": {
       "title": "Three Point Polar Alignment",
@@ -321,7 +354,8 @@
       "west": "Oeste",
       "down": "Abajo",
       "up": "Arriba",
-      "not_available": "No disponible"
+      "not_available": "No disponible",
+      "running": "CORRER"
     },
     "logs": {
       "loading": "Cargando data...",
@@ -349,7 +383,9 @@
         "invalidFormat": "Formato no valido. Esperado: ±DD:MM:SS.s",
         "apiResponseError": "Error en respuesta API:",
         "mountInfoError": "Error obteniendo información montura:"
-      }
+      },
+      "rotate": "Girar",
+      "visibleStars": "Búsqueda de estrellas visible"
     },
     "filterwheel": {
       "filter": "Filtro:",
@@ -376,6 +412,24 @@
         "open": "abrir tapa"
       },
       "title": "Panel de Flat"
+    },
+    "switch": {
+      "gauges": "Medidores",
+      "switch": "Cambiar"
+    },
+    "weatherModal": {
+      "cloudCover": "Cubierta de nubes",
+      "dewPoint": "Punto de rocío",
+      "humidity": "Humedad",
+      "imperial": "Imperial",
+      "metric": "Métrico",
+      "pressure": "Presión",
+      "rainRate": "Tasa de lluvia",
+      "skyQuality": "Calidad del cielo",
+      "skyTemperature": "Temperatura del cielo",
+      "temperature": "Temperatura",
+      "weatherInformation": "Información meteorológica",
+      "wind": "Viento"
     }
   }
 }

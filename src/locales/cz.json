@@ -62,6 +62,10 @@
         "confirmRestart": "Určitě chcete systém restartovat?",
         "confirmShutdown": "Jste si jisti, že chcete systém vypnout?",
         "confirmation": "Potvrzení"
+      },
+      "image": {
+        "quality": "Quality in %",
+        "title": "Images settings"
       }
     },
     "framing": {
@@ -332,7 +336,8 @@
       "warm_up_time": "Doba zahřátí",
       "cooling_time": "Doba chlazení",
       "binning_mode": "Binning",
-      "readout_mode": "Režim Čtení"
+      "readout_mode": "Režim Čtení",
+      "set_use_platesolve": "Use Platesolve"
     },
     "tppa": {
       "title": "Tříbodové Polární Zarovnání",
@@ -379,7 +384,8 @@
         "apiResponseError": "Chyba v odpovědi API:",
         "mountInfoError": "Chyba při získávání informací o montáži:"
       },
-      "rotate": "Rotace"
+      "rotate": "Rotace",
+      "visibleStars": "Visible Star Search"
     },
     "filterwheel": {
       "filter": "Filtr:",
