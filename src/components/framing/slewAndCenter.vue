@@ -106,12 +106,14 @@ import Papa from 'papaparse';
 import apiService from '@/services/apiService';
 import { apiStore } from '@/store/store';
 import { useFramingStore } from '@/store/framingStore';
+import { useSettingsStore } from '@/store/settingsStore';
 import { useI18n } from 'vue-i18n';
 import setSequenceTarget from '@/components/framing/setSequenceTarget.vue';
 
 const { t } = useI18n();
 const store = apiStore();
 const framingStore = useFramingStore();
+const settingsStore = useSettingsStore();
 const props = defineProps({
   RAangleString: String,
   DECangleString: String,
@@ -126,9 +128,6 @@ const RAangle = ref(null);
 const DECangle = ref(null);
 const Info = ref(null);
 
-// Tokyo coordinates
-const latitude = ref(35.69);
-const longitude = ref(139.69);
 const currentSiderealTime = ref(0);
 
 // Computed property to filter visible stars
@@ -352,7 +351,7 @@ function convertDECtoDegrees(dec) {
 }
 
 function calculateAltitude(decDeg, hourAngleDeg) {
-  const latRad = (latitude.value * Math.PI) / 180;
+  const latRad = (settingsStore.coordinates.latitude * Math.PI) / 180;
   const decRad = (decDeg * Math.PI) / 180;
   const haRad = (hourAngleDeg * Math.PI) / 180;
 
@@ -369,7 +368,7 @@ function updateSiderealTime() {
   const now = new Date();
   const JD = now / 86400000 - now.getTimezoneOffset() / 1440 + 2440587.5;
   const GMST = 18.697374558 + 24.06570982441908 * (JD - 2451545.0);
-  currentSiderealTime.value = (GMST % 24) * 15 + longitude.value / 15;
+  currentSiderealTime.value = (GMST % 24) * 15 + settingsStore.coordinates.longitude / 15;
 }
 
 function updateRaDec() {
