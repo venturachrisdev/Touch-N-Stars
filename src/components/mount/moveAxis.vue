@@ -74,29 +74,39 @@
       </button>
     </div>
     <div
-      class="flex flex-row items-center justify-between w-full border border-gray-300 p-2 mt-1 rounded-xl transition-all duration-200 hover:border-cyan-500 focus-within:border-cyan-500 hover:shadow-lg"
+      class="flex flex-col w-full border border-gray-300 p-2 mt-1 rounded-xl transition-all duration-200 hover:border-cyan-500 focus-within:border-cyan-500 hover:shadow-lg"
     >
-      <div>
-        <p class="text-sm min-w-32 font-medium text-gray-500">
-          {{ $t('components.mount.control.slewRate') }}
-        </p>
+      <div class="flex flex-col w-full">
+        <div>
+          <p class="text-sm min-w-32 font-medium text-gray-500">
+            {{ $t('components.mount.control.slewRate') }}
+          </p>
+        </div>
+        <div class=" flex flex-row w-full justify-center gap-2">
+          <button class="btn min-w-12" @click="settingsStore.mount.slewRate = 0.017">4x</button>
+          <button class="btn min-w-12" @click="settingsStore.mount.slewRate = 0.067">16x</button>
+          <button class="btn min-w-12" @click="settingsStore.mount.slewRate = 0.133">32x</button>
+          <button class="btn min-w-12" @click="settingsStore.mount.slewRate = 0.267">62x</button>
+        </div>
       </div>
-      <input
-        class="w-full mx-2"
-        type="range"
-        min="0.01"
-        max="5"
-        step="0.001"
-        v-model="settingsStore.mount.slewRate"
-      />
-      <input
-        class="text-black px-4 h-10 w-24 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-200"
-        type="number"
-        v-model="settingsStore.mount.slewRate"
-        min="0.0001"
-        max="3"
-        step="0.001"
-      />
+      <div class="flex flex-row w-full">
+        <input
+          class="w-full mx-2"
+          type="range"
+          min="0.01"
+          max="5"
+          step="0.001"
+          v-model="settingsStore.mount.slewRate"
+        />
+        <input
+          class="text-black px-4 h-10 w-24 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-200"
+          type="number"
+          v-model="settingsStore.mount.slewRate"
+          min="0.001"
+          max="3"
+          step="0.001"
+        />
+      </div>
     </div>
   </div>
 </template>
