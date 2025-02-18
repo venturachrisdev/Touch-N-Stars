@@ -43,7 +43,8 @@
           @change="updateRaDec"
         >
           <option v-for="star in visibleStars" :key="star.name" :value="star">
-            {{ star.name }} (Mag: {{ star.magnitude }})
+            {{ star.name }} (Mag: {{ star.magnitude }}) - Alt: {{ star.altAz.alt.toFixed(1) }}°, Az:
+            {{ star.altAz.az.toFixed(1) }}° ({{ star.altAz.direction }})
           </option>
         </select>
       </div>
@@ -149,14 +150,17 @@ const props = defineProps({
 const localRAangleString = ref(props.RAangleString);
 const localDECangleString = ref(props.DECangleString);
 
-// Computed property to filter visible stars
-
+// Computed property to filter visible stars and calculate Alt/Az
 const visibleStars = computed(() => {
-  return stars.value.filter((star) => {
-    const hourAngle = (currentSiderealTime.value - star.raDeg + 360) % 360;
-    const alt = calculateAltitude(star.decDeg, hourAngle);
-    return alt > 0;
-  });
+  return stars.value
+    .map((star) => {
+      const altAz = calculateAltAz(star.raDeg, star.decDeg);
+      return {
+        ...star,
+        altAz,
+      };
+    })
+    .filter((star) => star.altAz.alt > 0);
 });
 
 async function fetchTargetSearch() {
@@ -168,7 +172,6 @@ async function fetchTargetSearch() {
     const data = await apiService.searchNGC(framingStore.searchQuery, 10);
     if (Array.isArray(data)) {
       framingStore.targetSearchResult = data;
-      console.log('Suche: ', data);
     } else {
       console.warn("Die API hat kein Array zurückgegeben, 'targetSearchResult' wird geleert.");
       framingStore.targetSearchResult = [];
@@ -187,60 +190,38 @@ function selectTarget(item) {
   framingStore.DECangle = item.Dec;
   framingStore.RAangleString = degreesToHMS(item.RA);
   framingStore.DECangleString = degreesToDMS(item.Dec);
-
-  console.log('item', framingStore.selectedItem);
 }
 
 function degreesToHMS(deg) {
-  // Schritt 1: Grad in Stunden umrechnen
   const totalHours = deg / 15;
-
-  // Ganze Stunden ermitteln
   const h = Math.floor(totalHours);
-
-  // Schritt 2: Minuten
   const remainingHours = totalHours - h;
   const totalMinutes = remainingHours * 60;
   const m = Math.floor(totalMinutes);
-
-  // Schritt 3: Sekunden
   const remainingMinutes = totalMinutes - m;
   const s = remainingMinutes * 60;
 
-  // Formatierung (z. B. auf eine Nachkommastelle)
-  const hStr = String(h).padStart(1, '0'); // Stunden dürfen ruhig einstellig bleiben
-  const mStr = String(m).padStart(2, '0'); // Minuten zweistellig
-  const sStr = s.toFixed(1).padStart(4, '0'); // Sekunden mit einer Nachkommastelle
+  const hStr = String(h).padStart(2, '0');
+  const mStr = String(m).padStart(2, '0');
+  const sStr = s.toFixed(1).padStart(4, '0');
 
   return `${hStr}:${mStr}:${sStr}`;
 }
+
 function degreesToDMS(deg) {
-  console.log('degreesToDMS ', deg);
-  // 1) Vorzeichen merken und Absolutwert nehmen
   const sign = deg < 0 ? '-' : '+';
   deg = Math.abs(deg);
-
-  // 2) Ganze Grad
   const d = Math.floor(deg);
-
-  // 3) Minuten
   const remainingDeg = deg - d;
   const totalMinutes = remainingDeg * 60;
   const m = Math.floor(totalMinutes);
-
-  // 4) Sekunden
   const remainingMinutes = totalMinutes - m;
   const s = remainingMinutes * 60;
 
-  // 5) Formatierung
-  //    a) Grad: max. zwei Ziffern, da DEC zwischen -90° und +90° liegt
-  //    b) Minuten/Sekunden: jeweils zweistellig
   const dStr = String(d).padStart(2, '0');
   const mStr = String(m).padStart(2, '0');
-  // Auf eine Nachkommastelle runden, z. B. 0.1"
   const sStr = s.toFixed(1).padStart(4, '0');
 
-  // 6) Zusammenbauen: ±DD:MM:SS.s
   return `${sign}${dStr}:${mStr}:${sStr}`;
 }
 
@@ -252,7 +233,6 @@ onMounted(async () => {
   updateSiderealTime();
   setInterval(updateSiderealTime, 1000);
 
-  // Container-Größe für Framinngassitant berechnen
   const smallerDimension = Math.min(window.innerWidth, window.innerHeight - 200);
   const roundedDimension = Math.floor(smallerDimension / 100) * 100;
   framingStore.containerSize = roundedDimension;
@@ -267,14 +247,18 @@ async function loadStarData() {
       header: true,
       skipEmptyLines: true,
       complete: (results) => {
-        stars.value = results.data.map((star) => ({
-          name: star.name,
-          magnitude: parseFloat(star.magnitude),
-          ra: formatRA(star.ra),
-          dec: formatDEC(star.dec),
-          raDeg: convertRAtoDegrees(star.ra),
-          decDeg: convertDECtoDegrees(star.dec),
-        }));
+        stars.value = results.data.map((star) => {
+          const raDeg = convertRAtoDegrees(star.ra);
+          const decDeg = convertDECtoDegrees(star.dec);
+          return {
+            name: star.name,
+            magnitude: parseFloat(star.magnitude),
+            ra: star.ra, // Keep original RA format
+            dec: star.dec, // Keep original Dec format
+            raDeg: raDeg,
+            decDeg: decDeg,
+          };
+        });
       },
     });
   } catch (error) {
@@ -282,20 +266,9 @@ async function loadStarData() {
   }
 }
 
-function formatRA(ra) {
-  const matches = ra.match(/(\d+)h\s*(\d+)m\s*([\d.]+)s/);
-  if (!matches) return '00:00:00.0';
-  return `${matches[1].padStart(2, '0')}:${matches[2].padStart(2, '0')}:${matches[3].padStart(5, '0')}`;
-}
-
-function formatDEC(dec) {
-  const matches = dec.match(/([+-]?)(\d+)°\s*(\d+)′\s*([\d.]+)″/);
-  if (!matches) return '+00:00:00.0';
-  return `${matches[1]}${matches[2].padStart(2, '0')}:${matches[3].padStart(2, '0')}:${matches[4].padStart(5, '0')}`;
-}
-
 function convertRAtoDegrees(ra) {
   const matches = ra.match(/(\d+)h\s*(\d+)m\s*([\d.]+)s/);
+  if (!matches) return 0;
   return (
     15 *
     ((parseInt(matches[1]) || 0) +
@@ -306,6 +279,7 @@ function convertRAtoDegrees(ra) {
 
 function convertDECtoDegrees(dec) {
   const matches = dec.match(/([+-]?)(\d+)°\s*(\d+)′\s*([\d.]+)″/);
+  if (!matches) return 0;
   const sign = matches[1] === '-' ? -1 : 1;
   return (
     sign *
@@ -315,18 +289,53 @@ function convertDECtoDegrees(dec) {
   );
 }
 
-function calculateAltitude(decDeg, hourAngleDeg) {
+// New function to calculate Altitude and Azimuth
+function calculateAltAz(raDeg, decDeg) {
   const latRad = (settingsStore.coordinates.latitude * Math.PI) / 180;
   const decRad = (decDeg * Math.PI) / 180;
-  const haRad = (hourAngleDeg * Math.PI) / 180;
+  const now = new Date();
+  const JD = now / 86400000 - now.getTimezoneOffset() / 1440 + 2440587.5;
+  const GMST = 18.697374558 + 24.06570982441908 * (JD - 2451545.0);
+  const LMST = (GMST + settingsStore.coordinates.longitude / 15) % 24;
+  const hourAngle = LMST * 15 - raDeg;
+  const haRad = (hourAngle * Math.PI) / 180;
 
-  return (
-    (Math.asin(
-      Math.sin(latRad) * Math.sin(decRad) + Math.cos(latRad) * Math.cos(decRad) * Math.cos(haRad)
-    ) *
-      180) /
-    Math.PI
+  const altRad = Math.asin(
+    Math.sin(decRad) * Math.sin(latRad) + Math.cos(decRad) * Math.cos(latRad) * Math.cos(haRad)
   );
+  const alt = (altRad * 180) / Math.PI;
+
+  const azRad = Math.atan2(
+    -Math.cos(decRad) * Math.cos(latRad) * Math.sin(haRad),
+    Math.sin(decRad) * Math.cos(latRad) - Math.cos(decRad) * Math.sin(latRad) * Math.cos(haRad)
+  );
+  let az = (azRad * 180) / Math.PI;
+  if (az < 0) {
+    az += 360;
+  }
+  const direction = getDirection(az);
+
+  return { alt: alt, az: az, direction: direction };
+}
+
+function getDirection(az) {
+  if (az >= 337.5 || az < 22.5) {
+    return 'N';
+  } else if (az >= 22.5 && az < 67.5) {
+    return 'NE';
+  } else if (az >= 67.5 && az < 112.5) {
+    return 'E';
+  } else if (az >= 112.5 && az < 157.5) {
+    return 'SE';
+  } else if (az >= 157.5 && az < 202.5) {
+    return 'S';
+  } else if (az >= 202.5 && az < 247.5) {
+    return 'SW';
+  } else if (az >= 247.5 && az < 292.5) {
+    return 'W';
+  } else {
+    return 'NW';
+  }
 }
 
 function updateSiderealTime() {
