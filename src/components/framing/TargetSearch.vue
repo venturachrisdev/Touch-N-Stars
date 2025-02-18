@@ -32,8 +32,8 @@
         </ul>
       </div>
       <!-- Star Selection Dropdown -->
-      <div class="mb-4">
-        <label for="visibleStars" class="block text-white text-sm font-bold mb-2">{{
+      <div class="mb-4 mt-4">
+        <label for="visibleStars" class="block text-white font-bold text-xl mb-4">{{
           $t('components.slewAndCenter.visibleStars')
         }}</label>
         <select
