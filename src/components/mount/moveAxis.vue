@@ -82,7 +82,7 @@
             {{ $t('components.mount.control.slewRate') }}
           </p>
         </div>
-        <div class=" flex flex-row w-full justify-center gap-2">
+        <div class="flex flex-row w-full justify-center gap-2">
           <button class="btn min-w-12" @click="settingsStore.mount.slewRate = 0.017">4x</button>
           <button class="btn min-w-12" @click="settingsStore.mount.slewRate = 0.067">16x</button>
           <button class="btn min-w-12" @click="settingsStore.mount.slewRate = 0.133">32x</button>
