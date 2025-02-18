@@ -31,6 +31,22 @@
           </li>
         </ul>
       </div>
+      <!-- Star Selection Dropdown -->
+      <div class="mb-4">
+        <label for="visibleStars" class="block text-white text-sm font-bold mb-2">{{
+          $t('components.slewAndCenter.visibleStars')
+        }}</label>
+        <select
+          id="visibleStars"
+          v-model="selectedStar"
+          class="text-black w-full p-2 border border-gray-300 rounded"
+          @change="updateRaDec"
+        >
+          <option v-for="star in visibleStars" :key="star.name" :value="star">
+            {{ star.name }} (Mag: {{ star.magnitude }})
+          </option>
+        </select>
+      </div>
       <div class="flex min-w-36 items-center border border-gray-500 p-1 mt-2 rounded-lg">
         <label for="DewHeater" class="text-sm mb-1 text-gray-400"
           >{{ $t('components.framing.useNinaCache') }}
@@ -116,10 +132,33 @@ import slewAndCenter from '@/components/framing/slewAndCenter.vue';
 import TargetPic from '@/components/framing/TargetPic.vue';
 import controlUseNinaCache from '@/components/framing/controlUseNinaCache.vue';
 import { useFramingStore } from '@/store/framingStore';
-import { onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import FramingAssistangModal from '@/components/framing/FramingAssistangModal.vue';
+import Papa from 'papaparse';
+import { useSettingsStore } from '@/store/settingsStore';
 
 const framingStore = useFramingStore();
+const settingsStore = useSettingsStore();
+const stars = ref([]);
+const selectedStar = ref(null);
+const currentSiderealTime = ref(0);
+const props = defineProps({
+  RAangleString: String,
+  DECangleString: String,
+});
+const localRAangleString = ref(props.RAangleString);
+const localDECangleString = ref(props.DECangleString);
+
+// Computed property to filter visible stars
+
+const visibleStars = computed(() => {
+  return stars.value.filter((star) => {
+    const hourAngle = (currentSiderealTime.value - star.raDeg + 360) % 360;
+    const alt = calculateAltitude(star.decDeg, hourAngle);
+    return alt > 0;
+  });
+});
+
 async function fetchTargetSearch() {
   if (framingStore.searchQuery.trim() === '') {
     framingStore.targetSearchResult = [];
@@ -205,16 +244,115 @@ function degreesToDMS(deg) {
   return `${sign}${dStr}:${mStr}:${sStr}`;
 }
 
-onMounted(() => {
+onMounted(async () => {
   framingStore.height = 200;
   framingStore.width = 200;
   framingStore.fov = 2;
+  await loadStarData();
+  updateSiderealTime();
+  setInterval(updateSiderealTime, 1000);
 
   // Container-Größe für Framinngassitant berechnen
   const smallerDimension = Math.min(window.innerWidth, window.innerHeight - 200);
   const roundedDimension = Math.floor(smallerDimension / 100) * 100;
   framingStore.containerSize = roundedDimension;
 });
+
+async function loadStarData() {
+  try {
+    const response = await fetch('/stars.csv');
+    const csvData = await response.text();
+
+    Papa.parse(csvData, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (results) => {
+        stars.value = results.data.map((star) => ({
+          name: star.name,
+          magnitude: parseFloat(star.magnitude),
+          ra: formatRA(star.ra),
+          dec: formatDEC(star.dec),
+          raDeg: convertRAtoDegrees(star.ra),
+          decDeg: convertDECtoDegrees(star.dec),
+        }));
+      },
+    });
+  } catch (error) {
+    console.error('Error loading star data:', error);
+  }
+}
+
+function formatRA(ra) {
+  const matches = ra.match(/(\d+)h\s*(\d+)m\s*([\d.]+)s/);
+  if (!matches) return '00:00:00.0';
+  return `${matches[1].padStart(2, '0')}:${matches[2].padStart(2, '0')}:${matches[3].padStart(5, '0')}`;
+}
+
+function formatDEC(dec) {
+  const matches = dec.match(/([+-]?)(\d+)°\s*(\d+)′\s*([\d.]+)″/);
+  if (!matches) return '+00:00:00.0';
+  return `${matches[1]}${matches[2].padStart(2, '0')}:${matches[3].padStart(2, '0')}:${matches[4].padStart(5, '0')}`;
+}
+
+function convertRAtoDegrees(ra) {
+  const matches = ra.match(/(\d+)h\s*(\d+)m\s*([\d.]+)s/);
+  return (
+    15 *
+    ((parseInt(matches[1]) || 0) +
+      (parseInt(matches[2]) || 0) / 60 +
+      (parseFloat(matches[3]) || 0) / 3600)
+  );
+}
+
+function convertDECtoDegrees(dec) {
+  const matches = dec.match(/([+-]?)(\d+)°\s*(\d+)′\s*([\d.]+)″/);
+  const sign = matches[1] === '-' ? -1 : 1;
+  return (
+    sign *
+    ((parseInt(matches[2]) || 0) +
+      (parseInt(matches[3]) || 0) / 60 +
+      (parseFloat(matches[4]) || 0) / 3600)
+  );
+}
+
+function calculateAltitude(decDeg, hourAngleDeg) {
+  const latRad = (settingsStore.coordinates.latitude * Math.PI) / 180;
+  const decRad = (decDeg * Math.PI) / 180;
+  const haRad = (hourAngleDeg * Math.PI) / 180;
+
+  return (
+    (Math.asin(
+      Math.sin(latRad) * Math.sin(decRad) + Math.cos(latRad) * Math.cos(decRad) * Math.cos(haRad)
+    ) *
+      180) /
+    Math.PI
+  );
+}
+
+function updateSiderealTime() {
+  const now = new Date();
+  const JD = now / 86400000 - now.getTimezoneOffset() / 1440 + 2440587.5;
+  const GMST = 18.697374558 + 24.06570982441908 * (JD - 2451545.0);
+  currentSiderealTime.value = (GMST % 24) * 15 + settingsStore.coordinates.longitude / 15;
+}
+
+async function updateRaDec() {
+  if (selectedStar.value) {
+    localRAangleString.value = selectedStar.value.ra;
+    localDECangleString.value = selectedStar.value.dec;
+    // Update store with both formatted strings AND numeric values
+    framingStore.RAangleString = selectedStar.value.ra;
+    framingStore.DECangleString = selectedStar.value.dec;
+    framingStore.RAangle = selectedStar.value.raDeg;
+    framingStore.DECangle = selectedStar.value.decDeg;
+    try {
+      await apiService.setFramingImageSource('SKYATLAS');
+      await apiService.setFramingCoordinates(selectedStar.value.raDeg, selectedStar.value.decDeg);
+    } catch (error) {
+      console.error('Error updating sky atlas:', error);
+    }
+  }
+}
 </script>
 
 <style scoped></style>

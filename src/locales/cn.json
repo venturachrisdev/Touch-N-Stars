@@ -62,6 +62,10 @@
         "confirmRestart": "Are you sure you want to restart the system?",
         "confirmShutdown": "Are you sure you want to shutdown the system?",
         "confirmation": "Confirmation"
+      },
+      "image": {
+        "title": "Images settings",
+        "quality": "Quality in %"
       }
     },
     "framing": {
@@ -332,7 +336,8 @@
       "warm_up_time": "预热时间",
       "cooling_time": "冷却时间",
       "binning_mode": "Binning",
-      "readout_mode": "Readout Mode"
+      "readout_mode": "Readout Mode",
+      "set_use_platesolve": "Use Platesolve"
     },
     "tppa": {
       "title": "三点极轴对准",
@@ -379,7 +384,8 @@
         "apiResponseError": "API 响应错误：",
         "mountInfoError": "获取赤道仪信息时出错："
       },
-      "rotate": "Rotate"
+      "rotate": "Rotate",
+      "visibleStars": "Visible Star Search"
     },
     "filterwheel": {
       "filter": "滤镜：",
