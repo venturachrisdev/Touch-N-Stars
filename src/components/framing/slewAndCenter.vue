@@ -256,6 +256,7 @@ onBeforeUnmount(() => {
   stopFetchingInfo();
 });
 </script>
+
 <style scoped>
 .loader {
   border: 2px solid #f3f3f3;

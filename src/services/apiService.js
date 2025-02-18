@@ -707,12 +707,23 @@ const apiService = {
     }
   },
 
+  async setFramingCoordinates(RAangle, DECangle) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/framing/set-coordinates`, {
+        params: { RAangle, DECangle },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error setting framing coordinates:', error);
+      throw error;
+    }
+  },
+
   async slewAndCenter(RAangle, DECangle, Center) {
     try {
       const { BASE_URL } = getUrls();
-      await axios.get(`${BASE_URL}/framing/set-coordinates`, {
-        params: { RAangle, DECangle },
-      });
+      await this.setFramingCoordinates(RAangle, DECangle);
       await new Promise((resolve) => setTimeout(resolve, 3000)); // damit NINA genug Zeit hat die Koordinaten zu setzen
       const response = await axios.get(`${BASE_URL}/framing/slew`, {
         params: {

@@ -384,7 +384,8 @@
         "invalidFormat": "Ungültiges Format. Erwartet: ±DD:MM:SS.s",
         "apiResponseError": "Fehler in API-Antwort:",
         "mountInfoError": "Fehler beim Abrufen der Montierungsinformationen:"
-      }
+      },
+      "visibleStars": "Sichtbare Sternsuche"
     },
     "filterwheel": {
       "filter": "Filter:",
