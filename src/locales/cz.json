@@ -64,8 +64,8 @@
         "confirmation": "Potvrzení"
       },
       "image": {
-        "quality": "Quality in %",
-        "title": "Images settings"
+        "quality": "Kvalita v %",
+        "title": "Nastavení snímků"
       }
     },
     "framing": {
@@ -159,7 +159,7 @@
       "message": "Zpráva",
       "member": "Člen",
       "line": "Řádek",
-      "download": "Download"
+      "download": "Stáhnout"
     },
     "navigation": {
       "equipment": "Zařízení",
@@ -337,7 +337,7 @@
       "cooling_time": "Doba chlazení",
       "binning_mode": "Binning",
       "readout_mode": "Režim Čtení",
-      "set_use_platesolve": "Use Platesolve"
+      "set_use_platesolve": "Použít Řešení"
     },
     "tppa": {
       "title": "Tříbodové Polární Zarovnání",
@@ -385,7 +385,7 @@
         "mountInfoError": "Chyba při získávání informací o montáži:"
       },
       "rotate": "Rotace",
-      "visibleStars": "Visible Star Search"
+      "visibleStars": "Hledání Viditelných Hvězd"
     },
     "filterwheel": {
       "filter": "Filtr:",
