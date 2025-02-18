@@ -143,12 +143,6 @@ const settingsStore = useSettingsStore();
 const stars = ref([]);
 const selectedStar = ref(null);
 const currentSiderealTime = ref(0);
-const props = defineProps({
-  RAangleString: String,
-  DECangleString: String,
-});
-const localRAangleString = ref(props.RAangleString);
-const localDECangleString = ref(props.DECangleString);
 
 // Computed property to filter visible stars and calculate Alt/Az
 const visibleStars = computed(() => {
@@ -352,11 +346,15 @@ function updateSiderealTime() {
 
 async function updateRaDec() {
   if (selectedStar.value) {
-    localRAangleString.value = selectedStar.value.ra;
-    localDECangleString.value = selectedStar.value.dec;
-    // Update store with both formatted strings AND numeric values
-    framingStore.RAangleString = selectedStar.value.ra;
-    framingStore.DECangleString = selectedStar.value.dec;
+    // Get the formatted values
+    const formattedRA = degreesToHMS(selectedStar.value.raDeg);
+    const formattedDEC = degreesToDMS(selectedStar.value.decDeg);
+
+    // Update the store with the formatted values
+    framingStore.RAangleString = formattedRA;
+    framingStore.DECangleString = formattedDEC;
+
+    // Update store with the numeric values (this part is already correct)
     framingStore.RAangle = selectedStar.value.raDeg;
     framingStore.DECangle = selectedStar.value.decDeg;
     framingStore.selectedItem = {
