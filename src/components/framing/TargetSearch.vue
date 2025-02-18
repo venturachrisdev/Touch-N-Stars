@@ -160,7 +160,12 @@ const visibleStars = computed(() => {
         altAz,
       };
     })
-    .filter((star) => star.altAz.alt > 0);
+    .filter((star) => star.altAz.alt > 0)
+    .sort((a, b) => {
+      const altA = parseFloat(a.altAz.alt);
+      const altB = parseFloat(b.altAz.alt);
+      return altB - altA; // Sort by altitude in descending order
+    });
 });
 
 async function fetchTargetSearch() {
