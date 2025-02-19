@@ -333,7 +333,7 @@ onMounted(() => {
     tppaStore.currentMessage = JSON.parse(JSON.stringify(newMessage));
 
     // Update running state based on message
-    if (message.Response === 'started procedure') {
+    if (message.Response != 'stopped procedure') {
       tppaStore.setRunning(true);
       startStop.value = true;
     } else if (message.Response === 'stopped procedure') {
