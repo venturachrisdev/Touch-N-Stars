@@ -14,7 +14,7 @@ const availableLanguages = [
   { code: 'de', name: 'Deutsch' },
   { code: 'fr', name: 'Français' },
   { code: 'it', name: 'Italiano' },
-  { code: 'cz', name: 'čeština' },
+  { code: 'cz', name: 'Čeština' },
   { code: 'cn', name: '中文' },
   { code: 'pt', name: 'Português' },
   { code: 'es', name: 'Español' },
