@@ -144,7 +144,12 @@
       </div>
     </div>
   </div>
-  <TppaLastStatus v-if="tppaStore.isTppaRunning" class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
+  <div class="bg-gray-800 p-5 m-5 border border-gray-500 rounded-md">
+    <TppaLastStatus
+      v-if="tppaStore.isTppaRunning"
+      class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
+    />
+  </div>
 </template>
 
 <script setup>
