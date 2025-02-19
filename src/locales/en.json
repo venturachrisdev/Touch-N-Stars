@@ -355,7 +355,14 @@
       "down": "Down",
       "up": "Up",
       "not_available": "Not available",
-      "running": "RUNNING"
+      "running": "RUNNING",
+      "plate_solve_start": "Platesolve start",
+      "plate_solve_ok": "Platesolve successful",
+      "plate_solve_error": "Platesolve error",
+      "slewing_first_position": "Slewing to first position",
+      "slewing_next_position": "Slewing to next position",
+      "capture_running": "Exposure running",
+      "last_messages": "Last messages"
     },
     "logs": {
       "loading": "Loading data...",
