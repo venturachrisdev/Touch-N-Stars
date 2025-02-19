@@ -96,9 +96,10 @@ const apiService = {
           quality: quality,
           resize: resize,
           scale: scale,
-          autoPrepare: false,
+          autoPrepare: true,
         },
       });
+      console.log(response);
       return response.data;
     } catch (error) {
       console.error('Error read Image :', error);
@@ -114,7 +115,7 @@ const apiService = {
           quality: quality,
           resize: resize,
           scale: scale,
-          autoPrepare: false,
+          autoPrepare: true,
           imageType: imageType,
         },
       });
@@ -307,7 +308,7 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
-        params: { getResult: true, quality: quality },
+        params: { getResult: true, quality: quality, autoPrepare: true },
       });
       return response.data;
     } catch (error) {
