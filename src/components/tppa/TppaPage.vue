@@ -134,7 +134,7 @@
               <p style="white-space: pre-wrap">
                 {{ formatMessage(tppaStore.currentMessage.message) }}
               </p>
-              <p class="text-xs">
+              <p v-if="false" class="text-xs">
                 <strong>{{ $t('components.tppa.last_update') }}:</strong>
                 {{ tppaStore.currentMessage.time }}
               </p>
@@ -144,12 +144,12 @@
       </div>
     </div>
   </div>
+  <TppaLastStatus v-if="tppaStore.isTppaRunning" class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-
 const { t } = useI18n();
 import websocketService from '@/services/websocketTppa';
 import {
@@ -161,6 +161,7 @@ import {
 import { apiStore } from '@/store/store';
 import { useTppaStore } from '@/store/tppaStore';
 import apiService from '@/services/apiService';
+import TppaLastStatus from '@/components/tppa/TppaLastStatus.vue';
 
 const tppaStore = useTppaStore();
 const store = apiStore();
