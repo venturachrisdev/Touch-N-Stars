@@ -10,9 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add manuell mount controll
 
 ### Changed
+- autoPrepare activated for the images
 
 ### Fixed
-
 
 
 ## [1.0.1.1] - unreleasd
@@ -22,7 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - DLSR chip size is loaded from the framing settings
 
 ### Fixed
-
 
 
 ## [1.0.1.0] - 2025-02-14
