@@ -17,7 +17,6 @@
             @click="startAlignment"
             :disabled="tppaStore.isTppaRunning"
           >
-
             {{
               tppaStore.isTppaRunning
                 ? $t('components.tppa.running')
@@ -133,9 +132,7 @@
     </div>
   </div>
   <div v-if="tppaStore.isTppaRunning" class="bg-gray-800 p-5 m-5 border border-gray-500 rounded-md">
-    <TppaLastStatus
-      class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50"
-    />
+    <TppaLastStatus class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
   </div>
 </template>
 

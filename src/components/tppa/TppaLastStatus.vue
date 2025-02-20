@@ -22,7 +22,7 @@ import { ref, watch } from 'vue';
 import { useLogStore } from '@/store/logStore';
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n(); 
+const { t } = useI18n();
 const logStore = useLogStore();
 let lastProcessedTimestamp = null;
 const lastSolveMessages = ref([]);
@@ -51,22 +51,28 @@ watch(
         continue;
       }
       let message;
-        if (entry.message.includes('Platesolving with parameters:')) { //41
-          message = t('components.tppa.plate_solve_start'); 
-        } else if (entry.message.includes('Platesolve successful:')) { //54
-          message = t('components.tppa.plate_solve_ok');
-        } else if (entry.message.includes('Platesolve failed')) { //56
-          message = t('components.tppa.plate_solve_error');
-        } else if (entry.message.includes('Slewing to initial position')) { //417
-          message = t('components.tppa.slewing_first_position');
-        } else if (entry.message.includes('Moving Primary Telescope Axis')) { //475
-          message = t('components.tppa.slewing_next_position');
-        } else if (entry.message.includes('Starting Exposure')) { //737
-          message = t('components.tppa.capture_running');
-        } else {
-          // Nicht relevante Logs überspringen
-          continue;
-        }
+      if (entry.message.includes('Platesolving with parameters:')) {
+        //41
+        message = t('components.tppa.plate_solve_start');
+      } else if (entry.message.includes('Platesolve successful:')) {
+        //54
+        message = t('components.tppa.plate_solve_ok');
+      } else if (entry.message.includes('Platesolve failed')) {
+        //56
+        message = t('components.tppa.plate_solve_error');
+      } else if (entry.message.includes('Slewing to initial position')) {
+        //417
+        message = t('components.tppa.slewing_first_position');
+      } else if (entry.message.includes('Moving Primary Telescope Axis')) {
+        //475
+        message = t('components.tppa.slewing_next_position');
+      } else if (entry.message.includes('Starting Exposure')) {
+        //737
+        message = t('components.tppa.capture_running');
+      } else {
+        // Nicht relevante Logs überspringen
+        continue;
+      }
       // Speichere Einträge (max. 3)
       lastSolveMessages.value.push({
         timestamp: entry.timestamp,
