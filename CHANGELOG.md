@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Loading the autofocus graphic after a run did not always work
+- Shutdown / Restart now also works when PHD2 is running
 
 ## [1.0.1.0] - 2025-02-14
 ### Added
