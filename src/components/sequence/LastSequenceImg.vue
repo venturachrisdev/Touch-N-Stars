@@ -31,38 +31,47 @@
         <span class="font-bold">{{ $t('components.sequence.date') }}: </span>
         <span>{{ formattedDate }}</span>
       </div>
-      <div v-if="ExposureTime" class="flex justify-between border-b border-gray-700">
+
+      <div v-if="isValidNumber(ExposureTime)" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.exposureTime') }}:</span>
         <span>{{ ExposureTime.toFixed(2) }} s</span>
       </div>
-      <div v-if="HFR" class="flex justify-between border-b border-gray-700">
+
+      <div v-if="isValidNumber(HFR)" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.hfr') }}:</span>
         <span>{{ HFR.toFixed(2) }}</span>
       </div>
+
       <div v-if="Stars" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.stars') }}:</span>
         <span>{{ Stars }}</span>
       </div>
-      <div v-if="Mean" class="flex justify-between border-b border-gray-700">
+
+      <div v-if="isValidNumber(Mean)" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.mean') }}:</span>
         <span>{{ Mean.toFixed(2) }}</span>
       </div>
-      <div v-if="Median" class="flex justify-between border-b border-gray-700">
+
+      <div v-if="isValidNumber(Median)" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.median') }}:</span>
-        <span>{{ Median }}</span>
+        <span>{{ Median.toFixed(2) }}</span>
       </div>
-      <div v-if="StDev" class="flex justify-between border-b border-gray-700">
+
+      <div v-if="isValidNumber(StDev)" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.stDev') }}:</span>
         <span>{{ StDev.toFixed(2) }}</span>
       </div>
+
       <div v-if="RmsText" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.rmsText') }}:</span>
         <span>{{ RmsText }}</span>
       </div>
-      <div v-if="Temperature !== 'NaN'" class="flex justify-between border-b border-gray-700">
+
+      <div v-if="isValidNumber(Temperature)" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.temperature') }}:</span>
         <span>{{ Temperature }} °C</span>
       </div>
+
       <div v-if="Filter" class="flex justify-between border-b border-gray-700">
         <span class="font-bold">{{ $t('components.sequence.filter') }}:</span>
         <span>{{ Filter }}</span>
@@ -105,6 +114,10 @@ const dateValue = ref(null);
 const showModal = ref(false);
 const lastImgIndex = ref(null);
 
+const isValidNumber = (value) => {
+  return typeof value === 'number' && !isNaN(value);
+};
+
 // Computed Property für das Formatieren des Datums
 const formattedDate = computed(() => {
   if (!dateValue.value) return '';
@@ -137,7 +150,7 @@ async function wait(ms) {
 async function getlastImage(index, quality, resize, scale) {
   try {
     const result = await apiService.getSequenceImage(index, quality, resize, scale);
-
+    console.log(result);
     if (result.StatusCode != 200) {
       console.error('Unknown error: Check NINIA Log for more information');
       return;

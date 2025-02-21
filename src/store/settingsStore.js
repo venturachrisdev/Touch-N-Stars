@@ -45,6 +45,13 @@ export const useSettingsStore = defineStore('settings', {
       imageScale: 100,
       imageQuality: 90,
     },
+    flats: {
+      selectedOption: 'AutoExposure',
+      minBrightness: 0,
+      maxBrightness: 100,
+      brightness: 50,
+      exposureTime: 2,
+    },
   }),
   actions: {
     setCoordinates(coords) {

@@ -11,7 +11,6 @@ export function degreesToHMS(deg) {
   const m = Math.floor(totalMinutes);
   const remainingMinutes = totalMinutes - m;
   const s = remainingMinutes * 60;
-
   const hStr = String(h);
   const mStr = String(m).padStart(2, '0');
   const sStr = s.toFixed(1).padStart(4, '0');

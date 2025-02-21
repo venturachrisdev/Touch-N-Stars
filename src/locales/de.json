@@ -355,7 +355,14 @@
       "down": "Unten",
       "up": "Oben",
       "not_available": "Nicht verfügbar",
-      "running": "WIRD AUSGEFÜHRT"
+      "running": "WIRD AUSGEFÜHRT",
+      "plate_solve_start": "Platesolve start",
+      "plate_solve_ok": "Platesolve ok",
+      "plate_solve_error": "Platesolve Fehler",
+      "slewing_first_position": "Schwenkt zur ersten Position",
+      "slewing_next_position": "Schwenkt zur nächsten Position",
+      "capture_running": "Aufnahme läuft",
+      "last_messages": "Letzte Meldungen"
     },
     "logs": {
       "loading": "Daten werden geladen...",
@@ -412,6 +419,26 @@
         "open": "Deckel öffnen"
       },
       "title": "Flatpanel"
+    },
+    "flatassistant": {
+      "title": "Flat Assistant",
+      "count": "Anzahl",
+      "exposure_time": "Belichtungszeit",
+      "min_exposure_time": "Min Belichtungszeit",
+      "max_exposure_time": "Max Belichtungszeit",
+      "brightness": "Helligkeit",
+      "min_brightness": "Min Helligkeit",
+      "max_brightness": "Max Helligkeit",
+      "histogram_mean_target": "Histogrammdurchschnitsziel ",
+      "mean_tolerance": "Duchschnittstoleranz",
+      "completed_recordings" : "Completed recordings:",
+      "start_auto_exposure": "Start",
+      "start_auto_brightness": "Start",
+      "start_sky_flat": "Start",
+      "stop": "Stop",
+      "auto_exposure": "Dynamische Belichtungszeit",
+      "auto_brightness": "Dynamische Helligkeit",
+      "skyflat": "Skyflat"
     },
     "weatherModal": {
       "weatherInformation": "Wetterinformationen",

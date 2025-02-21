@@ -13,14 +13,10 @@
         </div>
         <div v-else class="flex space-x-4">
           <button
-            class="default-button-cyan"
+            class="default-button-cyan disabled:opacity-50"
             @click="startAlignment"
             :disabled="tppaStore.isTppaRunning"
           >
-            <span
-              v-if="tppaStore.isTppaRunning"
-              class="inline-block w-5 h-5 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"
-            ></span>
             {{
               tppaStore.isTppaRunning
                 ? $t('components.tppa.running')
@@ -130,26 +126,19 @@
                 </span>
               </span>
             </div>
-            <div v-if="tppaStore.currentMessage" class="mt-20">
-              <p style="white-space: pre-wrap">
-                {{ formatMessage(tppaStore.currentMessage.message) }}
-              </p>
-              <p class="text-xs">
-                <strong>{{ $t('components.tppa.last_update') }}:</strong>
-                {{ tppaStore.currentMessage.time }}
-              </p>
-            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <div v-if="tppaStore.isTppaRunning" class="bg-gray-800 p-5 m-5 border border-gray-500 rounded-md">
+    <TppaLastStatus class="p-4 bg-gray-800/50 rounded-lg border border-gray-700/50" />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-
 const { t } = useI18n();
 import websocketService from '@/services/websocketTppa';
 import {
@@ -161,6 +150,7 @@ import {
 import { apiStore } from '@/store/store';
 import { useTppaStore } from '@/store/tppaStore';
 import apiService from '@/services/apiService';
+import TppaLastStatus from '@/components/tppa/TppaLastStatus.vue';
 
 const tppaStore = useTppaStore();
 const store = apiStore();
@@ -327,16 +317,15 @@ onMounted(() => {
     tppaStore.currentMessage = JSON.parse(JSON.stringify(newMessage));
 
     // Update running state based on message
-    if (message.Response === 'started procedure') {
+    if (message.Response != 'stopped procedure') {
       tppaStore.setRunning(true);
       startStop.value = true;
+      console.log('TPPA start');
     } else if (message.Response === 'stopped procedure') {
       tppaStore.setRunning(false);
       startStop.value = false;
       resetErrors();
     }
-
-    // Force immediate UI update
     formatMessage(message);
   });
 

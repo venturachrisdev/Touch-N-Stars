@@ -71,6 +71,22 @@ const apiService = {
     }
   },
 
+  async imageHistoryAllFilterd(imageType) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/image-history`, {
+        params: {
+          all: true,
+          imageType: imageType,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error read Image History:', error);
+      throw error;
+    }
+  },
+
   //-------------------------------------  Image  ---------------------------------------
   async getSequenceImage(index, quality, resize, scale) {
     try {
@@ -80,6 +96,27 @@ const apiService = {
           quality: quality,
           resize: resize,
           scale: scale,
+          autoPrepare: true,
+        },
+      });
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.error('Error read Image :', error);
+      throw error;
+    }
+  },
+
+  async getSequenceImageFilterd(index, quality, resize, scale, imageType) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/image/${index}`, {
+        params: {
+          quality: quality,
+          resize: resize,
+          scale: scale,
+          autoPrepare: true,
+          imageType: imageType,
         },
       });
       return response.data;
@@ -271,7 +308,7 @@ const apiService = {
     try {
       const { BASE_URL } = getUrls();
       const response = await axios.get(`${BASE_URL}/equipment/camera/capture`, {
-        params: { getResult: true, quality: quality },
+        params: { getResult: true, quality: quality, autoPrepare: true },
       });
       return response.data;
     } catch (error) {
@@ -476,6 +513,119 @@ const apiService = {
       throw error;
     }
   },
+
+  //-------------------------------------  Flatassistant ---------------------------------------
+  flatassistantAction(action) {
+    const { BASE_URL } = getUrls();
+    return this._simpleGetRequest(`${BASE_URL}/flats/${action}`);
+  },
+
+  //auto-exposure
+  async flatAutoExposure(
+    count,
+    minExposure,
+    maxExposure,
+    histogramMean,
+    meanTolerance,
+    binning,
+    gain,
+    offset,
+    filter,
+    brightness
+  ) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/flats/auto-exposure`, {
+        params: {
+          count,
+          minExposure,
+          maxExposure,
+          histogramMean,
+          meanTolerance,
+          binning,
+          gain,
+          offset,
+          filter,
+          brightness,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error auto-exposure:', error);
+      throw error;
+    }
+  },
+
+  //auto-brightness
+  async flatAutoBrightness(
+    count,
+    minBrightness,
+    maxBrightness,
+    histogramMean,
+    meanTolerance,
+    binning,
+    gain,
+    offset,
+    filter,
+    exposureTime
+  ) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/flats/auto-brightness`, {
+        params: {
+          count,
+          minBrightness,
+          maxBrightness,
+          histogramMean,
+          meanTolerance,
+          binning,
+          gain,
+          offset,
+          filter,
+          exposureTime,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error auto-brightness:', error);
+      throw error;
+    }
+  },
+
+  //skyflat
+  async flatSkyflat(
+    count,
+    minExposure,
+    maxExposure,
+    histogramMean,
+    meanTolerance,
+    binning,
+    gain,
+    offset,
+    filter
+  ) {
+    try {
+      const { BASE_URL } = getUrls();
+      const response = await axios.get(`${BASE_URL}/flats/skyflat`, {
+        params: {
+          count,
+          minExposure,
+          maxExposure,
+          histogramMean,
+          meanTolerance,
+          binning,
+          gain,
+          offset,
+          filter,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error skyflats:', error);
+      throw error;
+    }
+  },
+
   //-------------------------------------  dome ---------------------------------------
   domeAction(action) {
     const { BASE_URL } = getUrls();
