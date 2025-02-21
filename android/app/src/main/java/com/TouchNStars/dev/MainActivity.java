@@ -7,10 +7,6 @@ import android.util.Log;
 import com.getcapacitor.BridgeActivity;
 import android.view.WindowManager;
 
-import com.getcapacitor.BridgeActivity;
-import com.getcapacitor.Config;
-import com.capawesome.capacitorandroidedgetoedgesupport.EdgeToEdge;
-
 public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,22 +23,6 @@ public class MainActivity extends BridgeActivity {
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
                 WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
             );
-        }
-
-        // ✅ EdgeToEdge Plugin aufrufen
-        try {
-            // Farben aus `capacitor.config.json` laden
-            String statusBarColor = Config.getString("plugins.CustomConfig.EdgeToEdge.statusBarColor", "#1F2937");
-            String navigationBarColor = Config.getString("plugins.CustomConfig.EdgeToEdge.navigationBarColor", "#1F2937");
-
-            // Setze Statusbar- und Navigationsleisten-Farbe
-            EdgeToEdge.setBackgroundColor(statusBarColor);
-            EdgeToEdge.setNavigationBarColor(navigationBarColor);
-
-            Log.i("MainActivity", "✅ EdgeToEdge Farben gesetzt: StatusBar=" + statusBarColor + ", NavigationBar=" + navigationBarColor);
-
-        } catch (Exception e) {
-            Log.e("MainActivity", "❌ Fehler beim Setzen der EdgeToEdge-Farben", e);
         }
 
         try {
