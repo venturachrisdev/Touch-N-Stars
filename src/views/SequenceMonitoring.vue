@@ -55,6 +55,11 @@
       <div class="mt-5 w-full">
         <LastSequenceImg />
       </div>
+
+      <div class="mt-5 w-full">
+        <SequenceImagesHistory />
+      </div>
+
       <div
         v-if="settingsStore.monitorViewSetting.showImgStatsGraph"
         class="w-full min-h-60 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl"
@@ -85,6 +90,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import SequenceImagesHistory from '@/components/sequence/SequenceImagesHistory.vue';
 import LastSequenceImg from '@/components/sequence/LastSequenceImg.vue';
 import SequenzGraph from '@/components/sequence/SequenzGraph.vue';
 import GuiderGraph from '@/components/guider/GuiderGraph.vue';

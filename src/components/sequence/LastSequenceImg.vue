@@ -18,7 +18,7 @@
         @click="openModal"
         :src="imageData"
         alt="Aufgenommenes Bild"
-        class="block w-full h-auto"
+        class="block w-full h-auto cursor-pointer"
       />
     </div>
 
@@ -214,11 +214,12 @@ watch(
   () => store.imageHistoryInfo,
   async (newVal, oldVal) => {
     if (!oldVal || newVal.length > oldVal.length) {
+      console.log('History: ', newVal);
       const latestIndex = newVal.length - 1;
       console.log('Watch imageHistoryInfo');
       console.log('latestIndex: ', latestIndex);
 
-      await wait(3000); // Es kann sein, dass das Bild noch nicht verfügbar ist
+      await wait(3000); // Wait 3 seconds. The image may not be available yet.
 
       getlastImage(latestIndex, settingsStore.camera.imageQuality, true, 0.5);
       if (showModal.value) {
