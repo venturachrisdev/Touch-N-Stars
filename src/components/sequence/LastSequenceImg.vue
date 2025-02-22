@@ -9,12 +9,11 @@
       </div>
     </div>
     <div
-      v-else-if="settingsStore.monitorViewSetting.showImage"
+      v-else-if="settingsStore.monitorViewSetting.showImage && imageData"
       ref="imageContainer"
       class="image-container overflow-hidden touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700"
     >
       <img
-        v-if="imageData"
         ref="image"
         @click="openModal"
         :src="imageData"
@@ -24,7 +23,7 @@
     </div>
 
     <div
-      v-if="!isLoadingImg && settingsStore.monitorViewSetting.showImageStats"
+      v-if="!isLoadingImg && settingsStore.monitorViewSetting.showImageStats && imageData"
       class="flex flex-col w-full min-w-60 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl p-4 text-sm space-y-2"
     >
       <div v-if="formattedDate" class="flex justify-between border-b border-gray-700">
@@ -152,6 +151,7 @@ async function getlastImage(index, quality, resize, scale) {
     const result = await apiService.getSequenceImage(index, quality, resize, scale);
     console.log(result);
     if (result.StatusCode != 200) {
+      isLoadingImg.value = false;
       console.error('Unknown error: Check NINIA Log for more information');
       return;
     }

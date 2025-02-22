@@ -50,7 +50,7 @@
   <div class="flex items-center justify-center m-4">
     <div
       v-if="store.imageHistoryInfo && store.imageHistoryInfo.length > 0"
-      class="flex flex-col w-full max-w-4xl justify-center items-center space-y-4"
+      class="flex flex-col w-full max-w-4xl justify-center items-center space-y-4 p-2"
     >
       <div class="mt-5 w-full">
         <LastSequenceImg />
@@ -63,13 +63,13 @@
       </div>
       <div
         v-if="settingsStore.monitorViewSetting.showGuiderGraph && store.guiderInfo.Connected"
-        class="flex w-full min-h-40 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl"
+        class="flex w-full min-h-40 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl p-2"
       >
         <GuiderStats class="min-w-24 pt-4" />
         <GuiderGraph class="w-full" />
       </div>
       <div
-        class="flex flex-col w-full min-h-80 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl"
+        class="flex flex-col w-full min-h-80 border border-cyan-700 bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl p-2"
         v-if="settingsStore.monitorViewSetting.showGuiderAfGraph && store.focuserInfo.Connected"
       >
         <p class="mb-4 text-center">{{ $t('components.focuser.last_autofocus') }}</p>
