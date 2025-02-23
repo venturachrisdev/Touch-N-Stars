@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 gap-2">
+  <div class="grid grid-cols-2 gap-2">
     <div v-for="image in imageHistory" v-bind:key="image.data" class="relative">
       <SequenceImage
         :image="image.data"

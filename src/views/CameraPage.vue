@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <div class="text-center m-6">
     <!-- Titel -->
     <div class="text-left mb-2">
       <h1 class="text-xl text-center font-bold">{{ $t('components.camera.title') }}</h1>
@@ -111,7 +111,7 @@
       </div>
 
       <!-- Capture Controls and Image Display -->
-      <div class="flex flex-col lg:flex-row gap-1 mx-5">
+      <div class="flex flex-col lg:flex-row gap-3 mx-5">
         <!-- Left Panel - Controls -->
         <div class="flex flex-col lg:w-1/6 space-y-3 min-h-[100px] lg:min-h-0">
           <!-- Loop Checkbox -->
@@ -208,7 +208,7 @@
         <div class="flex w-full lg:w-5/6 relative">
           <div
             ref="imageContainer"
-            class="image-container overflow-hidden w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700/50 flex-grow"
+            class="flex image-container overflow-hidden w-full touch-auto bg-gray-800 shadow-lg shadow-cyan-700/40 rounded-xl border border-cyan-700/50 flex-grow justify-center"
           >
             <img
               v-if="cameraStore.imageData"
@@ -216,13 +216,13 @@
               ref="image"
               :src="cameraStore.imageData"
               alt="Captured Image"
-              class="block"
+              class="block max-h-screen"
             />
             <div v-else class="flex items-center justify-center">
               <img
                 src="../assets/Logo_TouchNStars_600x600.png"
                 alt="Captured Image"
-                class="block"
+                class="block max-h-screen"
               />
             </div>
             <!-- SVG Icon oben rechts -->

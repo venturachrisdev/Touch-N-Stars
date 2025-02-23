@@ -1,5 +1,5 @@
 <template>
-  <div class="container text-center">
+  <div class="text-center m-6">
     <h5 class="text-xl font-bold text-white mb-4">{{ $t('pages.equipment.title') }}</h5>
     <div class="flex flex-col items-center justify-center">
       <profilSelect

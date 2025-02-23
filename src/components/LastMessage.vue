@@ -33,7 +33,7 @@
       <div
         v-for="(entry, index) in firstLog"
         :key="index"
-        class="fixed bottom-0 left-0 right-0 flex flex-wrap items-center gap-2 border-t border-gray-900 bg-gray-800 p-2 text-sm"
+        class="z-30 fixed bottom-0 left-24 right-0 flex flex-wrap items-center gap-2 border-t border-gray-900 bg-gray-800 py-2 px-8 text-sm"
         :class="{
           'text-green-600': entry.level === 'INFO',
           'text-red-600': entry.level === 'ERROR',

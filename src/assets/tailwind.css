@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply bg-gray-900;
+}
+
 @layer utilities {
   .scrollbar-hide {
     -ms-overflow-style: none;  /* IE and Edge */
@@ -43,7 +47,7 @@
 
   .btn-primary {
     @apply px-6 py-3 rounded-lg text-white font-medium transition-all duration-200;
-    @apply flex items-center justify-center min-w-[160px];
+    @apply flex items-center justify-center min-w-[140px];
     @apply shadow-lg hover:shadow-xl;
   }
 

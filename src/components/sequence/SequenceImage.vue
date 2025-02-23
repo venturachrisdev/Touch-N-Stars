@@ -63,7 +63,7 @@
         </div>
       </div>
     </div>
-    <img ref="image" :src="image" alt="Sequence Image" class="block w-full h-auto" />
+    <img ref="image" :src="image" alt="Sequence Image" class="block w-full max-h-screen h-auto" />
   </div>
 
   <ImageModal

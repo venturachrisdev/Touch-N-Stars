@@ -5,7 +5,7 @@
       ref="imageRef"
       :src="cameraStore.imageData"
       alt="Captured Image"
-      class="main-image"
+      class="main-image max-h-screen"
       @load="onImageLoad"
     />
 

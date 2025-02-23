@@ -1,6 +1,6 @@
 <template>
-  <div class="container flex items-center justify-center">
-    <div class="container max-w-3xl">
+  <div class="my-6 flex items-center justify-center">
+    <div class="max-w-3xl">
       <h5 class="text-xl text-center font-bold text-white mb-4">
         {{ $t('components.guider.title') }}
       </h5>

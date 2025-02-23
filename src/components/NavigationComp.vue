@@ -1,10 +1,9 @@
 <template>
-  <div class="flex top-0 bg-gray-800 shadow-md overflow-hidden justify-center h-20">
+  <div class="shadow-md py-3">
     <div
-      class="flex mx-auto items-center justify-start overflow-x-auto overflow-y-hidden scrollbar-hide"
-      style="scroll-snap-type: x mandatory"
+      class="mx-auto items-center justify-start"
     >
-      <div class="flex space-x-2 px-2" style="scroll-snap-align: start">
+      <div class="flex flex-col align-items-center items-center">
         <div v-if="store.isBackendReachable">
           <router-link
             to="/equipment"
@@ -221,8 +220,6 @@
           >
             <svg
               fill="#FFFFFF"
-              height="400px"
-              width="400px"
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="-100 0 639.479 439.479"
@@ -290,10 +287,6 @@ const store = apiStore();
 
   .top-0 {
     z-index: 50;
-  }
-
-  .flex {
-    padding: 8px 0;
   }
 }
 

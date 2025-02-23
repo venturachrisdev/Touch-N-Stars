@@ -55,7 +55,7 @@
     v-model:activeItem="currentTab"
   />
 
-  <div class="flex items-center justify-center mx-6 my-16">
+  <div class="flex items-center justify-center m-6 mb-8">
     <div v-if="currentTab == 'showStats'">
       <div
         v-if="store.imageHistoryInfo && store.imageHistoryInfo.length > 0"
