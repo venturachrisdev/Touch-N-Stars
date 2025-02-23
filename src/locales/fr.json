@@ -221,7 +221,10 @@
           "showGuiderAfGraph": "Montrer la courbe de l'AutoFocus"
         }
       },
-      "running": "EN COURS D'EXÉCUTION"
+      "running": "EN COURS D'EXÉCUTION",
+      "imageHistory": "Image History",
+      "duration": "Duration",
+      "temperatureShort": "Temp"
     },
     "mount": {
       "title": "Monture",
