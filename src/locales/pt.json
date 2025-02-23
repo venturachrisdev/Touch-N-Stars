@@ -221,7 +221,10 @@
           "showGuiderAfGraph": "Mostrar gráfico do autofoco"
         }
       },
-      "running": "EM EXECUÇÃO"
+      "running": "EM EXECUÇÃO",
+      "imageHistory": "Image History",
+      "duration": "Duration",
+      "temperatureShort": "Temp"
     },
     "mount": {
       "title": "Montagem",

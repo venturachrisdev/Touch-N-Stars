@@ -221,7 +221,10 @@
           "showGuiderAfGraph": "Zobrazit graf-ostření"
         }
       },
-      "running": "BĚŽÍCÍ"
+      "running": "BĚŽÍCÍ",
+      "imageHistory": "Image History",
+      "duration": "Duration",
+      "temperatureShort": "Temp"
     },
     "mount": {
       "title": "Montáž",

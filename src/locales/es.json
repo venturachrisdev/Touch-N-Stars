@@ -221,7 +221,10 @@
           "showGuiderAfGraph": "Mostrar gráfica autoenfoque"
         }
       },
-      "running": "CORRER"
+      "running": "CORRER",
+      "imageHistory": "Historial de Imagenes",
+      "duration": "Duración",
+      "temperatureShort": "Temp"
     },
     "mount": {
       "title": "Montura",

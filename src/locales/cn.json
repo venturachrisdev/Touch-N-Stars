@@ -221,7 +221,10 @@
           "showGuiderAfGraph": "显示自动对焦图表"
         }
       },
-      "running": "运行中"
+      "running": "运行中",
+      "imageHistory": "Image History",
+      "duration": "Duration",
+      "temperatureShort": "Temp"
     },
     "mount": {
       "title": "赤道仪",

@@ -221,7 +221,10 @@
           "showGuiderAfGraph": "Mostra grafico autofocus"
         }
       },
-      "running": "IN CORSO"
+      "running": "IN CORSO",
+      "imageHistory": "Image History",
+      "duration": "Duration",
+      "temperatureShort": "Temp"
     },
     "mount": {
       "title": "Montatura",
