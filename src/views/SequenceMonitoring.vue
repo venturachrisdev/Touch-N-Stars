@@ -55,11 +55,11 @@
     v-model:activeItem="currentTab"
   />
 
-  <div class="flex items-center justify-center m-4 mt-16">
+  <div class="flex items-center justify-center mx-6 my-16">
     <div v-if="currentTab == 'showStats'">
       <div
         v-if="store.imageHistoryInfo && store.imageHistoryInfo.length > 0"
-        class="flex flex-col w-full max-w-4xl justify-center items-center space-y-4 p-2"
+        class="flex flex-col w-full max-w-4xl justify-center items-center space-y-4"
       >
         <div class="mt-5 w-full">
           <LastSequenceImg />
@@ -92,7 +92,7 @@
       </div>
     </div>
 
-    <div v-if="currentTab == 'showImageHistory'">
+    <div v-if="currentTab == 'showImageHistory'" class="mt-5">
       <SequenceImageHistory />
     </div>
   </div>
